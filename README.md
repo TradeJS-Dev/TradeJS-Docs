@@ -1,4 +1,4 @@
-# tradejs-docs
+# TradeJS-Docs
 
 Standalone Docusaurus documentation site for the TradeJS framework.
 
