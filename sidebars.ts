@@ -1,10 +1,13 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
+const currentLocale = process.env.DOCUSAURUS_CURRENT_LOCALE ?? 'en';
+const t = (en: string, ru: string) => (currentLocale === 'ru' ? ru : en);
+
 const sidebars: SidebarsConfig = {
   docsSidebar: [
     {
       type: 'category',
-      label: 'Getting started',
+      label: t('Getting started', 'Начало'),
       collapsed: false,
       items: [
         'intro',
@@ -15,17 +18,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Strategies',
+      label: t('Strategies', 'Стратегии'),
       items: [
         {
           type: 'category',
-          label: 'Authoring',
+          label: t('Authoring', 'Разработка'),
           items: [
             'api/framework',
             'strategies/authoring/write-strategies',
             {
               type: 'category',
-              label: 'Strategy Runtime Hooks',
+              label: t('Strategy Runtime Hooks', 'Хуки runtime-стратегий'),
               items: [
                 'strategies/authoring/strategy-hooks/index',
                 'strategies/authoring/strategy-hooks/on-init',
@@ -47,7 +50,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Built-In Strategies',
+          label: t('Built-In Strategies', 'Встроенные стратегии'),
           items: [
             'strategies/reference/trendline',
             'strategies/reference/breakout',
@@ -58,7 +61,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Validation and Live Ops',
+          label: t('Validation and Live Ops', 'Валидация и live-режим'),
           items: [
             'strategies/operations/risk-management',
             'strategies/operations/pre-live-checklist',
@@ -69,16 +72,16 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Indicators',
+      label: t('Indicators', 'Индикаторы'),
       items: ['indicators/authoring', 'indicators/pine', 'indicators/catalog'],
     },
     {
       type: 'category',
-      label: 'Backtesting',
+      label: t('Backtesting', 'Бэктестинг'),
       items: [
         {
           type: 'category',
-          label: 'Workflow',
+          label: t('Workflow', 'Процесс'),
           items: [
             'runtime/backtesting/overview',
             'runtime/backtesting/grid-config',
@@ -87,18 +90,18 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Playbook',
+          label: t('Playbook', 'Шпаргалка'),
           items: ['runtime/backtesting/strategy-playbook'],
         },
       ],
     },
     {
       type: 'category',
-      label: 'Runtime',
+      label: t('Runtime', 'Рантайм'),
       items: [
         {
           type: 'category',
-          label: 'Signals',
+          label: t('Signals', 'Сигналы'),
           items: [
             'runtime/execution/signals',
             'runtime/execution/multi-strategy-signals',
@@ -130,7 +133,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Operations',
+      label: t('Operations', 'Эксплуатация'),
       items: [
         'api/cli',
         'operations/env-reference',

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Overview
+title: Обзор
 slug: /
 ---
 
@@ -24,7 +24,7 @@ slug: /
 ## С чего начать
 
 - [Quickstart](./getting-started/quickstart)
-- [Настройка root пользователя](./getting-started/root-user)
+- [Настройка пользователя root](./getting-started/root-user)
 - [Core API](./api/framework)
 - [CLI API](./api/cli)
 - [Как создавать стратегии](./strategies/authoring/write-strategies)

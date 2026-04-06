@@ -2,6 +2,9 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+const currentLocale = process.env.DOCUSAURUS_CURRENT_LOCALE ?? 'en';
+const t = (en: string, ru: string) => (currentLocale === 'ru' ? ru : en);
+
 const config: Config = {
   title: 'TradeJS Docs',
   tagline: 'Technical docs for the TradeJS open-source framework',
@@ -103,31 +106,31 @@ const config: Config = {
           type: 'doc',
           docId: 'intro',
           position: 'left',
-          label: 'Getting started',
+          label: t('Getting started', 'Начало'),
         },
         {
           type: 'doc',
           docId: 'strategies/authoring/write-strategies',
           position: 'left',
-          label: 'Strategies',
+          label: t('Strategies', 'Стратегии'),
         },
         {
           type: 'doc',
           docId: 'indicators/authoring',
           position: 'left',
-          label: 'Indicators',
+          label: t('Indicators', 'Индикаторы'),
         },
         {
           type: 'doc',
           docId: 'runtime/backtesting/overview',
           position: 'left',
-          label: 'Backtesting',
+          label: t('Backtesting', 'Бэктестинг'),
         },
         {
           type: 'doc',
           docId: 'runtime/execution/signals',
           position: 'left',
-          label: 'Runtime',
+          label: t('Runtime', 'Рантайм'),
         },
         {
           type: 'doc',
@@ -145,7 +148,7 @@ const config: Config = {
           type: 'doc',
           docId: 'operations/production-runbook',
           position: 'left',
-          label: 'Operations',
+          label: t('Operations', 'Эксплуатация'),
         },
         {
           type: 'localeDropdown',
@@ -180,45 +183,45 @@ const config: Config = {
       },
       links: [
         {
-          title: 'Getting Started',
+          title: t('Getting Started', 'Начало'),
           items: [
-            { label: 'Overview', to: '/' },
-            { label: 'Quickstart', to: '/getting-started/quickstart' },
-            { label: 'Root User Setup', to: '/getting-started/root-user' },
+            { label: t('Overview', 'Обзор'), to: '/' },
+            { label: t('Quickstart', 'Быстрый старт'), to: '/getting-started/quickstart' },
+            { label: t('Root User Setup', 'Настройка пользователя root'), to: '/getting-started/root-user' },
           ],
         },
         {
-          title: 'Authoring',
+          title: t('Authoring', 'Разработка'),
           items: [
-            { label: 'Core API', to: '/api/framework' },
+            { label: t('Core API', 'Базовый API'), to: '/api/framework' },
             {
-              label: 'Creating Strategies',
+              label: t('Creating Strategies', 'Создание стратегий'),
               to: '/strategies/authoring/write-strategies',
             },
-            { label: 'Writing Indicators', to: '/indicators/authoring' },
+            { label: t('Writing Indicators', 'Создание индикаторов'), to: '/indicators/authoring' },
           ],
         },
         {
-          title: 'Operations',
+          title: t('Operations', 'Эксплуатация'),
           items: [
-            { label: 'CLI API', to: '/api/cli' },
+            { label: t('CLI API', 'CLI API'), to: '/api/cli' },
             {
-              label: 'Production Runbook',
+              label: t('Production Runbook', 'Руководство по эксплуатации продакшена'),
               to: '/operations/production-runbook',
             },
-            { label: 'Monitoring', to: '/operations/monitoring-alerts' },
-            { label: 'Backup and Restore', to: '/operations/backup-restore' },
+            { label: t('Monitoring', 'Мониторинг'), to: '/operations/monitoring-alerts' },
+            { label: t('Backup and Restore', 'Резервное копирование и восстановление'), to: '/operations/backup-restore' },
           ],
         },
         {
-          title: 'Open Source',
+          title: t('Open Source', 'Open Source'),
           items: [
             {
-              label: 'GitHub Repository',
+              label: t('GitHub Repository', 'Репозиторий GitHub'),
               href: 'https://github.com/tradejs-dev/tradejs',
             },
             {
-              label: 'Issue Tracker',
+              label: t('Issue Tracker', 'Трекер задач'),
               href: 'https://github.com/tradejs-dev/tradejs/issues',
             },
           ],

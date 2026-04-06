@@ -11,12 +11,18 @@ Runtime module:
 
 - `@tradejs/node`
 
-## Required Environment
+## Configuration Source
 
-```env
-OPENAI_API_KEY=...
-OPENAI_API_ENDPOINT=https://api.openai.com/v1
-```
+TradeJS resolves AI credentials in this order:
+
+1. Account settings stored in the current Redis user record.
+
+In the web app, open the gear icon in the left sidebar and set:
+
+- `OPENAI_API_KEY`
+- `OPENAI_API_ENDPOINT`
+
+These values are stored per user, so different operators can use different providers or keys without sharing one global secret.
 
 ## Runtime Behavior
 
@@ -27,6 +33,11 @@ For `entry` decisions with signal:
 3. In non-backtest mode, order may be blocked if quality is below threshold.
 
 Default minimum quality: `4`.
+
+Notes:
+
+- `OPENAI_API_KEY` and `OPENAI_API_ENDPOINT` should be configured on the user record, not in app environment variables.
+- If you want the standard OpenAI endpoint, save `https://api.openai.com/v1` in the user settings explicitly.
 
 ## Real TrendLine Adapter Example
 

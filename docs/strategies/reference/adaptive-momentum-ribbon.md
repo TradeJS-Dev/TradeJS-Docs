@@ -4,11 +4,11 @@ title: 'AdaptiveMomentumRibbon'
 
 `AdaptiveMomentumRibbon` is a built-in Pine-backed strategy from `@tradejs/strategies`.
 
-Runtime injects `loadPineScript` into `core.ts`, so Pine logic is maintained separately from TypeScript orchestration.
+Runtime injects `loadPineScriptFile` into `core.ts`, so Pine logic is maintained separately from TypeScript orchestration.
 
 ## Entry Logic
 
-1. `core.ts` loads Pine code using `loadPineScript('adaptiveMomentumRibbon.pine')`.
+1. `core.ts` loads Pine code using `loadPineScriptFile('adaptiveMomentumRibbon.pine')`.
 2. Takes recent candles (`AMR_LOOKBACK_BARS`) and runs Pine via `runPineScript`.
 3. Reads latest plot values:
 

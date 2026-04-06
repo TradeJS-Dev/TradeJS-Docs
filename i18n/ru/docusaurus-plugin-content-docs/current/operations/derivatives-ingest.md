@@ -1,5 +1,5 @@
 ---
-title: Ingest деривативов и spread
+title: Загрузка деривативов и спреда
 ---
 
 TradeJS умеет загружать рыночные features по деривативам и spread в TimescaleDB.

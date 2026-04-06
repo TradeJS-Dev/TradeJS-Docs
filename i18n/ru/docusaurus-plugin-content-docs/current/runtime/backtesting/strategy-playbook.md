@@ -1,5 +1,5 @@
 ---
-title: Runtime Playbook
+title: Шпаргалка по рантайму
 ---
 
 Эта шпаргалка содержит copy-paste команды для текущей конфигурации:
@@ -110,4 +110,4 @@ npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --clear --user root
 
 - [Результаты бэктеста -> runtime-конфиг](./results-runtime-config)
 - [Data Sync](../../getting-started/data-sync)
-- [Pine Script стратегия пошагово](../../strategies/authoring/pine-strategy-step-by-step)
+- [Пошаговое создание стратегии на Pine Script](../../strategies/authoring/pine-strategy-step-by-step)

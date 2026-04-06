@@ -1,6 +1,6 @@
 ---
 sidebar_position: 5
-title: Core API
+title: Базовый API
 ---
 
 `@tradejs/core` — публичный пакет для разработки strategy и indicator плагинов в TradeJS.

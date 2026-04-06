@@ -106,6 +106,14 @@ Open:
 - `http://localhost:3000/routes/backtest` for saved backtest runs
 - `http://localhost:3000/routes/dashboard` for market charts and signals
 
+After sign-in:
+
+- open the gear icon in the left sidebar to manage account settings
+- configure Bybit API access for this user before working with live exchange data
+- move passwordless auth token, OpenAI, and Telegram settings into the user profile stored in Redis
+
+If port `3000` is already busy, `tradejs-app dev` automatically picks the next free port and prints the actual URL in the console.
+
 For production mode:
 
 ```bash

@@ -1,5 +1,5 @@
 ---
-title: Pine Script стратегия пошагово
+title: Пошаговое создание стратегии на Pine Script
 ---
 
 Этот гайд показывает, как добавить Pine-стратегию в TradeJS как обычный полноценный модуль стратегии.
@@ -139,12 +139,11 @@ plot(sell_sig ? 1 : 0, "entryShort")
 
 ```ts
 import {
-  type BacktestPriceMode,
-  type Direction,
-  type Interval,
-  type StrategyConfig,
+  BacktestPriceMode,
+  Direction,
+  Interval,
+  StrategyConfig,
 } from '@tradejs/types';
-import { asPositiveInt, asPositiveNumber } from '@tradejs/core/math';
 
 export type AdaptiveMomentumRibbonKcMaType =
   | 'SMA'
@@ -213,14 +212,15 @@ export type AdaptiveMomentumRibbonConfig = StrategyConfig &
 ```ts
 import {
   PineContextLike,
-  asFiniteNumber,
   getPinePlotSeries,
+  toFiniteNumber,
 } from '@tradejs/node/pine';
+
 import {
-  type Direction,
-  type StrategyEntryModelFigures,
-  type StrategyFigureLine,
-  type StrategyFigurePoint,
+  Direction,
+  StrategyEntryModelFigures,
+  StrategyFigureLine,
+  StrategyFigurePoint,
 } from '@tradejs/types';
 
 interface BuildAdaptiveMomentumRibbonFiguresParams {
@@ -271,8 +271,8 @@ const toFigurePoints = (
 
   for (let i = start; i < series.length; i += 1) {
     const item = series[i];
-    const timestamp = asFiniteNumber(item?.time);
-    const value = asFiniteNumber(item?.value);
+    const timestamp = toFiniteNumber(item?.time);
+    const value = toFiniteNumber(item?.value);
     if (timestamp == null || value == null) continue;
     points.push({
       timestamp,
@@ -335,27 +335,32 @@ export const buildAdaptiveMomentumRibbonFigures = ({
 
 ```ts
 import {
-  PineContextLike,
-  asPineBoolean,
-  asFiniteNumber,
-  getLatestPinePlotValue,
+  getLatestPineBooleanPlotValues,
+  getLatestPineNumberPlotValues,
   runPineScript,
+  type PineContextLike,
 } from '@tradejs/node/pine';
-import type { CreateStrategyCore } from '@tradejs/types';
-import { AdaptiveMomentumRibbonConfig } from './config';
+import { asPositiveInt, asPositiveNumber } from '@tradejs/core/math';
+import { logger } from '@tradejs/infra/logger';
+import type { AdaptiveMomentumRibbonConfig } from './config';
 import { buildAdaptiveMomentumRibbonFigures } from './figures';
+import { type CreateStrategyCore } from '@tradejs/types';
 
 const AMR_PINE_FILE_NAME = 'adaptiveMomentumRibbon.pine';
-
-const asPositiveInt = (value: unknown, fallback: number): number => {
-  const normalized = Math.floor(Number(value));
-  return Number.isFinite(normalized) && normalized > 0 ? normalized : fallback;
-};
-
-const asPositiveNumber = (value: unknown, fallback: number): number => {
-  const normalized = Number(value);
-  return Number.isFinite(normalized) && normalized > 0 ? normalized : fallback;
-};
+const AMR_BOOLEAN_PLOTS = [
+  'entryLong',
+  'entryShort',
+  'invalidated',
+  'activeBuy',
+  'activeSell',
+] as const;
+const AMR_NUMBER_PLOTS = [
+  'signalOsc',
+  'kcMidline',
+  'kcUpper',
+  'kcLower',
+  'invalidationLevel',
+] as const;
 
 const asKcMaType = (
   value: unknown,
@@ -397,55 +402,18 @@ const resolveLinePlots = (value: unknown): string[] => {
     .filter((item) => item.length > 0);
 };
 
-const getLookbackCandles = <TCandle>(
-  candles: TCandle[],
-  lookbackBars: number,
-) => {
-  if (lookbackBars <= 0) {
-    return candles;
-  }
-
-  return candles.slice(-lookbackBars);
-};
-
-const readBooleanPlot = (
-  pineContext: PineContextLike,
-  plotName: string,
-): boolean => asPineBoolean(getLatestPinePlotValue(pineContext, plotName));
-
-const readNumericPlot = (
-  pineContext: PineContextLike,
-  plotName: string,
-): number | null =>
-  asFiniteNumber(getLatestPinePlotValue(pineContext, plotName)) ?? null;
-
 const readAmrSnapshot = (pineContext: PineContextLike, linePlots: string[]) => {
-  const lineValues = Object.fromEntries(
-    linePlots.map((plotName) => [
-      plotName,
-      readNumericPlot(pineContext, plotName),
-    ]),
-  );
-
   return {
-    entryLong: readBooleanPlot(pineContext, 'entryLong'),
-    entryShort: readBooleanPlot(pineContext, 'entryShort'),
-    invalidated: readBooleanPlot(pineContext, 'invalidated'),
-    activeBuy: readBooleanPlot(pineContext, 'activeBuy'),
-    activeSell: readBooleanPlot(pineContext, 'activeSell'),
-    signalOsc: readNumericPlot(pineContext, 'signalOsc'),
-    kcMidline: readNumericPlot(pineContext, 'kcMidline'),
-    kcUpper: readNumericPlot(pineContext, 'kcUpper'),
-    kcLower: readNumericPlot(pineContext, 'kcLower'),
-    invalidationLevel: readNumericPlot(pineContext, 'invalidationLevel'),
-    lineValues,
+    ...getLatestPineBooleanPlotValues(pineContext, AMR_BOOLEAN_PLOTS),
+    ...getLatestPineNumberPlotValues(pineContext, AMR_NUMBER_PLOTS),
+    lineValues: getLatestPineNumberPlotValues(pineContext, linePlots),
   };
 };
 
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
   AdaptiveMomentumRibbonConfig
-> = async ({ config, symbol, loadPineScript, strategyApi }) => {
-  const script = loadPineScript(AMR_PINE_FILE_NAME);
+> = async ({ config, symbol, loadPineScriptFile, strategyApi }) => {
+  const script = loadPineScriptFile(AMR_PINE_FILE_NAME);
   const { LONG, SHORT, AMR_EXIT_ON_INVALIDATION } = config;
   const linePlots = resolveLinePlots(config.AMR_LINE_PLOTS);
   const lookbackBars = asPositiveInt(config.AMR_LOOKBACK_BARS, 0);
@@ -468,7 +436,7 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       position && typeof position.qty === 'number' && position.qty > 0,
     );
 
-    const candles = getLookbackCandles(fullData, lookbackBars);
+    const candles = lookbackBars > 0 ? fullData.slice(-lookbackBars) : fullData;
 
     let pineContext;
     try {
@@ -481,7 +449,7 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       });
     } catch (error) {
       if (typeof globalThis.setImmediate === 'function') {
-        console.warn(
+        logger.warn(
           'AdaptiveMomentumRibbon pine run failed for %s: %s',
           symbol,
           String(error),
@@ -536,7 +504,7 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       return strategyApi.skip('STRATEGY_DISABLED');
     }
 
-    const { stopLossPrice, takeProfitPrice } =
+    const { stopLossPrice, takeProfitPrice, qty } =
       strategyApi.getDirectionalTpSlPrices({
         price: currentPrice,
         direction: modeConfig.direction,
@@ -545,7 +513,12 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
         unit: 'percent',
       });
 
+    if (!qty || !Number.isFinite(qty) || qty <= 0) {
+      return strategyApi.skip('INVALID_QTY');
+    }
+
     return strategyApi.entry({
+      code: amr.entryLong ? 'AMR_ENTRY_LONG' : 'AMR_ENTRY_SHORT',
       direction: modeConfig.direction,
       figures: buildAdaptiveMomentumRibbonFigures({
         pineContext,
@@ -558,7 +531,7 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
         amr,
       },
       orderPlan: {
-        qty: 1,
+        qty,
         stopLossPrice,
         takeProfits: [{ rate: 1, price: takeProfitPrice }],
       },
@@ -576,12 +549,15 @@ import {
   config as DEFAULT_CONFIG,
 } from './config';
 import { createAdaptiveMomentumRibbonCore } from './core';
+import { adaptiveMomentumRibbonManifest } from './manifest';
 
 export const AdaptiveMomentumRibbonStrategyCreator =
   createStrategyRuntime<AdaptiveMomentumRibbonConfig>({
     strategyName: 'AdaptiveMomentumRibbon',
     defaults: DEFAULT_CONFIG as AdaptiveMomentumRibbonConfig,
     createCore: createAdaptiveMomentumRibbonCore,
+    manifest: adaptiveMomentumRibbonManifest,
+    strategyDirectory: __dirname,
   });
 ```
 
@@ -590,52 +566,45 @@ export const AdaptiveMomentumRibbonStrategyCreator =
 ### `adapters/ai.ts`
 
 ```ts
-import type { StrategyAiAdapter } from '@tradejs/types';
+import { mapAiRuntimeFromConfig } from '@tradejs/core/strategies';
 import { AdaptiveMomentumRibbonConfig } from '../config';
+import { StrategyAiAdapter } from '@tradejs/types';
 
 export const adaptiveMomentumRibbonAiAdapter: StrategyAiAdapter = {
-  mapEntryRuntimeFromConfig: (config) => {
-    const typedConfig = config as Pick<
-      AdaptiveMomentumRibbonConfig,
-      'AI_ENABLED' | 'MIN_AI_QUALITY'
-    >;
-
-    return {
-      enabled: Boolean(typedConfig.AI_ENABLED),
-      minQuality: Number(typedConfig.MIN_AI_QUALITY ?? 4),
-    };
-  },
+  mapEntryRuntimeFromConfig: (config) =>
+    mapAiRuntimeFromConfig(
+      config as Pick<
+        AdaptiveMomentumRibbonConfig,
+        'AI_ENABLED' | 'MIN_AI_QUALITY'
+      >,
+    ),
 };
 ```
 
 ### `adapters/ml.ts`
 
 ```ts
-import type { StrategyMlAdapter } from '@tradejs/types';
+import { mapMlRuntimeFromConfig } from '@tradejs/core/strategies';
 import { AdaptiveMomentumRibbonConfig } from '../config';
+import { StrategyMlAdapter } from '@tradejs/types';
 
 export const adaptiveMomentumRibbonMlAdapter: StrategyMlAdapter = {
-  mapEntryRuntimeFromConfig: (config) => {
-    const typedConfig = config as Pick<
-      AdaptiveMomentumRibbonConfig,
-      'ML_ENABLED' | 'ML_THRESHOLD'
-    >;
-
-    return {
-      enabled: Boolean(typedConfig.ML_ENABLED),
-      mlThreshold: Number(typedConfig.ML_THRESHOLD ?? 0.1),
-      strategyConfig: config,
-    };
-  },
+  mapEntryRuntimeFromConfig: (config) =>
+    mapMlRuntimeFromConfig(
+      config as Pick<
+        AdaptiveMomentumRibbonConfig,
+        'ML_ENABLED' | 'ML_THRESHOLD'
+      >,
+    ),
 };
 ```
 
 ### `manifest.ts`
 
 ```ts
-import type { StrategyManifest } from '@tradejs/types';
 import { adaptiveMomentumRibbonAiAdapter } from './adapters/ai';
 import { adaptiveMomentumRibbonMlAdapter } from './adapters/ml';
+import { StrategyManifest } from '@tradejs/types';
 
 export const adaptiveMomentumRibbonManifest: StrategyManifest = {
   name: 'AdaptiveMomentumRibbon',

@@ -123,8 +123,8 @@ export type MyPineIndicatorConfig = StrategyConfig & typeof config;
 ```ts
 import {
   PineContextLike,
-  asFiniteNumber,
   getPinePlotSeries,
+  toFiniteNumber,
 } from '@tradejs/node/pine';
 import type { StrategyEntryModelFigures } from '@tradejs/types';
 
@@ -134,8 +134,8 @@ export const buildMyPineFigures = (
   const points = getPinePlotSeries(pineContext, 'myOsc')
     .slice(-180)
     .map((item) => {
-      const timestamp = asFiniteNumber(item?.time);
-      const value = asFiniteNumber(item?.value);
+      const timestamp = toFiniteNumber(item?.time);
+      const value = toFiniteNumber(item?.value);
       if (timestamp == null || value == null) return null;
       return { timestamp, value };
     })
@@ -160,9 +160,9 @@ export const buildMyPineFigures = (
 
 ```ts
 import {
-  asPineBoolean,
-  getLatestPinePlotValue,
+  getLatestPineRawPlotValue,
   runPineScript,
+  toPineBoolean,
 } from '@tradejs/node/pine';
 import type { CreateStrategyCore } from '@tradejs/types';
 import { MyPineIndicatorConfig } from './config';
@@ -170,8 +170,8 @@ import { buildMyPineFigures } from './figures';
 
 export const createMyPineIndicatorCore: CreateStrategyCore<
   MyPineIndicatorConfig
-> = async ({ config, symbol, loadPineScript, strategyApi }) => {
-  const script = loadPineScript('myPineIndicator.pine');
+> = async ({ config, symbol, loadPineScriptFile, strategyApi }) => {
+  const script = loadPineScriptFile('myPineIndicator.pine');
 
   return async () => {
     if (!script) {
@@ -186,11 +186,11 @@ export const createMyPineIndicatorCore: CreateStrategyCore<
       timeframe: String(config.INTERVAL ?? '15'),
     });
 
-    const entryLong = asPineBoolean(
-      getLatestPinePlotValue(pineContext, 'entryLong'),
+    const entryLong = toPineBoolean(
+      getLatestPineRawPlotValue(pineContext, 'entryLong'),
     );
-    const entryShort = asPineBoolean(
-      getLatestPinePlotValue(pineContext, 'entryShort'),
+    const entryShort = toPineBoolean(
+      getLatestPineRawPlotValue(pineContext, 'entryShort'),
     );
 
     if (!entryLong && !entryShort) {

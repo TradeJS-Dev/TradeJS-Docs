@@ -12,16 +12,25 @@ This page groups the most important environment variables by area.
 - `NEXTAUTH_SECRET` - required for session/token security.
 - `NEXTAUTH_URL` - public URL used by auth callbacks.
 
+## Per-User Settings in Redis
+
+TradeJS also stores account-specific settings in the Redis user record (`users:index:<user>`):
+
+- `BYBIT_API_KEY`
+- `BYBIT_API_SECRET`
+- `token`
+- `OPENAI_API_KEY`
+- `OPENAI_API_ENDPOINT`
+- `TG_BOT_TOKEN`
+- `TG_CHAT_ID`
+
+The web app manages these values from the account settings drawer opened by the gear icon in the left sidebar.
+
 ## Data Services
 
 - `REDIS_HOST`, `REDIS_PORT`
 - `PG_HOST`, `PG_PORT`, `PG_USER`, `PG_PASSWORD`, `PG_DATABASE`
 - `ML_GRPC_ADDRESS` (for runtime inference)
-
-## AI
-
-- `OPENAI_API_KEY`
-- `OPENAI_API_ENDPOINT` (optional; defaults to OpenAI endpoint)
 
 ## ML Training
 
@@ -39,3 +48,5 @@ This page groups the most important environment variables by area.
 - In production, inject secrets from a secret manager.
 - For local setup, run `npx @tradejs/cli infra-init` once, then `npx @tradejs/cli infra-up`.
 - Validate environment with `npx @tradejs/cli doctor` before enabling live orders.
+- Prefer the account settings drawer for user-scoped API keys and tokens instead of sharing one global `.env` secret across operators.
+- `OPENAI_*` and `TG_*` are not app environment variables anymore; store them on the user record in Redis.

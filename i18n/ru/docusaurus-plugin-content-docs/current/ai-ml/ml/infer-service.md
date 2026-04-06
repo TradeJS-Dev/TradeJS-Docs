@@ -1,5 +1,5 @@
 ---
-title: ML infer gRPC сервис
+title: gRPC-сервис инференса моделей
 ---
 
 Runtime ML-gating обращается к Python gRPC сервису инференса.

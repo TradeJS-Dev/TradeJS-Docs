@@ -1,5 +1,5 @@
 ---
-title: TypeScript Strategy Step by Step
+title: Пошаговое создание стратегии на TypeScript
 ---
 
 Это самый короткий практический путь, как сделать пользовательскую TypeScript-стратегию через `StrategyAPI`.
