@@ -53,6 +53,7 @@ const strategy = await strategyCreator({
 - Включается флагом `--makeOrders`.
 - Runtime может заблокировать исполнение по AI/ML policy.
 - Сигнал может быть сохранен как `skipped`, даже если ордер не отправлен.
+- Сигналы со статусами `skipped` и `canceled` не отправляются в Telegram.
 
 ## Telegram-уведомления
 
@@ -61,6 +62,7 @@ npx @tradejs/cli signals --notify
 ```
 
 Если есть AI-анализ, он уходит отдельным сообщением.
+Для суточной Telegram-сводки используйте `npx @tradejs/cli signals-summary`.
 
 Подробная инструкция:
 

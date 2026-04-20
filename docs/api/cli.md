@@ -15,6 +15,7 @@ npx @tradejs/cli infra-up
 npx @tradejs/cli infra-down
 npx @tradejs/cli backtest
 npx @tradejs/cli signals
+npx @tradejs/cli signals-summary
 npx @tradejs/cli bot
 npx @tradejs/cli results
 ```
@@ -69,6 +70,15 @@ npx @tradejs/cli ai-train -n 50 --minQuality 4
 - `-u, --updateOnly`
 - `-C, --cacheOnly`
 - `-c, --chunk` chunk mode like `1/3`
+
+## Signals Summary Flags
+
+`npx @tradejs/cli signals-summary --help`:
+
+- `-u, --user` select the Redis user that owns Telegram settings and runtime journal data
+- `--connector` choose the connector used for trade reconciliation
+- `-H, --hours` size of the digest window in hours (`24` by default)
+- `-P, --printOnly` print the digest instead of sending it to Telegram
 
 ## Doctor Flags
 

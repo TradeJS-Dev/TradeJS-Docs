@@ -2,7 +2,7 @@
 title: Telegram Notifications
 ---
 
-TradeJS can send signal messages to Telegram from `npx @tradejs/cli signals --notify`.
+TradeJS can send runtime signal messages and a daily digest to Telegram.
 
 ## 1. Configure Telegram
 
@@ -46,13 +46,43 @@ npx @tradejs/cli signals --user root --notify --tickers BTC --cacheOnly
 Flow:
 
 1. Script finds signals.
-2. Script loads AI analysis from Redis key `analysis:<symbol>:<signalId>` if present.
-3. TradeJS sends the main signal message and uploads the screenshot when available.
-4. If AI analysis exists, TradeJS sends one follow-up analysis message.
+2. Signal records are still saved even when runtime decides `orderStatus=skipped`.
+3. Telegram delivery filters out `skipped` and `canceled` signals; they are stored for UI/debugging but are not sent to chat.
+4. Script loads AI analysis from Redis key `analysis:<symbol>:<signalId>` if present.
+5. TradeJS sends the main signal message and uploads the screenshot when available.
+6. If AI analysis exists, TradeJS sends one follow-up analysis message.
+
+Delivery details:
+
+- Telegram sends are serialized so the main signal message stays grouped with its AI follow-up in chat order.
+- Failed order attempts can still produce a Telegram notification; only `skipped` and `canceled` are filtered out.
 
 Use the same `--user` value that owns the Telegram settings in Redis.
 
-## 4. Common Troubleshooting
+## 4. Daily Summary Digest
+
+```bash
+npx @tradejs/cli signals-summary --user root --connector bybit
+```
+
+Defaults:
+
+- the digest covers the last 24 hours
+- `--hours` changes the window size
+- `--printOnly` prints the digest to stdout instead of sending it to Telegram
+
+Digest content:
+
+- signal counts by strategy and by status
+- trade counts by strategy
+- trade status split (`active` / `closed`)
+- current PnL for active trades
+- closed PnL for closed trades
+
+TradeJS links runtime signals and trades with a generated `orderId`.
+On Bybit, the same runtime id is passed through as `orderLinkId`, which lets the digest reconcile runtime trade records with exchange closed-PnL data.
+
+## 5. Common Troubleshooting
 
 - No messages at all:
   check the saved account settings for that user and whether bot is added to chat/channel.
@@ -60,3 +90,5 @@ Use the same `--user` value that owns the Telegram settings in Redis.
   check screenshot generation and whether the app can render the dashboard page configured by `APP_URL`.
 - Missing AI follow-up:
   check that `analysis:<symbol>:<signalId>` exists in Redis.
+- Daily digest misses trade PnL:
+  check that runtime orders were opened through TradeJS and that the selected connector supports the closed/open trade data used by the digest.

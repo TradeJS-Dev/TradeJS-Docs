@@ -17,6 +17,7 @@ npx @tradejs/cli infra-up
 npx @tradejs/cli infra-down
 npx @tradejs/cli backtest
 npx @tradejs/cli signals
+npx @tradejs/cli signals-summary
 npx @tradejs/cli bot
 npx @tradejs/cli results
 ```
@@ -71,6 +72,15 @@ npx @tradejs/cli ai-train -n 50 --minQuality 4
 - `-u, --updateOnly`
 - `-C, --cacheOnly`
 - `-c, --chunk` — запуск по чанку, например `1/3`
+
+## Часто используемые флаги `signals-summary`
+
+`npx @tradejs/cli signals-summary --help`:
+
+- `-u, --user` — выбрать Redis-пользователя, на котором лежат Telegram-настройки и runtime journal
+- `--connector` — выбрать connector для сверки сделок
+- `-H, --hours` — размер окна сводки в часах (по умолчанию `24`)
+- `-P, --printOnly` — печатать сводку в stdout вместо отправки в Telegram
 
 ## Флаги `doctor`
 

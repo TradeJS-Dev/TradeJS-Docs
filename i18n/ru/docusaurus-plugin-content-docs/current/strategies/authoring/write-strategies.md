@@ -95,6 +95,11 @@ export const createMyStrategyCore: CreateStrategyCore<
   - `aiAdapter`
   - `mlAdapter`
 
+- `tradejs.config.ts`:
+
+  - `hooks` для общей логики сразу на все стратегии текущего проекта
+  - удобно для общих risk rules, cross-strategy управления позициями и shared order filters
+
 - `adapters/*`:
 
   - mapping policy из конфига (`mapEntryRuntimeFromConfig`)

@@ -38,6 +38,12 @@ export default defineConfig(basePreset, {
   strategies: ['@scope/my-strategy-plugin', './src/plugins/strategy.ts'],
   indicators: ['@scope/my-indicator-plugin', './src/plugins/indicator.ts'],
   connectors: ['@scope/my-connector-plugin', './src/plugins/connector.ts'],
+  hooks: {
+    onBar: async ({ ctx, market }) => {
+      void ctx;
+      void market;
+    },
+  },
 });
 ```
 
@@ -54,6 +60,39 @@ Supported filenames:
 - `tradejs.config.js`
 - `tradejs.config.mjs`
 - `tradejs.config.cjs`
+
+## Shared Project Hooks
+
+`tradejs.config.ts` also supports project-level `hooks`. These hooks apply to every strategy loaded by the current config.
+
+```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
+export default defineConfig(basePreset, {
+  hooks: {
+    onBar: async ({ ctx, market }) => {
+      // Runs for every configured strategy on every candle.
+      // Use it for shared risk rules or cross-strategy checks.
+      void ctx;
+      void market;
+    },
+    beforePlaceOrder: async ({ ctx, entry }) => {
+      // Runs for every entry before connector placement.
+      void ctx;
+      void entry;
+    },
+  },
+});
+```
+
+Use project hooks when the behavior should be shared across multiple strategies in the same project. Keep strategy-specific hooks in `manifest.ts`.
+
+For the same stage:
+
+- project hooks from `tradejs.config.ts` run first
+- strategy hooks from `manifest.ts` run after them
+- hooks are merged additively, so strategy-local hooks still work
 
 ## Strategy Plugin API
 

@@ -4,6 +4,8 @@ title: Offline Evaluation for AI Gating
 
 Before changing AI gating logic, run offline evaluation.
 
+If you need the end-to-end workflow behind replayable AI datasets first, start with [Prompt Replay from Backtests](./prompt-replay).
+
 ## Goal
 
 Estimate how AI approval rules affect trade coverage and expected quality without touching live execution.

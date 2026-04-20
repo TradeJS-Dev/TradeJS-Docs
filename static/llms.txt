@@ -21,6 +21,7 @@ Marketing site: https://tradejs.dev
 - Runtime execution: https://docs.tradejs.dev/runtime/execution/signals
 - Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
 - AI: https://docs.tradejs.dev/ai-ml/ai/configuration
+- AI prompt replay: https://docs.tradejs.dev/ai-ml/ai/prompt-replay
 - ML: https://docs.tradejs.dev/ai-ml/ml/configuration
 - Operations: https://docs.tradejs.dev/operations/production-runbook
 

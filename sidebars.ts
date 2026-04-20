@@ -32,7 +32,9 @@ const sidebars: SidebarsConfig = {
               items: [
                 'strategies/authoring/strategy-hooks/index',
                 'strategies/authoring/strategy-hooks/on-init',
+                'strategies/authoring/strategy-hooks/on-bar',
                 'strategies/authoring/strategy-hooks/after-core-decision',
+                'strategies/authoring/strategy-hooks/after-bar-decision',
                 'strategies/authoring/strategy-hooks/on-skip',
                 'strategies/authoring/strategy-hooks/before-close-position',
                 'strategies/authoring/strategy-hooks/after-enrich-ml',
@@ -127,6 +129,7 @@ const sidebars: SidebarsConfig = {
       label: 'AI',
       items: [
         'ai-ml/ai/configuration',
+        'ai-ml/ai/prompt-replay',
         'ai-ml/ai/prompt-governance',
         'ai-ml/ai/offline-gating-eval',
       ],

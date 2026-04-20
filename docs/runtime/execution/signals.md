@@ -53,6 +53,7 @@ const strategy = await strategyCreator({
 - Enable with `--makeOrders`.
 - Runtime can still skip orders due to AI/ML policy.
 - Signal can be stored with `orderStatus = skipped` when gate blocks execution.
+- Signals stored as `skipped` or `canceled` are not forwarded to Telegram notifications.
 
 ## Telegram Notifications
 
@@ -61,6 +62,7 @@ npx @tradejs/cli signals --notify
 ```
 
 When AI analysis is present, Telegram receives a follow-up analysis message.
+TradeJS also provides `npx @tradejs/cli signals-summary` for a daily Telegram digest over recent runtime signal and trade activity.
 
 See full setup:
 

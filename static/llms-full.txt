@@ -65,6 +65,7 @@ The documentation covers:
 ### AI and ML
 
 - AI configuration: https://docs.tradejs.dev/ai-ml/ai/configuration
+- AI prompt replay: https://docs.tradejs.dev/ai-ml/ai/prompt-replay
 - Prompt governance: https://docs.tradejs.dev/ai-ml/ai/prompt-governance
 - Offline gating evaluation: https://docs.tradejs.dev/ai-ml/ai/offline-gating-eval
 - ML configuration: https://docs.tradejs.dev/ai-ml/ml/configuration
