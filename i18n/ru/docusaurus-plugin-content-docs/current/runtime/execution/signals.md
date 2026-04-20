@@ -42,11 +42,33 @@ const strategy = await strategyCreator({
 
 ## Пайплайн
 
-1. Загружаются активные strategy config.
-2. Загружаются рыночные данные по символам и BTC.
-3. Для каждого символа выполняется runtime стратегии.
-4. Сигналы сохраняются в Redis.
-5. При необходимости отправляются скриншоты и Telegram-уведомления.
+1. Резолвятся коннектор и universe тикеров.
+2. При необходимости прогревается market cache через `update`.
+3. Загружаются активные strategy config из Redis.
+4. Выполняются project-level hooks `beforeSignals` из `tradejs.config.ts`.
+5. Для каждого символа выполняется runtime стратегии.
+6. Сигналы сохраняются в Redis.
+7. Выполняются project-level hooks `afterSignals` из `tradejs.config.ts`.
+8. При необходимости отправляются скриншоты и Telegram-уведомления.
+
+`beforeSignals` и `afterSignals` — это batch hooks для всего прогона signals. Они не относятся к hooks в `manifest.ts` и не выполняются на каждой свече.
+
+Типичные кейсы:
+
+- одноразовые global risk checks до обхода тикеров
+- cross-strategy close-all логика, которую нужно запускать один раз на цикл signals
+- run-level логирование, метрики и уведомления после завершения прогона
+
+`beforeSignals` может прервать фазу обработки тикеров, если возвращает:
+
+```ts
+{
+  abort: true,
+  reason: 'SOME_REASON',
+}
+```
+
+Когда strategy runtime вызывает `strategyApi.getMarketData()` в `ENV='CRON'`, TradeJS теперь использует уже прогретый candle cache текущего прогона вместо повторного live `kline` fetch для каждого символа стратегии.
 
 ## Исполнение ордеров
 

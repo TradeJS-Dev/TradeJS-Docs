@@ -131,7 +131,6 @@ const sidebars: SidebarsConfig = {
         'ai-ml/ai/configuration',
         'ai-ml/ai/prompt-replay',
         'ai-ml/ai/prompt-governance',
-        'ai-ml/ai/offline-gating-eval',
       ],
     },
     {

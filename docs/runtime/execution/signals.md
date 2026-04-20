@@ -42,11 +42,33 @@ const strategy = await strategyCreator({
 
 ## Pipeline
 
-1. Load active strategy configs.
-2. Load symbol candles + BTC context data.
-3. Run strategy runtime for each symbol.
-4. Save produced signals to Redis.
-5. Optionally send screenshots and Telegram notifications.
+1. Resolve connector and ticker universe.
+2. Optionally warm market cache with `update`.
+3. Load active strategy configs from Redis.
+4. Run project-level `beforeSignals` hooks from `tradejs.config.ts`.
+5. Run strategy runtime for each symbol.
+6. Save produced signals to Redis.
+7. Run project-level `afterSignals` hooks from `tradejs.config.ts`.
+8. Optionally send screenshots and Telegram notifications.
+
+`beforeSignals` and `afterSignals` are batch hooks for the whole signals run. They are not strategy manifest hooks and do not execute per candle.
+
+Typical use cases:
+
+- one-shot global risk checks before scanning symbols
+- cross-strategy close-all logic that should run once per signals cycle
+- run-level logging, metrics, or notifications after signals finish
+
+`beforeSignals` may abort the ticker evaluation phase by returning:
+
+```ts
+{
+  abort: true,
+  reason: 'SOME_REASON',
+}
+```
+
+When active strategy runtime calls `strategyApi.getMarketData()` in `ENV='CRON'`, TradeJS reuses the warmed candle cache for the current run instead of forcing another live kline fetch for every strategy symbol.
 
 ## Order Execution
 

@@ -71,6 +71,15 @@ import { basePreset } from '@tradejs/base';
 
 export default defineConfig(basePreset, {
   hooks: {
+    beforeSignals: async ({
+      connectorName,
+      tickers,
+      runtimeStrategies,
+    }) => {
+      void connectorName;
+      void tickers;
+      void runtimeStrategies;
+    },
     onBar: async ({ ctx, market }) => {
       // Вызывается для каждой подключенной стратегии на каждой свече.
       // Подходит для общих risk rules и cross-strategy проверок.
@@ -87,6 +96,30 @@ export default defineConfig(basePreset, {
 ```
 
 Используйте project hooks, когда логика должна быть общей для нескольких стратегий в одном проекте. Стратегически-специфичные hooks оставляйте в `manifest.ts`.
+
+У project hooks есть две группы:
+
+- strategy runtime hooks, например `onBar`, `afterBarDecision` и `beforePlaceOrder`
+- batch hooks для signals, например `beforeSignals` и `afterSignals`
+
+`beforeSignals` и `afterSignals` оборачивают весь пайплайн `npx @tradejs/cli signals`, а не одну свечу конкретной стратегии. Их можно объявлять только в `tradejs.config.ts`, но не в `manifest.ts`.
+
+`beforeSignals` может прервать текущий прогон signals:
+
+```ts
+export default defineConfig(basePreset, {
+  hooks: {
+    beforeSignals: async () => {
+      return {
+        abort: true,
+        reason: 'GLOBAL_UNREALIZED_PNL_TARGET_REACHED_CLOSE_ALL',
+      };
+    },
+  },
+});
+```
+
+`afterSignals` получает итог выполнения: найденные сигналы, статус и общую длительность прогона.
 
 Для одного и того же stage:
 

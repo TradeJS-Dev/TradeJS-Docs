@@ -71,6 +71,15 @@ import { basePreset } from '@tradejs/base';
 
 export default defineConfig(basePreset, {
   hooks: {
+    beforeSignals: async ({
+      connectorName,
+      tickers,
+      runtimeStrategies,
+    }) => {
+      void connectorName;
+      void tickers;
+      void runtimeStrategies;
+    },
     onBar: async ({ ctx, market }) => {
       // Runs for every configured strategy on every candle.
       // Use it for shared risk rules or cross-strategy checks.
@@ -87,6 +96,30 @@ export default defineConfig(basePreset, {
 ```
 
 Use project hooks when the behavior should be shared across multiple strategies in the same project. Keep strategy-specific hooks in `manifest.ts`.
+
+There are two groups of project hooks:
+
+- strategy runtime hooks such as `onBar`, `afterBarDecision`, and `beforePlaceOrder`
+- signals batch hooks such as `beforeSignals` and `afterSignals`
+
+`beforeSignals` and `afterSignals` run around the `npx @tradejs/cli signals` pipeline, not around an individual strategy candle. They are only available in `tradejs.config.ts`, not in `manifest.ts`.
+
+`beforeSignals` may abort the current signals run:
+
+```ts
+export default defineConfig(basePreset, {
+  hooks: {
+    beforeSignals: async () => {
+      return {
+        abort: true,
+        reason: 'GLOBAL_UNREALIZED_PNL_TARGET_REACHED_CLOSE_ALL',
+      };
+    },
+  },
+});
+```
+
+`afterSignals` receives the final outcome of the run, including collected signals, status, and total duration.
 
 For the same stage:
 

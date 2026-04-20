@@ -154,6 +154,7 @@ type GateOutput = {
 ## Important Notes
 
 - Use `tradejs.config.ts -> hooks` for behavior shared across all strategies in the project, such as shared risk controls, cross-strategy position management, or common order filters.
+- `beforeSignals` and `afterSignals` are also project-level hooks in `tradejs.config.ts`, but they belong to the `signals` command lifecycle, not to the per-strategy runtime documented on this page.
 - Keep strategy-only behavior in `manifest.hooks` when it should apply to one strategy only.
 - `entry.runtime.raw` is the raw runtime returned by `core.ts` through `strategyApi.entry(...)`.
 - `entry.runtime.resolved` is the runtime actually used by the shared runtime after merging manifest defaults, adapter config, and the raw decision runtime.

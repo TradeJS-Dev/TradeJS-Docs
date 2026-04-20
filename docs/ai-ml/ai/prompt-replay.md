@@ -1,10 +1,10 @@
 ---
-title: Prompt Replay from Backtests
+title: AI Filter Validation on Backtest Data
 ---
 
-TradeJS can turn AI-enabled backtests into reusable prompt replay datasets.
+TradeJS can turn AI-enabled backtests into reusable datasets for AI filter validation.
 
-Instead of treating AI review as a live-only gate, you can capture replayable AI rows during backtests and run the same historical trades through updated prompt logic later.
+Instead of treating AI review as a live-only gate, you can capture replayable AI rows during backtests and run the same historical trades through updated prompts, models, and approval thresholds later.
 
 This replay is historical, not provider-free. By default, `ai-train` sends prompt requests to the configured AI provider again; only `--localOnly` switches replay into a deterministic local mode without provider calls.
 
@@ -27,7 +27,7 @@ When AI dataset export is enabled in backtests, TradeJS writes per-trade rows wi
 
 Rows are written into per-worker chunk files and later merged into one replay dataset.
 
-## How Prompt Replay Works
+## How It Works
 
 1. Run a backtest with AI dataset export enabled.
 2. Merge worker chunk files into one timestamped dataset.
@@ -55,6 +55,13 @@ Important:
 - default replay still calls your configured AI provider
 - `--localOnly` is the provider-free deterministic gate mode
 
+Useful `ai-train` flags:
+
+- `-n, --recent` evaluate the latest N trades from the end (`0` = all rows)
+- `--minQuality` minimum AI quality threshold required to approve entry
+- `-s, --strategy` pick the latest merged file for one strategy
+- `-f, --file` replay a specific merged dataset file
+
 ## What You Can Validate
 
 - prompt changes in strategy `aiAdapter`
@@ -64,9 +71,26 @@ Important:
 - `tp / fp / tn / fn` behavior for approval vs realized profitability
 - deterministic local gate experiments with `--localOnly`
 
-## Why This Is Useful Before Live Rollout
+## How `ai-train` Scores Approval
 
-Prompt replay gives you a safer iteration loop:
+- a trade is approved only when AI returns the same direction as the original signal and `quality >= minQuality`
+- historical correctness is measured against realized trade outcome (`profit > 0`)
+
+## Core Metrics
+
+- approval rate
+- precision by quality bucket
+- impact on net expectancy proxy
+- disagreement rate with strategy direction
+- `tp / fp / tn / fn` counts for approval vs realized profitability
+
+## Cost-Saving Option
+
+For cost-sensitive manual review loops, some teams run and inspect `ai-train` from coding agents such as OpenAI Codex or Claude Code instead of building every replay iteration around raw API calls in their own tooling.
+
+This can make prompt-review cycles faster, and depending on your plan, included limits, and usage pattern, it can sometimes be cheaper than running the same workflow through direct per-request API usage. Treat that as an operational option, not a guaranteed pricing advantage, and verify current pricing for your Codex, Claude Code, and provider plans before standardizing the workflow.
+
+## Recommended Evaluation Flow
 
 1. Change prompt logic or adapter rules in code.
 2. Replay the same historical rows.
@@ -79,4 +103,3 @@ That makes AI gating auditable, repeatable, and easier to discuss with strategy 
 
 - [AI Runtime and Configuration](./configuration)
 - [AI Prompt Governance](./prompt-governance)
-- [Historical Evaluation for AI Gating](./offline-gating-eval)

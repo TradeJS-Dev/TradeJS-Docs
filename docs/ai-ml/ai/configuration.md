@@ -39,7 +39,7 @@ Notes:
 - `OPENAI_API_KEY` and `OPENAI_API_ENDPOINT` should be configured on the user record, not in app environment variables.
 - If you want the standard OpenAI endpoint, save `https://api.openai.com/v1` in the user settings explicitly.
 
-If you want to validate prompt changes before touching live execution, see [Prompt Replay from Backtests](./prompt-replay). That workflow uses backtest-exported AI rows to replay the current prompt logic on the same historical sample.
+If you want to validate AI filter changes before touching live execution, see [AI Filter Validation on Backtest Data](./prompt-replay). That workflow uses backtest-exported AI rows to replay the current prompt logic on the same historical sample.
 
 ## Real TrendLine Adapter Example
 
