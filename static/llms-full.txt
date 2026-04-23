@@ -28,6 +28,7 @@ The documentation covers:
 - Overview: https://docs.tradejs.dev/
 - Core API: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
+- Ready-made project hook helpers (`closeOppositePositionsBeforeOpen`, `createCloseAllOnGlobalProfitBeforeSignalsHook`, `createMoveStopToBreakEvenOnBarHook`) are documented in Core API: https://docs.tradejs.dev/api/framework
 
 ### First-Time Setup
 

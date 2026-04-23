@@ -12,6 +12,7 @@ Marketing site: https://tradejs.dev
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
 - Core API: https://docs.tradejs.dev/api/framework
+- Ready-made project hook helpers: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
 
 ## Main Technical Areas

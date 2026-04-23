@@ -121,6 +121,59 @@ export default defineConfig(basePreset, {
 
 `afterSignals` receives the final outcome of the run, including collected signals, status, and total duration.
 
+## Ready-made Project Hook Helpers
+
+`@tradejs/node/strategies` exports optional hook helpers for common runtime
+risk controls. They are not enabled by `basePreset`; add only the ones your
+project should use.
+
+```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+import { getBuiltInStrategyDefaultConfig } from '@tradejs/strategies';
+import {
+  closeOppositePositionsBeforeOpen,
+  createCloseAllOnGlobalProfitBeforeSignalsHook,
+  createMoveStopToBreakEvenOnBarHook,
+} from '@tradejs/node/strategies';
+
+export default defineConfig(basePreset, {
+  hooks: {
+    beforeSignals: createCloseAllOnGlobalProfitBeforeSignalsHook({
+      getStrategyDefaultConfig: getBuiltInStrategyDefaultConfig,
+      profitRiskMultiplier: 5,
+    }),
+    onBar: createMoveStopToBreakEvenOnBarHook(),
+    beforePlaceOrder: async ({ ctx, entry }) => {
+      if (!ctx.strategyConfig.CLOSE_OPPOSITE_POSITIONS) {
+        return;
+      }
+
+      await closeOppositePositionsBeforeOpen({
+        connector: ctx.connector,
+        entryContext: entry.context,
+      });
+    },
+  },
+});
+```
+
+Available helpers:
+
+- `closeOppositePositionsBeforeOpen(...)` closes already-open positions on other symbols with the opposite direction before a new entry is placed. Use it from `beforePlaceOrder` when your project wants cross-symbol position cleanup before opening a new order.
+- `createCloseAllOnGlobalProfitBeforeSignalsHook(...)` creates a `beforeSignals` hook. It checks aggregate unrealized PnL before ticker evaluation, closes all open positions when the configured global threshold is reached, and aborts the current `signals` run.
+- `createMoveStopToBreakEvenOnBarHook(...)` creates an `onBar` hook. It moves the stop loss to the position entry price after the favorable move reaches the configured risk multiple. With no options it uses the default half-risk trigger.
+
+`createCloseAllOnGlobalProfitBeforeSignalsHook` accepts:
+
+- `getStrategyDefaultConfig(strategyName)` — optional resolver used to combine default strategy config with runtime strategy config before reading `MAX_LOSS_VALUE`.
+- `profitRiskMultiplier` — optional multiplier for the average `MAX_LOSS_VALUE` threshold.
+
+`createMoveStopToBreakEvenOnBarHook` accepts:
+
+- `isEnabled(config)` — optional predicate for enabling the hook per strategy config.
+- `triggerRiskMultiplier` — optional multiplier applied to the current or configured risk percentage. The default is `0.5`.
+
 For the same stage:
 
 - project hooks from `tradejs.config.ts` run first
