@@ -210,3 +210,9 @@ div[class*='codeBlockContainer'] pre {
   border-top: 1px solid rgba(52, 209, 201, 0.25);
   background: #0d1420;
 }
+
+@media (max-width: 996px) {
+  .navbar-sidebar--show .navbar__search {
+    display: none;
+  }
+}
