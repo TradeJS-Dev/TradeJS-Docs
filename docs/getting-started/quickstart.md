@@ -8,7 +8,7 @@ This guide is for external package users (without cloning the TradeJS repo).
 ## Requirements
 
 - Node.js `20.19+`
-- npm/yarn/pnpm
+- npm `10+`
 - Docker Desktop (or Docker Engine) installed and running
 - Docker Compose plugin available (`docker compose`)
 
@@ -18,8 +18,17 @@ This guide is for external package users (without cloning the TradeJS repo).
 mkdir tradejs-project
 cd tradejs-project
 npm init -y
-npm i @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
+npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
+
+Use the same TradeJS version for all `@tradejs/*` packages. The installable app
+flow requires `@tradejs/app@1.0.10` or newer; if you previously installed
+`1.0.9`, remove `node_modules` and `package-lock.json`, then run the install
+command again after upgrading.
+
+`tradejs-app` generates an internal `.tradejs/app` working copy when it runs
+from `node_modules`. Treat that directory as generated output; configure your
+project from the root `tradejs.config.ts` instead.
 
 ## 2. Add `tradejs.config.ts`
 
@@ -136,3 +145,13 @@ Redis is not reachable from your environment.
 ### `ECONNREFUSED 127.0.0.1:5432`
 
 PostgreSQL/Timescale is not reachable from your environment.
+
+### `npx tradejs-app` tries to install packages or fails with React/TypeScript errors
+
+You are likely using an old `@tradejs/app` package or a non-npm install flow.
+Install all `@tradejs/*` packages at `1.0.10` or newer with `npm install`.
+
+### `Cannot find module` for `@tradejs/core/*`, `@tradejs/infra/*`, or app aliases
+
+TradeJS package versions are mismatched. Reinstall all `@tradejs/*` packages
+together so they resolve to the same version.

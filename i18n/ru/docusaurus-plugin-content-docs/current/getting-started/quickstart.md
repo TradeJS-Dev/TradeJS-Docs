@@ -8,7 +8,7 @@ title: Быстрый старт
 ## Что нужно заранее
 
 - Node.js `20.19+`
-- npm/yarn/pnpm
+- npm `10+`
 - Установленный и запущенный Docker Desktop (или Docker Engine)
 - Доступный Docker Compose plugin (`docker compose`)
 
@@ -18,8 +18,17 @@ title: Быстрый старт
 mkdir tradejs-project
 cd tradejs-project
 npm init -y
-npm i @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
+npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
+
+Используйте одну и ту же версию для всех пакетов `@tradejs/*`. Сценарий
+installable app требует `@tradejs/app@1.0.10` или новее. Если раньше ставили
+`1.0.9`, удалите `node_modules` и `package-lock.json`, затем повторите команду
+установки после обновления.
+
+При запуске из `node_modules` команда `tradejs-app` создает внутреннюю рабочую
+копию `.tradejs/app`. Считайте эту директорию generated output: настраивайте
+проект через корневой `tradejs.config.ts`, а не через файлы внутри `.tradejs/app`.
 
 ## 2. Добавьте `tradejs.config.ts`
 
@@ -136,3 +145,13 @@ Redis недоступен из вашего окружения.
 ### Ошибка `ECONNREFUSED 127.0.0.1:5432`
 
 PostgreSQL/Timescale недоступен из вашего окружения.
+
+### `npx tradejs-app` пытается установить пакеты или падает с ошибками React/TypeScript
+
+Скорее всего, используется старый `@tradejs/app` или установка выполнена не через npm.
+Установите все пакеты `@tradejs/*` версии `1.0.10` или новее через `npm install`.
+
+### `Cannot find module` для `@tradejs/core/*`, `@tradejs/infra/*` или алиасов приложения
+
+Версии TradeJS-пакетов не совпадают. Переустановите все пакеты `@tradejs/*`
+одной командой, чтобы они разрешались в одну и ту же версию.
