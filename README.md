@@ -4,10 +4,19 @@ Standalone Docusaurus documentation site for the TradeJS framework.
 
 Source of truth for `docs.tradejs.dev`. Core framework code stays in the main monorepo: `https://github.com/TradeJS-Dev/tradejs`.
 
+## Public Docs Entry Points
+
+- Getting started: https://docs.tradejs.dev/getting-started/quickstart
+- Installation: https://docs.tradejs.dev/getting-started/installation
+- First backtest: https://docs.tradejs.dev/getting-started/first-backtest
+- Examples: https://docs.tradejs.dev/examples
+- GitHub: https://github.com/TradeJS-Dev/tradejs
+- Site: https://tradejs.dev
+
 ## Install
 
 ```bash
-yarn
+npm install
 ```
 
 ## Run
@@ -15,7 +24,7 @@ yarn
 Build and serve both locales:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 Site runs on `http://localhost:3001`.
@@ -25,14 +34,14 @@ Site runs on `http://localhost:3001`.
 Docusaurus dev server supports one locale per process.
 
 ```bash
-yarn dev:hot:en
-yarn dev:hot:ru
+npm run dev:hot:en
+npm run dev:hot:ru
 ```
 
 ## Build
 
 ```bash
-yarn build
+npm run build
 ```
 
 ## Container Image

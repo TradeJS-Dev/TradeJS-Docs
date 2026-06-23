@@ -1,31 +1,44 @@
 ---
 sidebar_position: 1
-title: Обзор
+title: Добро пожаловать
 slug: /
 ---
 
-Это официальный справочник по open-source фреймворку TradeJS.
+TradeJS помогает разработчикам создавать, тестировать, сравнивать и автоматизировать торговые стратегии на TypeScript.
 
-Если коротко, TradeJS как open-source фреймворк помогает:
+Если вы открыли проект впервые, начните так:
 
-- запускать торговые стратегии в live-режиме,
-- искать и отправлять сигналы,
-- тестировать идеи на истории (бэктесты),
-- обучать и подключать ML-модели,
-- добавлять AI-проверку сигналов перед исполнением ордера.
+1. Прочитайте [Что такое TradeJS?](./introduction/what-is-tradejs).
+2. Установите публичные пакеты через [Установку](./getting-started/installation).
+3. Запустите детерминированный пример в [Первом бэктесте](./getting-started/first-backtest).
+4. Разберитесь с объектами в [Базовых понятиях](./core-concepts/strategy).
+5. Возьмите стартовые шаблоны из [Примеров](./examples).
 
-Для внешнего использования важны несколько пакетов:
+TradeJS предназначен для research, backtesting, генерации сигналов и контролируемой автоматизации. Это не финансовая рекомендация, не HFT-движок и не система, которая обещает будущий доход.
 
-- `@tradejs/core` — browser-safe API для авторинга, config-helper’ы и общие indicator/math/time helper’ы
-- `@tradejs/node` — Node runtime для исполнения стратегий, бэктестов, Pine loader и plugin/connector registry
-- `@tradejs/cli` — рабочие команды для бэктестов, сигналов, ботов, проверок и ML-процесса
-- `@tradejs/app` — опциональный installable Next.js UI для просмотра бэктестов, дашбордов и runtime-данных
+## Публичные пакеты
 
-## С чего начать
+- `@tradejs/core` - browser-safe API для разработки, config helpers, общие indicator/math/time helpers
+- `@tradejs/node` - Node runtime для стратегий, бэктестов, Pine loading, connector/plugin registries
+- `@tradejs/cli` - команды для backtests, signals, bots, doctor checks, ML workflows
+- `@tradejs/app` - опциональный installable Next.js UI для бэктестов, dashboards и runtime data
+- `@tradejs/base` - preset со встроенными стратегиями, индикаторами и коннекторами
+- `@tradejs/types` - общие TypeScript-контракты
+- `@tradejs/strategies`, `@tradejs/indicators`, `@tradejs/connectors` - встроенные plugin-каталоги
 
-- [Quickstart](./getting-started/quickstart)
-- [Настройка пользователя root](./getting-started/root-user)
-- [Core API](./api/framework)
-- [CLI API](./api/cli)
-- [Как создавать стратегии](./strategies/authoring/write-strategies)
-- [Как писать индикаторы](./indicators/authoring)
+Используйте публичные subpath-импорты вроде `@tradejs/core/config`, `@tradejs/core/indicators`, `@tradejs/node/strategies` и `@tradejs/types`. Не импортируйте из внутренних `src`-папок пакетов.
+
+## Ссылки
+
+- Сайт: [tradejs.dev](https://tradejs.dev)
+- GitHub: [TradeJS-Dev/tradejs](https://github.com/TradeJS-Dev/tradejs)
+- npm organization: [npmjs.com/org/tradejs](https://www.npmjs.com/org/tradejs)
+- Примеры: [Examples](./examples)
+
+## Что читать дальше
+
+- [Что такое TradeJS?](./introduction/what-is-tradejs)
+- [Быстрый старт](./getting-started/quickstart)
+- [Первый бэктест](./getting-started/first-backtest)
+- [Чем TradeJS не является](./introduction/what-tradejs-is-not)
+- [Ограничения бэктестинга](./limitations/backtesting-caveats)

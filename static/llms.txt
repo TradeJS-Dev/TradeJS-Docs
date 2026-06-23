@@ -9,16 +9,24 @@ Marketing site: https://tradejs.dev
 ## Start Here
 
 - Overview: https://docs.tradejs.dev/
+- What is TradeJS: https://docs.tradejs.dev/introduction/what-is-tradejs
+- Installation: https://docs.tradejs.dev/getting-started/installation
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
+- First backtest: https://docs.tradejs.dev/getting-started/first-backtest
+- Understanding output: https://docs.tradejs.dev/getting-started/understanding-output
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
+- Examples: https://docs.tradejs.dev/examples
 - Core API: https://docs.tradejs.dev/api/framework
 - Ready-made project hook helpers: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
 
 ## Main Technical Areas
 
-- Strategies: https://docs.tradejs.dev/strategies/authoring/write-strategies
-- Indicators: https://docs.tradejs.dev/indicators/authoring
+- Core concepts: https://docs.tradejs.dev/core-concepts/strategy
+- Create a simple strategy: https://docs.tradejs.dev/guides/create-simple-strategy
+- Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
+- Strategies deep dive: https://docs.tradejs.dev/strategies/authoring/write-strategies
+- Indicators: https://docs.tradejs.dev/guides/add-indicators
 - Runtime execution: https://docs.tradejs.dev/runtime/execution/signals
 - Runtime parity: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
 - Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
@@ -26,6 +34,8 @@ Marketing site: https://tradejs.dev
 - AI filter validation on backtest data: https://docs.tradejs.dev/ai-ml/ai/prompt-replay
 - ML: https://docs.tradejs.dev/ai-ml/ml/configuration
 - Operations: https://docs.tradejs.dev/operations/production-runbook
+- Limitations: https://docs.tradejs.dev/limitations
+- Backtesting caveats: https://docs.tradejs.dev/limitations/backtesting-caveats
 
 ## Reading Preference
 

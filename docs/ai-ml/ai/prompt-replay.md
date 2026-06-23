@@ -88,7 +88,7 @@ Useful `ai-train` flags:
 
 For cost-sensitive manual review loops, some teams run and inspect `ai-train` from coding agents such as OpenAI Codex or Claude Code instead of building every replay iteration around raw API calls in their own tooling.
 
-This can make prompt-review cycles faster, and depending on your plan, included limits, and usage pattern, it can sometimes be cheaper than running the same workflow through direct per-request API usage. Treat that as an operational option, not a guaranteed pricing advantage, and verify current pricing for your Codex, Claude Code, and provider plans before standardizing the workflow.
+This can make prompt-review cycles faster, and depending on your plan, included limits, and usage pattern, it can sometimes be cheaper than running the same workflow through direct per-request API usage. Treat that as an operational option, not an assured pricing advantage, and verify current pricing for your Codex, Claude Code, and provider plans before standardizing the workflow.
 
 ## Recommended Evaluation Flow
 

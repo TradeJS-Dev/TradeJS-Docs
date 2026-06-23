@@ -68,7 +68,7 @@ function ensureYandexMetrikaInit(): void {
   window.__tradejsYmInit = true;
 }
 
-export default function Root({ children }: Props): JSX.Element {
+export default function Root({ children }: Props): React.ReactElement {
   const location = useLocation();
   const lastTrackedHrefRef = useRef<string | null>(null);
   const docsJsonLd = {

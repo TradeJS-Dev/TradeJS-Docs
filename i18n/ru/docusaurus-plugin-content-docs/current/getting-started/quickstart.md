@@ -3,16 +3,11 @@ sidebar_position: 2
 title: Быстрый старт
 ---
 
-Эта страница для внешних пользователей пакетов TradeJS (без клонирования репозитория).
+Этот гайд рассчитан на внешнего пользователя npm-пакетов, без клонирования TradeJS monorepo.
 
-## Что нужно заранее
+Если нужны только команды установки, начните с [Установки](./installation). Если нужен готовый детерминированный прогон, откройте [Первый бэктест](./first-backtest).
 
-- Node.js `20.19+`
-- npm `10+`
-- Установленный и запущенный Docker Desktop (или Docker Engine)
-- Доступный Docker Compose plugin (`docker compose`)
-
-## 1. Создайте проект и установите пакеты
+## 1. Установите пакеты
 
 ```bash
 mkdir tradejs-project
@@ -21,16 +16,11 @@ npm init -y
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Используйте одну и ту же версию для всех пакетов `@tradejs/*`. Сценарий
-installable app требует `@tradejs/app@1.0.10` или новее. Если раньше ставили
-`1.0.9`, удалите `node_modules` и `package-lock.json`, затем повторите команду
-установки после обновления.
+Используйте одинаковую версию для всех `@tradejs/*` пакетов. В актуальном source project публичные пакеты имеют версию `1.0.10`.
 
-При запуске из `node_modules` команда `tradejs-app` создает внутреннюю рабочую
-копию `.tradejs/app`. Считайте эту директорию generated output: настраивайте
-проект через корневой `tradejs.config.ts`, а не через файлы внутри `.tradejs/app`.
+`tradejs-app` при запуске из `node_modules` создает внутреннюю рабочую копию `.tradejs/app`. Считайте эту папку generated output; настраивайте проект из корневого `tradejs.config.ts`.
 
-## 2. Добавьте `tradejs.config.ts`
+## 2. Настройте TradeJS
 
 ```ts
 import { defineConfig } from '@tradejs/core/config';
@@ -39,72 +29,43 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-Политика импортов для плагинов:
+`basePreset` подключает built-in strategy, indicator и connector catalogs.
 
-- импортируйте plugin registration из `@tradejs/core/config`
-- browser-safe helper’ы импортируйте из публичных subpath’ов `@tradejs/core/*`
-- Node runtime helper’ы импортируйте из публичных subpath’ов `@tradejs/node/*`
-- общие контракты импортируйте из `@tradejs/types`
-- избегайте непубличных deep-imports вроде `@tradejs/core/src/*` или `@tradejs/node/src/*`
+## 3. Запустите локальную инфраструктуру
 
-## 3. Инициализируйте файлы dev-инфраструктуры
-
-`infra-init` создает `docker-compose.dev.yml` в корне проекта один раз.
-Если файл уже существует, команда его не перезаписывает.
+`infra-init` создает `docker-compose.dev.yml` в корне проекта один раз. Если файл уже существует, он не перезаписывается.
 
 ```bash
 npx @tradejs/cli infra-init
-```
-
-## 4. Поднимите dev-инфраструктуру
-
-`infra-up` использует существующий `docker-compose.dev.yml` и поднимает:
-
-- PostgreSQL/Timescale (`127.0.0.1:5432`)
-- Redis (`127.0.0.1:6379`)
-
-```bash
 npx @tradejs/cli infra-up
-```
-
-Важно:
-
-- `docker-compose.dev.yml` используется для локальной dev-инфраструктуры.
-- `docker-compose.prod.yml` предназначен для production deployment и `infra-up` его не использует.
-
-## 5. Проверьте окружение
-
-```bash
 npx @tradejs/cli doctor
 ```
 
-Обычно runtime ожидает:
+Примечания:
 
-- PostgreSQL/Timescale: `127.0.0.1:5432`
-- Redis: `127.0.0.1:6379`
-- ML gRPC (опционально): `127.0.0.1:50051`
+- `docker-compose.dev.yml` - локальная dev-инфраструктура.
+- `docker-compose.prod.yml` - production compose, `infra-up` его не использует.
 
-## 6. Базовые команды на каждый день
-
-```bash
-npx @tradejs/cli signals
-npx @tradejs/cli backtest
-npx @tradejs/cli results
-npx @tradejs/cli bot
-```
-
-## 7. Создайте пользователя `root`
-
-TradeJS app и CLI по умолчанию используют пользователя `root`.
-Создайте его один раз перед запуском UI:
+## 4. Создайте root-пользователя
 
 ```bash
 npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 ```
 
-Подробнее см. в [Root User Setup](./root-user).
+Подробнее: [Root User Setup](./root-user).
 
-## 8. Запустите web UI
+## 5. Полезные CLI-команды
+
+```bash
+npx @tradejs/cli backtest
+npx @tradejs/cli results
+npx @tradejs/cli signals
+npx @tradejs/cli bot
+```
+
+Для бэктеста нужен сохраненный backtest config в Redis. Детерминированный sandbox из [Первого бэктеста](./first-backtest) создает такой config сам.
+
+## 6. Запустите Web UI
 
 ```bash
 npx tradejs-app dev
@@ -112,46 +73,21 @@ npx tradejs-app dev
 
 Откройте:
 
-- `http://localhost:3000/routes/backtest` для сохраненных бэктестов
-- `http://localhost:3000/routes/dashboard` для графиков и сигналов
+- `http://localhost:3000/routes/backtest` для сохраненных бэктестов;
+- `http://localhost:3000/routes/dashboard` для графиков и сигналов;
+- `http://localhost:3000/routes/strategies` для runtime strategy config.
 
-После входа:
+Если порт `3000` занят, `tradejs-app dev` выберет следующий свободный порт и выведет фактический URL.
 
-- откройте иконку шестеренки в левом сайдбаре, чтобы управлять настройками аккаунта
-- настройте Bybit API доступ для текущего пользователя перед работой с live-данными биржи
-- перенесите passwordless token, OpenAI и Telegram настройки в профиль пользователя, который хранится в Redis
-
-Если порт `3000` уже занят, `tradejs-app dev` автоматически выберет следующий свободный порт и выведет фактический URL в консоль.
-
-Для production-режима:
+Production mode:
 
 ```bash
 npx tradejs-app build
 npx tradejs-app start
 ```
 
-## 9. Остановите dev-инфраструктуру
+## 7. Остановите dev infra
 
 ```bash
 npx @tradejs/cli infra-down
 ```
-
-## Если что-то не стартует
-
-### Ошибка `ECONNREFUSED 127.0.0.1:6379`
-
-Redis недоступен из вашего окружения.
-
-### Ошибка `ECONNREFUSED 127.0.0.1:5432`
-
-PostgreSQL/Timescale недоступен из вашего окружения.
-
-### `npx tradejs-app` пытается установить пакеты или падает с ошибками React/TypeScript
-
-Скорее всего, используется старый `@tradejs/app` или установка выполнена не через npm.
-Установите все пакеты `@tradejs/*` версии `1.0.10` или новее через `npm install`.
-
-### `Cannot find module` для `@tradejs/core/*`, `@tradejs/infra/*` или алиасов приложения
-
-Версии TradeJS-пакетов не совпадают. Переустановите все пакеты `@tradejs/*`
-одной командой, чтобы они разрешались в одну и ту же версию.

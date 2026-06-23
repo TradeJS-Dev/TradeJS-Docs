@@ -3,16 +3,13 @@ sidebar_position: 2
 title: Quickstart
 ---
 
-This guide is for external package users (without cloning the TradeJS repo).
+This guide is for external package users who want a normal npm project, not a TradeJS monorepo checkout.
 
-## Requirements
+If you only need the install commands, start with [Installation](./installation). If you want a deterministic demo run, use [Run your first backtest](./first-backtest).
 
-- Node.js `20.19+`
-- npm `10+`
-- Docker Desktop (or Docker Engine) installed and running
-- Docker Compose plugin available (`docker compose`)
+## 1. Install
 
-## 1. Create Project and Install Packages
+Create a project and install the public packages:
 
 ```bash
 mkdir tradejs-project
@@ -21,16 +18,13 @@ npm init -y
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Use the same TradeJS version for all `@tradejs/*` packages. The installable app
-flow requires `@tradejs/app@1.0.10` or newer; if you previously installed
-`1.0.9`, remove `node_modules` and `package-lock.json`, then run the install
-command again after upgrading.
+Use the same version for all `@tradejs/*` packages. Current public packages in the source project are `1.0.10`.
 
 `tradejs-app` generates an internal `.tradejs/app` working copy when it runs
 from `node_modules`. Treat that directory as generated output; configure your
 project from the root `tradejs.config.ts` instead.
 
-## 2. Add `tradejs.config.ts`
+## 2. Configure TradeJS
 
 ```ts
 import { defineConfig } from '@tradejs/core/config';
@@ -39,32 +33,17 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-Plugin import policy:
+This default preset wires the built-in strategy, indicator, and connector plugin catalogs.
 
-- import plugin registration from `@tradejs/core/config`
-- import browser-safe helpers from public `@tradejs/core/*` subpaths
-- import Node runtime helpers from public `@tradejs/node/*` subpaths
-- import shared contracts from `@tradejs/types`
-- avoid non-public deep imports like `@tradejs/core/src/*` or `@tradejs/node/src/*`
-
-## 3. Initialize Dev Infra Files
+## 3. Start Local Infrastructure
 
 `infra-init` creates `docker-compose.dev.yml` in project root once.
 If the file already exists, it is preserved and not overwritten.
 
 ```bash
 npx @tradejs/cli infra-init
-```
-
-## 4. Start Dev Infra
-
-`infra-up` uses existing `docker-compose.dev.yml` and starts:
-
-- PostgreSQL/Timescale (`127.0.0.1:5432`)
-- Redis (`127.0.0.1:6379`)
-
-```bash
 npx @tradejs/cli infra-up
+npx @tradejs/cli doctor
 ```
 
 Note:
@@ -72,31 +51,7 @@ Note:
 - `docker-compose.dev.yml` is for local development infra.
 - `docker-compose.prod.yml` is production deployment compose and is not used by `infra-up`.
 
-## 5. Verify Environment
-
-```bash
-npx @tradejs/cli doctor
-```
-
-Typical endpoints expected by runtime:
-
-- PostgreSQL/Timescale: `127.0.0.1:5432`
-- Redis: `127.0.0.1:6379`
-- ML gRPC (optional): `127.0.0.1:50051`
-
-## 6. Daily Commands
-
-```bash
-npx @tradejs/cli signals
-npx @tradejs/cli backtest
-npx @tradejs/cli results
-npx @tradejs/cli bot
-```
-
-## 7. Create Root User
-
-TradeJS app and CLI use the `root` user by default.
-Create it once before opening the UI:
+## 4. Create Root User
 
 ```bash
 npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
@@ -104,7 +59,18 @@ npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 
 For details, see [Root User Setup](./root-user).
 
-## 8. Run Web UI
+## 5. Useful CLI Commands
+
+```bash
+npx @tradejs/cli backtest
+npx @tradejs/cli results
+npx @tradejs/cli signals
+npx @tradejs/cli bot
+```
+
+Backtests require a saved backtest config in Redis. The deterministic sandbox described in [Run your first backtest](./first-backtest) seeds that config for you.
+
+## 6. Run Web UI
 
 ```bash
 npx tradejs-app dev
@@ -130,7 +96,7 @@ npx tradejs-app build
 npx tradejs-app start
 ```
 
-## 9. Stop Dev Infra
+## 7. Stop Dev Infra
 
 ```bash
 npx @tradejs/cli infra-down

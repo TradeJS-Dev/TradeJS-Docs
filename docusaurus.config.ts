@@ -104,51 +104,39 @@ const config: Config = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'getting-started/quickstart',
           position: 'left',
           label: t('Getting started', 'Начало'),
         },
         {
           type: 'doc',
-          docId: 'strategies/authoring/write-strategies',
+          docId: 'core-concepts/strategy',
           position: 'left',
-          label: t('Strategies', 'Стратегии'),
+          label: t('Concepts', 'Понятия'),
         },
         {
           type: 'doc',
-          docId: 'indicators/authoring',
+          docId: 'examples',
           position: 'left',
-          label: t('Indicators', 'Индикаторы'),
+          label: t('Examples', 'Примеры'),
         },
         {
           type: 'doc',
-          docId: 'runtime/backtesting/overview',
+          docId: 'guides/backtest-strategy',
           position: 'left',
           label: t('Backtesting', 'Бэктестинг'),
         },
         {
           type: 'doc',
-          docId: 'runtime/execution/signals',
+          docId: 'advanced/runtime',
           position: 'left',
           label: t('Runtime', 'Рантайм'),
         },
         {
           type: 'doc',
-          docId: 'ai-ml/ml/configuration',
+          docId: 'limitations/index',
           position: 'left',
-          label: 'ML',
-        },
-        {
-          type: 'doc',
-          docId: 'ai-ml/ai/configuration',
-          position: 'left',
-          label: 'AI',
-        },
-        {
-          type: 'doc',
-          docId: 'operations/production-runbook',
-          position: 'left',
-          label: t('Operations', 'Эксплуатация'),
+          label: t('Limitations', 'Ограничения'),
         },
         {
           type: 'localeDropdown',
@@ -186,31 +174,34 @@ const config: Config = {
           title: t('Getting Started', 'Начало'),
           items: [
             { label: t('Overview', 'Обзор'), to: '/' },
+            { label: t('Installation', 'Установка'), to: '/getting-started/installation' },
             { label: t('Quickstart', 'Быстрый старт'), to: '/getting-started/quickstart' },
+            { label: t('First Backtest', 'Первый бэктест'), to: '/getting-started/first-backtest' },
             { label: t('Root User Setup', 'Настройка пользователя root'), to: '/getting-started/root-user' },
           ],
         },
         {
-          title: t('Authoring', 'Разработка'),
+          title: t('Guides', 'Руководства'),
           items: [
+            { label: t('Examples', 'Примеры'), to: '/examples' },
             { label: t('Core API', 'Базовый API'), to: '/api/framework' },
             {
               label: t('Creating Strategies', 'Создание стратегий'),
-              to: '/strategies/authoring/write-strategies',
+              to: '/guides/create-simple-strategy',
             },
-            { label: t('Writing Indicators', 'Создание индикаторов'), to: '/indicators/authoring' },
+            { label: t('Backtest a Strategy', 'Бэктест стратегии'), to: '/guides/backtest-strategy' },
           ],
         },
         {
-          title: t('Operations', 'Эксплуатация'),
+          title: t('Advanced', 'Продвинутые темы'),
           items: [
+            { label: t('Architecture', 'Архитектура'), to: '/advanced/architecture' },
             { label: t('CLI API', 'CLI API'), to: '/api/cli' },
             {
               label: t('Production Runbook', 'Руководство по эксплуатации продакшена'),
               to: '/operations/production-runbook',
             },
-            { label: t('Monitoring', 'Мониторинг'), to: '/operations/monitoring-alerts' },
-            { label: t('Backup and Restore', 'Резервное копирование и восстановление'), to: '/operations/backup-restore' },
+            { label: t('Backtesting Caveats', 'Ограничения бэктестинга'), to: '/limitations/backtesting-caveats' },
           ],
         },
         {
