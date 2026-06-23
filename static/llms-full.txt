@@ -12,7 +12,7 @@ Marketing site: https://tradejs.dev
 The documentation covers:
 
 1. Framework introduction and scope
-2. Getting started, installation, and first backtest
+2. Getting started, installation, first backtest, and backtest config seeding
 3. Core concepts: strategies, candles, signals, orders, metrics, connectors, and plugins
 4. Practical guides and examples
 5. Public APIs for `@tradejs/core` and `@tradejs/cli`
@@ -39,6 +39,7 @@ The documentation covers:
 - Installation: https://docs.tradejs.dev/getting-started/installation
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
 - Run your first backtest: https://docs.tradejs.dev/getting-started/first-backtest
+- Create a backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Understanding output: https://docs.tradejs.dev/getting-started/understanding-output
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
 - Data sync: https://docs.tradejs.dev/getting-started/data-sync
@@ -58,6 +59,7 @@ The documentation covers:
 - Examples: https://docs.tradejs.dev/examples
 - Create a simple strategy: https://docs.tradejs.dev/guides/create-simple-strategy
 - Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
+- Data quality guide: https://docs.tradejs.dev/guides/data-quality
 - Add indicators: https://docs.tradejs.dev/guides/add-indicators
 - Compare strategies: https://docs.tradejs.dev/guides/compare-strategies
 - Pine Script-inspired workflows: https://docs.tradejs.dev/guides/pine-workflows
@@ -86,11 +88,19 @@ The documentation covers:
 
 ### Backtesting
 
+- Create a backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Backtesting overview: https://docs.tradejs.dev/runtime/backtesting/overview
 - Grid config: https://docs.tradejs.dev/runtime/backtesting/grid-config
 - Results to runtime config: https://docs.tradejs.dev/runtime/backtesting/results-runtime-config
 - Runtime playbook: https://docs.tradejs.dev/runtime/backtesting/strategy-playbook
 - Backtesting caveats: https://docs.tradejs.dev/limitations/backtesting-caveats
+- Data quality guide: https://docs.tradejs.dev/guides/data-quality
+
+### Architecture
+
+- Architecture: https://docs.tradejs.dev/advanced/architecture
+- Runtime: https://docs.tradejs.dev/advanced/runtime
+- Diagrams: https://docs.tradejs.dev/advanced/diagrams
 
 ### AI and ML
 

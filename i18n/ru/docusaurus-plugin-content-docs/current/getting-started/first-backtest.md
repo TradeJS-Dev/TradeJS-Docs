@@ -21,7 +21,7 @@ Sandbox сейчас использует зафиксированный Yarn lo
 ## 2. Запустите infra
 
 ```bash
-yarn infra-up
+npx @tradejs/cli infra-up
 ```
 
 ## 3. Запустите demo
@@ -105,3 +105,5 @@ npx @tradejs/cli backtest --user root --config <StrategyName:configName> --ticke
 ```
 
 Перед запуском нужен backtest config у выбранного пользователя. Sandbox показывает текущий supported seeding path.
+
+Точный формат Redis key и минимальный manual config описаны в [Создать backtest config](./backtest-config).

@@ -34,7 +34,7 @@ The sandbox currently uses its committed Yarn lockfile for deterministic CI. A p
 ## 2. Start Local Infra
 
 ```bash
-yarn infra-up
+npx @tradejs/cli infra-up
 ```
 
 This starts the local Redis/PostgreSQL services required by the CLI.
@@ -123,7 +123,7 @@ Use these metrics to inspect and compare behavior. They do not predict future re
 ## Stop Infra
 
 ```bash
-yarn infra-down
+npx @tradejs/cli infra-down
 ```
 
 ## For Your Own Project
@@ -135,3 +135,5 @@ npx @tradejs/cli backtest --user root --config <StrategyName:configName> --ticke
 ```
 
 Before that command can run, you need a backtest config saved under the selected user. The sandbox shows the current supported seeding path. A simpler public demo initializer should be added to TradeJS so new npm users do not need to copy a seed script.
+
+For the exact Redis key format and a minimal manual config, see [Create a backtest config](./backtest-config).

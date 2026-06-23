@@ -10,7 +10,7 @@ Backtesting runs strategy logic over historical candles and stores metrics/artif
 npx @tradejs/cli backtest --user root --config <StrategyName:configName> --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
 ```
 
-The selected config must exist in Redis. The deterministic sandbox in [Run your first backtest](../getting-started/first-backtest) seeds one for you.
+The selected config must exist in Redis. The deterministic sandbox in [Run your first backtest](../getting-started/first-backtest) seeds one for you; for your own strategy, see [Create a backtest config](../getting-started/backtest-config).
 
 ## Useful Flags
 

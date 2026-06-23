@@ -13,6 +13,7 @@ Marketing site: https://tradejs.dev
 - Installation: https://docs.tradejs.dev/getting-started/installation
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
 - First backtest: https://docs.tradejs.dev/getting-started/first-backtest
+- Backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Understanding output: https://docs.tradejs.dev/getting-started/understanding-output
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
 - Examples: https://docs.tradejs.dev/examples
@@ -25,9 +26,11 @@ Marketing site: https://tradejs.dev
 - Core concepts: https://docs.tradejs.dev/core-concepts/strategy
 - Create a simple strategy: https://docs.tradejs.dev/guides/create-simple-strategy
 - Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
+- Data quality guide: https://docs.tradejs.dev/guides/data-quality
 - Strategies deep dive: https://docs.tradejs.dev/strategies/authoring/write-strategies
 - Indicators: https://docs.tradejs.dev/guides/add-indicators
 - Runtime execution: https://docs.tradejs.dev/runtime/execution/signals
+- Diagrams: https://docs.tradejs.dev/advanced/diagrams
 - Runtime parity: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
 - Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
 - AI: https://docs.tradejs.dev/ai-ml/ai/configuration

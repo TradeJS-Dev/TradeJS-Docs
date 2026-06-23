@@ -24,6 +24,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/installation',
         'getting-started/quickstart',
         'getting-started/first-backtest',
+        'getting-started/backtest-config',
         'getting-started/understanding-output',
         'getting-started/root-user',
         'getting-started/data-sync',
@@ -50,6 +51,7 @@ const sidebars: SidebarsConfig = {
         'examples',
         'guides/create-simple-strategy',
         'guides/backtest-strategy',
+        'guides/data-quality',
         'guides/add-indicators',
         'guides/compare-strategies',
         'guides/pine-workflows',
@@ -115,6 +117,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'advanced/architecture',
         'advanced/runtime',
+        'advanced/diagrams',
         'advanced/manifests',
         'advanced/infra-docker',
         'advanced/extending-tradejs',
