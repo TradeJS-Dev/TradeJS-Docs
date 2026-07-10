@@ -68,7 +68,7 @@ Typical use cases:
 }
 ```
 
-When active strategy runtime calls `strategyApi.getMarketData()` in `ENV='CRON'`, TradeJS reuses the warmed candle cache for the current run instead of forcing another live kline fetch for every strategy symbol.
+Strategy cores evaluate the current closed candle through `strategyApi.getDecisionPriceContext()`. Full market history is not exposed through `StrategyAPI`; runtime warmup data is used to initialize indicator and replayable detector state before the decision.
 
 ## Order Execution
 

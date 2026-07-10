@@ -170,7 +170,7 @@ import { buildMyPineFigures } from './figures';
 
 export const createMyPineIndicatorCore: CreateStrategyCore<
   MyPineIndicatorConfig
-> = async ({ config, symbol, loadPineScriptFile, strategyApi }) => {
+> = async ({ config, symbol, data, loadPineScriptFile, strategyApi }) => {
   const script = loadPineScriptFile('myPineIndicator.pine');
 
   return async () => {
@@ -178,9 +178,10 @@ export const createMyPineIndicatorCore: CreateStrategyCore<
       return strategyApi.skip('PINE_SCRIPT_EMPTY');
     }
 
-    const { fullData, currentPrice } = await strategyApi.getMarketData();
+    const lookbackBars = Math.max(1, Number(config.MY_LOOKBACK_BARS ?? 400));
+    const candles = data.slice(-lookbackBars);
     const pineContext = await runPineScript({
-      candles: fullData.slice(-Number(config.MY_LOOKBACK_BARS ?? 400)),
+      candles,
       script,
       symbol,
       timeframe: String(config.INTERVAL ?? '15'),
@@ -202,6 +203,7 @@ export const createMyPineIndicatorCore: CreateStrategyCore<
       return strategyApi.skip('SIDE_DISABLED');
     }
 
+    const { currentPrice } = await strategyApi.getDecisionPriceContext();
     const { stopLossPrice, takeProfitPrice } =
       strategyApi.getDirectionalTpSlPrices({
         price: currentPrice,

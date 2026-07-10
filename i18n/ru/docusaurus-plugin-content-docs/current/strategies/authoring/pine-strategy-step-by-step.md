@@ -412,7 +412,7 @@ const readAmrSnapshot = (pineContext: PineContextLike, linePlots: string[]) => {
 
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
   AdaptiveMomentumRibbonConfig
-> = async ({ config, symbol, loadPineScriptFile, strategyApi }) => {
+> = async ({ config, symbol, data, loadPineScriptFile, strategyApi }) => {
   const script = loadPineScriptFile(AMR_PINE_FILE_NAME);
   const { LONG, SHORT, AMR_EXIT_ON_INVALIDATION } = config;
   const linePlots = resolveLinePlots(config.AMR_LINE_PLOTS);
@@ -425,9 +425,9 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       return strategyApi.skip('AMR_SCRIPT_EMPTY');
     }
 
-    const { fullData, currentPrice, timestamp } =
-      await strategyApi.getMarketData();
-    if (fullData.length < 2) {
+    const candleLimit = lookbackBars > 0 ? lookbackBars : 400;
+    const candles = data.slice(-candleLimit);
+    if (candles.length < 2) {
       return strategyApi.skip('WAIT_DATA');
     }
 
@@ -435,8 +435,6 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
     const positionExists = Boolean(
       position && typeof position.qty === 'number' && position.qty > 0,
     );
-
-    const candles = lookbackBars > 0 ? fullData.slice(-lookbackBars) : fullData;
 
     let pineContext;
     try {
@@ -469,27 +467,17 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
         (position.direction === 'LONG' && amr.entryShort) ||
         (position.direction === 'SHORT' && amr.entryLong)
       ) {
-        return {
-          kind: 'exit',
+        return strategyApi.exit({
           code: 'CLOSE_BY_AMR_SIGNAL',
-          closePlan: {
-            price: currentPrice,
-            timestamp,
-            direction: position.direction,
-          },
-        };
+          direction: position.direction,
+        });
       }
 
       if (Boolean(AMR_EXIT_ON_INVALIDATION) && amr.invalidated) {
-        return {
-          kind: 'exit',
+        return strategyApi.exit({
           code: 'CLOSE_BY_AMR_INVALIDATION',
-          closePlan: {
-            price: currentPrice,
-            timestamp,
-            direction: position.direction,
-          },
-        };
+          direction: position.direction,
+        });
       }
 
       return strategyApi.skip('POSITION_HELD');
@@ -504,6 +492,8 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       return strategyApi.skip('STRATEGY_DISABLED');
     }
 
+    const { currentPrice, timestamp } =
+      await strategyApi.getDecisionPriceContext();
     const { stopLossPrice, takeProfitPrice, qty } =
       strategyApi.getDirectionalTpSlPrices({
         price: currentPrice,

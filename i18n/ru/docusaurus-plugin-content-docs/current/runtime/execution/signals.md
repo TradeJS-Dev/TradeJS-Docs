@@ -68,7 +68,7 @@ const strategy = await strategyCreator({
 }
 ```
 
-Когда strategy runtime вызывает `strategyApi.getMarketData()` в `ENV='CRON'`, TradeJS теперь использует уже прогретый candle cache текущего прогона вместо повторного live `kline` fetch для каждого символа стратегии.
+Strategy core обрабатывает текущую закрытую свечу через `strategyApi.getDecisionPriceContext()`. Полная история рынка не доступна через `StrategyAPI`: runtime использует warmup-данные для инициализации индикаторов и replayable detector-state до принятия решения.
 
 ## Исполнение ордеров
 

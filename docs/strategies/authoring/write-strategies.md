@@ -58,12 +58,12 @@ export const createMyStrategyCore: CreateStrategyCore<
   MyStrategyConfig
 > = async ({ strategyApi }) => {
   return async () => {
-    const positionExists = await strategyApi.isCurrentPositionExists();
-    if (positionExists) {
+    const position = await strategyApi.getCurrentPosition();
+    if (position && position.qty > 0) {
       return strategyApi.skip('POSITION_EXISTS');
     }
 
-    const { currentPrice } = await strategyApi.getMarketData();
+    const { currentPrice } = await strategyApi.getDecisionPriceContext();
 
     const { stopLossPrice, takeProfitPrice } =
       strategyApi.getDirectionalTpSlPrices({
@@ -85,6 +85,14 @@ export const createMyStrategyCore: CreateStrategyCore<
   };
 };
 ```
+
+## StrategyAPI Data Rules
+
+- Use `getDecisionPriceContext()` for the current closed candle, timestamp, and signal-time price.
+- Use `getCurrentIndicatorsContext()` for the strategy's typed indicator snapshot and `baseContext`. The snapshot type is inherited from `CreateStrategyCore`; do not pass a generic type argument to the method.
+- Use `getCurrentPosition()` once and derive position existence from `qty`.
+- Full market history is not exposed through `StrategyAPI`. Stateful detectors should rebuild from their initialization data and keep only the bounded rolling window they need.
+- Return exits through `strategyApi.exit({ code, direction })`. Exit price and timestamp are resolved from the current closed candle and cannot be overridden by strategy code.
 
 ## Where Runtime Behavior Is Defined
 

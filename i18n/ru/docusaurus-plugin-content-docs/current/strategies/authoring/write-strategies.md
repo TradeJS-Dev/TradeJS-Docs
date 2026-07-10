@@ -58,12 +58,12 @@ export const createMyStrategyCore: CreateStrategyCore<
   MyStrategyConfig
 > = async ({ strategyApi }) => {
   return async () => {
-    const positionExists = await strategyApi.isCurrentPositionExists();
-    if (positionExists) {
+    const position = await strategyApi.getCurrentPosition();
+    if (position && position.qty > 0) {
       return strategyApi.skip('POSITION_EXISTS');
     }
 
-    const { currentPrice } = await strategyApi.getMarketData();
+    const { currentPrice } = await strategyApi.getDecisionPriceContext();
 
     const { stopLossPrice, takeProfitPrice } =
       strategyApi.getDirectionalTpSlPrices({
@@ -85,6 +85,14 @@ export const createMyStrategyCore: CreateStrategyCore<
   };
 };
 ```
+
+## Правила доступа к данным через StrategyAPI
+
+- Используйте `getDecisionPriceContext()` для текущей закрытой свечи, timestamp и цены в момент сигнала.
+- Используйте `getCurrentIndicatorsContext()` для типизированного indicator snapshot и `baseContext`. Тип snapshot наследуется из `CreateStrategyCore`; не передавайте generic-параметр самому методу.
+- Вызывайте `getCurrentPosition()` один раз и определяйте наличие позиции по `qty`.
+- Полная история рынка не доступна через `StrategyAPI`. Stateful detector должен восстановиться из initialization data и хранить только необходимое bounded rolling window.
+- Возвращайте выход через `strategyApi.exit({ code, direction })`. Цена и timestamp выхода определяются по текущей закрытой свече и не могут быть переопределены стратегией.
 
 ## Где задается runtime-поведение
 

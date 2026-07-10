@@ -48,7 +48,11 @@ export type SimpleMaConfig = StrategyConfig & typeof config;
 ## 3. Add Core Logic (`core.ts`)
 
 ```ts
-import type { CreateStrategyCore, Direction } from '@tradejs/types';
+import type {
+  CreateStrategyCore,
+  Direction,
+  IndicatorsHistorySnapshot,
+} from '@tradejs/types';
 import { SimpleMaConfig } from './config';
 
 const getCrossDirection = ({
@@ -70,17 +74,14 @@ const getCrossDirection = ({
   return null;
 };
 
-export const createSimpleMaCore: CreateStrategyCore<SimpleMaConfig> = async ({
-  config,
-  strategyApi,
-  indicatorsState,
-}) => {
+export const createSimpleMaCore: CreateStrategyCore<
+  SimpleMaConfig,
+  IndicatorsHistorySnapshot | undefined
+> = async ({ config, strategyApi }) => {
   return async () => {
-    indicatorsState.onBar();
-
-    const snapshot = indicatorsState.snapshot();
-    const maFast = Array.isArray(snapshot?.maFast) ? snapshot.maFast : [];
-    const maSlow = Array.isArray(snapshot?.maSlow) ? snapshot.maSlow : [];
+    const { indicators } = strategyApi.getCurrentIndicatorsContext();
+    const maFast = Array.isArray(indicators?.maFast) ? indicators.maFast : [];
+    const maSlow = Array.isArray(indicators?.maSlow) ? indicators.maSlow : [];
 
     if (maFast.length < 2 || maSlow.length < 2) {
       return strategyApi.skip('WAIT_MA_DATA');
@@ -100,11 +101,12 @@ export const createSimpleMaCore: CreateStrategyCore<SimpleMaConfig> = async ({
       return strategyApi.skip('NO_CROSS');
     }
 
-    if (await strategyApi.isCurrentPositionExists()) {
+    const position = await strategyApi.getCurrentPosition();
+    if (position && position.qty > 0) {
       return strategyApi.skip('POSITION_EXISTS');
     }
 
-    const { currentPrice } = await strategyApi.getMarketData();
+    const { currentPrice } = await strategyApi.getDecisionPriceContext();
 
     const { stopLossPrice, takeProfitPrice, qty } =
       strategyApi.getDirectionalTpSlPrices({
@@ -230,6 +232,6 @@ npx @tradejs/cli signals --user root --strategy SimpleMa --connector bybit
 
 ## Notes
 
-- `indicatorsState.snapshot().maFast/maSlow` comes from shared indicator pipeline.
+- `getCurrentIndicatorsContext().indicators` comes from the shared indicator pipeline and is typed by the strategy's `CreateStrategyCore` declaration.
 - Keep `core.ts` focused on decision logic. Execution, AI/ML, hooks, and order placement are handled by shared runtime.
 - If you need Pine integration, use [Pine Strategy Step by Step](./pine-strategy-step-by-step).
