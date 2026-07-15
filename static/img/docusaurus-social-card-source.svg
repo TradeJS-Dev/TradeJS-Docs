@@ -67,12 +67,15 @@
   <text x="96" y="382" fill="#EEF6FF" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="-1.2">
     Docs
   </text>
-  <text x="96" y="436" fill="#A8BED5" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="400">
-    Setup, APIs, runtime execution, backtesting, AI/ML, and operations.
+  <text x="96" y="426" fill="#A8BED5" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="400">
+    TypeScript strategies, backtesting, runtime,
+  </text>
+  <text x="96" y="462" fill="#A8BED5" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="400">
+    and self-hosted operations.
   </text>
 
-  <rect x="96" y="474" width="218" height="46" rx="23" fill="#102133" stroke="#28516B" />
-  <text x="128" y="504" fill="#DAF6F4" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" letter-spacing="0.4">
+  <rect x="96" y="482" width="218" height="46" rx="23" fill="#102133" stroke="#28516B" />
+  <text x="128" y="512" fill="#DAF6F4" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" letter-spacing="0.4">
     docs.tradejs.dev
   </text>
 
@@ -87,6 +90,6 @@
   <rect x="730" y="436" width="162" height="14" rx="7" fill="#12283C" />
 
   <text x="96" y="560" fill="#7F93AC" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600" letter-spacing="1.2">
-    TRADEJS OPEN-SOURCE FRAMEWORK
+    TYPESCRIPT • OPEN SOURCE • SELF-HOSTED
   </text>
 </svg>

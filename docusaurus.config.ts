@@ -7,7 +7,7 @@ const t = (en: string, ru: string) => (currentLocale === 'ru' ? ru : en);
 
 const config: Config = {
   title: 'TradeJS Docs',
-  tagline: 'Technical docs for the TradeJS open-source framework',
+  tagline: 'Self-hosted TypeScript trading strategy framework',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -73,12 +73,12 @@ const config: Config = {
       {
         name: 'description',
         content:
-          'Official documentation for the TradeJS open-source framework: strategy authoring, indicators, runtime, backtesting, AI/ML, and operations.',
+          'Documentation for the open-source, self-hosted TradeJS framework: build, backtest, and run programmable trading strategies in TypeScript.',
       },
       {
         name: 'keywords',
         content:
-          'TradeJS, trading docs, algorithmic trading, TypeScript strategies, Pine Script, backtesting, AI/ML',
+          'TradeJS, TypeScript trading strategies, self-hosted trading framework, algorithmic trading, backtesting, runtime',
       },
       {
         name: 'robots',
@@ -110,15 +110,9 @@ const config: Config = {
         },
         {
           type: 'doc',
-          docId: 'core-concepts/strategy',
+          docId: 'strategies/authoring/typescript-strategy-step-by-step',
           position: 'left',
-          label: t('Concepts', 'Понятия'),
-        },
-        {
-          type: 'doc',
-          docId: 'examples',
-          position: 'left',
-          label: t('Examples', 'Примеры'),
+          label: t('TypeScript Strategies', 'TypeScript-стратегии'),
         },
         {
           type: 'doc',
@@ -128,15 +122,15 @@ const config: Config = {
         },
         {
           type: 'doc',
-          docId: 'advanced/runtime',
+          docId: 'runtime/execution/signals',
           position: 'left',
           label: t('Runtime', 'Рантайм'),
         },
         {
           type: 'doc',
-          docId: 'limitations/index',
+          docId: 'operations/production-runbook',
           position: 'left',
-          label: t('Limitations', 'Ограничения'),
+          label: t('Self-Hosting', 'Self-hosting'),
         },
         {
           type: 'localeDropdown',
@@ -181,26 +175,26 @@ const config: Config = {
           ],
         },
         {
-          title: t('Guides', 'Руководства'),
+          title: t('TypeScript', 'TypeScript'),
           items: [
             { label: t('Examples', 'Примеры'), to: '/examples' },
             { label: t('Core API', 'Базовый API'), to: '/api/framework' },
             {
-              label: t('Creating Strategies', 'Создание стратегий'),
-              to: '/guides/create-simple-strategy',
+              label: t('TypeScript Strategy', 'TypeScript-стратегия'),
+              to: '/strategies/authoring/typescript-strategy-step-by-step',
             },
             { label: t('Backtest a Strategy', 'Бэктест стратегии'), to: '/guides/backtest-strategy' },
           ],
         },
         {
-          title: t('Advanced', 'Продвинутые темы'),
+          title: t('Self-Hosting', 'Self-hosting'),
           items: [
             { label: t('Architecture', 'Архитектура'), to: '/advanced/architecture' },
-            { label: t('CLI API', 'CLI API'), to: '/api/cli' },
             {
               label: t('Production Runbook', 'Руководство по эксплуатации продакшена'),
               to: '/operations/production-runbook',
             },
+            { label: t('Monitoring', 'Мониторинг'), to: '/operations/monitoring-alerts' },
             { label: t('Backtesting Caveats', 'Ограничения бэктестинга'), to: '/limitations/backtesting-caveats' },
           ],
         },

@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-Use the public npm packages. Public docs should not depend on the TradeJS monorepo workspace.
+Install the public npm packages into your own TypeScript project. TradeJS runs locally or on infrastructure you operate; this guide does not depend on the TradeJS monorepo workspace.
 
 ## Requirements
 

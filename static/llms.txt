@@ -1,6 +1,6 @@
 # TradeJS Documentation
 
-> Official technical documentation for the TradeJS open-source framework: setup, APIs, strategy authoring, indicators, runtime execution, backtesting, AI/ML, and operations.
+> Documentation for the open-source, self-hosted TradeJS framework: build, backtest, and run programmable trading strategies in TypeScript.
 
 Docs home: https://docs.tradejs.dev
 Russian docs: https://docs.tradejs.dev/ru/
@@ -12,6 +12,7 @@ Marketing site: https://tradejs.dev
 - What is TradeJS: https://docs.tradejs.dev/introduction/what-is-tradejs
 - Installation: https://docs.tradejs.dev/getting-started/installation
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
+- TypeScript strategy: https://docs.tradejs.dev/strategies/authoring/typescript-strategy-step-by-step
 - First backtest: https://docs.tradejs.dev/getting-started/first-backtest
 - Backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Understanding output: https://docs.tradejs.dev/getting-started/understanding-output
@@ -21,22 +22,26 @@ Marketing site: https://tradejs.dev
 - Ready-made project hook helpers: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
 
-## Main Technical Areas
+## Primary Workflow
+
+- TypeScript strategies: https://docs.tradejs.dev/strategies/authoring/write-strategies
+- Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
+- Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
+- Runtime execution: https://docs.tradejs.dev/runtime/execution/signals
+- Self-hosting: https://docs.tradejs.dev/operations/production-runbook
+- Architecture: https://docs.tradejs.dev/advanced/architecture
+
+## Extensions and Reference
 
 - Core concepts: https://docs.tradejs.dev/core-concepts/strategy
 - Create a simple strategy: https://docs.tradejs.dev/guides/create-simple-strategy
-- Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
 - Data quality guide: https://docs.tradejs.dev/guides/data-quality
-- Strategies deep dive: https://docs.tradejs.dev/strategies/authoring/write-strategies
 - Indicators: https://docs.tradejs.dev/guides/add-indicators
-- Runtime execution: https://docs.tradejs.dev/runtime/execution/signals
 - Diagrams: https://docs.tradejs.dev/advanced/diagrams
 - Runtime parity: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
-- Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
 - AI: https://docs.tradejs.dev/ai-ml/ai/configuration
 - AI filter validation on backtest data: https://docs.tradejs.dev/ai-ml/ai/prompt-replay
 - ML: https://docs.tradejs.dev/ai-ml/ml/configuration
-- Operations: https://docs.tradejs.dev/operations/production-runbook
 - Limitations: https://docs.tradejs.dev/limitations
 - Backtesting caveats: https://docs.tradejs.dev/limitations/backtesting-caveats
 

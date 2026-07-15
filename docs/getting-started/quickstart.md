@@ -3,7 +3,7 @@ sidebar_position: 2
 title: Quickstart
 ---
 
-This guide is for external package users who want a normal npm project, not a TradeJS monorepo checkout.
+This guide creates a self-hosted TypeScript project from the public npm packages. It is for external package users, not a TradeJS monorepo checkout.
 
 If you only need the install commands, start with [Installation](./installation). For a guided package-only run, use [Run your first backtest](./first-backtest).
 

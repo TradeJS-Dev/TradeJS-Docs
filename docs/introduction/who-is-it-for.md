@@ -2,24 +2,27 @@
 title: Who is it for?
 ---
 
-TradeJS is for developers and technical researchers who want a programmable way to research, test, compare, and automate trading strategies.
+TradeJS is for TypeScript developers and technical researchers who want a programmable, self-hosted way to research, test, and run trading strategies.
 
 It fits you if you want to:
 
 - write strategy logic in TypeScript
-- port or mirror Pine Script-inspired ideas into a testable runtime
 - run backtests before considering live automation
+- move one strategy implementation from backtest into runtime
+- keep strategy code, data, credentials, and operations on your infrastructure
 - inspect signals, orders, positions, and metrics
 - build custom plugins for strategies, indicators, or connectors
 - keep strategy research reproducible in code
+
+Pine Script-inspired workflows and AI/ML layers are available when needed, but they are not required for the primary TypeScript workflow.
 
 It is less useful if you want a no-code trading app, a managed investment product, or a one-click signal subscription.
 
 ## Typical Users
 
-- TypeScript developers experimenting with systematic strategies
+- TypeScript developers building systematic strategies
 - quant-minded builders who want inspectable backtest artifacts
-- teams that need a controlled runtime for signals and automation
+- teams that need a self-hosted runtime for signals and controlled automation
 - researchers comparing strategy variants across symbols and time windows
 
 ## Assumed Comfort Level

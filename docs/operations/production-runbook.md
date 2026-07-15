@@ -4,6 +4,21 @@ title: Production Runbook
 
 Use this runbook as a daily operational checklist.
 
+## Self-Hosted Deployment Model
+
+TradeJS is distributed as public npm packages, not as a managed trading service. A production installation runs in an environment you operate and connects to Redis and PostgreSQL/Timescale services you control.
+
+Build and start the installable app from your project:
+
+```bash
+npx tradejs-app build
+npx tradejs-app start
+```
+
+Use your own process supervisor or container platform for the app and scheduled runtime commands. Provide TLS, ingress, backups, secrets management, and service monitoring according to your environment.
+
+The public packages do not provision a turnkey production environment. Start with the local [Quickstart](../getting-started/quickstart), then replace local infrastructure with your production services deliberately.
+
 ## Daily Health Checks
 
 1. `docker compose ps` or service manager status.

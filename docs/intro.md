@@ -4,7 +4,7 @@ title: Welcome
 slug: /
 ---
 
-TradeJS helps developers build, test, compare, and automate trading strategies with TypeScript.
+TradeJS is an open-source, self-hosted framework for building, backtesting, and running programmable trading strategies in TypeScript.
 
 Start here if you are opening the project for the first time:
 
@@ -14,7 +14,17 @@ Start here if you are opening the project for the first time:
 4. Learn the main objects in [Core Concepts](./core-concepts/strategy).
 5. Copy from the practical [Examples](./examples).
 
-TradeJS is designed for research, backtesting, signal generation, and controlled automation. It is not financial advice, not an HFT engine, and not a system that can promise future returns.
+The primary workflow is **write → backtest → run**: keep strategy logic in TypeScript, compare it on historical data, and move selected configurations into a runtime you operate.
+
+TradeJS is designed for research, backtesting, signal generation, and controlled automation on your infrastructure. It is not financial advice, not an HFT engine, and not a system that can promise future returns.
+
+## Product Focus
+
+- **TypeScript-native:** strategies, indicators, plugins, and runtime contracts are programmable and typed.
+- **One strategy lifecycle:** use the same strategy implementation for backtests and runtime evaluation.
+- **Self-hosted:** keep strategy code, market data, credentials, and execution infrastructure under your control.
+
+Pine compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this core workflow.
 
 ## Public Packages
 

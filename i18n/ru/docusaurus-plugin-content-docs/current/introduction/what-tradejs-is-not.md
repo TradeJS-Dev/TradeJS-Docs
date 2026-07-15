@@ -4,6 +4,10 @@ title: Чем TradeJS не является
 
 TradeJS ограничен задачами research, backtesting, signal generation и automation. Он не убирает торговый риск.
 
+## Не hosted trading SaaS
+
+TradeJS распространяется как набор публичных npm-пакетов и запускается локально или на вашей инфраструктуре. Вы отвечаете за deployment, data services, credentials, monitoring и обновления.
+
 ## Не HFT
 
 TradeJS не является high-frequency trading engine. Он построен вокруг candle-based workflow. Рекомендуемые таймфреймы начинаются с `5m+`; многие примеры используют `15m`.

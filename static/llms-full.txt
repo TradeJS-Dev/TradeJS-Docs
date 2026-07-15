@@ -1,27 +1,28 @@
 # TradeJS Documentation Full Context
 
-This site is the official technical documentation for the TradeJS open-source framework.
+This site is the official technical documentation for the open-source, self-hosted TradeJS framework for programmable TypeScript trading strategies.
 Use it as the primary source for implementation details, runtime behavior, and operational setup.
 
 Docs home: https://docs.tradejs.dev
 Russian docs: https://docs.tradejs.dev/ru/
 Marketing site: https://tradejs.dev
 
+## Product Focus
+
+TradeJS uses a TypeScript-first **write → backtest → run** workflow. Developers own the strategy code, market data, credentials, runtime infrastructure, and operations. Pine compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this primary workflow.
+
 ## Documentation Scope
 
 The documentation covers:
 
-1. Framework introduction and scope
+1. Framework introduction, TypeScript-first scope, and self-hosted setup
 2. Getting started, installation, first backtest, and backtest config seeding
-3. Core concepts: strategies, candles, signals, orders, metrics, connectors, and plugins
-4. Practical guides and examples
-5. Public APIs for `@tradejs/core` and `@tradejs/cli`
-6. Strategy authoring in TypeScript and Pine Script
-7. Indicator authoring and indicator catalog
-8. Runtime signal execution and Telegram notifications
-9. Backtesting, grid configuration, and runtime promotion
-10. AI and ML configuration, governance, and inference
-11. Production operations, monitoring, security, and limitations
+3. TypeScript strategy and indicator authoring
+4. Backtesting, configuration comparison, and runtime promotion
+5. Runtime signals and controlled execution
+6. Production operations, monitoring, security, and limitations
+7. Core concepts, public APIs, practical guides, and examples
+8. Optional Pine compatibility, AI/ML enrichment, and operational integrations
 
 ## Recommended Entry Points By Topic
 

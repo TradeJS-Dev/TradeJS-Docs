@@ -4,6 +4,21 @@ title: Руководство по эксплуатации продакшена
 
 Этот runbook можно использовать как ежедневный шаблон эксплуатации.
 
+## Self-hosted модель deployment
+
+TradeJS распространяется как набор публичных npm-пакетов, а не как managed trading service. Production-инсталляция запускается в среде под вашим управлением и подключается к вашим Redis и PostgreSQL/Timescale.
+
+Соберите и запустите installable app из своего проекта:
+
+```bash
+npx tradejs-app build
+npx tradejs-app start
+```
+
+Используйте собственный process supervisor или container platform для приложения и runtime-команд по расписанию. TLS, ingress, backups, secrets management и monitoring настраиваются в вашей среде.
+
+Публичные пакеты не разворачивают готовую production-инфраструктуру автоматически. Начните с локального [Быстрого старта](../getting-started/quickstart), затем осознанно замените локальные сервисы production-инфраструктурой.
+
 ## Ежедневные проверки
 
 1. Проверка статуса сервисов (`docker compose ps` или оркестратор).
