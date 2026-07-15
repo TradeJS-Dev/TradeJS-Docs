@@ -56,11 +56,8 @@ Create/update user in Redis:
 npx @tradejs/cli user-add --user root --password 'secret'
 ```
 
-Optional persistent token:
-
-```bash
-npx @tradejs/cli user-add --user root --password 'secret' --token '<token>'
-```
+`user-add` accepts only the username and password. Legacy persistent-token
+authentication is not supported by the current account API.
 
 ## Legacy History Migration
 

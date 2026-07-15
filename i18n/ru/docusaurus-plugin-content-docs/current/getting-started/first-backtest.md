@@ -2,92 +2,61 @@
 title: Первый бэктест
 ---
 
-Эта страница показывает самый практичный первый backtest flow, который есть сейчас.
+На этой странице первый бэктест запускается из обычного npm-проекта. Клонировать
+TradeJS monorepo не нужно.
 
-CLI умеет запускать бэктесты, но ожидает сохраненный backtest config в Redis. Ближайший полный demo-path - deterministic sandbox в основном репозитории TradeJS. Он сделан как внешний пользовательский проект и потребляет опубликованные `@tradejs/*` пакеты.
-
-Источник: [examples/sandbox](https://github.com/tradejs-dev/tradejs/tree/main/examples/sandbox)
-
-## 1. Установите пример
+## 1. Создайте проект
 
 ```bash
-git clone https://github.com/tradejs-dev/tradejs.git
-cd tradejs/examples/sandbox
-yarn install --immutable
+mkdir tradejs-first-backtest
+cd tradejs-first-backtest
+npm init -y
+npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Sandbox сейчас использует зафиксированный Yarn lockfile для deterministic CI. Хороший следующий issue для проекта - добавить package-only `npm create` или `tradejs init demo-backtest`.
+Добавьте `tradejs.config.ts` в корень проекта:
+
+```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
+export default defineConfig(basePreset);
+```
 
 ## 2. Запустите infra
 
 ```bash
+npx @tradejs/cli infra-init
 npx @tradejs/cli infra-up
+npx @tradejs/cli doctor
+npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 ```
 
-## 3. Запустите demo
+## 3. Сохраните backtest config
 
 ```bash
-yarn e2e
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
+  'users:root:backtests:configs:MaStrategy:base' \
+  '{"INTERVAL":["15"],"MAX_LOSS_VALUE":[10],"MA_FAST":[21],"MA_SLOW":[55],"LONG":[{"enable":true,"direction":"LONG","TP":2,"SL":1,"minRiskRatio":1.2}],"SHORT":[{"enable":true,"direction":"SHORT","TP":2,"SL":1,"minRiskRatio":1.2}]}'
 ```
 
-Скрипт:
+Grid хранится под ключом
+`users:<user>:backtests:configs:<StrategyName:configName>`. Каждое top-level
+значение должно быть массивом, даже если в нем один кандидат.
 
-1. создает/обновляет пользователя `sandbox`;
-2. создает config `SandboxDeterministicSignal:base`;
-3. запускает backtest для `SANDBOXUSDT` на timeframe `15`;
-4. проверяет backtest stats в Redis;
-5. запускает deterministic `signals`;
-6. проверяет snapshot сигналов.
+## 4. Запустите бэктест
 
-## Пример стратегии
-
-Ключевой config:
-
-```ts
-export const SANDBOX_E2E_GRID_CONFIG = {
-  INTERVAL: ['15'],
-  SANDBOX_ENTRY_EVERY_BARS: [96],
-  SANDBOX_QTY: [1],
-  SANDBOX_TP_PCT: [0.4],
-  SANDBOX_SL_PCT: [1],
-} as const;
+```bash
+npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
 ```
 
-Минимальная форма решения:
-
-```ts
-const signal = {
-  strategy: 'SandboxDeterministicSignal',
-  symbol,
-  interval: '15',
-  direction: 'LONG',
-  timestamp: candle.timestamp,
-  prices: {
-    currentPrice,
-    takeProfitPrice,
-    stopLossPrice,
-    riskRatio,
-  },
-};
-```
+Без `--cacheOnly` команда сначала обновляет публичную историю свечей. Успешный
+запуск выводит выбранную стратегию/config, прогресс и таблицу результатов.
 
 ## Ожидаемый вывод
 
-```text
-Sandbox backtest snapshot check passed
-{
-  "orders": 159,
-  "wins": 0,
-  "losses": 159,
-  "amount": -44.12,
-  "netProfit": -144.12,
-  "winRate": 0,
-  "maxDrawdown": 144.12
-}
-Sandbox signals snapshot check passed
-```
-
-Эти числа не являются trading claim. Это детерминированные тестовые данные для проверки pipeline.
+Точные метрики меняются вместе с историей рынка. Это проверка pipeline, а не
+обещание доходности.
 
 ## Метрики
 
@@ -98,12 +67,11 @@ Sandbox signals snapshot check passed
 - `winRate` - доля winning orders;
 - `maxDrawdown` - максимальное историческое снижение.
 
-Для своего проекта базовая форма команды такая:
+## Остановите infra
 
 ```bash
-npx @tradejs/cli backtest --user root --config <StrategyName:configName> --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
+npx @tradejs/cli infra-down
 ```
 
-Перед запуском нужен backtest config у выбранного пользователя. Sandbox показывает текущий supported seeding path.
-
-Точный формат Redis key и минимальный manual config описаны в [Создать backtest config](./backtest-config).
+Точный формат Redis key, script-based seeding и troubleshooting описаны в
+[Создать backtest config](./backtest-config).

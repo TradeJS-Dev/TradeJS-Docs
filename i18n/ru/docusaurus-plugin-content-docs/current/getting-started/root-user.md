@@ -14,7 +14,6 @@ npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 
 - хеширует пароль через `bcrypt`
 - записывает пользователя в Redis-ключ `users:index:root`
-- автоматически создает persistent token для `root`, если его нет
 - хранит account-level настройки в той же Redis-записи пользователя
 
 ## 2. Проверить пользователя в Redis
@@ -28,14 +27,13 @@ redis-cli JSON.GET users:index:root
 - `userName`
 - `passwordHash`
 - `updatedAt`
-- `token` (для `root`)
 
 После сохранения настроек в UI в этой же записи могут появиться:
 
 - `BYBIT_API_KEY`
 - `BYBIT_API_SECRET`
-- `OPENAI_API_KEY`
-- `OPENAI_API_ENDPOINT`
+- `AI_API_KEY`
+- `AI_API_ENDPOINT`
 - `TG_BOT_TOKEN`
 - `TG_CHAT_ID`
 
@@ -47,12 +45,10 @@ redis-cli JSON.GET users:index:root
 4. Настройте нужные параметры для этого пользователя:
    - Bybit API key/secret
    - смену пароля
-   - persistent token для passwordless auth
-   - OpenAI API key/endpoint
+   - API key/endpoint AI-провайдера
    - Telegram bot token/chat id
-5. Для API-only сценариев используйте persistent token из Redis или из drawer настроек аккаунта.
 
-## 4. Смена пароля или токена
+## 4. Смена пароля
 
 Смена пароля:
 
@@ -60,13 +56,8 @@ redis-cli JSON.GET users:index:root
 npx @tradejs/cli user-add -u root -p 'NewStrongPassword456!'
 ```
 
-Явно задать токен:
-
-```bash
-npx @tradejs/cli user-add -u root -p 'NewStrongPassword456!' -t 'my-static-token'
-```
-
 Примечания:
 
-- Пароль и токен также можно менять из drawer настроек аккаунта после входа.
+- Пароль также можно менять из drawer настроек аккаунта после входа.
 - Секреты хранятся в Redis на уровне пользователя и в UI показываются в замаскированном виде.
+- Legacy-поле `token` удаляется текущим account-settings API и не принимается командой `user-add`.

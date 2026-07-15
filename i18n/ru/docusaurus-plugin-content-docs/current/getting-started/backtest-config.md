@@ -93,7 +93,7 @@ await redis.set(key, JSON.stringify(grid));
 await redis.quit();
 ```
 
-Sandbox использует тот же подход в `examples/sandbox/src/scripts/seedBacktestConfig.ts`.
+Храните такой seed script в своем проекте, если config должен воспроизводиться или проходить review в version control.
 
 ## Runtime config и backtest grid
 

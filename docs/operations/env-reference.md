@@ -18,9 +18,8 @@ TradeJS also stores account-specific settings in the Redis user record (`users:i
 
 - `BYBIT_API_KEY`
 - `BYBIT_API_SECRET`
-- `token`
-- `OPENAI_API_KEY`
-- `OPENAI_API_ENDPOINT`
+- `AI_API_KEY`
+- `AI_API_ENDPOINT`
 - `TG_BOT_TOKEN`
 - `TG_CHAT_ID`
 
@@ -49,4 +48,4 @@ The web app manages these values from the account settings drawer opened by the 
 - For local setup, run `npx @tradejs/cli infra-init` once, then `npx @tradejs/cli infra-up`.
 - Validate environment with `npx @tradejs/cli doctor` before enabling live orders.
 - Prefer the account settings drawer for user-scoped API keys and tokens instead of sharing one global `.env` secret across operators.
-- `OPENAI_*` and `TG_*` are not app environment variables anymore; store them on the user record in Redis.
+- `AI_API_*` and `TG_*` are user-record fields, not app environment variables; store them on the user record in Redis.

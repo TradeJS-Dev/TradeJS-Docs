@@ -19,8 +19,8 @@ TradeJS resolves AI credentials in this order:
 
 In the web app, open the gear icon in the left sidebar and set:
 
-- `OPENAI_API_KEY`
-- `OPENAI_API_ENDPOINT`
+- `AI_API_KEY`
+- `AI_API_ENDPOINT`
 
 These values are stored per user, so different operators can use different providers or keys without sharing one global secret.
 
@@ -32,11 +32,13 @@ For `entry` decisions with signal:
 2. AI analysis is written to Redis (`analysis:<symbol>:<signalId>`).
 3. In non-backtest mode, order may be blocked if quality is below threshold.
 
-Default minimum quality: `4`.
+The runtime fallback is `4` when a strategy does not provide a threshold.
+Built-in strategies define `MIN_AI_QUALITY` in their own configs, so inspect the
+effective strategy config instead of assuming one global default.
 
 Notes:
 
-- `OPENAI_API_KEY` and `OPENAI_API_ENDPOINT` should be configured on the user record, not in app environment variables.
+- `AI_API_KEY` and `AI_API_ENDPOINT` should be configured on the user record, not in app environment variables.
 - If you want the standard OpenAI endpoint, save `https://api.openai.com/v1` in the user settings explicitly.
 
 If you want to validate AI filter changes before touching live execution, see [AI Filter Validation on Backtest Data](./prompt-replay). That workflow uses backtest-exported AI rows to replay the current prompt logic on the same historical sample.

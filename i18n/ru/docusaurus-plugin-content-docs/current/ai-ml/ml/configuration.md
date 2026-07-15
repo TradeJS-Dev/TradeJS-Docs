@@ -14,10 +14,10 @@ title: Как работает и настраивается машинное о
 ## Реальные команды
 
 ```bash
-npx @tradejs/cli backtest --config trendline --ml
+npx @tradejs/cli backtest --config TrendLine:base --ml
 npx @tradejs/cli ml-export
 npx @tradejs/cli ml-inspect
-npx @tradejs/cli ml-train:trendline:xgboost
+npx @tradejs/cli ml-train:latest --strategy TrendLine --model xgboost
 ```
 
 ## Пример `.env` для ML

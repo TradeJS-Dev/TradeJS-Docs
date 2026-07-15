@@ -5,7 +5,7 @@ title: Quickstart
 
 This guide is for external package users who want a normal npm project, not a TradeJS monorepo checkout.
 
-If you only need the install commands, start with [Installation](./installation). If you want a deterministic demo run, use [Run your first backtest](./first-backtest).
+If you only need the install commands, start with [Installation](./installation). For a guided package-only run, use [Run your first backtest](./first-backtest).
 
 ## 1. Install
 
@@ -68,7 +68,7 @@ npx @tradejs/cli signals
 npx @tradejs/cli bot
 ```
 
-Backtests require a saved backtest config in Redis. The deterministic sandbox described in [Run your first backtest](./first-backtest) seeds that config for you.
+Backtests require a saved backtest config in Redis. [Run your first backtest](./first-backtest) shows how to seed one from the package-only project.
 
 ## 6. Run Web UI
 
@@ -85,7 +85,7 @@ After sign-in:
 
 - open the gear icon in the left sidebar to manage account settings
 - configure Bybit API access for this user before working with live exchange data
-- move passwordless auth token, OpenAI, and Telegram settings into the user profile stored in Redis
+- store AI-provider and Telegram settings in the user profile in Redis
 
 If port `3000` is already busy, `tradejs-app dev` automatically picks the next free port and prints the actual URL in the console.
 

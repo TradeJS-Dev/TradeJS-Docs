@@ -56,11 +56,8 @@ npx @tradejs/cli clean-tests --user root --cache
 npx @tradejs/cli user-add --user root --password 'secret'
 ```
 
-Опциональный persistent token:
-
-```bash
-npx @tradejs/cli user-add --user root --password 'secret' --token '<token>'
-```
+`user-add` принимает только username и password. Текущий account API не
+поддерживает legacy-аутентификацию через persistent token.
 
 ## Миграция legacy-истории
 

@@ -36,14 +36,16 @@ Research и backtesting:
 - `runtime-evidence` - собирает runtime evidence.
 - `replay-runtime-evidence` - replay собранного runtime evidence.
 - `execution-calibration` - проверяет runtime execution assumptions.
-- `research:auto` - запускает automated research workflow.
 
 Runtime и signals:
 
 - `signals` - оценивает runtime strategies на последней закрытой свече.
 - `signals-summary` - собирает summary по recent runtime signal/order state.
 - `bot` - запускает Telegram bot.
-- `agent-run` - запускает agent workflow.
+
+`research:auto` и `agent-run` — maintainer workflows основного source repo, а
+не поддерживаемые команды для внешнего package-flow. Поэтому они намеренно не
+включены в этот публичный command map, хотя их launchers пока входят в пакет.
 
 Market data и maintenance:
 

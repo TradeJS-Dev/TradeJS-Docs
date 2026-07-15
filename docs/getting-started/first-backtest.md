@@ -2,111 +2,75 @@
 title: Run your first backtest
 ---
 
-This page shows the most practical first backtest path available today.
-
-The package-level CLI can run backtests, but it expects a saved backtest config in Redis. The closest complete demo is the deterministic sandbox in the main TradeJS repository. It is intentionally built like an external user project and consumes published `@tradejs/*` packages instead of workspace packages.
+This page runs a first backtest from a normal npm project. No TradeJS monorepo
+checkout is required.
 
 ## What You Will Run
 
-The sandbox runs:
+You will create:
 
 - a local `tradejs.config.ts`
-- a custom strategy plugin: `SandboxDeterministicSignal`
-- a custom indicator plugin
-- a custom connector with deterministic candle data
-- a seeded backtest config: `SandboxDeterministicSignal:base`
-- one backtest and one signal scan
-
-Source: [examples/sandbox](https://github.com/tradejs-dev/tradejs/tree/main/examples/sandbox)
+- the default plugin preset
+- a Redis backtest config named `MaStrategy:base`
+- one `MaStrategy` backtest over `BTCUSDT`
 
 ## 1. Install
 
-Clone the TradeJS repository only to use the standalone example:
+Create a project and install the public packages:
 
 ```bash
-git clone https://github.com/tradejs-dev/tradejs.git
-cd tradejs/examples/sandbox
-yarn install --immutable
+mkdir tradejs-first-backtest
+cd tradejs-first-backtest
+npm init -y
+npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-The sandbox currently uses its committed Yarn lockfile for deterministic CI. A package-only `npm create` or `tradejs init demo-backtest` flow is still a good next issue for the project.
+Add `tradejs.config.ts` in the project root:
+
+```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
+export default defineConfig(basePreset);
+```
 
 ## 2. Start Local Infra
 
 ```bash
+npx @tradejs/cli infra-init
 npx @tradejs/cli infra-up
+npx @tradejs/cli doctor
+npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 ```
 
-This starts the local Redis/PostgreSQL services required by the CLI.
+This creates and starts the local Redis/PostgreSQL services required by the CLI.
 
-## 3. Run the Demo
+## 3. Save a Backtest Config
 
 ```bash
-yarn e2e
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
+  'users:root:backtests:configs:MaStrategy:base' \
+  '{"INTERVAL":["15"],"MAX_LOSS_VALUE":[10],"MA_FAST":[21],"MA_SLOW":[55],"LONG":[{"enable":true,"direction":"LONG","TP":2,"SL":1,"minRiskRatio":1.2}],"SHORT":[{"enable":true,"direction":"SHORT","TP":2,"SL":1,"minRiskRatio":1.2}]}'
 ```
 
-The script performs these steps:
+TradeJS reads backtest grids from
+`users:<user>:backtests:configs:<StrategyName:configName>`. Every top-level grid
+value is an array, even when it contains only one candidate.
 
-1. Creates or updates user `sandbox`.
-2. Seeds backtest config `SandboxDeterministicSignal:base`.
-3. Runs a backtest for `SANDBOXUSDT` on timeframe `15`.
-4. Checks the saved backtest statistics in Redis.
-5. Runs a deterministic `signals` pass.
-6. Checks the stored signal snapshot.
+## 4. Run the Backtest
 
-## Strategy Example
-
-The demo strategy enters long every configured number of bars, creates a signal, places an order through the sandbox connector, and attaches TP/SL orders.
-
-Key config:
-
-```ts
-export const SANDBOX_E2E_GRID_CONFIG = {
-  INTERVAL: ['15'],
-  SANDBOX_ENTRY_EVERY_BARS: [96],
-  SANDBOX_QTY: [1],
-  SANDBOX_TP_PCT: [0.4],
-  SANDBOX_SL_PCT: [1],
-} as const;
+```bash
+npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
 ```
 
-Minimal decision shape:
-
-```ts
-const signal = {
-  strategy: 'SandboxDeterministicSignal',
-  symbol,
-  interval: '15',
-  direction: 'LONG',
-  timestamp: candle.timestamp,
-  prices: {
-    currentPrice,
-    takeProfitPrice,
-    stopLossPrice,
-    riskRatio,
-  },
-};
-```
+Without `--cacheOnly`, the command refreshes the required public candle history
+before running the test. A successful run prints the resolved strategy/config,
+progress, and a result table.
 
 ## Expected Output
 
-The exact CLI logs include progress lines, but the important success lines are:
-
-```text
-Sandbox backtest snapshot check passed
-{
-  "orders": 159,
-  "wins": 0,
-  "losses": 159,
-  "amount": -44.12,
-  "netProfit": -144.12,
-  "winRate": 0,
-  "maxDrawdown": 144.12
-}
-Sandbox signals snapshot check passed
-```
-
-These numbers are not a trading claim. The strategy is deterministic test data for verifying the pipeline.
+Exact metrics vary because the command uses current market history. Treat the
+output as a pipeline check, not as a performance promise.
 
 ## Metrics Explained
 
@@ -126,14 +90,5 @@ Use these metrics to inspect and compare behavior. They do not predict future re
 npx @tradejs/cli infra-down
 ```
 
-## For Your Own Project
-
-After installation, the normal CLI shape is:
-
-```bash
-npx @tradejs/cli backtest --user root --config <StrategyName:configName> --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
-```
-
-Before that command can run, you need a backtest config saved under the selected user. The sandbox shows the current supported seeding path. A simpler public demo initializer should be added to TradeJS so new npm users do not need to copy a seed script.
-
-For the exact Redis key format and a minimal manual config, see [Create a backtest config](./backtest-config).
+For the exact Redis key format, script-based seeding, and troubleshooting, see
+[Create a backtest config](./backtest-config).

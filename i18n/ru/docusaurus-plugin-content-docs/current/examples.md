@@ -62,4 +62,4 @@ TradeJS содержит `TrendLine`, `ReverseTrendLine` и `AdaptiveTrendChanne
 
 См. [TrendLine](./strategies/reference/trendline) и [AdaptiveTrendChannel](./strategies/reference/adaptive-trend-channel).
 
-Полный runnable пример: [Первый бэктест](./getting-started/first-backtest).
+Полный package-only пример с npm-проектом и публичным CLI: [Первый бэктест](./getting-started/first-backtest).

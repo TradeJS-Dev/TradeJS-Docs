@@ -102,6 +102,6 @@ Related pages:
 - [AdaptiveTrendChannel reference](./strategies/reference/adaptive-trend-channel)
 - [Backtesting caveats](./limitations/backtesting-caveats)
 
-## Deterministic Sandbox
+## First Runnable Backtest
 
-For a complete runnable example, use [Run your first backtest](./getting-started/first-backtest). It points to the standalone sandbox app that seeds a deterministic strategy, connector, backtest config, and assertions.
+For a complete package-only flow, use [Run your first backtest](./getting-started/first-backtest). It creates an npm project, seeds a `MaStrategy` backtest config, and runs the public CLI.
