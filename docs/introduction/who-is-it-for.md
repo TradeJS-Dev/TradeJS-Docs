@@ -14,7 +14,7 @@ It fits you if you want to:
 - build custom plugins for strategies, indicators, or connectors
 - keep strategy research reproducible in code
 
-Pine Script-inspired workflows and AI/ML layers are available when needed, but they are not required for the primary TypeScript workflow.
+Pine-backed strategy workflows and AI/ML layers are available when needed, but they are not required for the primary TypeScript workflow.
 
 It is less useful if you want a no-code trading app, a managed investment product, or a one-click signal subscription.
 

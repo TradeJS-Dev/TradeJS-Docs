@@ -1,13 +1,10 @@
 ---
-title: Write Custom Indicators
+title: Write Custom TypeScript Indicators
 ---
 
-This guide shows how to add your own indicator and render it in the TradeJS chart.
+This guide shows how to add your own TypeScript indicator and render it in the TradeJS chart.
 
-TradeJS supports two indicator paths:
-
-- TypeScript indicator plugins (this page)
-- [Pine `plot` indicators inside Pine strategies](./pine)
+Custom TradeJS indicators are authored as TypeScript plugins. Standalone Pine indicator plugins are not currently supported; Pine support is limited to strategy modules.
 
 ## 1. Create an Indicator Plugin Package
 

@@ -5,7 +5,7 @@ title: Архитектура
 TradeJS разделен на публичные пакеты:
 
 - `@tradejs/core` - browser-safe config, authoring API, indicators, figures, math, time;
-- `@tradejs/node` - Node runtime, backtests, Pine loading, registries;
+- `@tradejs/node` - Node runtime, backtests, Pine strategy loading, registries;
 - `@tradejs/types` - общие контракты;
 - `@tradejs/infra` - Redis, Timescale, ML, logging, IO;
 - `@tradejs/strategies` - built-in strategy catalog;

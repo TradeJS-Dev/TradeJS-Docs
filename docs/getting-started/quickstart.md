@@ -59,16 +59,20 @@ npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 
 For details, see [Root User Setup](./root-user).
 
-## 5. Useful CLI Commands
+## 5. Run a Backtest
+
+`backtest` is not an initializer: it requires a saved backtest config in Redis.
+Do not use bare `npx @tradejs/cli backtest` on a new project.
+
+[Run your first backtest](./first-backtest) shows how to save
+`MaStrategy:base`. After that, run:
 
 ```bash
-npx @tradejs/cli backtest
-npx @tradejs/cli results
-npx @tradejs/cli signals
-npx @tradejs/cli bot
+npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
 ```
 
-Backtests require a saved backtest config in Redis. [Run your first backtest](./first-backtest) shows how to seed one from the package-only project.
+See [CLI API](../api/cli) for `results`, `signals`, and other commands with their
+required arguments and prerequisites.
 
 ## 6. Run Web UI
 

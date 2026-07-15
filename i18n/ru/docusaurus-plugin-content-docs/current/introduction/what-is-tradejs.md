@@ -28,13 +28,13 @@ TradeJS — это developer framework и runtime stack, а не black-box tradi
 - Генерировать runtime-сигналы.
 - Запускать фреймворк локально или на своей инфраструктуре.
 - Подключать свои strategy, indicator и connector plugins.
-- Добавлять совместимость с Pine и AI/ML workflows как опциональные расширения.
+- Добавлять совместимость с Pine-backed стратегиями и AI/ML workflows как опциональные расширения.
 - Смотреть результаты в installable app.
 
 ## Публичная поверхность
 
 - `@tradejs/core` - config, helpers, indicators, math, time, figures.
-- `@tradejs/node` - Node runtime, backtests, Pine loading, registries.
+- `@tradejs/node` - Node runtime, backtests, Pine strategy loading, registries.
 - `@tradejs/cli` - setup, backtests, signals, results, AI/ML workflows.
 - `@tradejs/app` - опциональный web UI.
 - `@tradejs/base` - default preset.

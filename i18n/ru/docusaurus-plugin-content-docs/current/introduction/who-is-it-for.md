@@ -14,7 +14,7 @@ TradeJS подходит TypeScript-разработчикам и техниче
 - создавать свои plugins;
 - хранить research в коде.
 
-Pine Script-inspired workflows и AI/ML-слои доступны при необходимости, но не требуются для основного TypeScript-процесса.
+Pine-backed strategy workflows и AI/ML-слои доступны при необходимости, но не требуются для основного TypeScript-процесса.
 
 Он хуже подходит, если вам нужен no-code trading app, managed investment product или one-click signal subscription.
 

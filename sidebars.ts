@@ -107,7 +107,7 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: t('Indicators', 'Индикаторы'),
-          items: ['indicators/authoring', 'indicators/pine', 'indicators/catalog'],
+          items: ['indicators/authoring', 'indicators/catalog'],
         },
       ],
     },

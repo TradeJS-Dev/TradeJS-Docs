@@ -54,16 +54,20 @@ npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
 
 Подробнее: [Root User Setup](./root-user).
 
-## 5. Полезные CLI-команды
+## 5. Запустите бэктест
+
+`backtest` не является initializer: команде нужен сохраненный backtest config в
+Redis. Не запускайте bare-команду `npx @tradejs/cli backtest` в новом проекте.
+
+[Первый бэктест](./first-backtest) показывает, как сохранить `MaStrategy:base`.
+После этого выполните:
 
 ```bash
-npx @tradejs/cli backtest
-npx @tradejs/cli results
-npx @tradejs/cli signals
-npx @tradejs/cli bot
+npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
 ```
 
-Для бэктеста нужен сохраненный backtest config в Redis. [Первый бэктест](./first-backtest) показывает, как создать его из package-only проекта.
+Команды `results`, `signals` и другие сценарии с обязательными аргументами и
+prerequisites описаны в [CLI API](../api/cli).
 
 ## 6. Запустите Web UI
 

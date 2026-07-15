@@ -5,6 +5,7 @@ title: Add indicators
 Indicators transform candle history into values a strategy can use.
 
 Use built-in indicators when possible. Add a custom indicator when your strategy needs reusable derived data.
+Custom indicators are authored as TypeScript plugins.
 
 ## Plugin Registration
 
@@ -28,4 +29,3 @@ Deep dives:
 
 - [Writing indicators](../indicators/authoring)
 - [Indicator catalog](../indicators/catalog)
-- [Pine indicators](../indicators/pine)

@@ -24,12 +24,12 @@ TradeJS is designed for research, backtesting, signal generation, and controlled
 - **One strategy lifecycle:** use the same strategy implementation for backtests and runtime evaluation.
 - **Self-hosted:** keep strategy code, market data, credentials, and execution infrastructure under your control.
 
-Pine compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this core workflow.
+Pine-backed strategy compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this core workflow.
 
 ## Public Packages
 
 - `@tradejs/core` - browser-safe authoring API, config helpers, shared indicator/math/time helpers
-- `@tradejs/node` - Node runtime for strategy execution, backtests, Pine loading, connector/plugin registries
+- `@tradejs/node` - Node runtime for strategy execution, backtests, Pine strategy loading, connector/plugin registries
 - `@tradejs/cli` - operational commands for backtests, signals, bots, doctor checks, ML workflows
 - `@tradejs/app` - optional installable Next.js UI for viewing backtests, dashboards, and runtime data
 - `@tradejs/base` - default preset that wires built-in strategies, indicators, and connectors

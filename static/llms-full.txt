@@ -9,7 +9,7 @@ Marketing site: https://tradejs.dev
 
 ## Product Focus
 
-TradeJS uses a TypeScript-first **write → backtest → run** workflow. Developers own the strategy code, market data, credentials, runtime infrastructure, and operations. Pine compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this primary workflow.
+TradeJS uses a TypeScript-first **write → backtest → run** workflow. Developers own the strategy code, market data, credentials, runtime infrastructure, and operations. Pine-backed strategy compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this primary workflow.
 
 ## Documentation Scope
 
@@ -22,7 +22,7 @@ The documentation covers:
 5. Runtime signals and controlled execution
 6. Production operations, monitoring, security, and limitations
 7. Core concepts, public APIs, practical guides, and examples
-8. Optional Pine compatibility, AI/ML enrichment, and operational integrations
+8. Optional Pine-backed strategy compatibility, AI/ML enrichment, and operational integrations
 
 ## Recommended Entry Points By Topic
 
@@ -63,7 +63,7 @@ The documentation covers:
 - Data quality guide: https://docs.tradejs.dev/guides/data-quality
 - Add indicators: https://docs.tradejs.dev/guides/add-indicators
 - Compare strategies: https://docs.tradejs.dev/guides/compare-strategies
-- Pine Script-inspired workflows: https://docs.tradejs.dev/guides/pine-workflows
+- Pine-backed strategy workflows: https://docs.tradejs.dev/guides/pine-workflows
 - AI/ML workflows: https://docs.tradejs.dev/guides/ai-ml-workflows
 
 ### Strategy Authoring
@@ -78,7 +78,6 @@ The documentation covers:
 
 - Indicator authoring: https://docs.tradejs.dev/indicators/authoring
 - Indicator catalog: https://docs.tradejs.dev/indicators/catalog
-- Pine indicators: https://docs.tradejs.dev/indicators/pine
 
 ### Runtime and Execution
 

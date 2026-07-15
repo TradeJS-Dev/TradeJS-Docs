@@ -28,7 +28,7 @@ TradeJS is not a black-box trading product. It is a developer framework and runt
 - Generate runtime signals from the same strategy logic.
 - Run the framework locally or on self-hosted infrastructure.
 - Register custom strategy, indicator, and connector plugins.
-- Add Pine compatibility and AI/ML workflows as optional extensions.
+- Add Pine-backed strategy compatibility and AI/ML workflows as optional extensions.
 - Inspect results in the installable app.
 
 ## Public Surface
@@ -36,7 +36,7 @@ TradeJS is not a black-box trading product. It is a developer framework and runt
 Use public packages:
 
 - `@tradejs/core` for config, strategy authoring helpers, indicators, math, time, and figures
-- `@tradejs/node` for Node-only runtime helpers, backtests, Pine loading, and registries
+- `@tradejs/node` for Node-only runtime helpers, backtests, Pine strategy loading, and registries
 - `@tradejs/cli` for setup, backtests, signals, results, AI/ML workflows, and runtime checks
 - `@tradejs/app` for the optional web UI
 - `@tradejs/base` for the default preset

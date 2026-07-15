@@ -4,6 +4,8 @@ title: Добавить индикаторы
 
 Indicators преобразуют candle history в значения для стратегии.
 
+Пользовательские индикаторы создаются как TypeScript plugins.
+
 ## Регистрация plugin
 
 ```ts
@@ -26,4 +28,3 @@ export default defineConfig(basePreset, {
 
 - [Создание индикаторов](../indicators/authoring)
 - [Каталог индикаторов](../indicators/catalog)
-- [Pine indicators](../indicators/pine)
