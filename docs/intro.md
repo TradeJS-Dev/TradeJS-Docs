@@ -10,7 +10,7 @@ Start here if you are opening the project for the first time:
 
 1. Read [What is TradeJS?](./introduction/what-is-tradejs).
 2. Install the public packages with [Installation](./getting-started/installation).
-3. Run a deterministic first backtest with [Run your first backtest](./getting-started/first-backtest).
+3. Create the project and open the Backtest UI with `npx create-tradejs` in [Run your first backtest](./getting-started/first-backtest).
 4. Learn the main objects in [Core Concepts](./core-concepts/strategy).
 5. Copy from the practical [Examples](./examples).
 

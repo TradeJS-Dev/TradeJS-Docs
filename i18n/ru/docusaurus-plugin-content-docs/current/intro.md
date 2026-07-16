@@ -10,7 +10,7 @@ TradeJS — open-source self-hosted фреймворк для создания, 
 
 1. Прочитайте [Что такое TradeJS?](./introduction/what-is-tradejs).
 2. Установите публичные пакеты через [Установку](./getting-started/installation).
-3. Запустите детерминированный пример в [Первом бэктесте](./getting-started/first-backtest).
+3. Создайте проект и откройте Backtest UI через `npx create-tradejs` в [Первом бэктесте](./getting-started/first-backtest).
 4. Разберитесь с объектами в [Базовых понятиях](./core-concepts/strategy).
 5. Возьмите стартовые шаблоны из [Примеров](./examples).
 

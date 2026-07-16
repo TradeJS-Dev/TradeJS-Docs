@@ -8,8 +8,11 @@ title: How Backtests Work
 Run:
 
 ```bash
-npx @tradejs/cli backtest
+npx @tradejs/cli backtest --config <StrategyName:configName>
 ```
+
+The selected config must already exist in Redis. For a complete runnable
+example, start with [Run your first backtest](../../getting-started/first-backtest).
 
 Local infra prerequisite:
 

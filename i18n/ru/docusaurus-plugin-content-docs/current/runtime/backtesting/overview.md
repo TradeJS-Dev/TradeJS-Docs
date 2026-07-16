@@ -6,8 +6,11 @@ title: Как работают бэктесты
 ## Точка входа
 
 ```bash
-npx @tradejs/cli backtest
+npx @tradejs/cli backtest --config <StrategyName:configName>
 ```
+
+Выбранный config должен уже существовать в Redis. Полный runnable-пример
+описан в [Первом бэктесте](../../getting-started/first-backtest).
 
 Требование к локальной инфраструктуре:
 

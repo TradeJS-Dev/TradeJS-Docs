@@ -2,16 +2,28 @@
 title: Installation
 ---
 
-Install the public npm packages into your own TypeScript project. TradeJS runs locally or on infrastructure you operate; this guide does not depend on the TradeJS monorepo workspace.
+Use `create-tradejs` for a new project. Install packages manually only when
+adding TradeJS to an existing TypeScript project. Neither path depends on the
+TradeJS monorepo workspace.
 
 ## Requirements
 
-- Node.js `20.19+`
+- Node.js 20.19 or newer
 - npm `10+`
 - Docker Desktop or Docker Engine
 - Docker Compose plugin (`docker compose`)
 
-## Create a Project
+## Recommended: Create a Complete Project
+
+```bash
+npx create-tradejs
+```
+
+This installs the packages, starts local infrastructure, creates the initial
+user and backtest config, and opens the Web UI. Continue with
+[Run your first backtest](./first-backtest).
+
+## Manual Installation
 
 ```bash
 mkdir tradejs-project

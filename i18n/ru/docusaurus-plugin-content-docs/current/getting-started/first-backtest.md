@@ -2,76 +2,77 @@
 title: Первый бэктест
 ---
 
-На этой странице первый бэктест запускается из обычного npm-проекта. Клонировать
-TradeJS monorepo не нужно.
+Создайте полноценный локальный TradeJS-проект и запустите первый бэктест из
+Web UI. Клонировать TradeJS monorepo и вручную заполнять Redis не нужно.
 
-## 1. Создайте проект
+## Требования
 
-```bash
-mkdir tradejs-first-backtest
-cd tradejs-first-backtest
-npm init -y
-npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
-```
+- Node.js 20.19 или новее
+- npm 10 или новее
+- Docker Desktop или Docker Engine
+- Docker Compose plugin (`docker compose`)
 
-Добавьте `tradejs.config.ts` в корень проекта:
-
-```ts
-import { defineConfig } from '@tradejs/core/config';
-import { basePreset } from '@tradejs/base';
-
-export default defineConfig(basePreset);
-```
-
-## 2. Запустите infra
+## 1. Создайте и запустите TradeJS
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-npx @tradejs/cli doctor
-npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
+npx create-tradejs
 ```
 
-## 3. Сохраните backtest config
+Команда создаёт папку `tradejs-project`, после чего:
+
+1. устанавливает публичные пакеты TradeJS;
+2. создаёт `tradejs.config.ts` и локальные environment-файлы;
+3. запускает Redis и PostgreSQL/Timescale и ждёт прохождения healthchecks;
+4. запускает Web UI и открывает install-страницу в браузере.
+
+Чтобы выбрать другое имя проекта:
 
 ```bash
-docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
-  'users:root:backtests:configs:MaStrategy:base' \
-  '{"INTERVAL":["15"],"MAX_LOSS_VALUE":[10],"MA_FAST":[21],"MA_SLOW":[55],"LONG":[{"enable":true,"direction":"LONG","TP":2,"SL":1,"minRiskRatio":1.2}],"SHORT":[{"enable":true,"direction":"SHORT","TP":2,"SL":1,"minRiskRatio":1.2}]}'
+npx create-tradejs my-trading-project
 ```
 
-Grid хранится под ключом
-`users:<user>:backtests:configs:<StrategyName:configName>`. Каждое top-level
-значение должно быть массивом, даже если в нем один кандидат.
+## 2. Завершите локальную установку
 
-## 4. Запустите бэктест
+Введите и подтвердите пароль локального пользователя `root`. TradeJS сохранит в
+локальном Redis только hash пароля, создаст стартовый config `MaStrategy:base`,
+авторизует пользователя и откроет dashboard.
+
+На dashboard должен появиться стандартный график Coinbase BTCUSDT. Нажмите
+**Create backtest** в правом верхнем углу.
+
+## 3. Запустите бэктест
+
+Preset `First backtest preset` уже содержит:
+
+- strategy/config: `MaStrategy:base`;
+- connector: Binance;
+- ticker: `BTCUSDT`;
+- interval: 15 минут;
+- окно: 45 дней;
+- tests/parallel workers: 1/1.
+
+Нажмите **Start**. TradeJS загрузит необходимую публичную историю свечей,
+запустит бэктест и покажет прогресс и логи на странице. Точные метрики зависят
+от текущего рыночного окна: первый запуск проверяет pipeline и не обещает
+доходность.
+
+## Остановка и повторный запуск
+
+Нажмите `Ctrl+C` в терминале `create-tradejs`, чтобы остановить Web UI. Docker
+services продолжат работать. Для повторного запуска:
 
 ```bash
-npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
+cd tradejs-project
+npm run infra-up
+npm run dev
 ```
 
-Без `--cacheOnly` команда сначала обновляет публичную историю свечей. Успешный
-запуск выводит выбранную стратегию/config, прогресс и таблицу результатов.
-
-## Ожидаемый вывод
-
-Точные метрики меняются вместе с историей рынка. Это проверка pipeline, а не
-обещание доходности.
-
-## Метрики
-
-- `orders` - закрытые ордера;
-- `wins` / `losses` - положительные и отрицательные исходы;
-- `amount` - gross result в snapshot;
-- `netProfit` - net historical result;
-- `winRate` - доля winning orders;
-- `maxDrawdown` - максимальное историческое снижение.
-
-## Остановите infra
+Остановить локальную инфраструктуру:
 
 ```bash
-npx @tradejs/cli infra-down
+cd tradejs-project
+npm run infra-down
 ```
 
-Точный формат Redis key, script-based seeding и troubleshooting описаны в
+Ручная настройка grid-конфигов описана в статье
 [Создать backtest config](./backtest-config).

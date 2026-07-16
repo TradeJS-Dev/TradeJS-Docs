@@ -16,7 +16,7 @@ TradeJS uses a TypeScript-first **write → backtest → run** workflow. Develop
 The documentation covers:
 
 1. Framework introduction, TypeScript-first scope, and self-hosted setup
-2. Getting started, installation, first backtest, and backtest config seeding
+2. One-command setup with `npx create-tradejs`, first-run password installation, market dashboard, and first backtest in the Web UI
 3. TypeScript strategy and indicator authoring
 4. Backtesting, configuration comparison, and runtime promotion
 5. Runtime signals and controlled execution

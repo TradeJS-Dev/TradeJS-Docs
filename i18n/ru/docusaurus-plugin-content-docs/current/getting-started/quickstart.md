@@ -3,95 +3,82 @@ sidebar_position: 2
 title: Быстрый старт
 ---
 
-Этот гайд создаёт self-hosted TypeScript-проект из публичных npm-пакетов. Он рассчитан на внешнего пользователя без клонирования TradeJS monorepo.
-
-Если нужны только команды установки, начните с [Установки](./installation). Пошаговый package-only запуск описан в [Первом бэктесте](./first-backtest).
-
-## 1. Установите пакеты
+Создайте и запустите self-hosted TradeJS-проект из публичных npm-пакетов:
 
 ```bash
-mkdir tradejs-project
-cd tradejs-project
-npm init -y
+npx create-tradejs
+```
+
+Это рекомендуемый старт для внешнего пользователя. Команда создаёт
+`tradejs-project`, устанавливает согласованные версии TradeJS-пакетов, запускает
+локальную Docker-инфраструктуру и открывает Web UI. На install-странице задайте
+и подтвердите пароль локального пользователя `root`. TradeJS автоматически
+авторизует пользователя и откроет dashboard.
+
+На dashboard загрузится график Coinbase BTCUSDT. Кнопка **Create backtest** в правом
+верхнем углу открывает форму запуска бэктеста. Полный сценарий описан в статье
+[Первый бэктест](./first-backtest).
+
+## Что создаётся в проекте
+
+- `tradejs.config.ts` с `basePreset`;
+- `.env` с локальными auth URL и сгенерированным auth secret;
+- `docker-compose.dev.yml` для Redis и PostgreSQL/Timescale;
+- npm scripts для UI, CLI-бэктестов и инфраструктуры;
+- `.tradejs/app` как generated UI output после первого запуска приложения.
+
+`tradejs-app` создаёт `.tradejs/app` как generated UI output. Настраивайте
+TradeJS из корня проекта и не редактируйте сгенерированную копию приложения.
+
+## Ежедневные команды
+
+Запускайте их из `tradejs-project`:
+
+```bash
+npm run infra-up
+npm run doctor
+npm run dev
+```
+
+Полезные routes:
+
+- `/routes/dashboard` — графики, сигналы и кнопка **Create backtest**;
+- `/routes/backtest` — запуск jobs и просмотр прогресса;
+- `/routes/strategies` — runtime strategy config.
+
+Остановка локальных services:
+
+```bash
+npm run infra-down
+```
+
+## Ручная установка пакетов
+
+Она нужна только для интеграции TradeJS в существующий проект. Используйте одну
+версию для всех `@tradejs/*` пакетов:
+
+```bash
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Используйте одинаковую версию для всех `@tradejs/*` пакетов. В актуальном source project публичные пакеты имеют версию `1.0.10`.
+После этого выполните ручную настройку из статьи [Установка](./installation).
 
-`tradejs-app` при запуске из `node_modules` создает внутреннюю рабочую копию `.tradejs/app`. Считайте эту папку generated output; настраивайте проект из корневого `tradejs.config.ts`.
+## Частые ошибки
 
-## 2. Настройте TradeJS
+### Docker недоступен
 
-```ts
-import { defineConfig } from '@tradejs/core/config';
-import { basePreset } from '@tradejs/base';
+Запустите Docker Desktop или Docker daemon, проверьте `docker compose version` и
+повторите `npx create-tradejs` в новой пустой папке.
 
-export default defineConfig(basePreset);
-```
+### Папка по умолчанию уже существует
 
-`basePreset` подключает built-in strategy, indicator и connector catalogs.
-
-## 3. Запустите локальную инфраструктуру
-
-`infra-init` создает `docker-compose.dev.yml` в корне проекта один раз. Если файл уже существует, он не перезаписывается.
+Передайте другое имя:
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-npx @tradejs/cli doctor
+npx create-tradejs my-trading-project
 ```
 
-Примечания:
+### Версии пакетов не совпадают
 
-- `docker-compose.dev.yml` - локальная dev-инфраструктура.
-- `docker-compose.prod.yml` - production compose, `infra-up` его не использует.
-
-## 4. Создайте root-пользователя
-
-```bash
-npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
-```
-
-Подробнее: [Root User Setup](./root-user).
-
-## 5. Запустите бэктест
-
-`backtest` не является initializer: команде нужен сохраненный backtest config в
-Redis. Не запускайте bare-команду `npx @tradejs/cli backtest` в новом проекте.
-
-[Первый бэктест](./first-backtest) показывает, как сохранить `MaStrategy:base`.
-После этого выполните:
-
-```bash
-npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
-```
-
-Команды `results`, `signals` и другие сценарии с обязательными аргументами и
-prerequisites описаны в [CLI API](../api/cli).
-
-## 6. Запустите Web UI
-
-```bash
-npx tradejs-app dev
-```
-
-Откройте:
-
-- `http://localhost:3000/routes/backtest` для сохраненных бэктестов;
-- `http://localhost:3000/routes/dashboard` для графиков и сигналов;
-- `http://localhost:3000/routes/strategies` для runtime strategy config.
-
-Если порт `3000` занят, `tradejs-app dev` выберет следующий свободный порт и выведет фактический URL.
-
-Production mode:
-
-```bash
-npx tradejs-app build
-npx tradejs-app start
-```
-
-## 7. Остановите dev infra
-
-```bash
-npx @tradejs/cli infra-down
-```
+Удалите `node_modules` и lockfile, затем установите все TradeJS-пакеты вместе.
+Не смешивайте разные версии `@tradejs/*`.

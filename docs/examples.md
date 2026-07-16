@@ -104,4 +104,7 @@ Related pages:
 
 ## First Runnable Backtest
 
-For a complete package-only flow, use [Run your first backtest](./getting-started/first-backtest). It creates an npm project, seeds a `MaStrategy` backtest config, and runs the public CLI.
+For the complete package-only flow, run `npx create-tradejs` as described in
+[Run your first backtest](./getting-started/first-backtest). It creates an npm
+project, starts local infrastructure, seeds `MaStrategy:base`, and opens the
+Backtest UI.
