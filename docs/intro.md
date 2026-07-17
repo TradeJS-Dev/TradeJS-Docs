@@ -4,7 +4,7 @@ title: Welcome
 slug: /
 ---
 
-TradeJS is an open-source, self-hosted framework for building, backtesting, and running programmable trading strategies in TypeScript.
+TradeJS is a TypeScript framework for building, backtesting, and running programmable trading strategies. Its self-hosted runtime keeps infrastructure and execution under your control.
 
 Start here if you are opening the project for the first time:
 
@@ -44,6 +44,7 @@ Use explicit public subpaths such as `@tradejs/core/config`, `@tradejs/core/indi
 - GitHub: [TradeJS-Dev/tradejs](https://github.com/TradeJS-Dev/tradejs)
 - npm organization: [npmjs.com/org/tradejs](https://www.npmjs.com/org/tradejs)
 - Examples: [Examples](./examples)
+- Licensing: [License overview](./introduction/licensing)
 
 ## Read Next
 
@@ -51,4 +52,5 @@ Use explicit public subpaths such as `@tradejs/core/config`, `@tradejs/core/indi
 - [Quickstart](./getting-started/quickstart)
 - [Run your first backtest](./getting-started/first-backtest)
 - [What TradeJS is not](./introduction/what-tradejs-is-not)
+- [Licensing](./introduction/licensing)
 - [Backtesting caveats](./limitations/backtesting-caveats)

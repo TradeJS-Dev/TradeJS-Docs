@@ -73,7 +73,7 @@ const config: Config = {
       {
         name: 'description',
         content:
-          'Documentation for the open-source, self-hosted TradeJS framework: build, backtest, and run programmable trading strategies in TypeScript.',
+          'Documentation for the TradeJS TypeScript framework: build, backtest, and run programmable trading strategies with a self-hosted runtime.',
       },
       {
         name: 'keywords',
@@ -199,8 +199,12 @@ const config: Config = {
           ],
         },
         {
-          title: t('Open Source', 'Open Source'),
+          title: t('Licensing', 'Лицензирование'),
           items: [
+            {
+              label: t('License Overview', 'Обзор лицензий'),
+              to: '/introduction/licensing',
+            },
             {
               label: t('GitHub Repository', 'Репозиторий GitHub'),
               href: 'https://github.com/tradejs-dev/tradejs',

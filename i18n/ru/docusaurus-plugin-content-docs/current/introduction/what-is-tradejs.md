@@ -2,7 +2,7 @@
 title: Что такое TradeJS?
 ---
 
-TradeJS — open-source self-hosted фреймворк для создания, бэктестинга и запуска программируемых торговых стратегий на TypeScript.
+TradeJS — TypeScript-фреймворк для создания, бэктестинга и запуска программируемых торговых стратегий. Self-hosted runtime оставляет инфраструктуру и исполнение под вашим контролем.
 
 В базовом виде TradeJS-проект состоит из:
 
@@ -55,3 +55,4 @@ export default defineConfig(basePreset);
 - [Первый бэктест](../getting-started/first-backtest)
 - [Базовые понятия: стратегия](../core-concepts/strategy)
 - [Примеры](../examples)
+- [Лицензирование](./licensing)

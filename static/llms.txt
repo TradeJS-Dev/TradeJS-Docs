@@ -1,6 +1,6 @@
 # TradeJS Documentation
 
-> Documentation for the open-source, self-hosted TradeJS framework: build, backtest, and run programmable trading strategies in TypeScript.
+> Documentation for the TradeJS TypeScript framework: build, backtest, and run programmable trading strategies with a self-hosted runtime.
 
 Docs home: https://docs.tradejs.dev
 Russian docs: https://docs.tradejs.dev/ru/

@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
         'introduction/what-is-tradejs',
         'introduction/who-is-it-for',
         'introduction/what-tradejs-is-not',
+        'introduction/licensing',
       ],
     },
     {

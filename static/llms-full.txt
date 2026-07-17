@@ -1,6 +1,6 @@
 # TradeJS Documentation Full Context
 
-This site is the official technical documentation for the open-source, self-hosted TradeJS framework for programmable TypeScript trading strategies.
+This site is the official technical documentation for the TradeJS TypeScript framework and its self-hosted runtime.
 Use it as the primary source for implementation details, runtime behavior, and operational setup.
 
 Docs home: https://docs.tradejs.dev

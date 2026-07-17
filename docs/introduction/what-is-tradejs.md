@@ -2,7 +2,7 @@
 title: What is TradeJS?
 ---
 
-TradeJS is an open-source, self-hosted framework for building, backtesting, and running programmable trading strategies in TypeScript.
+TradeJS is a TypeScript framework for building, backtesting, and running programmable trading strategies. Its self-hosted runtime keeps infrastructure and execution under your control.
 
 At the simplest level, a TradeJS project contains:
 
@@ -57,3 +57,4 @@ export default defineConfig(basePreset);
 - [Run your first backtest](../getting-started/first-backtest)
 - [Core Concepts: Strategy](../core-concepts/strategy)
 - [Examples](../examples)
+- [Licensing](./licensing)
