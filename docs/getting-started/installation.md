@@ -32,7 +32,8 @@ npm init -y
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Keep all `@tradejs/*` packages on the same version. Current public packages in the source project are `1.0.10`.
+Keep all `@tradejs/*` packages on the same version. When pinning versions
+manually, use the same release number for every TradeJS package.
 
 ## Add `tradejs.config.ts`
 
@@ -72,6 +73,18 @@ npx tradejs-app dev
 ```
 
 Open the URL printed by the command. The default is usually `http://localhost:3000`.
+
+## Anonymous Onboarding Telemetry
+
+The Web UI reports only the anonymous Yandex Metrica goal names
+`scaffold_success` and `first_backtest`. Strategy configuration, symbols,
+credentials, and backtest results are not included. To disable these events,
+add the following value to your project `.env` before starting or building the
+app:
+
+```bash
+NEXT_PUBLIC_TRADEJS_TELEMETRY_DISABLED=1
+```
 
 Useful routes:
 
