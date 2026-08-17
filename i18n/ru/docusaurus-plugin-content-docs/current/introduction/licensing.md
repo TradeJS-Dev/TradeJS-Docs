@@ -6,7 +6,10 @@ title: Лицензирование
 
 ## Компоненты под Business Source License
 
-Продуктовые и runtime-пакеты `@tradejs/app`, `@tradejs/base`, `@tradejs/cli`, `@tradejs/node` и `@tradejs/strategies`, а также приватный ML runtime и продуктовый код под корневой лицензией используют Business Source License 1.1 (`BUSL-1.1`).
+Продуктовые и runtime-пакеты `@tradejs/app`, `@tradejs/base`, `@tradejs/cli`,
+`@tradejs/node` и независимо публикуемые пакеты `@tradejs/strategy-*`, а также
+приватный ML runtime и продуктовый код под корневой лицензией используют
+Business Source License 1.1 (`BUSL-1.1`).
 
 Additional Use Grant разрешает production-использование внутри вашей организации, включая собственный трейдинг, исследования, аналитику и операционные задачи. Он не разрешает предоставлять третьим лицам конкурирующий продукт, hosted-сервис или managed-сервис. Для такого использования нужна коммерческая лицензия.
 
@@ -21,6 +24,7 @@ Additional Use Grant разрешает production-использование в
 - `create-tradejs`
 - `@tradejs/indicators`
 - `@tradejs/infra`
+- `@tradejs/strategy-kit`
 - `@tradejs/types`
 - sandbox-пример для внешних пользователей
 

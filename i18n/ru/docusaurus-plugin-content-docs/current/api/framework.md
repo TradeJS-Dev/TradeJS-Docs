@@ -16,9 +16,33 @@ title: Базовый API
 ## Правило импортов
 
 - Импортируйте config/plugin registration из `@tradejs/core/config`.
-- Импортируйте runtime/хелперы из явных публичных subpath’ов вроде `@tradejs/node/strategies`, `@tradejs/node/backtest`, `@tradejs/core/indicators`, `@tradejs/core/math`, `@tradejs/core/time`, `@tradejs/node/pine`.
+- Импортируйте runtime/хелперы из явных публичных subpath’ов вроде `@tradejs/node/strategies`, `@tradejs/node/backtest`, `@tradejs/node/registry`, `@tradejs/core/indicators`, `@tradejs/core/math`, `@tradejs/core/time`, `@tradejs/node/pine`.
 - Импортируйте общие типы из `@tradejs/types`.
 - Не используйте непубличные deep-imports.
+
+У `@tradejs/core`, `@tradejs/node` и `@tradejs/infra` нет root export.
+
+## Публичные поверхности пакетов
+
+Browser-safe subpath'ы `@tradejs/core`:
+
+- authoring/runtime contracts: `config`, `strategies`, `indicators`, `figures`;
+- data/calculation helpers: `data`, `math`, `time`, `tickers`, `trade`, `grid`, `backtest`;
+- shared utilities: `api`, `async`, `constants`;
+- нормализация AI settings: `aiEndpoints`, `aiLanguages`, `aiModels`.
+
+Node-only subpath'ы `@tradejs/node`:
+
+- `strategies`, `registry`, `backtest`, `pine`;
+- `ai`, `connectors`, `cli`, `constants`.
+
+Server-only `@tradejs/infra` содержит Redis, logging, files, HTTP, ML, user и
+runtime settings, trading accounts и узкие Timescale subpath'ы. Candles,
+derivatives, spread, market context, Hyperliquid whale context и Timescale
+client импортируются из `@tradejs/infra/timescale/*`; агрегирующего
+`@tradejs/infra/timescale` в TradeJS 3 нет.
+
+Перенесенные импорты перечислены в [миграции на TradeJS 3](../getting-started/migration-v3).
 
 ## Конвенции по утилитам (для контрибьюторов)
 
@@ -130,7 +154,6 @@ runtime risk controls. Они не включаются автоматическ
 ```ts
 import { defineConfig } from '@tradejs/core/config';
 import { basePreset } from '@tradejs/base';
-import { getBuiltInStrategyDefaultConfig } from '@tradejs/strategies';
 import {
   closeOppositePositionsBeforeOpen,
   createCloseAllOnGlobalProfitBeforeSignalsHook,
@@ -140,7 +163,6 @@ import {
 export default defineConfig(basePreset, {
   hooks: {
     beforeSignals: createCloseAllOnGlobalProfitBeforeSignalsHook({
-      getStrategyDefaultConfig: getBuiltInStrategyDefaultConfig,
       profitRiskMultiplier: 5,
     }),
     onBar: createMoveStopToBreakEvenOnBarHook(),

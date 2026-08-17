@@ -52,6 +52,19 @@ Backtest config - JSON object, где каждое значение являет
 
 TradeJS разворачивает массивы в grid тестов. Даже одно значение нужно заворачивать в массив.
 
+## Directional overrides
+
+Многие built-in стратегии разрешают numeric/boolean field в таком порядке:
+
+1. `<KEY>_LONG` или `<KEY>_SHORT` для текущего направления;
+2. unsuffixed `<KEY>`;
+3. strategy fallback.
+
+Например, `TARGET_R_MULT_SHORT` может настраивать short target независимо от
+`TARGET_R_MULT_LONG`. Суффикс поддерживают только поля, которые используют эту
+конвенцию; сверяйтесь с reference/default config стратегии. В grid каждое
+suffixed value по-прежнему является массивом.
+
 ## Seed через `redis-cli`
 
 После `npx @tradejs/cli infra-up` Redis обычно доступен на `127.0.0.1:6379`.
@@ -100,8 +113,12 @@ await redis.quit();
 Runtime strategy configs лежат в:
 
 ```text
-users:<user>:strategies:<StrategyName>:config
+users:<user>:strategies:<StrategyName>:<configId>
 ```
+
+`config` — conventional default id. Named ids позволяют одной стратегии иметь
+отдельные configs для разных accounts/scopes; `ENABLE=false` отключает запись
+без удаления.
 
 В CLI есть helper, который превращает enabled runtime config в one-value backtest grid и убирает runtime-only keys:
 

@@ -2,7 +2,7 @@
 title: 'VolumeDivergence'
 ---
 
-`VolumeDivergence` — встроенная TypeScript-стратегия разворота из `@tradejs/strategies`, которая сравнивает price pivots и pivots нормализованного объема.
+`VolumeDivergence` — встроенная TypeScript-стратегия разворота из `@tradejs/strategy-volume-divergence`, которая сравнивает price pivots и pivots нормализованного объема.
 
 ## Логика входа
 

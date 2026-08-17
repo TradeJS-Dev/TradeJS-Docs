@@ -2,7 +2,7 @@
 title: 'MaStrategy'
 ---
 
-`MaStrategy` — встроенная TypeScript-стратегия из `@tradejs/strategies` на пересечении fast/slow скользящих средних.
+`MaStrategy` — встроенная TypeScript-стратегия из `@tradejs/strategy-ma-strategy` на пересечении fast/slow скользящих средних.
 
 ## Логика входа
 

@@ -34,18 +34,24 @@ Research и backtesting:
 - `runtime-parity` - сверяет runtime entries с deterministic backtest replay.
 - `replay` - replay сохраненных runtime данных.
 - `runtime-evidence` - собирает runtime evidence.
+- `runtime-evidence-sync` - импортирует complete evidence bundles с другого runtime host.
+- `runtime-scorecard` - сравнивает recent runtime behavior с verified release envelope.
 - `replay-runtime-evidence` - replay собранного runtime evidence.
 - `execution-calibration` - проверяет runtime execution assumptions.
 
 Runtime и signals:
 
 - `signals` - оценивает runtime strategies на последней закрытой свече.
+- `signals-daemon` - постоянно запускает configured scopes по closed-candle boundaries.
 - `signals-summary` - собирает summary по recent runtime signal/order state.
+- `market-ws` - поднимает dashboard candle WebSocket gateway.
 - `bot` - запускает Telegram bot.
 
-`research:auto` и `agent-run` — maintainer workflows основного source repo, а
-не поддерживаемые команды для внешнего package-flow. Поэтому они намеренно не
-включены в этот публичный command map, хотя их launchers пока входят в пакет.
+`research:auto`, `research:core`, `strategy-release`, `agent-run`,
+`binance:breadth-universes:update` и `hyperliquid:whales:update` — maintainer
+workflows основного source repo, а не поддерживаемые команды для внешнего
+package-flow. Поэтому они намеренно не включены в этот публичный command map,
+хотя их launchers пока входят в пакет.
 
 Market data и maintenance:
 
@@ -55,6 +61,8 @@ Market data и maintenance:
 - `derivatives:ingest` - ingest derivatives context.
 - `derivatives:ingest:coinalyze:all` - ingest Coinalyze derivatives context для всех configured targets.
 - `spread:ingest` - ingest Binance/Coinbase spread context.
+- `hyperliquid:whale-ingest` - stream position-aware whale execution context.
+- `hyperliquid:whale-backfill` - заполняет explicit historical whale-context window.
 - `maintenance:cleanup-market-context` - чистит старые market-context records.
 - `clean-dir`, `clean-redis`, `clean-tests` - maintenance cleanup helpers.
 
@@ -152,6 +160,14 @@ Backtest config keys лежат в Redis по ключу `users:<user>:backtests
 - `-c, --chunk` - разделить universe, например `1/3`.
 - `-U, --user` - Redis user config.
 - `-o, --connector` - connector provider/name.
+- `-V, --universe` - `crypto` или `tradfi`.
+- `-A, --account` - trading account id.
+- `-D, --deployment` - runtime deployment id.
+- `-w, --watch` - продолжать запуск по candle boundaries; `signals-daemon` включает этот режим напрямую.
+- `-d, --settleDelayMs` - delay после candle close перед daemon cycle.
+
+Без explicit scope flags `signals` находит и запускает все active named runtime
+config scopes. Подробнее: [Как работают сигналы](../runtime/execution/signals).
 
 ## Signals Summary
 

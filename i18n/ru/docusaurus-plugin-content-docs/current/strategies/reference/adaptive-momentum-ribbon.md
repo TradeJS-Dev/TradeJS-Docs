@@ -2,7 +2,7 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
-`AdaptiveMomentumRibbon` — встроенная Pine-стратегия из `@tradejs/strategies`.
+`AdaptiveMomentumRibbon` — встроенная Pine-стратегия из `@tradejs/strategy-adaptive-momentum-ribbon`.
 
 Runtime передает в `core.ts` загрузчик скрипта (`loadPineScriptFile`), поэтому Pine-логика хранится отдельно и обновляется независимо от TypeScript-кода.
 
@@ -25,7 +25,9 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 6. Если позиции нет и сигнал валидный:
 
 - применяет side-конфиг (`LONG` или `SHORT`)
-- считает TP/SL/qty
+- ставит structural stop за Pine invalidation/Keltner level
+- считает R-multiple target и risk-sized qty
+- при включенных guardrails отбрасывает плохую signal-time execution geometry
 - возвращает `entry`
 
 ## Выходы
@@ -54,6 +56,10 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 - `AMR_MOMENTUM_PERIOD` — `Momentum Period` в Pine.
 - `AMR_BUTTERWORTH_SMOOTHING` — `Butterworth Smoothing` в Pine.
 - `AMR_WAIT_CLOSE` — подтверждать сигналы только на закрытии свечи.
+- `AMR_CONFIRM_ON_NEXT_BAR` — подтверждать candidate следующей закрытой свечой.
+- `AMR_MIN_SIGNAL_OSC_ABS`, `AMR_MIN_SIGNAL_OSC_ABS_LONG`, `AMR_MIN_SIGNAL_OSC_ABS_SHORT` — порог силы oscillator с directional overrides.
+- `AMR_REQUIRE_KC_BIAS` — требовать согласование с Keltner bias.
+- `AMR_MIN_BARS_BETWEEN_SIGNALS` — detector cooldown.
 - `AMR_SHOW_INVALIDATION_LEVELS` — рисовать invalidation-уровни.
 - `AMR_SHOW_KELTNER_CHANNEL` — рисовать Keltner Channel.
 - `AMR_KC_LENGTH` — период Keltner midline.
@@ -64,6 +70,11 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 ### Параметры исполнения/визуализации
 
 - `AMR_LOOKBACK_BARS` — сколько свечей передавать в Pine на один расчет.
+- `AMR_STOP_BUFFER_PCT` — buffer за structural invalidation level.
+- `AMR_TARGET_R_MULT` — расстояние target в initial-risk multiples.
+- `AMR_MIN_TP_DISTANCE_BPS*` — optional minimum target distance.
+- `AMR_MAX_DELAY_RISK_TP_RATIO*` и `AMR_DELAY_RISK_MOVE_MULT*` — optional signal-time delayed-entry risk guard.
+- `AMR_EXIT_ON_OPPOSITE_SIGNAL` — выход по противоположному AMR signal.
 - `AMR_EXIT_ON_INVALIDATION` — закрывать позицию по invalidation-сигналу.
 - `AMR_LINE_PLOTS` — какие plot-линии переносить в `figures.lines`.
 - `CLOSE_OPPOSITE_POSITIONS` — поле есть в конфиге по общему шаблону, текущий `AdaptiveMomentumRibbon` hook-логику по нему не использует.
@@ -72,15 +83,13 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 
 - `LONG.enable` — включить/выключить long-сценарий.
 - `LONG.direction` — направление ордера (`LONG`).
-- `LONG.TP` — take-profit в процентах.
-- `LONG.SL` — stop-loss в процентах.
+- `LONG.minRiskRatio` — минимальный net reward/risk после costs.
 
 ### Параметры сценария `SHORT`
 
 - `SHORT.enable` — включить/выключить short-сценарий.
 - `SHORT.direction` — направление ордера (`SHORT`).
-- `SHORT.TP` — take-profit в процентах.
-- `SHORT.SL` — stop-loss в процентах.
+- `SHORT.minRiskRatio` — минимальный net reward/risk после costs.
 
 ## Используемые индикаторы (что означает каждый)
 
@@ -120,18 +129,23 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 {
   "ENV": "CRON",
   "INTERVAL": "15",
-  "AMR_LOOKBACK_BARS": 400,
-  "AMR_MOMENTUM_PERIOD": 20,
-  "AMR_BUTTERWORTH_SMOOTHING": 3,
+  "AMR_LOOKBACK_BARS": 200,
+  "AMR_MOMENTUM_PERIOD": 32,
+  "AMR_BUTTERWORTH_SMOOTHING": 4,
   "AMR_WAIT_CLOSE": true,
+  "AMR_CONFIRM_ON_NEXT_BAR": true,
+  "AMR_MIN_SIGNAL_OSC_ABS_LONG": 1.75,
+  "AMR_MIN_SIGNAL_OSC_ABS_SHORT": 1.25,
   "AMR_KC_LENGTH": 20,
   "AMR_KC_MA_TYPE": "EMA",
   "AMR_ATR_LENGTH": 14,
   "AMR_ATR_MULTIPLIER": 2,
+  "AMR_STOP_BUFFER_PCT": 0.05,
+  "AMR_TARGET_R_MULT": 2.4,
   "AMR_EXIT_ON_INVALIDATION": true,
   "AMR_LINE_PLOTS": ["kcMidline", "kcUpper", "kcLower", "invalidationLevel"],
-  "LONG": { "enable": true, "direction": "LONG", "TP": 2, "SL": 1 },
-  "SHORT": { "enable": true, "direction": "SHORT", "TP": 2, "SL": 1 }
+  "LONG": { "enable": true, "direction": "LONG", "minRiskRatio": 1 },
+  "SHORT": { "enable": true, "direction": "SHORT", "minRiskRatio": 1 }
 }
 ```
 

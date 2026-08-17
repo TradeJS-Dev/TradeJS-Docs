@@ -2,7 +2,7 @@
 title: 'AdaptiveTrendChannel'
 ---
 
-`AdaptiveTrendChannel` is a built-in TypeScript strategy from `@tradejs/strategies`.
+`AdaptiveTrendChannel` is a built-in TypeScript strategy from `@tradejs/strategy-adaptive-trend-channel`.
 
 It replays candles through an adaptive channel engine, watches for bullish/bearish channel flips, and sizes entries from the distance to the channel boundary used as the stop.
 

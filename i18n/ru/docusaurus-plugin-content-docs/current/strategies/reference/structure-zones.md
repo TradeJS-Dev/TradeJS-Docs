@@ -2,7 +2,7 @@
 title: 'StructureZones'
 ---
 
-`StructureZones` - встроенная TypeScript-стратегия из `@tradejs/strategies`.
+`StructureZones` - встроенная TypeScript-стратегия из `@tradejs/strategy-structure-zones`.
 
 Она исследует market-structure zones от swing points и торгует reactions или transition breakouts от этих зон.
 

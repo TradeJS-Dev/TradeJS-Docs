@@ -7,7 +7,8 @@ Redis is used as an operational storage layer for runtime state, configs, and tr
 ## Main Key Families
 
 - Users: `users:index:<user>`
-- User strategy configs: `users:<user>:strategies:*:config`
+- Named user strategy configs: `users:<user>:strategies:<strategy>:<configId>`
+- Promoted per-symbol strategy results: `users:<user>:strategies:<strategy>:results`
 - Backtest configs: `users:<user>:backtests:configs:<config>`
 - Backtest artifacts:
   `users:<user>:tests:<strategy>:<testName>:(config|stat|orders)`
@@ -22,6 +23,10 @@ TradeJS uses mixed persistence:
 - some keys are short-lived (cache/test runtime),
 - some keys are medium-lived (signals/history windows),
 - config keys are intended to stay durable.
+
+`config` is the conventional runtime config id; `results` is reserved for
+promoted per-symbol backtest results and is not loaded as a named runtime
+config.
 
 ## Operational Rules
 

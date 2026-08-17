@@ -6,7 +6,10 @@ TradeJS version 2.0.0 and later uses a mixed-license model. The license closest 
 
 ## Business Source License components
 
-The product and runtime packages `@tradejs/app`, `@tradejs/base`, `@tradejs/cli`, `@tradejs/node`, and `@tradejs/strategies`, together with the private ML runtime and product code covered by the repository root license, use Business Source License 1.1 (`BUSL-1.1`).
+The product and runtime packages `@tradejs/app`, `@tradejs/base`, `@tradejs/cli`,
+`@tradejs/node`, and the independently published `@tradejs/strategy-*`
+packages, together with the private ML runtime and product code covered by the
+repository root license, use Business Source License 1.1 (`BUSL-1.1`).
 
 The Additional Use Grant allows production use for your own organization, including your own trading, research, analytics, and operations. It does not allow you to provide a competing product or hosted or managed service to third parties. That use requires a commercial license.
 
@@ -21,6 +24,7 @@ These packages remain MIT-licensed:
 - `create-tradejs`
 - `@tradejs/indicators`
 - `@tradejs/infra`
+- `@tradejs/strategy-kit`
 - `@tradejs/types`
 - the external-user sandbox example
 

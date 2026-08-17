@@ -26,7 +26,7 @@ Use this when you are porting or comparing Pine Script-inspired workflows.
 
 ## Built-In Strategies
 
-The current built-in catalog includes:
+The non-empty `@tradejs/base` preset installs independent strategy packages for:
 
 - `Breakout`
 - `TrendLine`
@@ -41,8 +41,21 @@ The current built-in catalog includes:
 - `AdaptiveMomentumRibbon`
 - `MaStrategy`
 - `VolumeDivergence`
+- `MarketFlushReversal`
+- `VolatilityCompressionBreakout`
+- `RelativeRotation`
+- `CupAndHandle`
+- `HeadAndShoulders`
+- `Grid`
+- `GridClassic`
+- `HyperliquidConsensus`
 
-Built-ins are useful examples, but they are still strategy code that needs your own validation.
+TrendLine and ReverseTrendLine share `@tradejs/strategy-trend-line`; every
+other strategy has its own package and repository. Built-ins are useful
+examples, but they are still strategy code that needs your own validation.
+
+See the [built-in strategy catalog](../strategies/reference) for the grouped
+list, data requirements, and per-strategy references.
 
 ## Next
 

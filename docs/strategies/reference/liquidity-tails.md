@@ -2,7 +2,7 @@
 title: 'LiquidityTails'
 ---
 
-`LiquidityTails` is a built-in TypeScript strategy from `@tradejs/strategies`.
+`LiquidityTails` is a built-in TypeScript strategy from `@tradejs/strategy-liquidity-tails`.
 
 It detects wick/tail liquidity zones, waits for retests, and trades reactions with a stop outside the retested zone.
 
@@ -20,7 +20,8 @@ It detects wick/tail liquidity zones, waits for retests, and trades reactions wi
    - short: above `signal.zone.top`
 7. Computes target from `LIQUIDITY_TAILS_TARGET_R_MULT`.
 8. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
-9. Returns `entry` with liquidity-tail figures and `liquidityTailsContext`.
+9. Optionally reserves part of the risk budget for later scale-ins at improved retests.
+10. Returns `entry` with liquidity-tail figures and `liquidityTailsContext`.
 
 Entry codes:
 
@@ -31,7 +32,10 @@ Entry codes:
 
 When a position exists:
 
+- `LIQUIDITY_TAILS_INVALIDATION_EXIT` when the configured directional invalidation policy is enabled.
 - `LIQUIDITY_TAILS_OPPOSITE_RETEST_EXIT` when `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST=true` and the opposite retest appears.
+- `LIQUIDITY_TAILS_SCALE_IN_RETEST_EXIT` when an intended addition retest should close instead.
+- otherwise a qualifying improved retest can produce `LIQUIDITY_TAILS_*_SCALE_IN` until the configured addition count or basket risk budget is exhausted.
 - otherwise `POSITION_EXISTS`.
 
 ## Config Parameters
@@ -48,11 +52,28 @@ Liquidity-tail model:
 - `LIQUIDITY_TAILS_REACTION_CLOSE_BEYOND_ZONE`
 - `LIQUIDITY_TAILS_REQUIRE_REACTION_BODY`
 - `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT`
+- `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS`
+- `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES`
+- `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL`
+- `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS`
+- `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO`
+- `LIQUIDITY_TAILS_CLOSE_HOLD_BARS`
 - `LIQUIDITY_TAILS_STOP_ATR_BUFFER_MULT`
 - `LIQUIDITY_TAILS_STOP_BUFFER_PCT`
 - `LIQUIDITY_TAILS_TARGET_R_MULT`
 - `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST`
+- `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION`
+- `LIQUIDITY_TAILS_SCALE_IN_ENABLED`
+- `LIQUIDITY_TAILS_SCALE_IN_COUNT`
+- `LIQUIDITY_TAILS_INITIAL_RISK_FRACTION`
+- `LIQUIDITY_TAILS_SCALE_IN_MIN_IMPROVEMENT_ATR`
 - `LIQUIDITY_TAILS_MAX_FIGURE_ZONES`
+
+For numeric and boolean fields resolved directionally, `<KEY>_LONG` or
+`<KEY>_SHORT` takes precedence over `<KEY>`. This applies to wick ratio,
+dominance, retest distance/age/touches, retest ordinal, zone age, rejection
+efficiency, close-hold bars, target R, and invalidation exit. An omitted
+directional value falls back to the unsuffixed field.
 
 Shared groups:
 
@@ -82,3 +103,5 @@ The strategy stores:
 ## Validation Notes
 
 Check zone age, broken-zone behavior, and retest distance before comparing results. This strategy can be materially affected by candle wick quality and provider differences.
+When scale-ins are enabled, evaluate basket-level maximum loss and connector
+support for increasing an existing position, not just the first entry.

@@ -2,7 +2,10 @@
 
 Standalone Docusaurus documentation site for the TradeJS framework.
 
-Source of truth for `docs.tradejs.dev`. Core framework code stays in the main monorepo: `https://github.com/TradeJS-Dev/tradejs`.
+Source of truth for `docs.tradejs.dev`. Core framework code stays in
+[`TradeJS`](https://github.com/TradeJS-Dev/TradeJS); project composition,
+deployment, Base, Strategy Kit, and strategy implementations live in their own
+public repositories.
 
 ## Public Docs Entry Points
 
@@ -10,7 +13,8 @@ Source of truth for `docs.tradejs.dev`. Core framework code stays in the main mo
 - Installation: https://docs.tradejs.dev/getting-started/installation
 - First backtest: https://docs.tradejs.dev/getting-started/first-backtest
 - Examples: https://docs.tradejs.dev/examples
-- GitHub: https://github.com/TradeJS-Dev/tradejs
+- Repository ownership: https://docs.tradejs.dev/advanced/repository-ownership
+- GitHub: https://github.com/TradeJS-Dev/TradeJS
 - Site: https://tradejs.dev
 
 ## Install
@@ -41,8 +45,10 @@ npm run dev:hot:ru
 ## Build
 
 ```bash
-npm run build
+yarn checks
 ```
+
+`yarn checks` runs TypeScript validation and builds both locales.
 
 ## Container Image
 

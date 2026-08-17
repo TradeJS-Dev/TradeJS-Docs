@@ -2,7 +2,7 @@
 title: 'TrendFollow'
 ---
 
-`TrendFollow` is a built-in TypeScript strategy from `@tradejs/strategies`.
+`TrendFollow` is a built-in TypeScript strategy from `@tradejs/strategy-trend-follow`.
 
 It researches continuation-style trend setups, using a trailing stop line and strategy-specific deterministic guardrails.
 

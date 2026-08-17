@@ -24,7 +24,8 @@
     "serve": "docusaurus serve --port 3001",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "checks": "yarn typecheck && yarn build"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",

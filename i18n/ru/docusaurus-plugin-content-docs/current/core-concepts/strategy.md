@@ -14,9 +14,22 @@ title: Стратегия
 
 ## Built-in стратегии
 
-Актуальный каталог включает `Breakout`, `TrendLine`, `ReverseTrendLine`, `TrendShift`, `TrendFollow`, `DoubleTap`, `LiquidityTails`, `LiquidityZones`, `StructureZones`, `AdaptiveTrendChannel`, `AdaptiveMomentumRibbon`, `MaStrategy` и `VolumeDivergence`.
+Непустой preset `@tradejs/base` устанавливает независимые пакеты для 21
+стратегии: `Breakout`, `TrendLine`,
+`ReverseTrendLine`, `TrendShift`, `TrendFollow`, `DoubleTap`, `LiquidityTails`,
+`LiquidityZones`, `StructureZones`, `AdaptiveTrendChannel`,
+`AdaptiveMomentumRibbon`, `MaStrategy`, `VolumeDivergence`,
+`MarketFlushReversal`, `VolatilityCompressionBreakout`, `RelativeRotation`,
+`CupAndHandle`, `HeadAndShoulders`, `Grid`, `GridClassic` и
+`HyperliquidConsensus`.
 
-Это полезные примеры и research-модули, но каждый конфиг нужно проверять самостоятельно.
+TrendLine и ReverseTrendLine используют общий
+`@tradejs/strategy-trend-line`; у каждой другой стратегии свой пакет и
+репозиторий. Это полезные примеры и research-модули, но каждый конфиг нужно
+проверять самостоятельно.
+
+Сгруппированный список и требования к данным приведены в
+[каталоге встроенных стратегий](../strategies/reference).
 
 Дальше:
 

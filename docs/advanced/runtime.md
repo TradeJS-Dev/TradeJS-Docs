@@ -16,16 +16,18 @@ The current runtime path is shared across backtests, replay, signals, and automa
 - place or skip orders
 - store signals, evaluations, orders, and diagnostics
 
-## Recent Runtime Work
+## Current Runtime Model
 
-Recent source commits improved:
+- `signals` runs every discovered named config scope once unless explicit scope flags narrow it.
+- `signals-daemon` keeps bounded detector state across sequential closed candles and rebuilds safely after gaps or config changes.
+- runtime identity includes connector, universe, account/deployment, symbol, interval, strategy, and config id.
+- Bybit closed candles can arrive through a persistent WebSocket with REST recovery; the dashboard has a separate market WebSocket gateway.
+- signal/evaluation persistence happens before optional screenshots.
+- runtime lineage and evidence keep logic/config identity separate from account binding and risk amount.
 
-- runtime strategy config drawer in the app
-- runtime strategy analytics and strategy card metrics
-- replay/runtime comparison tolerance
-- execution slippage telemetry and calibration
-- runtime evidence reports
-- AI/ML gate diagnostics
+The app exposes named runtime config scopes, strategy analytics, drawdown and
+orders, chart annotations, and immutable evidence markers when corresponding
+artifacts are available.
 
 Related:
 

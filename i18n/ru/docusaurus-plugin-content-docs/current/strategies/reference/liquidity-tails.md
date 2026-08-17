@@ -2,7 +2,7 @@
 title: 'LiquidityTails'
 ---
 
-`LiquidityTails` - встроенная TypeScript-стратегия из `@tradejs/strategies`.
+`LiquidityTails` - встроенная TypeScript-стратегия из `@tradejs/strategy-liquidity-tails`.
 
 Она ищет wick/tail liquidity zones, ждет retest и торгует реакцию со stop за пределами retested zone.
 
@@ -20,7 +20,8 @@ title: 'LiquidityTails'
    - short: выше `signal.zone.top`
 7. Считает target от `LIQUIDITY_TAILS_TARGET_R_MULT`.
 8. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учетом `FEE_PERCENT`.
-9. Возвращает `entry` с liquidity-tail figures и `liquidityTailsContext`.
+9. Опционально резервирует часть risk budget для scale-ins на улучшенных retests.
+10. Возвращает `entry` с liquidity-tail figures и `liquidityTailsContext`.
 
 Entry codes:
 
@@ -31,7 +32,10 @@ Entry codes:
 
 Если позиция уже открыта:
 
+- `LIQUIDITY_TAILS_INVALIDATION_EXIT`, когда включена directional invalidation policy.
 - `LIQUIDITY_TAILS_OPPOSITE_RETEST_EXIT`, когда `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST=true` и появляется opposite retest.
+- `LIQUIDITY_TAILS_SCALE_IN_RETEST_EXIT`, когда retest для добавления должен закрыть позицию.
+- qualifying improved retest может создать `LIQUIDITY_TAILS_*_SCALE_IN`, пока не исчерпаны addition count или basket risk budget.
 - иначе `POSITION_EXISTS`.
 
 ## Параметры
@@ -48,11 +52,28 @@ Liquidity-tail model:
 - `LIQUIDITY_TAILS_REACTION_CLOSE_BEYOND_ZONE`
 - `LIQUIDITY_TAILS_REQUIRE_REACTION_BODY`
 - `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT`
+- `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS`
+- `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES`
+- `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL`
+- `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS`
+- `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO`
+- `LIQUIDITY_TAILS_CLOSE_HOLD_BARS`
 - `LIQUIDITY_TAILS_STOP_ATR_BUFFER_MULT`
 - `LIQUIDITY_TAILS_STOP_BUFFER_PCT`
 - `LIQUIDITY_TAILS_TARGET_R_MULT`
 - `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST`
+- `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION`
+- `LIQUIDITY_TAILS_SCALE_IN_ENABLED`
+- `LIQUIDITY_TAILS_SCALE_IN_COUNT`
+- `LIQUIDITY_TAILS_INITIAL_RISK_FRACTION`
+- `LIQUIDITY_TAILS_SCALE_IN_MIN_IMPROVEMENT_ATR`
 - `LIQUIDITY_TAILS_MAX_FIGURE_ZONES`
+
+Для directional numeric/boolean fields `<KEY>_LONG` или `<KEY>_SHORT` имеет
+приоритет над `<KEY>`. Это относится к wick ratio, dominance, retest
+distance/age/touches, retest ordinal, zone age, rejection efficiency,
+close-hold bars, target R и invalidation exit. Если directional value не задан,
+используется unsuffixed field.
 
 Shared groups:
 
@@ -82,3 +103,5 @@ Shared groups:
 ## Что проверять
 
 Проверяйте zone age, broken-zone behavior и retest distance перед сравнением результатов. Стратегия сильно зависит от качества свечных фитилей и различий между providers.
+При включенных scale-ins оценивайте basket-level maximum loss и поддержку
+увеличения позиции коннектором, а не только первый вход.

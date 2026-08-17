@@ -12,7 +12,8 @@ TradeJS supports two strategy creation paths:
 
 ## Typical Strategy Layout
 
-Each strategy package (built-ins in `packages/strategies`, user plugins in `src/strategies`) usually has:
+Each strategy package—whether a public `@tradejs/strategy-*` repository or your
+own public/private npm package—usually has:
 
 - `config.ts`
 - `core.ts`

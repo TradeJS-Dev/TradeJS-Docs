@@ -2,68 +2,62 @@
 title: Multi-Strategy Runtime
 ---
 
-`npx @tradejs/cli signals` can run multiple strategies in one pass.
+One `signals` process can evaluate multiple named configs, accounts, intervals,
+universes, and deployments. The canonical key is:
 
-Source:
-
-- `@tradejs/cli`
-
-## How Strategies Are Loaded
-
-For selected user, runtime scans keys:
-
-- `users:<user>:strategies:*:config`
-
-For each key it resolves:
-
-- strategy name from Redis key
-- creator via `getStrategyCreator(strategyName)`
-- config payload from Redis
-
-Unknown strategies are skipped with warning.
-
-## Per-Symbol Execution Order
-
-1. Load symbol candles and BTC context candles.
-2. Iterate loaded strategies in sorted config-key order.
-3. Run each strategy.
-4. On first non-empty signal:
-
-- save signal to Redis
-- stop checking other strategies for this symbol
-
-So current behavior is **first signal wins per symbol** in one run.
-
-## Data Context
-
-Every strategy receives:
-
-- symbol candles (`data`)
-- BTC symbol candles (`btcData`)
-- BTC Binance/Coinbase candles (for spread/correlation context)
-
-Runtime injects:
-
-- `ENV: 'CRON'`
-- selected `INTERVAL`
-- `MAKE_ORDERS` from CLI flag
-
-## Practical Setup
-
-1. Put multiple strategy configs under `users:<user>:strategies:<Strategy>:config`.
-2. Run:
-
-```bash
-npx @tradejs/cli signals --user root --timeframe 15
+```text
+users:<user>:strategies:<StrategyName>:<configId>
 ```
 
-3. Optional notifications/orders:
+`configId` distinguishes independently managed configs. `ENABLE=false`
+disables a record without deleting it.
+
+## Scope resolution
+
+For each enabled config TradeJS resolves:
+
+- strategy and named config id
+- `INTERVAL` and `UNIVERSE`
+- trading account from `ACCOUNT_ID` or deployment binding
+- connector/provider
+- optional deployment strategy overrides and policy profile
+- symbol-specific results config
+
+When `signals` runs without explicit `--timeframe`, `--universe`, `--account`,
+or `--deployment`, it discovers active configs and executes every unique scope.
+Explicit flags narrow the run.
+
+## Per-symbol evaluation
+
+Every compatible strategy is evaluated for the symbol on the same latest
+closed candle. TradeJS persists each non-empty signal with its
+`runtimeConfigId` and lineage; the runtime no longer uses a “first signal wins”
+rule. Skip evaluations are also persisted or aggregated for diagnostics.
+
+Two configs for the same strategy and account are ambiguous and rejected.
+Use a different account or disable one config. Separate strategies can still
+emit conflicting directions, so account-level risk hooks and connector rules
+remain responsible for portfolio policy.
+
+## Examples
+
+Evaluate every configured scope once:
 
 ```bash
-npx @tradejs/cli signals --user root --timeframe 15 --notify --makeOrders
+npx @tradejs/cli signals --user root
 ```
 
-## Related
+Run one deployment continuously:
 
-- [How Signals Work](./signals)
-- [Results -> Runtime Config Promotion](../backtesting/results-runtime-config)
+```bash
+npx @tradejs/cli signals-daemon --user root --deployment production --notify --makeOrders
+```
+
+Narrow a diagnostic pass:
+
+```bash
+npx @tradejs/cli signals --user root --universe crypto --timeframe 15 --account bybit-main --tickers BTCUSDT,ETHUSDT --cacheOnly
+```
+
+See [How signals work](./signals) and
+[Results to runtime config](../backtesting/results-runtime-config).

@@ -31,6 +31,27 @@ The web app manages these values from the account settings drawer opened by the 
 - `PG_HOST`, `PG_PORT`, `PG_USER`, `PG_PASSWORD`, `PG_DATABASE`
 - `ML_GRPC_ADDRESS` (for runtime inference)
 
+## Signals daemon and streaming
+
+- `SIGNALS_PARALLEL` - concurrent symbol evaluations, default `4`.
+- `SIGNALS_DAEMON_SETTLE_DELAY_MS` - delay after a candle boundary, default `5000`.
+- `SIGNALS_DAEMON_MAX_LIVE_BARS` - bounded sequential bars before detector-state rebuild.
+- `SIGNALS_DAEMON_HEAP_MB` - production daemon heap cap used by the supplied container entrypoint.
+- `SIGNALS_KLINE_WS_ENABLED` - Bybit daemon kline stream; set `0` for REST-only.
+- `SIGNALS_KLINE_WS_WAIT_MS` - wait for confirmed WebSocket closes before REST recovery.
+- `MARKET_WS_HOST`, `MARKET_WS_PORT` - dashboard candle gateway binding.
+- `MARKET_WS_HEAP_MB` - gateway heap cap used by the supplied container entrypoint.
+
+## Hyperliquid whale context
+
+- `HYPERLIQUID_WHALE_CONTEXT_ENABLED` - allow whale context for the current runtime mode.
+- `HYPERLIQUID_WHALE_BACKFILL_ENABLED` - permit automatic network backfill; off by default.
+- `HYPERLIQUID_WHALE_MIN_COVERAGE_PCT` - minimum accepted signal-time coverage.
+- `HYPERLIQUID_WHALE_CONCURRENCY` - historical recovery concurrency.
+- `HYPERLIQUID_WHALE_RATE_LIMIT_WEIGHT` - request-rate budget weight.
+- `HYPERLIQUID_WHALE_CONTEXT_STAGE_TIMEOUT_MS` - market-context stage timeout.
+- `HYPERLIQUID_WS_URL` - optional public stream endpoint override.
+
 ## ML Training
 
 - `ML_TRAIN_RECENT_DAYS`
@@ -49,3 +70,12 @@ The web app manages these values from the account settings drawer opened by the 
 - Validate environment with `npx @tradejs/cli doctor` before enabling live orders.
 - Prefer the account settings drawer for user-scoped API keys and tokens instead of sharing one global `.env` secret across operators.
 - `AI_API_*` and `TG_*` are user-record fields, not app environment variables; store them on the user record in Redis.
+
+## Repository ownership
+
+In the official self-hosted split, commit secret-free application defaults to
+`TradeJS-Project/deploy/runtime.env`. Inject `PG_PASSWORD`, authentication
+secrets, API credentials, SSH keys, and server-only values from
+`TradeJS-Deploy` or an equivalent secret manager. npm publishing credentials
+belong only to package source repositories; a project that installs private
+strategies should use a separate read-only registry token.

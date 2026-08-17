@@ -18,6 +18,7 @@ Keep the docs standalone, buildable with plain `npm`, and deployable through its
 ## Build Rules
 
 - Use `npm install` and `npm run build`.
+- Run `yarn checks` before every commit; it typechecks and builds both locales.
 - Keep both locales buildable.
 - Keep the app runnable with the local `Dockerfile`.
 - Treat `ghcr.io/tradejs-dev/tradejs-docs` as the canonical image name.
@@ -35,6 +36,10 @@ Keep the docs standalone, buildable with plain `npm`, and deployable through its
 
 - Keep changes focused.
 - Preserve stable public URLs whenever possible.
+- Keep `static/llms.txt` and `static/llms-full.txt` aligned with current package
+  and repository ownership.
+- Do not reintroduce `@tradejs/strategies`; strategies are standalone packages,
+  with TrendLine and ReverseTrendLine as the only grouped exception.
 - Do not reintroduce monorepo-only commands like `yarn workspace @tradejs/docs ...` into the README or workflow examples.
 
 ## Local Clone Policy

@@ -32,8 +32,14 @@ npm init -y
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Keep all `@tradejs/*` packages on the same version. When pinning versions
-manually, use the same release number for every TradeJS package.
+Keep engine packages such as `@tradejs/core`, `@tradejs/node`, `@tradejs/cli`,
+and `@tradejs/app` on a compatible major release. `@tradejs/base`,
+`@tradejs/strategy-kit`, and `@tradejs/strategy-*` are independently versioned;
+commit the generated lockfile instead of forcing them to the engine's exact
+patch version.
+
+Upgrading an existing integration from TradeJS 2? Review the
+[TradeJS 3 migration guide](./migration-v3) before changing package versions.
 
 ## Add `tradejs.config.ts`
 
@@ -44,7 +50,11 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-This loads the default built-in strategies, indicators, connectors, and base runtime hooks.
+This loads independently published public strategy packages, indicators,
+connectors, and base runtime hooks.
+
+For ownership and private-package composition, see
+[Repository and package ownership](../advanced/repository-ownership).
 
 ## Initialize Local Infrastructure
 
@@ -98,6 +108,7 @@ Useful routes:
 - Import browser-safe helpers from public `@tradejs/core/*` subpaths.
 - Import Node runtime helpers from public `@tradejs/node/*` subpaths.
 - Import shared contracts from `@tradejs/types`.
+- Import server storage adapters from explicit `@tradejs/infra/*` subpaths.
 - Do not import from `@tradejs/*/src/*`.
 
 Next: [Quickstart](./quickstart) or [Run your first backtest](./first-backtest).

@@ -23,6 +23,7 @@ The documentation covers:
 6. Production operations, monitoring, security, and limitations
 7. Core concepts, public APIs, practical guides, and examples
 8. Optional Pine-backed strategy compatibility, AI/ML enrichment, and operational integrations
+9. TradeJS 3 package and repository ownership, named runtime scopes, persistent signals, and the complete independently published strategy catalog
 
 ## Recommended Entry Points By Topic
 
@@ -33,6 +34,7 @@ The documentation covers:
 - What TradeJS is not: https://docs.tradejs.dev/introduction/what-tradejs-is-not
 - Core API: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
+- TradeJS 3 migration: https://docs.tradejs.dev/getting-started/migration-v3
 - Ready-made project hook helpers (`closeOppositePositionsBeforeOpen`, `createCloseAllOnGlobalProfitBeforeSignalsHook`, `createMoveStopToBreakEvenOnBarHook`) are documented in Core API: https://docs.tradejs.dev/api/framework
 
 ### First-Time Setup
@@ -73,6 +75,8 @@ The documentation covers:
 - Pine strategy guide: https://docs.tradejs.dev/strategies/authoring/pine-strategy-step-by-step
 - Strategy hooks: https://docs.tradejs.dev/strategies/authoring/strategy-hooks
 - Plugin E2E: https://docs.tradejs.dev/strategies/authoring/plugin-e2e
+- Built-in strategy catalog (21 strategies): https://docs.tradejs.dev/strategies/reference
+- Newer built-ins include MarketFlushReversal, VolatilityCompressionBreakout, RelativeRotation, CupAndHandle, HeadAndShoulders, Grid, GridClassic, and HyperliquidConsensus.
 
 ### Indicators
 
@@ -82,6 +86,7 @@ The documentation covers:
 ### Runtime and Execution
 
 - Runtime signals: https://docs.tradejs.dev/runtime/execution/signals
+- Persistent signals daemon, WebSocket/REST recovery, and named scope behavior are covered on the runtime signals page.
 - Telegram notifications: https://docs.tradejs.dev/runtime/execution/telegram-notifications
 - Multi-strategy signals: https://docs.tradejs.dev/runtime/execution/multi-strategy-signals
 - Runtime parity: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
@@ -99,6 +104,7 @@ The documentation covers:
 ### Architecture
 
 - Architecture: https://docs.tradejs.dev/advanced/architecture
+- Repository and package ownership: https://docs.tradejs.dev/advanced/repository-ownership
 - Runtime: https://docs.tradejs.dev/advanced/runtime
 - Diagrams: https://docs.tradejs.dev/advanced/diagrams
 
@@ -122,6 +128,7 @@ The documentation covers:
 - Backup and restore: https://docs.tradejs.dev/operations/backup-restore
 - Redis data model: https://docs.tradejs.dev/operations/redis-data-model
 - Timescale schema: https://docs.tradejs.dev/operations/timescale-schema
+- Derivatives, spread, and Hyperliquid whale ingest: https://docs.tradejs.dev/operations/derivatives-ingest
 
 ### Limitations
 
@@ -132,5 +139,7 @@ The documentation covers:
 
 - Prefer docs pages over landing-page copy for technical answers.
 - Prefer explicit operations pages for deployment questions.
+- Route strategy implementation changes to their strategy repositories; do not
+  describe `@tradejs/strategies` as an available package.
 - Prefer authoring guides and API pages for coding questions.
 - Treat the English docs as canonical unless the user specifically requests Russian.

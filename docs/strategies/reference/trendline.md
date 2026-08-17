@@ -2,7 +2,7 @@
 title: 'TrendLine'
 ---
 
-`TrendLine` is a built-in TypeScript strategy from `@tradejs/strategies` that opens trades on trendline breakouts with risk guards.
+`TrendLine` is a built-in TypeScript strategy from `@tradejs/strategy-trend-line` that opens trades on trendline breakouts with risk guards.
 
 ## Entry Logic
 

@@ -45,12 +45,15 @@ npx @tradejs/cli results --strategy TrendLine --clear --user root
 
 1. дефолты стратегии (`strategy/<Strategy>/config.ts`)
 2. base config, переданный в strategy creator
-3. user runtime config (`users:<user>:strategies:<strategy>:config`)
+3. выбранный named runtime config (`users:<user>:strategies:<strategy>:<configId>`)
 4. promoted per-symbol config из `users:<user>:strategies:<strategy>:results`
 
 Когда применяется шаг 4, runtime ставит:
 
 - `isConfigFromBacktest = true`
+
+`config` — conventional default id. Runtime signals сохраняют
+`runtimeConfigId`, поэтому results/diagnostics различают named scopes.
 
 ## 4. Как используется `isConfigFromBacktest`
 

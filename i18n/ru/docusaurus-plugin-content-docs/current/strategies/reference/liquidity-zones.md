@@ -2,7 +2,7 @@
 title: 'LiquidityZones'
 ---
 
-`LiquidityZones` - встроенная TypeScript-стратегия из `@tradejs/strategies`.
+`LiquidityZones` - встроенная TypeScript-стратегия из `@tradejs/strategy-liquidity-zones`.
 
 Она строит liquidity zones от swing highs/lows, ждет retest и торгует реакцию от этих зон.
 

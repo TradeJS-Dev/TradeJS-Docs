@@ -52,6 +52,19 @@ A backtest config is a JSON object where every value is an array:
 
 TradeJS expands the arrays into a test grid. If you only want one value, still wrap it in an array.
 
+## Directional Overrides
+
+Many built-in strategies resolve a numeric or boolean field in this order:
+
+1. `<KEY>_LONG` or `<KEY>_SHORT` for the current direction;
+2. unsuffixed `<KEY>`;
+3. the strategy fallback.
+
+For example, `TARGET_R_MULT_SHORT` can tune short targets without changing
+`TARGET_R_MULT_LONG`. Only fields used through this convention support the
+suffix; consult the strategy reference/default config instead of assuming every
+field is directional. In a grid, each suffixed value is still an array.
+
 ## Seed With `redis-cli`
 
 After `npx @tradejs/cli infra-up`, Redis is normally available on `127.0.0.1:6379`.
@@ -102,8 +115,12 @@ Keep a seed script like this in your own project when the config should be repro
 Runtime strategy configs are stored under:
 
 ```text
-users:<user>:strategies:<StrategyName>:config
+users:<user>:strategies:<StrategyName>:<configId>
 ```
+
+`config` is the conventional default id. Named ids let one strategy keep
+separate configs for different accounts or scopes; `ENABLE=false` disables a
+record without deleting it.
 
 The CLI has internal helpers that convert enabled runtime strategy configs into one-value backtest grids by removing runtime-only keys such as:
 

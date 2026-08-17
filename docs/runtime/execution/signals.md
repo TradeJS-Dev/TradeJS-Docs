@@ -3,92 +3,86 @@ sidebar_position: 9
 title: How Signals Work
 ---
 
-## Entry Point
+TradeJS has a one-shot signal command and a persistent production daemon. Both
+evaluate only closed candles through the same strategy runtime used by replay
+and backtests where practical.
 
 ```bash
+# One pass over every configured scope
 npx @tradejs/cli signals
+
+# Long-running process aligned to candle boundaries
+npx @tradejs/cli signals-daemon
+# Equivalent: npx @tradejs/cli signals --watch
 ```
 
-Main script:
+## Runtime configuration and scopes
 
-- `@tradejs/cli`
+Runtime configs use named keys:
 
-## Real Strategy Config Source
-
-Signal runtime loads active strategy configs from Redis keys like:
-
-- `users:<user>:strategies:TrendLine:config`
-
-And resolves creators dynamically:
-
-```ts
-const strategyCreator = await getStrategyCreator(strategyName);
-const strategy = await strategyCreator({
-  userName: flags.user,
-  connector,
-  symbol,
-  data: [...cachedData],
-  btcData: [...btcCachedData],
-  btcBinanceData: [...btcBinanceData],
-  btcCoinbaseData: [...btcCoinbaseData],
-  config: {
-    ...strategyConfig,
-    ENV: 'CRON',
-    INTERVAL: interval,
-    MAKE_ORDERS: flags.makeOrders,
-  },
-});
+```text
+users:<user>:strategies:<StrategyName>:<configId>
 ```
 
-## Pipeline
+`config` remains the conventional default id. Each record may define
+`ENABLE`, `INTERVAL`, `UNIVERSE`, and `ACCOUNT_ID`. A runtime deployment can
+override the provider, interval, universe, account, selected strategies, and
+per-strategy config. Without explicit scope flags, `signals` groups active
+configs and evaluates all resolved scopes once.
 
-1. Resolve connector and ticker universe.
-2. Optionally warm market cache with `update`.
-3. Load active strategy configs from Redis.
-4. Run project-level `beforeSignals` hooks from `tradejs.config.ts`.
-5. Run strategy runtime for each symbol.
-6. Save produced signals to Redis.
-7. Run project-level `afterSignals` hooks from `tradejs.config.ts`.
-8. Optionally send screenshots and Telegram notifications.
+Useful scope flags:
 
-`beforeSignals` and `afterSignals` are batch hooks for the whole signals run. They are not strategy manifest hooks and do not execute per candle.
+- `--user`, `--connector`, `--timeframe`
+- `--universe crypto|tradfi`
+- `--account <id>`
+- `--deployment <id>`
+- `--tickers`, `--exclude`, `--tickersLimit`, `--chunk`
 
-Typical use cases:
+Two enabled configs for the same strategy may share a runtime only when they
+resolve to different accounts. A same-strategy/same-account conflict fails
+clearly instead of picking one config silently.
 
-- one-shot global risk checks before scanning symbols
-- cross-strategy close-all logic that should run once per signals cycle
-- run-level logging, metrics, or notifications after signals finish
+## One cycle
 
-`beforeSignals` may abort the ticker evaluation phase by returning:
+1. Load project plugins, deployments, trading accounts, and enabled runtime configs.
+2. Resolve each scope's connector and ticker universe.
+3. Prepare candles and required signal-time market context.
+4. Run the project `beforeSignals` hook.
+5. Evaluate strategies on the latest closed candle.
+6. Persist signal/evaluation state before optional screenshots.
+7. Apply AI/ML/policy gates and place orders only when `--makeOrders` permits it.
+8. Run `afterSignals`, notifications, skip stats, and cycle telemetry.
 
-```ts
-{
-  abort: true,
-  reason: 'SOME_REASON',
-}
-```
+`beforeSignals` and `afterSignals` are project-level batch hooks. Strategy
+cores read the decision candle through `StrategyAPI`; full connector history is
+not exposed to strategy code.
 
-Strategy cores evaluate the current closed candle through `strategyApi.getDecisionPriceContext()`. Full market history is not exposed through `StrategyAPI`; runtime warmup data is used to initialize indicator and replayable detector state before the decision.
+## Persistent daemon state
 
-## Order Execution
+The daemon keeps only bounded replayable detector state between sequential
+closed candles. Heavy runtimes and indicator controllers are disposable. A
+strategy is rebuilt from rolling warmup history after restart, a candle gap,
+an effective config change, or `SIGNALS_DAEMON_MAX_LIVE_BARS`.
 
-- Enable with `--makeOrders`.
-- Runtime can still skip orders due to AI/ML policy.
-- Signal can be stored with `orderStatus = skipped` when gate blocks execution.
-- Signals stored as `skipped` or `canceled` are not forwarded to Telegram notifications.
+The lifecycle identity includes connector, universe, account/deployment,
+symbol, interval, strategy, and named config. Removed scopes are evicted.
+Catch-up rebuilding does not place historical orders or send historical
+notifications.
 
-## Telegram Notifications
+For Bybit crypto scopes, the daemon uses one public kline WebSocket by default.
+Confirmed candles are batch-written to Timescale; REST remains the startup,
+gap, and reconnect fallback. Set `SIGNALS_KLINE_WS_ENABLED=0` for REST-only
+operation or tune `SIGNALS_KLINE_WS_WAIT_MS`.
 
-```bash
-npx @tradejs/cli signals --notify
-```
+## Orders and notifications
 
-When AI analysis is present, Telegram receives a follow-up analysis message.
-TradeJS also provides `npx @tradejs/cli signals-summary` for a daily Telegram digest over recent runtime signal and trade activity.
-The same Telegram report delivery helper is used by `runtime-parity --notify`
-for runtime/backtest parity summaries.
+- `--makeOrders` permits order placement; strategy, account, AI/ML, and policy checks can still block it.
+- `--notify` sends accepted signal notifications and optional AI commentary.
+- skipped or canceled orders are retained for diagnostics but not forwarded as trade notifications.
+- `signals-summary` creates a recent runtime digest.
 
-See full setup:
-
-- [Telegram Notifications](./telegram-notifications)
-- [Runtime Parity](../backtesting/runtime-parity)
+Production should supervise the daemon, cap heap with
+`SIGNALS_DAEMON_HEAP_MB`, and alert on cycle failures and stale candles. See
+[Multi-strategy runtime](./multi-strategy-signals),
+[Telegram notifications](./telegram-notifications), and
+[Runtime parity](../backtesting/runtime-parity).

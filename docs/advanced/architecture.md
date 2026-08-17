@@ -10,7 +10,8 @@ TradeJS is split into public packages with clear boundaries.
 - `@tradejs/node`: Node-only runtime, backtests, Pine strategy loading, registries, and strategy execution helpers
 - `@tradejs/types`: shared TypeScript contracts
 - `@tradejs/infra`: Redis, Timescale, ML, logging, and IO adapters
-- `@tradejs/strategies`: built-in strategy plugin catalog
+- `@tradejs/strategy-*`: independently versioned strategy plugins
+- `@tradejs/strategy-kit/*`: browser-safe neutral strategy helpers
 - `@tradejs/indicators`: built-in indicator plugin catalog
 - `@tradejs/connectors`: built-in connector and market data provider catalog
 - `@tradejs/base`: default preset wiring built-ins
@@ -24,11 +25,18 @@ Use public subpaths:
 - `@tradejs/core/config`
 - `@tradejs/core/indicators`
 - `@tradejs/core/math`
+- `@tradejs/core/aiModels`
 - `@tradejs/node/strategies`
+- `@tradejs/node/registry`
 - `@tradejs/node/backtest`
 - `@tradejs/infra/redis`
+- `@tradejs/infra/timescale/candles`
 - `@tradejs/types`
 
-Avoid package root imports where a package intentionally exposes only subpaths, and never rely on `@tradejs/*/src/*`.
+`@tradejs/core`, `@tradejs/node`, and `@tradejs/infra` are subpath-only
+packages. Never rely on their roots or on `@tradejs/*/src/*`. Keep
+`@tradejs/node` and `@tradejs/infra` out of browser/client bundles.
 
-Deep dive: [Core API](../api/framework).
+Deep dives: [repository ownership](./repository-ownership),
+[Core API](../api/framework), and
+[TradeJS 3 migration](../getting-started/migration-v3).

@@ -16,9 +16,33 @@ title: Core API
 ## Import Rule
 
 - Import config/plugin registration from `@tradejs/core/config`.
-- Import runtime/helpers from explicit public subpaths like `@tradejs/node/strategies`, `@tradejs/node/backtest`, `@tradejs/core/indicators`, `@tradejs/core/math`, `@tradejs/core/time`, `@tradejs/node/pine`.
+- Import runtime/helpers from explicit public subpaths like `@tradejs/node/strategies`, `@tradejs/node/backtest`, `@tradejs/node/registry`, `@tradejs/core/indicators`, `@tradejs/core/math`, `@tradejs/core/time`, and `@tradejs/node/pine`.
 - Import shared types from `@tradejs/types`.
 - Do not use non-public deep imports.
+
+`@tradejs/core`, `@tradejs/node`, and `@tradejs/infra` have no root export.
+
+## Public Package Surfaces
+
+Browser-safe `@tradejs/core` subpaths include:
+
+- authoring and runtime contracts: `config`, `strategies`, `indicators`, `figures`
+- data and calculation helpers: `data`, `math`, `time`, `tickers`, `trade`, `grid`, `backtest`
+- shared utilities: `api`, `async`, `constants`
+- AI setting normalization: `aiEndpoints`, `aiLanguages`, `aiModels`
+
+Node-only `@tradejs/node` subpaths include:
+
+- `strategies`, `registry`, `backtest`, `pine`
+- `ai`, `connectors`, `cli`, `constants`
+
+Server-only `@tradejs/infra` includes Redis, logging, files, HTTP, ML, user and
+runtime settings, trading accounts, and focused Timescale subpaths. Import
+candles, derivatives, spread, market context, Hyperliquid whale context, or the
+Timescale client from `@tradejs/infra/timescale/*`; there is no aggregate
+`@tradejs/infra/timescale` export in TradeJS 3.
+
+See [Migrate to TradeJS 3](../getting-started/migration-v3) for moved imports.
 
 ## Utilities Convention (Contributors)
 
@@ -130,7 +154,6 @@ project should use.
 ```ts
 import { defineConfig } from '@tradejs/core/config';
 import { basePreset } from '@tradejs/base';
-import { getBuiltInStrategyDefaultConfig } from '@tradejs/strategies';
 import {
   closeOppositePositionsBeforeOpen,
   createCloseAllOnGlobalProfitBeforeSignalsHook,
@@ -140,7 +163,6 @@ import {
 export default defineConfig(basePreset, {
   hooks: {
     beforeSignals: createCloseAllOnGlobalProfitBeforeSignalsHook({
-      getStrategyDefaultConfig: getBuiltInStrategyDefaultConfig,
       profitRiskMultiplier: 5,
     }),
     onBar: createMoveStopToBreakEvenOnBarHook(),

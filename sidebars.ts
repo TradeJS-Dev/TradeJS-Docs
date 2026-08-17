@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'getting-started/installation',
+        'getting-started/migration-v3',
         'getting-started/quickstart',
         'getting-started/first-backtest',
         'getting-started/backtest-config',
@@ -90,6 +91,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: t('Built-In Strategies', 'Встроенные стратегии'),
           items: [
+            'strategies/reference/index',
             'strategies/reference/trendline',
             'strategies/reference/reverse-trendline',
             'strategies/reference/breakout',
@@ -103,6 +105,14 @@ const sidebars: SidebarsConfig = {
             'strategies/reference/structure-zones',
             'strategies/reference/trend-follow',
             'strategies/reference/trend-shift',
+            'strategies/reference/market-flush-reversal',
+            'strategies/reference/volatility-compression-breakout',
+            'strategies/reference/relative-rotation',
+            'strategies/reference/cup-and-handle',
+            'strategies/reference/head-and-shoulders',
+            'strategies/reference/grid',
+            'strategies/reference/grid-classic',
+            'strategies/reference/hyperliquid-consensus',
           ],
         },
         {
@@ -117,6 +127,7 @@ const sidebars: SidebarsConfig = {
       label: t('Advanced', 'Продвинутые темы'),
       items: [
         'advanced/architecture',
+        'advanced/repository-ownership',
         'advanced/runtime',
         'advanced/diagrams',
         'advanced/manifests',

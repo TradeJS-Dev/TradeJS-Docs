@@ -34,7 +34,8 @@ Pine-backed strategy compatibility, AI/ML enrichment, grid search, Telegram noti
 - `@tradejs/app` - optional installable Next.js UI for viewing backtests, dashboards, and runtime data
 - `@tradejs/base` - default preset that wires built-in strategies, indicators, and connectors
 - `@tradejs/types` - shared TypeScript contracts
-- `@tradejs/strategies`, `@tradejs/indicators`, `@tradejs/connectors` - built-in plugin catalogs
+- `@tradejs/strategy-*` - independent strategy plugins installed by `@tradejs/base`
+- `@tradejs/indicators`, `@tradejs/connectors` - built-in indicator and connector catalogs
 
 Use explicit public subpaths such as `@tradejs/core/config`, `@tradejs/core/indicators`, `@tradejs/node/strategies`, and `@tradejs/types`. Avoid non-public deep imports from package `src` folders.
 
@@ -45,6 +46,7 @@ Use explicit public subpaths such as `@tradejs/core/config`, `@tradejs/core/indi
 - npm organization: [npmjs.com/org/tradejs](https://www.npmjs.com/org/tradejs)
 - Examples: [Examples](./examples)
 - Licensing: [License overview](./introduction/licensing)
+- Repository map: [Repository and package ownership](./advanced/repository-ownership)
 
 ## Read Next
 

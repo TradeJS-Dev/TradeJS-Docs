@@ -16,7 +16,18 @@ Runtime:
 - размещает или пропускает orders;
 - сохраняет signals, evaluations, orders и diagnostics.
 
-Недавние изменения улучшили strategy config drawer, runtime analytics, replay/runtime comparison, slippage telemetry и AI/ML diagnostics.
+Текущая runtime-модель:
+
+- `signals` один раз выполняет все discovered named config scopes, если explicit flags не сужают scope;
+- `signals-daemon` сохраняет bounded detector state между последовательными closed candles и безопасно rebuild-ит его после gaps/config changes;
+- runtime identity включает connector, universe, account/deployment, symbol, interval, strategy и config id;
+- Bybit closed candles могут приходить через persistent WebSocket с REST recovery, а dashboard использует отдельный market WebSocket gateway;
+- signal/evaluation сохраняется до optional screenshots;
+- runtime lineage/evidence отделяет logic/config identity от account binding и risk amount.
+
+App показывает named runtime scopes, strategy analytics, drawdown/orders, chart
+annotations и immutable evidence markers, когда соответствующие artifacts
+доступны.
 
 Связанные страницы:
 

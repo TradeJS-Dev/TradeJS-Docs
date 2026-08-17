@@ -2,7 +2,7 @@
 title: 'DoubleTap'
 ---
 
-`DoubleTap` - встроенная TypeScript-стратегия из `@tradejs/strategies`.
+`DoubleTap` - встроенная TypeScript-стратегия из `@tradejs/strategy-double-tap`.
 
 Она ищет double-bottom и double-top structures, затем торгует breakout/breakdown с stop и target, которые возвращает pattern engine.
 

@@ -2,7 +2,7 @@
 title: 'LiquidityZones'
 ---
 
-`LiquidityZones` is a built-in TypeScript strategy from `@tradejs/strategies`.
+`LiquidityZones` is a built-in TypeScript strategy from `@tradejs/strategy-liquidity-zones`.
 
 It builds liquidity zones from swing highs/lows, waits for retests, and trades reactions from those zones.
 

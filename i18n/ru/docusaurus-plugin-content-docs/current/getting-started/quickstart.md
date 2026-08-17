@@ -54,8 +54,9 @@ npm run infra-down
 
 ## Ручная установка пакетов
 
-Она нужна только для интеграции TradeJS в существующий проект. Используйте одну
-версию для всех `@tradejs/*` пакетов:
+Она нужна только для интеграции TradeJS в существующий проект. Держите engine
+packages на совместимой major-версии, а independently versioned Base и strategy
+packages фиксируйте lockfile:
 
 ```bash
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
@@ -80,5 +81,6 @@ npx create-tradejs my-trading-project
 
 ### Версии пакетов не совпадают
 
-Удалите `node_modules` и lockfile, затем установите все TradeJS-пакеты вместе.
-Не смешивайте разные версии `@tradejs/*`.
+Удалите `node_modules`, восстановите закоммиченный lockfile и повторите install.
+При обновлении меняйте engine packages вместе и регенерируйте lockfile; не
+выравнивайте каждый `@tradejs/strategy-*` пакет по exact patch-версии движка.

@@ -19,6 +19,13 @@ Use your own process supervisor or container platform for the app and scheduled 
 
 The public packages do not provision a turnkey production environment. Start with the local [Quickstart](../getting-started/quickstart), then replace local infrastructure with your production services deliberately.
 
+The official repository split uses `TradeJS-Project` for package composition,
+`tradejs.config.ts`, secret-free runtime defaults, and the app image.
+`TradeJS-Deploy` owns production Compose, TLS, volumes, SSH, resource policy,
+and secrets. The Project dispatches an immutable image tag and Project revision
+to Deploy; Deploy does not rebuild application source. See
+[Repository and package ownership](../advanced/repository-ownership).
+
 ## Daily Health Checks
 
 1. `docker compose ps` or service manager status.
@@ -42,12 +49,11 @@ The public packages do not provision a turnkey production environment. Start wit
 
 ## Repository Research Automation
 
-The `research:auto` and `agent-run` launchers are maintainer workflows for the
-TradeJS source repository. They require repository-specific branches,
-worktrees, checks, and push credentials, so they are not a supported external
-npm deployment flow. Keep source-repository automation in the internal TradeJS
-runbook rather than adding it to an application deployment based on the public
-packages.
+The `research:auto` and `agent-run` launchers are maintainer workflows, not a
+supported external npm deployment flow. The agent image is built from TradeJS,
+but a strategy change is committed and proposed in that strategy's standalone
+repository. Its machine identity therefore needs access only to the engine and
+the strategy repositories in scope, not application or deployment secrets.
 
 ## Rollback
 

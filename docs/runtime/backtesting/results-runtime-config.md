@@ -45,12 +45,15 @@ Runtime config is resolved in this order (`resolveStrategyConfig`):
 
 1. strategy defaults (`strategy/<Strategy>/config.ts`)
 2. base config passed to strategy creator
-3. user runtime config (`users:<user>:strategies:<strategy>:config`)
+3. selected named runtime config (`users:<user>:strategies:<strategy>:<configId>`)
 4. promoted per-symbol result from `users:<user>:strategies:<strategy>:results`
 
 When step 4 applies, runtime marks:
 
 - `isConfigFromBacktest = true`
+
+`config` is the conventional default id. Runtime signals also retain
+`runtimeConfigId`, so results and diagnostics can distinguish named scopes.
 
 ## 4. How `isConfigFromBacktest` Is Used
 

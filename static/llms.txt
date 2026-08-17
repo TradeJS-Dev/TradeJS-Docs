@@ -11,6 +11,7 @@ Marketing site: https://tradejs.dev
 - Overview: https://docs.tradejs.dev/
 - What is TradeJS: https://docs.tradejs.dev/introduction/what-is-tradejs
 - Installation: https://docs.tradejs.dev/getting-started/installation
+- TradeJS 3 migration: https://docs.tradejs.dev/getting-started/migration-v3
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
 - TypeScript strategy: https://docs.tradejs.dev/strategies/authoring/typescript-strategy-step-by-step
 - First backtest: https://docs.tradejs.dev/getting-started/first-backtest
@@ -19,6 +20,7 @@ Marketing site: https://tradejs.dev
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
 - Examples: https://docs.tradejs.dev/examples
 - Core API: https://docs.tradejs.dev/api/framework
+- Built-in strategy catalog: https://docs.tradejs.dev/strategies/reference
 - Ready-made project hook helpers: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
 
@@ -28,8 +30,10 @@ Marketing site: https://tradejs.dev
 - Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
 - Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
 - Runtime execution: https://docs.tradejs.dev/runtime/execution/signals
+- Multi-scope runtime: https://docs.tradejs.dev/runtime/execution/multi-strategy-signals
 - Self-hosting: https://docs.tradejs.dev/operations/production-runbook
 - Architecture: https://docs.tradejs.dev/advanced/architecture
+- Repository and package ownership: https://docs.tradejs.dev/advanced/repository-ownership
 
 ## Extensions and Reference
 
@@ -39,6 +43,7 @@ Marketing site: https://tradejs.dev
 - Indicators: https://docs.tradejs.dev/guides/add-indicators
 - Diagrams: https://docs.tradejs.dev/advanced/diagrams
 - Runtime parity: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
+- Hyperliquid whale ingest: https://docs.tradejs.dev/operations/derivatives-ingest
 - AI: https://docs.tradejs.dev/ai-ml/ai/configuration
 - AI filter validation on backtest data: https://docs.tradejs.dev/ai-ml/ai/prompt-replay
 - ML: https://docs.tradejs.dev/ai-ml/ml/configuration

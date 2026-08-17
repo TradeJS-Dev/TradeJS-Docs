@@ -2,7 +2,7 @@
 title: 'MaStrategy'
 ---
 
-`MaStrategy` is a built-in TypeScript strategy from `@tradejs/strategies` based on fast/slow moving average crossover.
+`MaStrategy` is a built-in TypeScript strategy from `@tradejs/strategy-ma-strategy` based on fast/slow moving average crossover.
 
 ## Entry Logic
 

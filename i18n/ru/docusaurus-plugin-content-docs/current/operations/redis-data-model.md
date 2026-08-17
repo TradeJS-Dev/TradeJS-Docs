@@ -7,7 +7,8 @@ Redis в TradeJS — это оперативное хранилище для к�
 ## Основные группы ключей
 
 - Пользователи: `users:index:<user>`
-- Конфиги стратегий: `users:<user>:strategies:*:config`
+- Named strategy configs: `users:<user>:strategies:<strategy>:<configId>`
+- Promoted per-symbol results: `users:<user>:strategies:<strategy>:results`
 - Конфиги бэктестов: `users:<user>:backtests:configs:<config>`
 - Артефакты бэктестов:
   `users:<user>:tests:<strategy>:<testName>:(config|stat|orders)`
@@ -22,6 +23,9 @@ Redis в TradeJS — это оперативное хранилище для к�
 - часть ключей краткоживущая (кэш, временные результаты),
 - часть среднесрочная (сигналы, история),
 - конфиги обычно долговечные.
+
+`config` — conventional runtime config id; `results` зарезервирован для
+promoted per-symbol backtest results и не загружается как named runtime config.
 
 ## Правила эксплуатации
 

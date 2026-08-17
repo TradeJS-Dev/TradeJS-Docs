@@ -2,7 +2,7 @@
 title: 'ReverseTrendLine'
 ---
 
-`ReverseTrendLine` - встроенная TypeScript-стратегия из `@tradejs/strategies`.
+`ReverseTrendLine` - встроенная TypeScript-стратегия из `@tradejs/strategy-trend-line`.
 
 Она строит support/resistance trendlines по recent highs/lows и исследует rejection behavior вокруг линий, а не основной breakout path.
 

@@ -32,8 +32,14 @@ npm init -y
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Держите все пакеты `@tradejs/*` на одной версии. Если фиксируете версии
-вручную, указывайте один и тот же номер релиза для каждого пакета TradeJS.
+Держите engine packages `@tradejs/core`, `@tradejs/node`, `@tradejs/cli` и
+`@tradejs/app` на совместимой major-версии. `@tradejs/base`,
+`@tradejs/strategy-kit` и `@tradejs/strategy-*` версионируются независимо;
+коммитьте сгенерированный lockfile вместо принудительного выравнивания exact
+patch-версий.
+
+Если вы обновляете существующую интеграцию с TradeJS 2, сначала прочитайте
+[руководство по миграции на TradeJS 3](./migration-v3).
 
 ## Добавьте `tradejs.config.ts`
 
@@ -44,7 +50,11 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-`basePreset` подключает built-in стратегии, индикаторы, коннекторы и базовые hooks.
+`basePreset` подключает независимо публикуемые публичные strategy packages,
+индикаторы, коннекторы и базовые hooks.
+
+Границы ownership и private-package composition описаны в статье
+[Владение репозиториями и пакетами](../advanced/repository-ownership).
 
 ## Запустите локальную инфраструктуру
 
@@ -87,4 +97,5 @@ NEXT_PUBLIC_TRADEJS_TELEMETRY_DISABLED=1
 - browser-safe helpers: публичные `@tradejs/core/*` subpaths;
 - Node runtime helpers: публичные `@tradejs/node/*` subpaths;
 - shared contracts: `@tradejs/types`;
+- server storage adapters: явные subpath'ы `@tradejs/infra/*`;
 - не используйте `@tradejs/*/src/*`.

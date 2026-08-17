@@ -2,7 +2,7 @@
 title: 'AdaptiveTrendChannel'
 ---
 
-`AdaptiveTrendChannel` - встроенная TypeScript-стратегия из `@tradejs/strategies`.
+`AdaptiveTrendChannel` - встроенная TypeScript-стратегия из `@tradejs/strategy-adaptive-trend-channel`.
 
 Она прогоняет свечи через adaptive channel engine, ищет bullish/bearish channel flips и рассчитывает вход от расстояния до границы канала, которая используется как stop.
 

@@ -1,69 +1,47 @@
 ---
-title: Мультистратегии в рантайме
+title: Multi-Strategy Runtime
 ---
 
-`npx @tradejs/cli signals` умеет запускать несколько стратегий за один проход.
+Один процесс `signals` может оценивать несколько named configs, accounts,
+intervals, universes и deployments. Канонический ключ:
 
-Источник:
-
-- `@tradejs/cli`
-
-## Как подгружаются стратегии
-
-Для выбранного пользователя runtime сканирует ключи:
-
-- `users:<user>:strategies:*:config`
-
-Для каждого ключа:
-
-- извлекает имя стратегии из ключа Redis
-- берет creator через `getStrategyCreator(strategyName)`
-- читает config payload из Redis
-
-Неизвестные стратегии пропускаются с warning.
-
-## Порядок выполнения по символу
-
-1. Загружает свечи символа и BTC-контекст.
-2. Итерирует стратегии в отсортированном порядке config-key.
-3. Выполняет каждую стратегию.
-4. На первом непустом сигнале:
-
-- сохраняет сигнал в Redis
-- прекращает проверку остальных стратегий для этого символа
-
-Текущее поведение: **первый сигнал выигрывает для символа** в рамках одного запуска.
-
-## Контекст данных
-
-Каждой стратегии передается:
-
-- свечи символа (`data`)
-- свечи BTC (`btcData`)
-- свечи BTC Binance/Coinbase (для spread/correlation)
-
-Runtime принудительно прокидывает:
-
-- `ENV: 'CRON'`
-- выбранный `INTERVAL`
-- `MAKE_ORDERS` из CLI-флага
-
-## Практический сценарий
-
-1. Положите несколько конфигов в `users:<user>:strategies:<Strategy>:config`.
-2. Запустите:
-
-```bash
-npx @tradejs/cli signals --user root --timeframe 15
+```text
+users:<user>:strategies:<StrategyName>:<configId>
 ```
 
-3. Опционально нотификации/ордера:
+`configId` разделяет независимо управляемые конфиги. `ENABLE=false` отключает
+запись без удаления.
+
+## Разрешение scope
+
+Для каждого enabled config TradeJS определяет strategy/config id, `INTERVAL`,
+`UNIVERSE`, trading account из `ACCOUNT_ID` или deployment binding,
+connector/provider, optional deployment overrides/policy profile и
+symbol-specific results config.
+
+Без явных `--timeframe`, `--universe`, `--account` или `--deployment` команда
+находит активные configs и запускает каждый unique scope. Явные flags сужают
+запуск.
+
+## Оценка symbol
+
+Каждая совместимая стратегия оценивается на одной и той же последней закрытой
+свече. Каждый non-empty signal сохраняется со своим `runtimeConfigId` и
+lineage; правила «first signal wins» больше нет. Skip evaluations тоже
+сохраняются или агрегируются для diagnostics.
+
+Два конфига одной стратегии для одного account неоднозначны и отклоняются.
+Используйте другой account или отключите один config. Разные стратегии могут
+выдать противоположные направления, поэтому portfolio policy остается задачей
+account-level hooks и connector rules.
 
 ```bash
-npx @tradejs/cli signals --user root --timeframe 15 --notify --makeOrders
+# Все configured scopes один раз
+npx @tradejs/cli signals --user root
+
+# Один deployment постоянно
+npx @tradejs/cli signals-daemon --user root --deployment production --notify --makeOrders
+
+# Узкий diagnostic pass
+npx @tradejs/cli signals --user root --universe crypto --timeframe 15 --account bybit-main --tickers BTCUSDT,ETHUSDT --cacheOnly
 ```
-
-## Связанные статьи
-
-- [Как работают сигналы](./signals)
-- [Результаты бэктеста -> runtime-конфиг](../backtesting/results-runtime-config)

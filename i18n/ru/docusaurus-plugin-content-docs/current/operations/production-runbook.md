@@ -19,6 +19,13 @@ npx tradejs-app start
 
 Публичные пакеты не разворачивают готовую production-инфраструктуру автоматически. Начните с локального [Быстрого старта](../getting-started/quickstart), затем осознанно замените локальные сервисы production-инфраструктурой.
 
+В официальной схеме `TradeJS-Project` владеет package composition,
+`tradejs.config.ts`, secret-free runtime defaults и app image.
+`TradeJS-Deploy` владеет production Compose, TLS, volumes, SSH, resource policy
+и secrets. Project передаёт в Deploy immutable image tag и revision проекта;
+Deploy не пересобирает application source. Подробнее:
+[Владение репозиториями и пакетами](../advanced/repository-ownership).
+
 ## Ежедневные проверки
 
 1. Проверка статуса сервисов (`docker compose ps` или оркестратор).
@@ -42,11 +49,11 @@ npx tradejs-app start
 
 ## Автоматизация research в source repository
 
-Launchers `research:auto` и `agent-run` являются maintainer workflows основного
-TradeJS source repository. Им нужны repo-specific branches, worktrees, checks и
-push credentials, поэтому они не поддерживаются как внешний npm deployment
-flow. Такую автоматизацию следует держать во внутреннем runbook TradeJS, а не
-добавлять в deployment приложения на публичных пакетах.
+Launchers `research:auto` и `agent-run` являются maintainer workflows, а не
+поддерживаемым внешним npm deployment flow. Agent image собирается из TradeJS,
+но изменение стратегии коммитится и предлагается в отдельном репозитории этой
+стратегии. Machine identity нужен доступ только к движку и strategy repositories
+в scope, но не к application или deployment secrets.
 
 ## Rollback
 

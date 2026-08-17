@@ -8,13 +8,23 @@ TradeJS разделен на публичные пакеты:
 - `@tradejs/node` - Node runtime, backtests, Pine strategy loading, registries;
 - `@tradejs/types` - общие контракты;
 - `@tradejs/infra` - Redis, Timescale, ML, logging, IO;
-- `@tradejs/strategies` - built-in strategy catalog;
+- `@tradejs/strategy-*` - независимо версионируемые strategy plugins;
+- `@tradejs/strategy-kit/*` - browser-safe нейтральные strategy helpers;
 - `@tradejs/indicators` - built-in indicator catalog;
 - `@tradejs/connectors` - connector and market data catalog;
 - `@tradejs/base` - default preset;
 - `@tradejs/cli` - operational commands;
 - `@tradejs/app` - installable Next.js UI.
 
-Используйте public subpaths: `@tradejs/core/config`, `@tradejs/core/indicators`, `@tradejs/node/strategies`, `@tradejs/infra/redis`, `@tradejs/types`.
+Используйте public subpaths: `@tradejs/core/config`,
+`@tradejs/core/indicators`, `@tradejs/core/aiModels`,
+`@tradejs/node/strategies`, `@tradejs/node/registry`,
+`@tradejs/infra/redis`, `@tradejs/infra/timescale/candles`, `@tradejs/types`.
 
-Не используйте `@tradejs/*/src/*`.
+`@tradejs/core`, `@tradejs/node` и `@tradejs/infra` — subpath-only пакеты.
+Не используйте их root imports и `@tradejs/*/src/*`. Не добавляйте
+`@tradejs/node` или `@tradejs/infra` в browser/client bundle.
+
+Подробнее: [владение репозиториями](./repository-ownership),
+[Core API](../api/framework) и
+[миграция на TradeJS 3](../getting-started/migration-v3).

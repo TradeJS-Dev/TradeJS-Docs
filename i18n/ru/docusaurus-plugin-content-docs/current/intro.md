@@ -34,7 +34,8 @@ TradeJS предназначен для research, backtesting, генераци�
 - `@tradejs/app` - опциональный installable Next.js UI для бэктестов, dashboards и runtime data
 - `@tradejs/base` - preset со встроенными стратегиями, индикаторами и коннекторами
 - `@tradejs/types` - общие TypeScript-контракты
-- `@tradejs/strategies`, `@tradejs/indicators`, `@tradejs/connectors` - встроенные plugin-каталоги
+- `@tradejs/strategy-*` - независимые strategy plugins из `@tradejs/base`
+- `@tradejs/indicators`, `@tradejs/connectors` - каталоги индикаторов и коннекторов
 
 Используйте публичные subpath-импорты вроде `@tradejs/core/config`, `@tradejs/core/indicators`, `@tradejs/node/strategies` и `@tradejs/types`. Не импортируйте из внутренних `src`-папок пакетов.
 

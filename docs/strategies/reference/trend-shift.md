@@ -2,7 +2,7 @@
 title: 'TrendShift'
 ---
 
-`TrendShift` is a built-in TypeScript strategy from `@tradejs/strategies`.
+`TrendShift` is a built-in TypeScript strategy from `@tradejs/strategy-trend-shift`.
 
 It researches trend transition setups by detecting bullish and bearish flips in a dynamic trend band.
 

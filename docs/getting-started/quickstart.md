@@ -57,7 +57,8 @@ npm run infra-down
 ## Manual Package Installation
 
 Use manual installation only when integrating TradeJS into an existing project.
-Keep every `@tradejs/*` package on the same version:
+Keep engine packages on a compatible major version and let the lockfile resolve
+independently versioned Base and strategy packages:
 
 ```bash
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
@@ -82,5 +83,6 @@ npx create-tradejs my-trading-project
 
 ### Package or module versions do not match
 
-Delete `node_modules` and the lockfile, then reinstall all TradeJS packages
-together. Do not mix versions of `@tradejs/*` packages.
+Delete `node_modules`, restore the committed lockfile, and reinstall. When
+upgrading, update engine packages together and regenerate the lockfile; do not
+force every `@tradejs/strategy-*` package to the engine's exact patch version.
