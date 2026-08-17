@@ -44,6 +44,7 @@ Keep the docs standalone, buildable with plain `npm`, and deployable through its
 
 ## Local Clone Policy
 
-- Keep `TradeJS-Dev` repository clones under `~/dev/...`.
-- In this environment, use `~/dev/investing` for `TradeJS` and `~/dev/tradejs-docs` for this repo.
+- Keep `TradeJS-Dev` repository clones under `~/dev/tradejs/...`.
+- In this environment, use `~/dev/tradejs/investing` for `TradeJS` and
+  `~/dev/tradejs/tradejs-docs` for this repo.
 - Do not use `/tmp` as a working location for local long-lived clones.
