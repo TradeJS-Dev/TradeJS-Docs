@@ -75,3 +75,5 @@ docker compose -f ~/docker-compose.prod.yml up -d docs
 ```
 
 GHCR package `tradejs-docs` must stay public so the production host can pull it without registry login.
+
+Keywords: ai, claude, codex.

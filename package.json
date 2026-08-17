@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "Official TradeJS documentation site built with Docusaurus.",
+  "keywords": [
+    "ai",
+    "claude",
+    "codex"
+  ],
   "homepage": "https://docs.tradejs.dev",
   "repository": {
     "type": "git",
