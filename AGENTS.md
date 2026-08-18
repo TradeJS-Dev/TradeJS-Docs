@@ -9,6 +9,17 @@ These rules apply to the `TradeJS-Docs` repository.
 This repository is the source of truth for `docs.tradejs.dev`.
 Keep the docs standalone, buildable with plain `npm`, and deployable through its own GitHub Actions workflow.
 
+## Workspace Routing
+
+- This repository is the canonical destination for user-facing documentation,
+  “docs”, and “база знаний”. Start from `~/dev/tradejs/AGENTS.md` and do not
+  scan sibling repositories unless a documented API must be verified.
+- Verify package behavior in its owning source repository, but edit the public
+  article here. Internal research notes belong only in
+  `tradejs-project/notes/`; marketing/landing copy belongs in `tradejs-site`.
+- Use `yarn dev:hot:en` or `yarn dev:hot:ru` for local authoring and
+  `yarn checks` for complete verification.
+
 ## Audience
 
 - This repo is for external package users.
