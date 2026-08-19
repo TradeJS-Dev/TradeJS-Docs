@@ -637,41 +637,58 @@ import { basePreset } from '@tradejs/base';
 
 export default defineConfig(basePreset, {
   strategies: ['./src/plugins/adaptiveMomentumRibbon.plugin.ts'],
+  runtime: {
+    deployments: {
+      production: {
+        connectorName: 'bybit',
+        accountId: 'bybit-main',
+        strategies: {
+          AdaptiveMomentumRibbon: {
+            version: 1,
+            enabled: true,
+            config: {
+              INTERVAL: '15',
+              UNIVERSE: 'crypto',
+              BACKTEST_PRICE_MODE: 'mid',
+              AMR_MOMENTUM_PERIOD: 20,
+              AMR_BUTTERWORTH_SMOOTHING: 3,
+              AMR_WAIT_CLOSE: true,
+              AMR_SHOW_INVALIDATION_LEVELS: true,
+              AMR_SHOW_KELTNER_CHANNEL: true,
+              AMR_KC_LENGTH: 20,
+              AMR_KC_MA_TYPE: 'EMA',
+              AMR_ATR_LENGTH: 14,
+              AMR_ATR_MULTIPLIER: 2,
+              AMR_EXIT_ON_INVALIDATION: true,
+              AMR_LOOKBACK_BARS: 400,
+              AMR_LINE_PLOTS: [
+                'kcMidline',
+                'kcUpper',
+                'kcLower',
+                'invalidationLevel',
+              ],
+              LONG: { enable: true, direction: 'LONG', TP: 2, SL: 1 },
+              SHORT: { enable: true, direction: 'SHORT', TP: 2, SL: 1 },
+              AI_ENABLED: false,
+              ML_ENABLED: false,
+              ML_THRESHOLD: 0.1,
+              MIN_AI_QUALITY: 3,
+            },
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
 После этого `AdaptiveMomentumRibbon` доступна runtime/backtest как обычная plugin-стратегия.
 
-## 9. Runtime config в Redis
+Project declaration — единственный production config. Увеличивайте version
+стратегии при изменении package или config. Redis хранит только account и
+optional pause override.
 
-```bash
-redis-cli JSON.SET users:root:strategies:AdaptiveMomentumRibbon:config '$' '{
-  "ENV": "CRON",
-  "INTERVAL": "15",
-  "MAKE_ORDERS": false,
-  "BACKTEST_PRICE_MODE": "mid",
-  "AMR_MOMENTUM_PERIOD": 20,
-  "AMR_BUTTERWORTH_SMOOTHING": 3,
-  "AMR_WAIT_CLOSE": true,
-  "AMR_SHOW_INVALIDATION_LEVELS": true,
-  "AMR_SHOW_KELTNER_CHANNEL": true,
-  "AMR_KC_LENGTH": 20,
-  "AMR_KC_MA_TYPE": "EMA",
-  "AMR_ATR_LENGTH": 14,
-  "AMR_ATR_MULTIPLIER": 2,
-  "AMR_EXIT_ON_INVALIDATION": true,
-  "AMR_LOOKBACK_BARS": 400,
-  "AMR_LINE_PLOTS": ["kcMidline", "kcUpper", "kcLower", "invalidationLevel"],
-  "LONG": {"enable": true, "direction": "LONG", "TP": 2, "SL": 1},
-  "SHORT": {"enable": true, "direction": "SHORT", "TP": 2, "SL": 1},
-  "AI_ENABLED": false,
-  "ML_ENABLED": false,
-  "ML_THRESHOLD": 0.1,
-  "MIN_AI_QUALITY": 3
-}'
-```
-
-## 10. Backtest grid config
+## 9. Backtest grid config
 
 ```bash
 redis-cli JSON.SET users:root:backtests:configs:AdaptiveMomentumRibbon:amr-default '$' '{
@@ -702,7 +719,7 @@ redis-cli JSON.SET users:root:backtests:configs:AdaptiveMomentumRibbon:amr-defau
 
 Важно: имя backtest-конфига должно начинаться со стратегии (`AdaptiveMomentumRibbon:*`).
 
-## 11. Запуск и проверка
+## 10. Запуск и проверка
 
 Бэктест:
 

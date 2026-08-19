@@ -125,5 +125,5 @@ npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
 ## 7. Related Guides
 
 - [How Backtests Work](./overview)
-- [Results -> Runtime Config Promotion](./results-runtime-config)
+- [Results -> Project Config Promotion](./results-runtime-config)
 - [Runtime Playbook](./strategy-playbook)

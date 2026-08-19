@@ -18,17 +18,33 @@ npx @tradejs/cli signals-daemon
 
 ## Runtime configuration and scopes
 
-Runtime configs use named keys:
+Production runtime configuration is declared in the project's
+`tradejs.config.ts`. A deployment owns its connector/account/scope and every
+strategy owns one complete `{ version, enabled, config }` entry:
 
-```text
-users:<user>:strategies:<StrategyName>:<configId>
+```ts
+export default defineConfig(basePreset, {
+  runtime: {
+    deployments: {
+      production: {
+        connectorName: 'bybit',
+        accountId: 'bybit-main',
+        strategies: {
+          DoubleTap: {
+            version: 4,
+            enabled: true,
+            config: { INTERVAL: '15', UNIVERSE: 'crypto', MAX_LOSS_VALUE: 1 },
+          },
+        },
+      },
+    },
+  },
+});
 ```
 
-`config` remains the conventional default id. Each record may define
-`ENABLE`, `INTERVAL`, `UNIVERSE`, and `ACCOUNT_ID`. A runtime deployment can
-override the provider, interval, universe, account, selected strategies, and
-per-strategy config. Without explicit scope flags, `signals` groups active
-configs and evaluates all resolved scopes once.
+The runtime does not merge Redis strategy configs, result overlays, or
+deployment overrides. Account credentials remain server-owned. Without
+explicit scope flags, `signals` evaluates all declared active scopes once.
 
 Useful scope flags:
 
@@ -38,13 +54,13 @@ Useful scope flags:
 - `--deployment <id>`
 - `--tickers`, `--exclude`, `--tickersLimit`, `--chunk`
 
-Two enabled configs for the same strategy may share a runtime only when they
+Two declarations for the same strategy may share a runtime only when they
 resolve to different accounts. A same-strategy/same-account conflict fails
-clearly instead of picking one config silently.
+clearly instead of selecting one silently.
 
 ## One cycle
 
-1. Load project plugins, deployments, trading accounts, and enabled runtime configs.
+1. Load project plugins, Git-owned deployments, trading accounts, and optional pause overrides.
 2. Resolve each scope's connector and ticker universe.
 3. Prepare candles and required signal-time market context.
 4. Run the project `beforeSignals` hook.
@@ -65,9 +81,14 @@ strategy is rebuilt from rolling warmup history after restart, a candle gap,
 an effective config change, or `SIGNALS_DAEMON_MAX_LIVE_BARS`.
 
 The lifecycle identity includes connector, universe, account/deployment,
-symbol, interval, strategy, and named config. Removed scopes are evicted.
+symbol, interval, strategy, and the strategy version/config. Removed scopes are evicted.
 Catch-up rebuilding does not place historical orders or send historical
 notifications.
+
+Redis `users:<user>:runtime:controls` is optional. An absent key means no
+manual overrides. Pause stores only `entriesPaused: true`; resume removes the
+override. Invalid controls or an unavailable Redis fail closed. Pausing blocks
+new entries but does not stop management of existing positions.
 
 For Bybit crypto scopes, the daemon uses one public kline WebSocket by default.
 Confirmed candles are batch-written to Timescale; REST remains the startup,

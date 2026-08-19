@@ -166,8 +166,8 @@ Backtest config keys лежат в Redis по ключу `users:<user>:backtests
 - `-w, --watch` - продолжать запуск по candle boundaries; `signals-daemon` включает этот режим напрямую.
 - `-d, --settleDelayMs` - delay после candle close перед daemon cycle.
 
-Без explicit scope flags `signals` находит и запускает все active named runtime
-config scopes. Подробнее: [Как работают сигналы](../runtime/execution/signals).
+Без explicit scope flags `signals` находит и запускает все active Git-owned
+runtime scopes. Подробнее: [Как работают сигналы](../runtime/execution/signals).
 
 ## Signals Summary
 
@@ -282,7 +282,7 @@ Output и feature scope:
 - [Run your first backtest](../getting-started/first-backtest)
 - [Create a backtest config](../getting-started/backtest-config)
 - [Grid-конфиги бэктестов](../runtime/backtesting/grid-config)
-- [Results и promotion в runtime](../runtime/backtesting/results-runtime-config)
+- [Results и promotion в Project config](../runtime/backtesting/results-runtime-config)
 - [Runtime parity](../runtime/backtesting/runtime-parity)
 - [Data Sync](../getting-started/data-sync)
 - [Data quality guide](../guides/data-quality)

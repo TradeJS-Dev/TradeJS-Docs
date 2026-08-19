@@ -37,5 +37,5 @@ The selected config must exist in Redis. The deterministic sandbox in [Run your 
 
 - [Backtesting overview](../runtime/backtesting/overview)
 - [Grid config](../runtime/backtesting/grid-config)
-- [Results to runtime config](../runtime/backtesting/results-runtime-config)
+- [Promote results into Project config](../runtime/backtesting/results-runtime-config)
 - [Runtime parity](../runtime/backtesting/runtime-parity)

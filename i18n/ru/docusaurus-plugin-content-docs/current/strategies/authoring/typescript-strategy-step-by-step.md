@@ -185,28 +185,38 @@ import { basePreset } from '@tradejs/base';
 
 export default defineConfig(basePreset, {
   strategies: ['./src/plugins/simpleMa.plugin.ts'],
+  runtime: {
+    deployments: {
+      production: {
+        connectorName: 'bybit',
+        accountId: 'bybit-main',
+        strategies: {
+          SimpleMa: {
+            version: 1,
+            enabled: true,
+            config: {
+              INTERVAL: '15',
+              UNIVERSE: 'crypto',
+              BACKTEST_PRICE_MODE: 'mid',
+              MA_FAST: 21,
+              MA_SLOW: 55,
+              TP_PERCENT: 2,
+              SL_PERCENT: 1,
+              MAX_LOSS_USDT: 10,
+            },
+          },
+        },
+      },
+    },
+  },
 });
 ```
 
-## 6. Добавьте Redis-конфиги
+Production config теперь полностью хранится и review-ится в Git. Увеличивайте
+`SimpleMa.version` при каждом изменении production package или config. Redis
+хранит account и optional pause state, но не config стратегии.
 
-Runtime-конфиг:
-
-```bash
-redis-cli JSON.SET users:root:strategies:SimpleMa:config '$' '{
-  "ENV": "CRON",
-  "INTERVAL": "15",
-  "MAKE_ORDERS": false,
-  "BACKTEST_PRICE_MODE": "mid",
-  "MA_FAST": 21,
-  "MA_SLOW": 55,
-  "TP_PERCENT": 2,
-  "SL_PERCENT": 1,
-  "MAX_LOSS_USDT": 10
-}'
-```
-
-Backtest-конфиг:
+## 6. Добавьте backtest grid
 
 ```bash
 redis-cli JSON.SET users:root:backtests:configs:SimpleMa:quickstart '$' '{
@@ -227,7 +237,8 @@ redis-cli JSON.SET users:root:backtests:configs:SimpleMa:quickstart '$' '{
 ```bash
 npx @tradejs/cli backtest --user root --config SimpleMa:quickstart --connector bybit --tests 200 --parallel 4
 npx @tradejs/cli results --strategy SimpleMa --coverage --user root
-npx @tradejs/cli signals --user root --strategy SimpleMa --connector bybit
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli signals --user root --deployment production
 ```
 
 ## Примечания

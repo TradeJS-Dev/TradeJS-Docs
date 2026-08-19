@@ -17,29 +17,45 @@ npx @tradejs/cli signals-daemon
 
 ## Runtime-конфиги и scopes
 
-Named runtime configs хранятся по ключам:
+Production runtime настраивается в `tradejs.config.ts` проекта. Deployment
+задаёт connector/account/scope, а каждая стратегия содержит полный
+`{ version, enabled, config }`:
 
-```text
-users:<user>:strategies:<StrategyName>:<configId>
+```ts
+export default defineConfig(basePreset, {
+  runtime: {
+    deployments: {
+      production: {
+        connectorName: 'bybit',
+        accountId: 'bybit-main',
+        strategies: {
+          DoubleTap: {
+            version: 4,
+            enabled: true,
+            config: { INTERVAL: '15', UNIVERSE: 'crypto', MAX_LOSS_VALUE: 1 },
+          },
+        },
+      },
+    },
+  },
+});
 ```
 
-`config` — conventional default id. Запись может содержать `ENABLE`,
-`INTERVAL`, `UNIVERSE` и `ACCOUNT_ID`. Runtime deployment может переопределить
-provider, interval, universe, account, список стратегий и их config. Без явных
-scope flags `signals` группирует активные конфиги и один раз выполняет все
-resolved scopes.
+Runtime не объединяет Redis-конфиги стратегий, result overlays или deployment
+overrides. Credentials account остаются на сервере. Без явных scope flags
+`signals` один раз выполняет все активные declarations.
 
 Scope flags: `--user`, `--connector`, `--timeframe`,
 `--universe crypto|tradfi`, `--account`, `--deployment`, `--tickers`,
 `--exclude`, `--tickersLimit`, `--chunk`.
 
-Два включенных конфига одной стратегии могут работать одновременно, только
+Две declarations одной стратегии могут работать одновременно, только
 если разрешаются в разные accounts. Same-strategy/same-account conflict
 завершает запуск явной ошибкой.
 
 ## Один цикл
 
-1. Загружает project plugins, deployments, trading accounts и enabled runtime configs.
+1. Загружает project plugins, Git-owned deployments, trading accounts и optional pause overrides.
 2. Разрешает connector и ticker universe каждого scope.
 3. Готовит candles и обязательный signal-time market context.
 4. Выполняет project hook `beforeSignals`.
@@ -56,8 +72,13 @@ restart, candle gap, effective config change или
 `SIGNALS_DAEMON_MAX_LIVE_BARS` стратегия восстанавливается из rolling warmup.
 
 Lifecycle identity включает connector, universe, account/deployment, symbol,
-interval, strategy и named config. Удаленные scopes эвиктятся. Catch-up rebuild
+interval, strategy и её version/config. Удаленные scopes эвиктятся. Catch-up rebuild
 не ставит historical orders и не отправляет historical notifications.
+
+`users:<user>:runtime:controls` в Redis опционален. Отсутствующий ключ означает
+отсутствие ручных overrides. Pause записывает только `entriesPaused: true`, а
+resume удаляет override. Невалидный документ или недоступный Redis приводят к
+fail closed. Pause блокирует новые входы, но не управление открытыми позициями.
 
 Для Bybit crypto daemon по умолчанию использует один public kline WebSocket.
 Confirmed candles batch-записываются в Timescale; REST остается fallback для

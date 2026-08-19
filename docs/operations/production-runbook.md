@@ -26,6 +26,24 @@ and secrets. The Project dispatches an immutable image tag and Project revision
 to Deploy; Deploy does not rebuild application source. See
 [Repository and package ownership](../advanced/repository-ownership).
 
+## Configuration and rollout
+
+- Keep full deployment and strategy config in `tradejs.config.ts`.
+- Increment only the affected strategy's `version` when its package or config
+  changes; exact npm versions remain in the lockfile and image manifest.
+- Validate beta packages in an isolated production-like Project image. Promote
+  stable packages on the scheduled release channel, then build one Project
+  image from the stable composition.
+- After deploy, run `runtime-control verify`. Redis is not a deployment/config
+  source; it holds accounts, optional pause overrides, audit events, heartbeat,
+  signals, evaluations, and trades.
+- The UI is read-only for config and may only pause/resume new entries.
+
+During the breaking migration, back up Redis and pass a restore drill before
+deleting old `users:<user>:strategies*` and Redis deployment documents. Use an
+allowlisted cleanup that preserves controls, control events, accounts,
+heartbeats, signals, evaluations, and trades.
+
 ## Daily Health Checks
 
 1. `docker compose ps` or service manager status.
@@ -58,5 +76,7 @@ the strategy repositories in scope, not application or deployment secrets.
 ## Rollback
 
 - Keep previous image tags for `app` and `ml-infer`.
+- Pause entries when operationally necessary, then roll back the Project image;
+  do not move a Redis release pointer.
 - Roll back app and model aliases independently when required.
 - Verify runtime with `doctor` and smoke checks after rollback.

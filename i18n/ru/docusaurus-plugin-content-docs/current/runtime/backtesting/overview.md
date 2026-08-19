@@ -110,5 +110,5 @@ npx @tradejs/cli ai-train -n 50 --minQuality 4
 ## Связанные статьи
 
 - [Grid-конфигурация бэктеста для массового перебора параметров](./grid-config)
-- [Результаты бэктеста -> runtime-конфиг](./results-runtime-config)
+- [Результаты бэктеста -> Project config](./results-runtime-config)
 - [Data Sync](../../getting-started/data-sync)

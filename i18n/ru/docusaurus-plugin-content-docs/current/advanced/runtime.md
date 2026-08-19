@@ -18,16 +18,16 @@ Runtime:
 
 Текущая runtime-модель:
 
-- `signals` один раз выполняет все discovered named config scopes, если explicit flags не сужают scope;
+- `signals` один раз выполняет все активные Git-owned scopes, если explicit flags не сужают scope;
 - `signals-daemon` сохраняет bounded detector state между последовательными closed candles и безопасно rebuild-ит его после gaps/config changes;
-- runtime identity включает connector, universe, account/deployment, symbol, interval, strategy и config id;
+- runtime identity включает connector, universe, account/deployment, symbol, interval, strategy и её explicit version/config;
 - Bybit closed candles могут приходить через persistent WebSocket с REST recovery, а dashboard использует отдельный market WebSocket gateway;
 - signal/evaluation сохраняется до optional screenshots;
-- runtime lineage/evidence отделяет logic/config identity от account binding и risk amount.
+- production config читается только из immutable Project image; Redis хранит accounts, optional pause overrides, heartbeat, signals, evaluations и trades.
 
-App показывает named runtime scopes, strategy analytics, drawdown/orders, chart
-annotations и immutable evidence markers, когда соответствующие artifacts
-доступны.
+App показывает committed config read-only, strategy analytics, drawdown/orders
+и pause/resume. Research evidence может создаваться локально или в CI, но
+сервер и UI от него не зависят и не показывают evidence status.
 
 Связанные страницы:
 

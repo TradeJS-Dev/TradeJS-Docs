@@ -26,6 +26,24 @@ npx tradejs-app start
 Deploy не пересобирает application source. Подробнее:
 [Владение репозиториями и пакетами](../advanced/repository-ownership).
 
+## Config и rollout
+
+- Полные deployment и strategy configs храните в `tradejs.config.ts`.
+- При изменении package или config увеличивайте `version` только затронутой
+  стратегии; exact npm versions остаются в lockfile и image manifest.
+- Beta packages проверяйте в isolated production-like Project image. Stable
+  packages промоутятся scheduled release channel, после чего собирается один
+  Project image со stable composition.
+- После deploy выполняйте `runtime-control verify`. Redis не является source
+  конфигов: он хранит accounts, optional pause overrides, audit events,
+  heartbeat, signals, evaluations и trades.
+- UI показывает config read-only и может только pause/resume новые входы.
+
+При breaking migration перед удалением старых `users:<user>:strategies*` и
+Redis deployment docs создайте backup и пройдите restore drill. Allowlisted
+cleanup должен сохранить controls, control events, accounts, heartbeats,
+signals, evaluations и trades.
+
 ## Ежедневные проверки
 
 1. Проверка статуса сервисов (`docker compose ps` или оркестратор).
@@ -58,5 +76,7 @@ Launchers `research:auto` и `agent-run` являются maintainer workflows, 
 ## Rollback
 
 - Храните предыдущие теги образов `app` и `ml-infer`.
+- При необходимости поставьте entries на pause и откатите Project image; Redis
+  release pointer больше нет.
 - При необходимости откатывайте приложение и модельные alias независимо.
 - После отката прогоняйте `doctor` и smoke-проверки.

@@ -116,5 +116,5 @@ For external package users, the supported backtest flow is CLI-first.
 ## Related Guides
 
 - [Backtest Grid Config for Mass Parameter Search](./grid-config)
-- [Results -> Runtime Config Promotion](./results-runtime-config)
+- [Results -> Project Config Promotion](./results-runtime-config)
 - [Data Sync](../../getting-started/data-sync)

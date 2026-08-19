@@ -1,8 +1,9 @@
 ---
-title: Use Backtest Results In Runtime
+title: Promote Backtest Results Into Project Config
 ---
 
-This page explains how to promote positive backtest configs into runtime, how `npx @tradejs/cli results` works, and how `isConfigFromBacktest` is set.
+This page explains how to inspect positive backtest candidates and promote one
+reviewed config into the Git-owned production declaration.
 
 ## 1. What `npx @tradejs/cli results` Does
 
@@ -28,9 +29,9 @@ npx @tradejs/cli results --strategy TrendLine --update --user root
 npx @tradejs/cli results --strategy TrendLine --clear --user root
 ```
 
-## 2. Where Promoted Config Is Stored
+## 2. Where Research Results Are Stored
 
-Promoted per-symbol config is stored in:
+The `results` command may store per-symbol research winners in local Redis:
 
 - `users:<user>:strategies:<strategy>:results`
 
@@ -39,40 +40,31 @@ Each symbol entry contains:
 - `config` (strategy config for that symbol)
 - `stats` (backtest metrics)
 
-## 3. Runtime Config Precedence
+These records are research inputs only. Production never merges them into a
+strategy config.
 
-Runtime config is resolved in this order (`resolveStrategyConfig`):
+## 3. Promote One Config
 
-1. strategy defaults (`strategy/<Strategy>/config.ts`)
-2. base config passed to strategy creator
-3. selected named runtime config (`users:<user>:strategies:<strategy>:<configId>`)
-4. promoted per-symbol result from `users:<user>:strategies:<strategy>:results`
+1. Select one complete, deterministic config from the reviewed evidence.
+2. Update that strategy's `config` in `tradejs.config.ts`.
+3. Update its exact strategy package dependency when code changed.
+4. Increment that strategy's positive integer `version`.
+5. Commit package, lockfile, config, and version together.
+6. Run project checks and a production-like image smoke before deployment.
 
-When step 4 applies, runtime marks:
+The runtime UI renders this committed config read-only. The only mutable server
+operation is a manual pause/resume override; there is no Redis config write or
+release-pointer switch.
 
-- `isConfigFromBacktest = true`
-
-`config` is the conventional default id. Runtime signals also retain
-`runtimeConfigId`, so results and diagnostics can distinguish named scopes.
-
-## 4. How `isConfigFromBacktest` Is Used
-
-`isConfigFromBacktest` is written into signal payload and can be used in UI/Telegram/debug flows.
-
-Runtime behavior:
-
-- if symbol has promoted result config: signal shows `isConfigFromBacktest: true`
-- if no symbol entry exists: runtime uses base/user config and `isConfigFromBacktest: false`
-
-## 5. Recommended Workflow
+## 4. Recommended Workflow
 
 1. Run backtests for a strategy config grid.
 2. Run `npx @tradejs/cli results --strategy <Strategy> --coverage` to inspect winners.
-3. Promote with `--merge` first (safer than full overwrite).
-4. Run `npx @tradejs/cli signals` / `npx @tradejs/cli bot` and verify signals with `isConfigFromBacktest=true`.
-5. Re-run promotion periodically after new backtests.
+3. Review the candidate against the full release criteria; do not select by PnL alone.
+4. Copy the selected complete config into the Project declaration and bump its version.
+5. Deploy the immutable Project image, run `runtime-control verify`, and observe a bounded forward test.
 
-## 6. Notes
+## 5. Notes
 
 - `--coverage` currently uses ByBit ticker universe for coverage denominator.
-- `--merge` keeps previously promoted symbols unless a better profit is found.
+- `--merge` affects only the local research results record.

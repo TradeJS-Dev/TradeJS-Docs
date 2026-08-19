@@ -1,78 +1,42 @@
 ---
-title: Как применять результаты бэктестов в рантайме
+title: Перенос результатов бэктеста в Project config
 ---
 
-В этой статье: как продвигать позитивные backtest-конфиги в runtime, как работает `npx @tradejs/cli results`, и как выставляется `isConfigFromBacktest`.
+Эта страница описывает, как проверить кандидатов бэктеста и перенести один
+полный reviewed config в Git-owned production declaration.
 
-## 1. Что делает `npx @tradejs/cli results`
+## 1. Что делает `results`
 
-`npx @tradejs/cli results` сканирует сохраненные тесты/статистику и собирает лучших кандидатов по символам для выбранной стратегии.
-
-Базовая команда:
+`npx @tradejs/cli results` собирает сохранённые test configs/stats и показывает
+per-symbol winners одной стратегии:
 
 ```bash
 npx @tradejs/cli results --strategy TrendLine --coverage --user root
 ```
 
-Полезные режимы:
+`--update`, `--merge` и `--clear` управляют только локальной research-записью
+`users:<user>:strategies:<strategy>:results`. Production runtime её не читает.
 
-- `--update`: полностью перезаписать сохраненные strategy results
-- `--merge`: обновить только символы, где новый результат лучше сохраненного
-- `--clear`: удалить сохраненные promoted results
+## 2. Как промоутнуть один config
 
-Примеры:
+1. Выберите один полный deterministic config по reviewed evidence, а не только
+   по PnL.
+2. Обновите `config` стратегии в `tradejs.config.ts`.
+3. Если менялся код, обновите exact dependency её strategy package.
+4. Увеличьте positive integer `version` именно этой стратегии.
+5. Закоммитьте package, lockfile, config и version вместе.
+6. Запустите project checks и production-like image smoke перед deployment.
 
-```bash
-npx @tradejs/cli results --strategy TrendLine --merge --user root
-npx @tradejs/cli results --strategy TrendLine --update --user root
-npx @tradejs/cli results --strategy TrendLine --clear --user root
-```
+UI показывает committed config read-only. Единственное mutable server действие
+— optional pause/resume override. Записи config в production Redis и release
+pointer switch больше нет.
 
-## 2. Где хранится promoted config
+## 3. Рекомендуемый flow
 
-Промотированные конфиги по символам хранятся в ключе:
-
-- `users:<user>:strategies:<strategy>:results`
-
-Для каждого символа сохраняются:
-
-- `config` (конфиг стратегии для символа)
-- `stats` (метрики бэктеста)
-
-## 3. Приоритет конфигурации в рантайме
-
-Конфиг в runtime собирается в таком порядке (`resolveStrategyConfig`):
-
-1. дефолты стратегии (`strategy/<Strategy>/config.ts`)
-2. base config, переданный в strategy creator
-3. выбранный named runtime config (`users:<user>:strategies:<strategy>:<configId>`)
-4. promoted per-symbol config из `users:<user>:strategies:<strategy>:results`
-
-Когда применяется шаг 4, runtime ставит:
-
-- `isConfigFromBacktest = true`
-
-`config` — conventional default id. Runtime signals сохраняют
-`runtimeConfigId`, поэтому results/diagnostics различают named scopes.
-
-## 4. Как используется `isConfigFromBacktest`
-
-`isConfigFromBacktest` попадает в сигнал и может использоваться в UI/Telegram/debug-потоке.
-
-Поведение:
-
-- если для символа есть promoted config: `isConfigFromBacktest: true`
-- если записи нет: используется base/user config и `isConfigFromBacktest: false`
-
-## 5. Рекомендуемый workflow
-
-1. Прогоните бэктесты по сетке параметров стратегии.
-2. Выполните `npx @tradejs/cli results --strategy <Strategy> --coverage`.
-3. Для продакшена сначала используйте `--merge` (безопаснее полной перезаписи).
-4. Запустите `npx @tradejs/cli signals` / `npx @tradejs/cli bot` и проверьте сигналы с `isConfigFromBacktest=true`.
-5. Повторяйте promotion после новых бэктестов.
-
-## 6. Важные замечания
-
-- `--coverage` сейчас считает покрытие относительно набора тикеров ByBit.
-- `--merge` сохраняет текущие promoted символы, обновляя только реально лучшие.
+1. Запустите backtest config grid.
+2. Проверьте coverage и кандидатов через `results`.
+3. Проведите release/parity review выбранного полного config.
+4. Перенесите его в Project declaration и увеличьте strategy version.
+5. Задеплойте immutable Project image и выполните
+   `runtime-control verify --user root --deployment production`.
+6. Наблюдайте bounded forward test при `MAX_LOSS_VALUE=1`.

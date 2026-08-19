@@ -110,19 +110,11 @@ await redis.quit();
 
 Keep a seed script like this in your own project when the config should be reproducible or reviewed in version control.
 
-## Runtime Config To Backtest Grid
+## Project Config To Backtest Grid
 
-Runtime strategy configs are stored under:
-
-```text
-users:<user>:strategies:<StrategyName>:<configId>
-```
-
-`config` is the conventional default id. Named ids let one strategy keep
-separate configs for different accounts or scopes; `ENABLE=false` disables a
-record without deleting it.
-
-The CLI has internal helpers that convert enabled runtime strategy configs into one-value backtest grids by removing runtime-only keys such as:
+Production runtime strategy configs live in `tradejs.config.ts`. To reproduce
+one in a backtest, copy its values into a one-value Redis backtest grid. Remove
+invocation-only fields such as:
 
 - `ENV`
 - `INTERVAL`
@@ -131,7 +123,8 @@ The CLI has internal helpers that convert enabled runtime strategy configs into 
 - `BACKTEST_PRICE_MODE`
 - `BACKTEST_ENTRY_DELAY_BARS`
 
-For public docs, the practical path is still to seed the backtest grid directly unless you are working from an existing runtime strategy config in the app.
+The production runtime never reads this backtest key or merges per-symbol
+research results into the committed config.
 
 ## Common Errors
 

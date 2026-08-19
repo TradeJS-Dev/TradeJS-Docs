@@ -166,8 +166,8 @@ See [Create a backtest config](../getting-started/backtest-config).
 - `-w, --watch` - keep running on candle boundaries; `signals-daemon` enables this mode directly.
 - `-d, --settleDelayMs` - delay after candle close before a daemon cycle.
 
-Without explicit scope flags, `signals` discovers and runs all active named
-runtime config scopes. See [How signals work](../runtime/execution/signals).
+Without explicit scope flags, `signals` discovers and runs all active
+Git-declared runtime scopes. See [How signals work](../runtime/execution/signals).
 
 ## Signals Summary
 
@@ -282,7 +282,7 @@ Output and feature scope:
 - [Run your first backtest](../getting-started/first-backtest)
 - [Create a backtest config](../getting-started/backtest-config)
 - [Grid config for backtests](../runtime/backtesting/grid-config)
-- [Results and runtime promotion](../runtime/backtesting/results-runtime-config)
+- [Results and Project config promotion](../runtime/backtesting/results-runtime-config)
 - [Runtime Parity](../runtime/backtesting/runtime-parity)
 - [Data Sync](../getting-started/data-sync)
 - [Data quality guide](../guides/data-quality)

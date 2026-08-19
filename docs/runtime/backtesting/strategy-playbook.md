@@ -18,7 +18,7 @@ redis-cli --scan --pattern 'users:root:backtests:configs:AdaptiveMomentumRibbon:
 
 Use keys from output as `--config` values in commands below.
 
-## 2. TrendLine: Backtest -> Promote -> Runtime
+## 2. TrendLine: Backtest -> Review -> Project
 
 Backtest:
 
@@ -32,26 +32,21 @@ Inspect winners:
 npx @tradejs/cli results --strategy TrendLine --coverage --user root
 ```
 
-Promote positive configs to runtime (`users:root:strategies:TrendLine:results`):
+Record research winners locally:
 
 ```bash
 npx @tradejs/cli results --strategy TrendLine --merge --user root
 ```
 
-Run runtime signals with promoted config:
+Copy one reviewed complete config into the Project declaration, bump its
+strategy version, deploy the image, then run:
 
 ```bash
-npx @tradejs/cli signals --user root --cacheOnly --timeframe 15
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli signals --user root --deployment production --cacheOnly
 ```
 
-Quick check that promoted config is used (`isConfigFromBacktest=true`):
-
-```bash
-KEY=$(redis-cli --scan --pattern 'store:signals:BTCUSDT:*' | tail -n 1)
-redis-cli JSON.GET "$KEY" '$.isConfigFromBacktest'
-```
-
-## 3. AdaptiveMomentumRibbon: Backtest -> Promote -> Runtime
+## 3. AdaptiveMomentumRibbon: Backtest -> Review -> Project
 
 Backtest:
 
@@ -65,16 +60,17 @@ Inspect winners:
 npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --coverage --user root
 ```
 
-Promote positive configs to runtime (`users:root:strategies:AdaptiveMomentumRibbon:results`):
+Record research winners locally:
 
 ```bash
 npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
 ```
 
-Run runtime signals with promoted config:
+After committing one reviewed config and bumped strategy version, deploy and run:
 
 ```bash
-npx @tradejs/cli signals --user root --cacheOnly --timeframe 15
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli signals --user root --deployment production --cacheOnly
 ```
 
 Optional check for AMR signal payload:
@@ -108,6 +104,6 @@ npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --clear --user root
 
 ## 6. Related Docs
 
-- [Results -> Runtime Config Promotion](./results-runtime-config)
+- [Results -> Project Config Promotion](./results-runtime-config)
 - [Data Sync](../../getting-started/data-sync)
 - [Pine Strategy Step by Step](../../strategies/authoring/pine-strategy-step-by-step)

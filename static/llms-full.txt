@@ -96,7 +96,7 @@ The documentation covers:
 - Create a backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Backtesting overview: https://docs.tradejs.dev/runtime/backtesting/overview
 - Grid config: https://docs.tradejs.dev/runtime/backtesting/grid-config
-- Results to runtime config: https://docs.tradejs.dev/runtime/backtesting/results-runtime-config
+- Promote backtest results into Project config: https://docs.tradejs.dev/runtime/backtesting/results-runtime-config
 - Runtime playbook: https://docs.tradejs.dev/runtime/backtesting/strategy-playbook
 - Backtesting caveats: https://docs.tradejs.dev/limitations/backtesting-caveats
 - Data quality guide: https://docs.tradejs.dev/guides/data-quality

@@ -2,13 +2,17 @@
 title: Redis Data Model
 ---
 
-Redis is used as an operational storage layer for runtime state, configs, and transient artifacts.
+Redis is used as an operational storage layer for server state and transient
+artifacts. Production deployment and strategy config live in
+`tradejs.config.ts`, not Redis.
 
 ## Main Key Families
 
 - Users: `users:index:<user>`
-- Named user strategy configs: `users:<user>:strategies:<strategy>:<configId>`
-- Promoted per-symbol strategy results: `users:<user>:strategies:<strategy>:results`
+- Trading accounts: `users:<user>:trading-accounts:<accountId>`
+- Optional manual entry pauses: `users:<user>:runtime:controls`
+- Deployment heartbeat: `users:<user>:runtime:deployments:<deployment>:heartbeat`
+- Runtime control audit events: `users:<user>:runtime:strategy-control-events:*`
 - Backtest configs: `users:<user>:backtests:configs:<config>`
 - Backtest artifacts:
   `users:<user>:tests:<strategy>:<testName>:(config|stat|orders)`
@@ -24,9 +28,10 @@ TradeJS uses mixed persistence:
 - some keys are medium-lived (signals/history windows),
 - config keys are intended to stay durable.
 
-`config` is the conventional runtime config id; `results` is reserved for
-promoted per-symbol backtest results and is not loaded as a named runtime
-config.
+An absent `runtime:controls` key is valid and means “follow Git enabled.” Pause
+creates an override; resume removes it and deletes an empty document. Runtime
+does not read `users:<user>:strategies:*`, Redis deployment documents, releases,
+or per-symbol result overlays as production config.
 
 ## Operational Rules
 
@@ -38,4 +43,6 @@ config.
 
 - Start with key patterns used by the failing feature.
 - Compare expected symbol/user namespace with real keys.
-- If signals are missing, inspect both signal keys and strategy config keys.
+- If signals are missing, verify the image-owned declaration and package
+  manifest, the trading-account binding, optional controls, heartbeat, and
+  signal/evaluation keys.

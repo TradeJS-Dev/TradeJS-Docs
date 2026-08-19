@@ -2,13 +2,16 @@
 title: Модель данных Redis
 ---
 
-Redis в TradeJS — это оперативное хранилище для конфигов, runtime-состояния и временных артефактов.
+Redis в TradeJS — оперативное хранилище server state и временных артефактов.
+Production deployment и config стратегий находятся в `tradejs.config.ts`.
 
 ## Основные группы ключей
 
 - Пользователи: `users:index:<user>`
-- Named strategy configs: `users:<user>:strategies:<strategy>:<configId>`
-- Promoted per-symbol results: `users:<user>:strategies:<strategy>:results`
+- Trading accounts: `users:<user>:trading-accounts:<accountId>`
+- Optional manual pause: `users:<user>:runtime:controls`
+- Deployment heartbeat: `users:<user>:runtime:deployments:<deployment>:heartbeat`
+- Audit control events: `users:<user>:runtime:strategy-control-events:*`
 - Конфиги бэктестов: `users:<user>:backtests:configs:<config>`
 - Артефакты бэктестов:
   `users:<user>:tests:<strategy>:<testName>:(config|stat|orders)`
@@ -24,8 +27,10 @@ Redis в TradeJS — это оперативное хранилище для к�
 - часть среднесрочная (сигналы, история),
 - конфиги обычно долговечные.
 
-`config` — conventional runtime config id; `results` зарезервирован для
-promoted per-symbol backtest results и не загружается как named runtime config.
+Отсутствующий `runtime:controls` валиден и означает «следовать Git enabled».
+Pause создаёт override, resume удаляет его и пустой документ. Runtime не читает
+`users:<user>:strategies:*`, Redis deployment/release документы или per-symbol
+results как production config.
 
 ## Правила эксплуатации
 
@@ -37,4 +42,5 @@ promoted per-symbol backtest results и не загружается как named
 
 - Начинайте с нужного namespace (`user`, `symbol`, `strategy`).
 - Сверяйте ожидаемые ключи с реально существующими.
-- При пропавших сигналах проверяйте и ключи сигналов, и ключи конфигов.
+- При пропавших сигналах проверяйте declaration и package manifest образа,
+  account binding, optional controls, heartbeat и signal/evaluation keys.

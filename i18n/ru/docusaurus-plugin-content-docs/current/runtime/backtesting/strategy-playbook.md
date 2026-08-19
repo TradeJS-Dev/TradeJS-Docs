@@ -18,7 +18,7 @@ redis-cli --scan --pattern 'users:root:backtests:configs:AdaptiveMomentumRibbon:
 
 Берите ключи из вывода как значения `--config` в командах ниже.
 
-## 2. TrendLine: Backtest -> Promote -> Runtime
+## 2. TrendLine: Backtest -> Review -> Project
 
 Бэктест:
 
@@ -32,26 +32,21 @@ npx @tradejs/cli backtest --user root --config TrendLine:base --connector bybit 
 npx @tradejs/cli results --strategy TrendLine --coverage --user root
 ```
 
-Промоутнуть положительные конфиги в runtime (`users:root:strategies:TrendLine:results`):
+Сохранить research winners локально:
 
 ```bash
 npx @tradejs/cli results --strategy TrendLine --merge --user root
 ```
 
-Запустить runtime-сигналы с promoted-конфигом:
+Перенесите один reviewed полный config в Project declaration, увеличьте
+strategy version, задеплойте образ и выполните:
 
 ```bash
-npx @tradejs/cli signals --user root --cacheOnly --timeframe 15
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli signals --user root --deployment production --cacheOnly
 ```
 
-Быстрая проверка, что применился promoted config (`isConfigFromBacktest=true`):
-
-```bash
-KEY=$(redis-cli --scan --pattern 'store:signals:BTCUSDT:*' | tail -n 1)
-redis-cli JSON.GET "$KEY" '$.isConfigFromBacktest'
-```
-
-## 3. AdaptiveMomentumRibbon: Backtest -> Promote -> Runtime
+## 3. AdaptiveMomentumRibbon: Backtest -> Review -> Project
 
 Бэктест:
 
@@ -65,16 +60,17 @@ npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-defaul
 npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --coverage --user root
 ```
 
-Промоутнуть положительные конфиги в runtime (`users:root:strategies:AdaptiveMomentumRibbon:results`):
+Сохранить research winners локально:
 
 ```bash
 npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
 ```
 
-Запустить runtime-сигналы с promoted-конфигом:
+После commit reviewed config и bumped strategy version задеплойте образ:
 
 ```bash
-npx @tradejs/cli signals --user root --cacheOnly --timeframe 15
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli signals --user root --deployment production --cacheOnly
 ```
 
 Опциональная проверка полезной нагрузки AMR в сигнале:
@@ -108,6 +104,6 @@ npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --clear --user root
 
 ## 6. Связанные статьи
 
-- [Результаты бэктеста -> runtime-конфиг](./results-runtime-config)
+- [Результаты бэктеста -> Project config](./results-runtime-config)
 - [Data Sync](../../getting-started/data-sync)
 - [Пошаговое создание стратегии на Pine Script](../../strategies/authoring/pine-strategy-step-by-step)
