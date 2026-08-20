@@ -46,7 +46,7 @@ Useful routes:
 
 - `/routes/dashboard` — market charts, signals, and **Create backtest**;
 - `/routes/backtest` — launch jobs and inspect progress;
-- `/routes/strategies` — runtime strategy configuration.
+- `/routes/strategies` — deployed strategy settings, status, and pause controls.
 
 Stop local services with:
 

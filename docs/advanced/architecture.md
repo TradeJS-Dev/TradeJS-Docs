@@ -37,6 +37,5 @@ Use public subpaths:
 packages. Never rely on their roots or on `@tradejs/*/src/*`. Keep
 `@tradejs/node` and `@tradejs/infra` out of browser/client bundles.
 
-Deep dives: [repository ownership](./repository-ownership),
-[Core API](../api/framework), and
-[TradeJS 3 migration](../getting-started/migration-v3).
+Deep dives: [repository ownership](./repository-ownership) and
+[Core API](../api/framework).

@@ -1,12 +1,11 @@
 ---
-title: AI/ML workflows
+title: Использование AI и ML
 ---
 
-AI и ML в TradeJS - optional research/gating layers.
+AI и ML — необязательные слои анализа и фильтрации решений. Они не заменяют
+правила стратегии, проверку данных и управление риском.
 
-Используйте их для анализа и сравнения strategy decisions. Не воспринимайте их как доказательство будущего результата.
-
-## AI flow
+## Проверка AI-фильтра
 
 ```bash
 npx @tradejs/cli backtest --config TrendLine:base --ai
@@ -14,14 +13,18 @@ npx @tradejs/cli ai-export
 npx @tradejs/cli ai-train -n 50 --minQuality 4
 ```
 
-В актуальном source project есть deterministic local gate research и AI pocket search:
+Также можно проверить детерминированный локальный фильтр без внешних запросов и
+исследовать подмножества признаков:
 
 ```bash
 npx @tradejs/cli ai-train --localOnly
 npx @tradejs/cli ai-pocket-search --strategy TrendLine
 ```
 
-## ML flow
+Оценивайте не только долю разрешённых сигналов, но и размер выборки, результат
+после издержек, просадку, стабильность по периодам и риск переобучения.
+
+## Подготовка ML-модели
 
 ```bash
 npx @tradejs/cli backtest --config TrendLine:base --ml
@@ -30,8 +33,12 @@ npx @tradejs/cli ml-inspect
 npx @tradejs/cli ml-train:latest
 ```
 
-Подробнее:
+Разделяйте обучение и проверку по времени, исключайте будущую информацию,
+сохраняйте версию признаков и контролируйте деградацию после запуска.
 
-- [AI configuration](../ai-ml/ai/configuration)
-- [AI filter validation](../ai-ml/ai/prompt-replay)
-- [ML configuration](../ai-ml/ml/configuration)
+## Дальше
+
+- [Настройка AI](../ai-ml/ai/configuration)
+- [Проверка AI-фильтра](../ai-ml/ai/prompt-replay)
+- [Настройка ML](../ai-ml/ml/configuration)
+- [Ограничения бэктестинга](../limitations/backtesting-caveats)

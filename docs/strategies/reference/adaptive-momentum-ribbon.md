@@ -2,9 +2,19 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
-`AdaptiveMomentumRibbon` is a built-in Pine-backed strategy from `@tradejs/strategy-adaptive-momentum-ribbon`.
+`AdaptiveMomentumRibbon` combines a Pine-based momentum ribbon with Keltner
+context, structural invalidation, and risk-sized entries. Pine performs the
+signal calculation while TypeScript handles position state, exits, and order
+planning.
 
-Runtime injects `loadPineScriptFile` into `core.ts`, so Pine logic is maintained separately from TypeScript orchestration.
+## Visual overview
+
+![AdaptiveMomentumRibbon strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/strategy-logic.svg)
+
+![AdaptiveMomentumRibbon signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Entry Logic
 

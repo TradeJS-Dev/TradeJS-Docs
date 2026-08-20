@@ -4,6 +4,15 @@ title: 'VolumeDivergence'
 
 `VolumeDivergence` is a built-in TypeScript reversal strategy from `@tradejs/strategy-volume-divergence` that compares price pivots with normalized volume pivots.
 
+## Visual overview
+
+![VolumeDivergence strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/strategy-logic.svg)
+
+![VolumeDivergence signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 1. Builds normalized volume series (`0..100`) over `NORMALIZATION_LENGTH`.

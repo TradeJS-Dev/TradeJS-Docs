@@ -1,40 +1,68 @@
 ---
-title: Multi-Strategy Runtime
+title: Работа нескольких стратегий
 ---
 
-Один процесс `signals` может оценивать несколько стратегий, accounts,
-intervals, universes и deployments из `tradejs.config.ts`. Источник истины —
-Git; в production Redis нет namespace с конфигами стратегий.
+Один процесс `signals` может рассчитывать несколько стратегий, счетов,
+таймфреймов, классов рынка и развёртываний из `tradejs.config.ts`.
 
-## Разрешение scope
+## Разделение настроек
 
-Для каждой enabled strategy declaration TradeJS определяет strategy/version,
-`INTERVAL`, `UNIVERSE`, account и connector/provider из deployment, полный
-config с policy/risk и optional ticker/asset-class filters.
+Для каждой включённой стратегии TradeJS определяет:
 
-Без явных `--timeframe`, `--universe`, `--account` или `--deployment` команда
-находит активные declarations и запускает каждый unique scope. Явные flags сужают
-запуск.
+- имя, версию и полную конфигурацию;
+- таймфрейм и класс рынка;
+- коннектор и торговый счёт;
+- инструменты развёртывания и необязательный `selection.tickers` стратегии;
+- настройки риска и дополнительные правила.
 
-## Оценка symbol
+Каждая уникальная комбинация рассчитывается независимо. Параметры командной
+строки могут сузить текущий запуск, а `--tickers` — временно заменить его набор
+инструментов.
 
-Каждая совместимая стратегия оценивается на одной и той же последней закрытой
-свече. Каждый non-empty signal сохраняется со своей runtime version и
-lineage; правила «first signal wins» больше нет. Skip evaluations тоже
-сохраняются или агрегируются для diagnostics.
+Если у удалённого из списка инструмента остаётся открытая позиция, он
+продолжает обрабатываться для решений о выходе и управления позицией.
 
-Две declarations одной стратегии для одного account неоднозначны и отклоняются.
-Используйте другой account или отключите одну declaration. Разные стратегии могут
-выдать противоположные направления, поэтому portfolio policy остается задачей
-account-level hooks и connector rules.
+## Решения по одному инструменту
+
+Все применимые стратегии обрабатывают одну и ту же последнюю закрытую свечу и
+записывают собственные решения. Разные стратегии могут дать противоположные
+сигналы. TradeJS не считает их готовым портфельным решением: правила уровня
+счёта и хуки проекта должны определять суммарную экспозицию, лимиты позиций,
+хеджирование и разрешение конфликтов.
+
+Два включённых экземпляра одной стратегии не могут работать с одним счётом в
+одном процессе: их позиции и решения были бы неоднозначны. Используйте другой
+счёт или отключите один экземпляр.
+
+## Примеры
+
+Один расчёт всех включённых настроек:
 
 ```bash
-# Все configured scopes один раз
 npx @tradejs/cli signals --user root
-
-# Один deployment постоянно
-npx @tradejs/cli signals-daemon --user root --deployment production --notify --makeOrders
-
-# Узкий diagnostic pass
-npx @tradejs/cli signals --user root --universe crypto --timeframe 15 --account bybit-main --tickers BTCUSDT,ETHUSDT --cacheOnly
 ```
+
+Постоянная работа одного развёртывания:
+
+```bash
+npx @tradejs/cli signals-daemon \
+  --user root \
+  --deployment production \
+  --notify \
+  --makeOrders
+```
+
+Узкая диагностическая проверка без размещения ордеров:
+
+```bash
+npx @tradejs/cli signals \
+  --user root \
+  --universe crypto \
+  --timeframe 15 \
+  --account bybit-main \
+  --tickers BTCUSDT,ETHUSDT \
+  --cacheOnly
+```
+
+См. [Как рассчитываются сигналы](./signals) и
+[Проверка реальных решений через воспроизведение](../backtesting/replay-evidence).

@@ -3,7 +3,7 @@ sidebar_position: 5
 title: Базовый API
 ---
 
-`@tradejs/core` — публичный пакет для разработки strategy и indicator плагинов в TradeJS.
+`@tradejs/core` — публичный пакет для разработки стратегий и индикаторов TradeJS.
 
 ## Что экспортируется
 
@@ -15,40 +15,35 @@ title: Базовый API
 
 ## Правило импортов
 
-- Импортируйте config/plugin registration из `@tradejs/core/config`.
-- Импортируйте runtime/хелперы из явных публичных subpath’ов вроде `@tradejs/node/strategies`, `@tradejs/node/backtest`, `@tradejs/node/registry`, `@tradejs/core/indicators`, `@tradejs/core/math`, `@tradejs/core/time`, `@tradejs/node/pine`.
+- Импортируйте настройку и регистрацию плагинов из `@tradejs/core/config`.
+- Импортируйте функции среды исполнения из документированных точек входа:
+  `@tradejs/node/strategies`, `@tradejs/node/backtest`,
+  `@tradejs/node/registry`, `@tradejs/core/indicators`,
+  `@tradejs/core/math`, `@tradejs/core/time`, `@tradejs/node/pine`.
 - Импортируйте общие типы из `@tradejs/types`.
-- Не используйте непубличные deep-imports.
+- Не импортируйте непубличные внутренние файлы.
 
-У `@tradejs/core`, `@tradejs/node` и `@tradejs/infra` нет root export.
+У `@tradejs/core`, `@tradejs/node` и `@tradejs/infra` нет корневого экспорта.
 
-## Публичные поверхности пакетов
+## Публичные точки входа
 
-Browser-safe subpath'ы `@tradejs/core`:
+Точки входа `@tradejs/core`, пригодные для браузера:
 
-- authoring/runtime contracts: `config`, `strategies`, `indicators`, `figures`;
-- data/calculation helpers: `data`, `math`, `time`, `tickers`, `trade`, `grid`, `backtest`;
-- shared utilities: `api`, `async`, `constants`;
-- нормализация AI settings: `aiEndpoints`, `aiLanguages`, `aiModels`.
+- контракты и разработка: `config`, `strategies`, `indicators`, `figures`;
+- данные и вычисления: `data`, `math`, `time`, `tickers`, `trade`, `grid`, `backtest`;
+- общие функции: `api`, `async`, `constants`;
+- настройка AI: `aiEndpoints`, `aiLanguages`, `aiModels`.
 
-Node-only subpath'ы `@tradejs/node`:
+Точки входа `@tradejs/node`, доступные только в Node.js:
 
 - `strategies`, `registry`, `backtest`, `pine`;
 - `ai`, `connectors`, `cli`, `constants`.
 
-Server-only `@tradejs/infra` содержит Redis, logging, files, HTTP, ML, user и
-runtime settings, trading accounts и узкие Timescale subpath'ы. Candles,
-derivatives, spread, market context, Hyperliquid whale context и Timescale
-client импортируются из `@tradejs/infra/timescale/*`; агрегирующего
+Серверный пакет `@tradejs/infra` содержит работу с Redis, журналами, файлами,
+HTTP, ML, пользователями, торговыми счетами и Timescale. Свечи, деривативы,
+спреды и другой рыночный контекст импортируются из
+`@tradejs/infra/timescale/*`; агрегирующего
 `@tradejs/infra/timescale` в TradeJS 3 нет.
-
-Перенесенные импорты перечислены в [миграции на TradeJS 3](../getting-started/migration-v3).
-
-## Конвенции по утилитам (для контрибьюторов)
-
-- Browser-safe helper’ы держите в `@tradejs/core`, Node runtime helper’ы в `@tradejs/node`, infra-адаптеры в `@tradejs/infra`.
-- Тестовые helper-утилиты изолируйте от runtime-кода и экспортируйте только стабильные API.
-- Избегайте дублирования helper-логики в runtime-файлах; выносите общий код в единые функции.
 
 ## Как подключить плагины
 

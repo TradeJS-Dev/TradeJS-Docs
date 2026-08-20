@@ -2,9 +2,18 @@
 title: 'Grid'
 ---
 
-`Grid` — directional position-building стратегия. Она входит на EMA-trend
-pullback recovery или подтвержденном breakout retest и добавляет уровни, не
-выходя за единый risk budget позиции.
+`Grid` набирает направленную позицию после восстановления от отката в тренде EMA
+или подтверждённого повторного теста пробоя. Добавления остаются в пределах
+единого лимита риска всей позиции.
+
+## Визуальная схема
+
+![Логика Grid](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/strategy-logic.svg)
+
+![Пример сигнала Grid](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика
 
@@ -21,4 +30,3 @@ Entry codes: `GRID_DIRECTIONAL_PULLBACK_ENTRY`, `GRID_BREAKOUT_RETEST_ENTRY`;
 `GRID_ENTRY_MODE`, `GRID_BREAKOUT_*`, `GRID_STEP_ATR_MULT`,
 `GRID_MAX_LEVELS`, `GRID_STOP_ATR_MULT`, lifecycle exits и optional
 `GRID_RANGE_*`. Перед live проверьте поддержку position increase коннектором.
-

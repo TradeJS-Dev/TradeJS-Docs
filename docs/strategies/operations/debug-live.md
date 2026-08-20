@@ -1,32 +1,87 @@
 ---
-title: Debugging Strategies in Live Mode
+title: Diagnose Live Trading Behavior
 ---
 
-When a strategy behaves unexpectedly in live mode, debug it in layers.
+Diagnose an unexpected result by following the decision and order lifecycle in
+order. First define the exact strategy, account, symbol, candle timestamp, and
+expected outcome.
 
-## 1. Confirm Inputs
+## 1. Verify the Deployed Setup
 
-- Check symbol, interval, and strategy config loaded from Redis.
-- Verify market data freshness for target symbol and BTC context.
+```bash
+npx @tradejs/cli runtime-control verify \
+  --user <user> \
+  --deployment <deployment>
+```
 
-## 2. Confirm Strategy Decision Path
+Confirm the strategy package version, strategy `version`, complete
+configuration, account, connector, timeframe, symbol selection, enabled state,
+and pause state. Compare them with the reviewed revision, not with a local draft.
 
-- Inspect whether strategy returns `skip`, `entry`, or `exit`.
-- If `entry` exists but order is missing, inspect runtime policy and gate results.
+## 2. Verify Market Data
 
-## 3. Check Runtime Gates
+Check that the decision candle is closed, present once, timestamped correctly,
+and identical across the live record and replay source. Verify warm-up history
+and any required derivatives, spread, global-market, or on-chain context.
 
-- AI quality threshold (`minQuality`)
-- ML threshold and enrichment status
-- `MAKE_ORDERS` flag in effective runtime config
+If the strategy was not evaluated, investigate symbol selection, candle
+freshness, timeframe, process health, and data gaps before inspecting entry
+logic.
 
-## 4. Inspect Stored Artifacts
+## 3. Trace the Strategy Decision
 
-- Signal records in Redis
-- `analysis:<symbol>:<signalId>` for AI decision details
-- Recent logs around the same timestamp
+Determine whether the strategy returned `skip`, `entry`, or `exit` and inspect
+the recorded reason and inputs. Recalculate the relevant indicators and state
+at that timestamp. Do not use data from later candles during diagnosis.
 
-## 5. Reproduce With Narrow Scope
+If replay and live evaluation disagree, compare package/configuration versions,
+warm-up length, timestamp alignment, and external context first.
 
-- Run one symbol and one strategy.
-- Keep `--cacheOnly` where possible for deterministic replay.
+## 4. Trace Filters and Risk Controls
+
+When an `entry` exists but no order was submitted, inspect each subsequent
+decision:
+
+- strategy and project hooks;
+- account and portfolio exposure limits;
+- pause state and order-placement permission;
+- AI/ML or other policy filters;
+- sizing, minimum notional, price deviation, and liquidity checks.
+
+Record which control rejected the entry. A missing order is not necessarily a
+strategy mismatch.
+
+## 5. Trace the Order Lifecycle
+
+If submission was attempted, follow the client order id through request,
+acknowledgement, rejection, partial fill, fill, cancellation, and
+reconciliation. Compare local state with the venue before retrying an unknown
+outcome. Check permissions, rate limits, precision, margin, position mode, and
+connector errors.
+
+## 6. Reproduce the Window
+
+Use a narrow replay for the same strategy, symbols, and timestamps. For an
+entry-only comparison:
+
+```bash
+npx @tradejs/cli runtime-parity \
+  --user <user> \
+  --connector <connector> \
+  --strategy <StrategyName> \
+  --tickers <SYMBOLS> \
+  --startTime <ms> \
+  --endTime <ms> \
+  --details \
+  --cacheOnly
+```
+
+For exact version and execution comparison, collect a runtime record and follow
+[Validate live decisions with replay](../../runtime/backtesting/replay-evidence).
+
+## 7. Close the Diagnosis
+
+Document the observed behavior, expected behavior, exact versions and
+configuration, evidence, root cause, and corrective action. If the cause is
+uncertain or can create uncontrolled exposure, pause new entries while
+continuing to manage open positions.

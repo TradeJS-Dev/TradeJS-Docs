@@ -11,7 +11,7 @@ title: Как работает и настраивается машинное о
 4. Python train-контейнер обучает модель и пишет отчеты.
 5. Runtime-инференс идет в gRPC (`ML_GRPC_ADDRESS`).
 
-## Реальные команды
+## Команды
 
 ```bash
 npx @tradejs/cli backtest --config TrendLine:base --ml

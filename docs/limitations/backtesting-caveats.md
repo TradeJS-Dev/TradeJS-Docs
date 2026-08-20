@@ -16,7 +16,8 @@ Check whether your config includes fee assumptions and whether those assumptions
 
 Backtest prices are approximations. Live orders may fill worse than the candle price because of spread, latency, order book depth, volatility, and order type.
 
-Recent TradeJS runtime work includes slippage telemetry and execution calibration, but you still need to compare assumptions against real fills.
+TradeJS can record execution telemetry and compare replay with live fills, but
+you still need to calibrate assumptions against your own orders and venue.
 
 ## Data Quality
 

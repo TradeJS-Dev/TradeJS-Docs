@@ -2,9 +2,17 @@
 title: 'LiquidityTails'
 ---
 
-`LiquidityTails` - встроенная TypeScript-стратегия из `@tradejs/strategy-liquidity-tails`.
+`LiquidityTails` строит зоны ликвидности по крупным теням свечей, ждёт
+повторного теста и входит на реакции со стопом за границей зоны.
 
-Она ищет wick/tail liquidity zones, ждет retest и торгует реакцию со stop за пределами retested zone.
+## Визуальная схема
+
+![Логика LiquidityTails](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/strategy-logic.svg)
+
+![Пример сигнала LiquidityTails](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -82,7 +90,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

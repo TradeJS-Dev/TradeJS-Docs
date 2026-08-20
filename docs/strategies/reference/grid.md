@@ -6,6 +6,15 @@ title: 'Grid'
 pullback recovery or a confirmed breakout retest, then add levels while keeping
 the whole basket inside one configured risk budget.
 
+## Visual overview
+
+![Grid strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/strategy-logic.svg)
+
+![Grid signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Decision flow
 
 1. Classify trend direction and strength from fast/slow EMA and ATR geometry.
@@ -27,4 +36,3 @@ Entry codes are `GRID_DIRECTIONAL_PULLBACK_ENTRY` and
 
 Scale-in entries increase an existing position; validate connector support and
 basket-level loss behavior before enabling orders.
-

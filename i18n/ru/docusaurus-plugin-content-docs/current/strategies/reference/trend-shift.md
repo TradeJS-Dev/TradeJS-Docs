@@ -2,9 +2,17 @@
 title: 'TrendShift'
 ---
 
-`TrendShift` - встроенная TypeScript-стратегия из `@tradejs/strategy-trend-shift`.
+`TrendShift` входит при смене направления динамической трендовой полосы вверх
+или вниз.
 
-Она исследует trend transition setups через bullish/bearish flips в dynamic trend band.
+## Визуальная схема
+
+![Логика TrendShift](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/strategy-logic.svg)
+
+![Пример сигнала TrendShift](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -53,7 +61,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

@@ -1,12 +1,11 @@
 ---
-title: Use AI/ML workflows
+title: Use AI and ML
 ---
 
-AI and ML in TradeJS are optional research and gating layers.
+AI and ML are optional analysis and order-filtering layers. They do not replace
+strategy rules, data validation, or risk management.
 
-Use them to analyze and compare strategy decisions. Do not treat them as proof that a strategy will work live.
-
-## AI Flow
+## Evaluate an AI Gate
 
 ```bash
 npx @tradejs/cli backtest --config TrendLine:base --ai
@@ -14,14 +13,18 @@ npx @tradejs/cli ai-export
 npx @tradejs/cli ai-train -n 50 --minQuality 4
 ```
 
-Recent source changes added deterministic local gate research and AI pocket search workflows:
+You can also evaluate a deterministic local gate without provider calls and
+search feature subsets:
 
 ```bash
 npx @tradejs/cli ai-train --localOnly
 npx @tradejs/cli ai-pocket-search --strategy TrendLine
 ```
 
-## ML Flow
+Evaluate sample size, returns after costs, drawdown, period stability, and
+overfitting risk—not only the approval rate.
+
+## Prepare an ML Model
 
 ```bash
 npx @tradejs/cli backtest --config TrendLine:base --ml
@@ -30,9 +33,12 @@ npx @tradejs/cli ml-inspect
 npx @tradejs/cli ml-train:latest
 ```
 
+Split training and validation chronologically, exclude future information,
+version the feature definition, and monitor degradation after release.
+
 ## Read Next
 
-- [AI runtime and configuration](../ai-ml/ai/configuration)
+- [AI configuration](../ai-ml/ai/configuration)
 - [AI filter validation](../ai-ml/ai/prompt-replay)
 - [ML pipeline and configuration](../ai-ml/ml/configuration)
 - [Backtesting caveats](../limitations/backtesting-caveats)

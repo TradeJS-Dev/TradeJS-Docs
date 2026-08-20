@@ -1,40 +1,43 @@
 ---
-title: Compare strategies
+title: Compare Strategies
 ---
 
-Comparing strategies means holding assumptions steady and changing one thing at a time.
+Compare strategies on the same inputs and change one group of assumptions at a
+time.
 
-## Compare On
+## Hold Constant
 
-- same symbols
-- same time window
-- same timeframe
-- same fee/slippage assumptions
-- same cache/data source
-- same AI/ML mode if enabled
+- symbols and exact historical window;
+- timeframe and data provider;
+- fees, slippage, latency, and fill model;
+- position sizing and risk per trade;
+- missing-data and context rules;
+- AI/ML filter state when applicable.
 
-## Use Multiple Views
+## Compare
 
-Look at:
+- net result after modeled costs;
+- trade count, exposure, and turnover;
+- maximum drawdown and recovery time;
+- expectancy and the full trade-return distribution;
+- stability across symbols, subperiods, and market regimes;
+- concentration of profit and risk;
+- reasons for skipped entries;
+- agreement between backtest, replay, and live decisions.
 
-- order count
-- win rate
-- net result
-- drawdown
-- risk/reward
-- skipped reasons
-- chart figures
-- runtime/backtest parity
+If strategies have different turnover, holding periods, or risk, their absolute
+profit is not comparable without normalizing for capital, time, and exposure.
 
 ## Avoid
 
-- picking only the best symbol after the fact
-- optimizing too many parameters on one period
-- ignoring losing streaks and drawdown
-- comparing live fills against idealized historical fills without adjustment
+- selecting the best symbol or window after inspecting results;
+- optimizing many parameters on one sample;
+- ignoring loss streaks, tail risk, and drawdown;
+- comparing idealized historical prices with live fills without calibration;
+- combining strategies without measuring correlation and aggregate exposure.
 
 Related:
 
 - [Understanding the output](../getting-started/understanding-output)
 - [Backtesting caveats](../limitations/backtesting-caveats)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
+- [Compare live and replayed entries](../runtime/backtesting/runtime-parity)

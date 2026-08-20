@@ -25,39 +25,32 @@ Setup and diagnostics:
 - `infra-up` / `infra-down` - start or stop local infrastructure.
 - `server-health` - check service health.
 - `user-add` - create a user config.
-- `migration` - run migration tasks.
 
 Research and backtesting:
 
 - `backtest` - run strategy backtests or refresh market cache.
 - `results` - inspect, merge, update, or clear selected strategy results in Redis.
-- `runtime-parity` - replay runtime entries against deterministic backtest logic.
-- `replay` - replay stored runtime data.
-- `runtime-evidence` - collect runtime evidence.
-- `runtime-evidence-sync` - import completed evidence bundles from another runtime host.
-- `runtime-scorecard` - compare recent runtime behavior with a verified release envelope.
-- `replay-runtime-evidence` - replay collected runtime evidence.
-- `execution-calibration` - inspect runtime execution assumptions.
+- `runtime-parity` - compare recorded live entries with reconstructed entries.
+- `replay` - evaluate a deployed configuration over historical closed candles.
+- `runtime-evidence` - collect a timestamped record of live decisions and versions.
+- `runtime-evidence-sync` - verify and import a runtime record from another host.
+- `runtime-scorecard` - summarize live/replay differences and execution quality.
+- `replay-runtime-evidence` - combine a replay result with a runtime record.
+- `execution-calibration` - compare signal, arrival, and fill behavior.
 
 Runtime and signals:
 
 - `signals` - evaluate runtime strategies on the latest closed candle.
-- `signals-daemon` - keep configured scopes running on closed-candle boundaries.
+- `signals-daemon` - evaluate configured strategies whenever a candle closes.
 - `signals-summary` - summarize recent runtime signal/order state.
+- `runtime-control` - inspect, verify, pause, or resume configured live strategies.
 - `market-ws` - expose the dashboard candle WebSocket gateway.
 - `bot` - run the Telegram bot.
-
-`research:auto`, `research:core`, `strategy-release`, `agent-run`,
-`binance:breadth-universes:update`, and `hyperliquid:whales:update` are
-source-repository maintainer workflows, not supported external package
-commands. They are intentionally outside this public command map even though
-the package currently contains their launchers.
 
 Market data and maintenance:
 
 - `continuity` - check or repair candle continuity.
 - `binance:market-ingest` - ingest Binance market data.
-- `candles:migrate-provider` - migrate candle provider naming.
 - `derivatives:ingest` - ingest derivatives context.
 - `derivatives:ingest:coinalyze:all` - ingest Coinalyze derivatives context for all configured targets.
 - `spread:ingest` - ingest Binance/Coinbase spread context.
@@ -166,8 +159,47 @@ See [Create a backtest config](../getting-started/backtest-config).
 - `-w, --watch` - keep running on candle boundaries; `signals-daemon` enables this mode directly.
 - `-d, --settleDelayMs` - delay after candle close before a daemon cycle.
 
-Without explicit scope flags, `signals` discovers and runs all active
-Git-declared runtime scopes. See [How signals work](../runtime/execution/signals).
+Without filters, `signals` evaluates every enabled setup in
+`tradejs.config.ts`. See [How live signals work](../runtime/execution/signals).
+
+## Runtime Control
+
+`runtime-control` reads deployed settings from `tradejs.config.ts`. Pause and
+resume add or remove only a temporary new-entry block; they do not edit the
+strategy configuration.
+
+```bash
+npx @tradejs/cli runtime-control inspect --user root --deployment production
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli runtime-control pause --user root --deployment production --strategy TrendFollow
+npx @tradejs/cli runtime-control resume --user root --deployment production --strategy TrendFollow
+```
+
+- `inspect` prints resolved deployments and may be filtered by `--deployment`
+  and `--strategy`.
+- `verify` checks that declared strategies, packages, accounts, intervals, and
+  runtime bindings resolve; `--deployment` is optional.
+- `pause` and `resume` require both `--deployment` and `--strategy`.
+- pausing blocks new entries but keeps open-position management active.
+- resuming removes the override; it cannot enable a strategy disabled in
+  `tradejs.config.ts`.
+
+## Replay
+
+`replay` runs the enabled strategies from one deployment over a historical
+window. Pass `--runtimeEvidence` to reproduce the strategy, package, and
+configuration versions stored in a collected runtime record.
+
+- `--deployment` - deployment id from `tradejs.config.ts`, default `production`.
+- `--runtimeEvidence` - runtime record whose stored setup should be replayed.
+- `--days` or `--startTime` / `--endTime` - replay window.
+- `--tickers`, `--exclude`, `--tickersLimit` - temporary symbol selection for this run.
+- `--timeframe` - must match every selected strategy declaration.
+- `--cacheOnly` - use only cached history.
+- `--chart` - save compact chart data for the strategies UI.
+- `--showTickersList` - print the resolved symbol list and exit.
+
+See [Validate live decisions with replay](../runtime/backtesting/replay-evidence).
 
 ## Signals Summary
 
@@ -191,7 +223,8 @@ Git-declared runtime scopes. See [How signals work](../runtime/execution/signals
 - `-V, --verbose` - verbose output.
 - `-U, --user` - Redis user config.
 
-Use this command to inspect candidate configs before promoting them into runtime settings.
+Use this command to inspect candidate configurations before deciding whether
+they warrant independent validation and live evaluation.
 
 ## Runtime Parity
 
@@ -282,7 +315,7 @@ Output and feature scope:
 - [Run your first backtest](../getting-started/first-backtest)
 - [Create a backtest config](../getting-started/backtest-config)
 - [Grid config for backtests](../runtime/backtesting/grid-config)
-- [Results and Project config promotion](../runtime/backtesting/results-runtime-config)
-- [Runtime Parity](../runtime/backtesting/runtime-parity)
+- [Use a tested configuration in live trading](../runtime/backtesting/results-runtime-config)
+- [Compare live and replayed entries](../runtime/backtesting/runtime-parity)
 - [Data Sync](../getting-started/data-sync)
 - [Data quality guide](../guides/data-quality)

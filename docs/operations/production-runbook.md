@@ -22,27 +22,22 @@ The public packages do not provision a turnkey production environment. Start wit
 The official repository split uses `TradeJS-Project` for package composition,
 `tradejs.config.ts`, secret-free runtime defaults, and the app image.
 `TradeJS-Deploy` owns production Compose, TLS, volumes, SSH, resource policy,
-and secrets. The Project dispatches an immutable image tag and Project revision
+and secrets. The Project supplies a versioned image tag and project revision
 to Deploy; Deploy does not rebuild application source. See
 [Repository and package ownership](../advanced/repository-ownership).
 
 ## Configuration and rollout
 
 - Keep full deployment and strategy config in `tradejs.config.ts`.
-- Increment only the affected strategy's `version` when its package or config
-  changes; exact npm versions remain in the lockfile and image manifest.
-- Validate beta packages in an isolated production-like Project image. Promote
-  stable packages on the scheduled release channel, then build one Project
-  image from the stable composition.
+- Increment only the affected strategy's `version` when its package, config,
+  or ticker selection changes; exact npm versions remain in the lockfile and
+  image manifest.
+- Use stable package versions for live trading. Test upgrades in an isolated
+  environment before building the application image.
 - After deploy, run `runtime-control verify`. Redis is not a deployment/config
   source; it holds accounts, optional pause overrides, audit events, heartbeat,
   signals, evaluations, and trades.
 - The UI is read-only for config and may only pause/resume new entries.
-
-During the breaking migration, back up Redis and pass a restore drill before
-deleting old `users:<user>:strategies*` and Redis deployment documents. Use an
-allowlisted cleanup that preserves controls, control events, accounts,
-heartbeats, signals, evaluations, and trades.
 
 ## Daily Health Checks
 
@@ -64,14 +59,6 @@ heartbeats, signals, evaluations, and trades.
 2. ML inference service
 3. App service
 4. Reverse proxy / ingress if needed
-
-## Repository Research Automation
-
-The `research:auto` and `agent-run` launchers are maintainer workflows, not a
-supported external npm deployment flow. The agent image is built from TradeJS,
-but a strategy change is committed and proposed in that strategy's standalone
-repository. Its machine identity therefore needs access only to the engine and
-the strategy repositories in scope, not application or deployment secrets.
 
 ## Rollback
 

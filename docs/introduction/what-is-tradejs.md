@@ -2,24 +2,34 @@
 title: What is TradeJS?
 ---
 
-TradeJS is a TypeScript framework for building, backtesting, and running programmable trading strategies. Its self-hosted runtime keeps infrastructure and execution under your control.
+TradeJS is a TypeScript framework for systematic trading research,
+backtesting, market scanning, and self-hosted execution.
 
 At the simplest level, a TradeJS project contains:
 
 - market data as candles
 - one or more strategies that read those candles
 - signals that describe possible entries or exits
-- a runtime that can backtest, scan, and optionally automate execution
-- metrics and artifacts that help you compare strategy behavior
+- a backtest that applies those rules to historical candles
+- a live process that evaluates newly closed candles and can optionally place orders
+- reports that help you compare configurations and diagnose differences between
+  historical and live behavior
 
-TradeJS is not a black-box trading product. It is a developer framework and runtime stack. You write or configure the strategy, run it against historical data, inspect the output, and decide whether it is suitable for runtime signals or controlled automation on infrastructure you operate.
+TradeJS is not a black-box trading product. You define or configure the
+strategy, state the market-data and execution assumptions, inspect the results,
+and decide whether the evidence is strong enough for further validation or a
+limited live rollout.
 
 ## Primary Workflow
 
-1. Write typed strategy logic and indicators in TypeScript.
-2. Backtest and compare strategy configurations on historical data.
-3. Promote a selected result into runtime configuration.
-4. Generate signals and optionally automate execution on your infrastructure.
+1. Define strategy rules, risk limits, symbol universe, and timeframe.
+2. Backtest candidate configurations on historical data.
+3. Validate selected candidates out of sample and under realistic fees,
+   slippage, latency, and liquidity assumptions.
+4. Replay the exact live configuration over a known window and compare its
+   decisions with the backtest or live record.
+5. Generate live signals and, after separate risk approval, optionally allow
+   order placement.
 
 ## What You Can Do
 
@@ -29,9 +39,9 @@ TradeJS is not a black-box trading product. It is a developer framework and runt
 - Run the framework locally or on self-hosted infrastructure.
 - Register custom strategy, indicator, and connector plugins.
 - Add Pine-backed strategy compatibility and AI/ML workflows as optional extensions.
-- Inspect results in the installable app.
+- Inspect backtests and live status in the installable web app.
 
-## Public Surface
+## Main Packages
 
 Use public packages:
 
@@ -53,6 +63,7 @@ export default defineConfig(basePreset);
 
 ## Where To Go Next
 
+- [Trading Workflow and Terms](./trading-workflow-and-terms)
 - [Installation](../getting-started/installation)
 - [Run your first backtest](../getting-started/first-backtest)
 - [Core Concepts: Strategy](../core-concepts/strategy)

@@ -6,6 +6,15 @@ title: 'LiquidityTails'
 
 It detects wick/tail liquidity zones, waits for retests, and trades reactions with a stop outside the retested zone.
 
+## Visual overview
+
+![LiquidityTails strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/strategy-logic.svg)
+
+![LiquidityTails signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 1. Replays candles through `createLiquidityTailsEngine(...)`.

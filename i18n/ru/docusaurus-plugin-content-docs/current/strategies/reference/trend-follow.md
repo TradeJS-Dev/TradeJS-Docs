@@ -2,9 +2,17 @@
 title: 'TrendFollow'
 ---
 
-`TrendFollow` - встроенная TypeScript-стратегия из `@tradejs/strategy-trend-follow`.
+`TrendFollow` входит на продолжение тренда, используя скользящую линию стопа и
+детерминированные фильтры входа.
 
-Она исследует continuation-style trend setups с trailing stop line и strategy-specific deterministic guardrails.
+## Визуальная схема
+
+![Логика TrendFollow](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/strategy-logic.svg)
+
+![Пример сигнала TrendFollow](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -51,7 +59,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

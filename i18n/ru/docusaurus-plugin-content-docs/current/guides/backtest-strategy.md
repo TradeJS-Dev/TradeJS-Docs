@@ -2,39 +2,52 @@
 title: Бэктест стратегии
 ---
 
-Backtest прогоняет стратегию по историческим свечам и сохраняет metrics/artifacts.
+Бэктест применяет стратегию к историческим свечам и сохраняет сделки и метрики
+для анализа.
 
-## Базовая форма команды
+## Команда
 
 ```bash
-npx @tradejs/cli backtest --user root --config <StrategyName:configName> --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
+npx @tradejs/cli backtest \
+  --user root \
+  --config <StrategyName:configName> \
+  --tickers BTCUSDT \
+  --timeframe 15 \
+  --tests 1 \
+  --parallel 1
 ```
 
-Выбранный config должен существовать в Redis. Sandbox из [Первого бэктеста](../getting-started/first-backtest) создает такой config сам; для своей стратегии см. [Создать backtest config](../getting-started/backtest-config).
+Указанная сетка параметров должна существовать в локальном Redis. Установка из
+раздела [Первый бэктест](../getting-started/first-backtest) создаёт начальную
+сетку автоматически. Для собственной стратегии см.
+[Сетка параметров бэктеста](../getting-started/backtest-config).
 
-## Полезные flags
+## Полезные параметры
 
-- `--config` - backtest config key;
-- `--tickers` - список symbols;
-- `--timeframe` - interval;
-- `--tests` - максимум тестов;
-- `--parallel` - число workers;
-- `--cacheOnly` - не обновлять market cache;
-- `--updateOnly` - только обновить cache;
-- `--ml` - экспортировать ML rows;
-- `--ai` - экспортировать AI prompt rows;
-- `--runId` - продолжить resumable run.
+- `--config` — имя сетки;
+- `--tickers` — инструменты через запятую;
+- `--timeframe` — интервал свечи;
+- `--tests` — максимальное число тестов;
+- `--parallel` — число параллельных процессов;
+- `--cacheOnly` — не обновлять сохранённую историю;
+- `--updateOnly` — обновить историю без тестов;
+- `--ml` — записать строки для ML;
+- `--ai` — записать строки для проверки AI-промптов;
+- `--runId` — продолжить сохранённый запуск.
 
-## Workflow
+## Практическая последовательность
 
-1. Начните с одной стратегии, symbol и config.
-2. Проверьте, что entries/exits объяснимы.
-3. Расширьте окно и symbols.
-4. Сравнивайте варианты при одинаковых assumptions.
-5. Прочитайте [Ограничения бэктестинга](../limitations/backtesting-caveats).
+1. Начните с одной стратегии, одного инструмента и одной конфигурации.
+2. Убедитесь, что входы и выходы объясняются правилами и доступными данными.
+3. Расширьте период и набор инструментов.
+4. Сравнивайте варианты при одинаковых допущениях.
+5. Проверьте выбранный вариант вне выборки и прочитайте
+   [ограничения бэктестинга](../limitations/backtesting-caveats) до работы с
+   текущим рынком.
 
-Deep dives:
+## Подробные материалы
 
-- [Обзор бэктестинга](../runtime/backtesting/overview)
-- [Grid config](../runtime/backtesting/grid-config)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
+- [Как работают бэктесты](../runtime/backtesting/overview)
+- [Перебор сетки параметров](../runtime/backtesting/grid-config)
+- [Как использовать проверенную конфигурацию](../runtime/backtesting/results-runtime-config)
+- [Сравнение реальных и воспроизведённых входов](../runtime/backtesting/runtime-parity)

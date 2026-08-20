@@ -42,14 +42,6 @@ candles, derivatives, spread, market context, Hyperliquid whale context, or the
 Timescale client from `@tradejs/infra/timescale/*`; there is no aggregate
 `@tradejs/infra/timescale` export in TradeJS 3.
 
-See [Migrate to TradeJS 3](../getting-started/migration-v3) for moved imports.
-
-## Utilities Convention (Contributors)
-
-- Keep browser-safe helpers inside `@tradejs/core`, Node runtime helpers inside `@tradejs/node`, and infra adapters inside `@tradejs/infra`.
-- Keep test-only helpers isolated from runtime code and export only stable APIs.
-- Avoid duplicated helper logic across runtime files; extract shared helpers instead.
-
 ## Project Config API
 
 Create `tradejs.config.ts` in project root:

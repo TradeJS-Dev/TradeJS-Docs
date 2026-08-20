@@ -12,6 +12,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'intro',
         'introduction/what-is-tradejs',
+        'introduction/trading-workflow-and-terms',
         'introduction/who-is-it-for',
         'introduction/what-tradejs-is-not',
         'introduction/licensing',
@@ -23,7 +24,6 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'getting-started/installation',
-        'getting-started/migration-v3',
         'getting-started/quickstart',
         'getting-started/first-backtest',
         'getting-started/backtest-config',
@@ -124,7 +124,33 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: t('Advanced', 'Продвинутые темы'),
+      label: t('Research and Validation', 'Исследование и проверка'),
+      collapsed: false,
+      items: [
+        'runtime/backtesting/overview',
+        'runtime/backtesting/grid-config',
+        'runtime/backtesting/results-runtime-config',
+        'runtime/backtesting/replay-evidence',
+        'runtime/backtesting/runtime-parity',
+        'runtime/backtesting/strategy-playbook',
+      ],
+    },
+    {
+      type: 'category',
+      label: t('Live Trading', 'Реальная торговля'),
+      collapsed: false,
+      items: [
+        'runtime/execution/signals',
+        'runtime/execution/multi-strategy-signals',
+        'runtime/execution/telegram-notifications',
+        'strategies/operations/risk-management',
+        'strategies/operations/pre-live-checklist',
+        'strategies/operations/debug-live',
+      ],
+    },
+    {
+      type: 'category',
+      label: t('Reference and Operations', 'Справочник и эксплуатация'),
       items: [
         'advanced/architecture',
         'advanced/repository-ownership',
@@ -135,26 +161,6 @@ const sidebars: SidebarsConfig = {
         'advanced/extending-tradejs',
         'api/framework',
         'api/cli',
-        {
-          type: 'category',
-          label: t('Backtesting', 'Бэктестинг'),
-          items: [
-            'runtime/backtesting/overview',
-            'runtime/backtesting/grid-config',
-            'runtime/backtesting/results-runtime-config',
-            'runtime/backtesting/runtime-parity',
-            'runtime/backtesting/strategy-playbook',
-          ],
-        },
-        {
-          type: 'category',
-          label: t('Runtime Execution', 'Runtime-исполнение'),
-          items: [
-            'runtime/execution/signals',
-            'runtime/execution/multi-strategy-signals',
-            'runtime/execution/telegram-notifications',
-          ],
-        },
         {
           type: 'category',
           label: 'ML',
@@ -174,15 +180,6 @@ const sidebars: SidebarsConfig = {
             'ai-ml/ai/configuration',
             'ai-ml/ai/prompt-replay',
             'ai-ml/ai/prompt-governance',
-          ],
-        },
-        {
-          type: 'category',
-          label: t('Validation and Live Ops', 'Валидация и live-режим'),
-          items: [
-            'strategies/operations/risk-management',
-            'strategies/operations/pre-live-checklist',
-            'strategies/operations/debug-live',
           ],
         },
         {

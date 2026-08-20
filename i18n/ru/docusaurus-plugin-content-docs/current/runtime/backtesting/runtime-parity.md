@@ -1,118 +1,77 @@
 ---
-title: Runtime parity
+title: Сравнение реальных и воспроизведённых входов
 ---
 
-`runtime-parity` сравнивает live/runtime записи входов с детерминированным
-backtest replay за тот же недавний период.
+`runtime-parity` сравнивает записанные реальные входы с входами,
+восстановленными для тех же инструментов и периода. Команда отвечает на один
+вопрос:
 
-Запускайте его после promotion результатов бэктеста в runtime config или после
-изменений в runtime-логике стратегии. Команда отвечает на узкий вопрос:
+> Дали ли расчёт на текущем рынке и историческое воспроизведение сопоставимые
+> решения о входе?
 
-> Сгенерировали ли shared runtime и backtest replay сопоставимые entry orders
-> для выбранных стратегий и символов?
+Если нужно точное сравнение версий пакетов, конфигураций, сигналов, ордеров и
+исполнений, используйте [воспроизведение с журналом работы](./replay-evidence).
 
-## Запуск
-
-```bash
-npx @tradejs/cli runtime-parity --user root --connector bybit --days 3
-```
-
-Полезные варианты:
+## Запуск сравнения
 
 ```bash
-npx @tradejs/cli runtime-parity --user root --connector bybit --days 3 --details
-npx @tradejs/cli runtime-parity --user root --connector bybit --strategy TrendLine --tickers BTC,ETH
-npx @tradejs/cli runtime-parity --user root --connector bybit --startTime 1714000000000 --endTime 1714260000000
-npx @tradejs/cli runtime-parity --user root --connector bybit --days 3 --notify
+npx @tradejs/cli runtime-parity \
+  --user root \
+  --connector bybit \
+  --days 3
 ```
 
-## Что replay’ится
-
-Команда строит replay targets из:
-
-- сохраненных runtime trade records
-- runtime signal/evaluation universe
-- явных `--tickers`
-- последних strategy results, если они доступны
-
-Для каждого target резолвится effective runtime config:
-
-- user strategy config из Redis
-- per-symbol `results` patch, если он есть
-- runtime поля replay, например `ENV`
-
-По умолчанию replay запускается с `ENV=BACKTEST`, поэтому проверяет parity
-core/runtime исполнения без вызова live AI/ML gates.
-
-Используйте `--runtimeGates` только если намеренно хотите запускать
-сконфигурированные runtime gates во время parity replay. Это может вызвать
-внешних AI providers и ML inference.
-
-## Правила matching
-
-Runtime и backtest entries сопоставляются по:
-
-- strategy
-- symbol
-- direction
-- timestamp в пределах заданного tolerance
-
-Дефолтный tolerance по timestamp — одна 15m свеча. Изменить его можно так:
+Сравнение можно ограничить стратегией и инструментами или точными временными
+метками:
 
 ```bash
-npx @tradejs/cli runtime-parity --toleranceBars 2
+npx @tradejs/cli runtime-parity \
+  --user root \
+  --connector bybit \
+  --strategy <StrategyName> \
+  --tickers BTCUSDT,ETHUSDT \
+  --details
 ```
 
-Entry price выводится как drift для диагностики, но не является основным ключом
-matching.
+## Исходные данные и фильтры
 
-## Output
+Команда строит список проверок по записанным сделкам и расчётам, явному
+`--tickers` и локальным результатам стратегии, если они есть. По умолчанию
+стратегия запускается с `ENV=BACKTEST`, поэтому внешние AI/ML-фильтры не
+вызываются.
 
-Console и Telegram report включают:
+Используйте `--runtimeGates`, только если сравнение должно обращаться к
+настроенным AI- или ML-сервисам. Это может создавать расходы и делает результат
+зависимым от доступности внешнего сервиса.
 
-- окно replay, connector, replay env, статус runtime gates и tolerance
-- количество targets, compared targets, replay errors и sources targets
-- runtime entries, deduped runtime entries, duplicates, backtest entries
-- matched, runtime-only и backtest-only counts
-- average/max entry price delta и timestamp drift для matched entries
-- per-strategy breakdown по targets и entries
-- классификации backtest-only, если runtime signals/evaluations объясняют, почему entry не стал runtime trade
-- warnings, если AI/ML gates сконфигурированы, но `--runtimeGates` не включен
+Если важны точные рабочие версии и настройки, используйте журнал из раздела
+[Проверка реальных решений через воспроизведение](./replay-evidence).
 
-При `--notify` та же сводка отправляется в Telegram через сохраненные настройки
-текущего пользователя.
+## Правила сопоставления
 
-## Как читать результаты
+Входы сопоставляются по стратегии, инструменту, направлению и допустимому
+отклонению времени. По умолчанию допускается одна 15-минутная свеча. Параметр
+`--toleranceBars <count>` меняет допуск. Разница цены показывается для
+диагностики, но не является главным ключом сопоставления.
 
-`matched` должен быть близок к runtime entries, если в окне достаточно market
-data и runtime config совпадает с тем, что было live.
+## Как читать результат
 
-`runtimeOnly` означает, что runtime trade record есть, но детерминированный
-replay не создал сопоставимый entry.
+- **matched** — найден сопоставимый реальный и восстановленный вход;
+- **runtime-only** — реальный вход есть, но воспроизведение его не получило;
+- **backtest-only** — воспроизведение получило вход, которого нет в журнале.
 
-`backtestOnly` означает, что replay создал entry, которого нет в runtime trade
-records. Report по возможности классифицирует такие случаи:
+Когда возможно, входы только из воспроизведения получают причину:
 
-- `gated_out` — runtime signal/evaluation был, но AI/ML или policy заблокировали сделку
-- `order_failed` — runtime пытался поставить ордер, но placement failed
-- `core_skipped` — runtime выполнился, но core вернул skip
-- `not_evaluated` — сопоставимой runtime evaluation не найдено
-- `true_mismatch` — известного runtime-объяснения нет
+- `gated_out` — вход заблокировал фильтр или правило;
+- `order_failed` — попытка отправить ордер завершилась ошибкой;
+- `core_skipped` — расчёт стратегии пропустил вход;
+- `not_evaluated` — сопоставимый расчёт на текущем рынке не найден;
+- `true_mismatch` — в доступных записях нет известного объяснения.
 
-Если у стратегии `runtime=0` и `backtest=0`, выбранные targets не дали
-сопоставимых entries в этом окне. Это не означает, что AI/ML обязан одобрять
-live trade каждый день.
+Проверяйте различия свечей, времени, инструментов, конфигурации, версии
+стратегии, прогревочной истории, фильтров и жизненного цикла ордера. Нулевое
+число входов с обеих сторон означает лишь, что в этом периоде не было
+сопоставимых входов.
 
-## Флаги
-
-- `--user` выбирает Redis user config и runtime journal.
-- `--connector` выбирает connector provider/name для replay.
-- `--days` задает недавнее окно replay.
-- `--startTime` и `--endTime` задают явное окно replay.
-- `--strategy` ограничивает replay одной стратегией.
-- `--tickers` replay’ит comma-separated symbols для всех configured strategies.
-- `--cacheOnly` пропускает обновление market history перед replay.
-- `--toleranceBars` меняет timestamp matching tolerance.
-- `--runtimeGates` включает configured runtime AI/ML gates во время replay.
-- `--details` печатает детали unmatched entries в stdout.
-- `--notify` отправляет parity summary в Telegram.
+Полезные параметры: `--startTime`, `--endTime`, `--strategy`, `--tickers`,
+`--cacheOnly`, `--toleranceBars`, `--runtimeGates`, `--details`, `--notify`.

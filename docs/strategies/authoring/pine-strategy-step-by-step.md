@@ -684,7 +684,7 @@ export default defineConfig(basePreset, {
 
 After that, `AdaptiveMomentumRibbon` is available to runtime/backtests as a standard plugin strategy.
 
-The Project declaration is the only production config. Increment the strategy
+`tradejs.config.ts` is the source of live strategy settings. Increment the strategy
 version whenever its package or config changes. Redis retains the trading
 account and optional pause override only.
 

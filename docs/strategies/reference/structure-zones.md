@@ -2,9 +2,17 @@
 title: 'StructureZones'
 ---
 
-`StructureZones` is a built-in TypeScript strategy from `@tradejs/strategy-structure-zones`.
+`StructureZones` builds market-structure zones from swing points and trades
+reactions or transition breakouts at those zones.
 
-It researches market-structure zones built from swing points, then trades reactions or transition breakouts from those zones.
+## Visual overview
+
+![StructureZones strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/strategy-logic.svg)
+
+![StructureZones signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Entry Logic
 

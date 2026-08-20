@@ -26,6 +26,8 @@ Use metrics to compare:
 
 Do not optimize only one number. A high net result on one short window can be overfit, data-dependent, or caused by unrealistic execution assumptions.
 
-## Recent Runtime Metrics
+## Live Diagnostics
 
-The current app and runtime have more strategy-card and order-drawer metrics than early versions, including runtime strategy analytics, loss streak display, and replay/parity reports. Use those views as diagnostics, not as proof that a strategy is ready for live automation.
+The app shows strategy analytics, loss streaks, order details, and replay
+comparisons. Use these views to explain behavior and monitor risk, not as proof
+that a strategy is ready for automated execution.

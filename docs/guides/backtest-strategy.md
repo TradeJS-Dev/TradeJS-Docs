@@ -31,11 +31,13 @@ The selected config must exist in Redis. The deterministic sandbox in [Run your 
 2. Confirm entries and exits are explainable.
 3. Expand the symbol/time window.
 4. Compare variants with the same assumptions.
-5. Review [Backtesting caveats](../limitations/backtesting-caveats) before promoting anything to runtime.
+5. Validate the candidate out of sample and review
+   [backtesting caveats](../limitations/backtesting-caveats) before using it
+   with current market data.
 
 ## Deep Dives
 
 - [Backtesting overview](../runtime/backtesting/overview)
 - [Grid config](../runtime/backtesting/grid-config)
-- [Promote results into Project config](../runtime/backtesting/results-runtime-config)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
+- [Use a tested configuration in live trading](../runtime/backtesting/results-runtime-config)
+- [Compare live and replayed entries](../runtime/backtesting/runtime-parity)

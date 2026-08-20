@@ -2,9 +2,17 @@
 title: 'TrendShift'
 ---
 
-`TrendShift` is a built-in TypeScript strategy from `@tradejs/strategy-trend-shift`.
+`TrendShift` trades transitions detected as bullish or bearish flips in a
+dynamic trend band.
 
-It researches trend transition setups by detecting bullish and bearish flips in a dynamic trend band.
+## Visual overview
+
+![TrendShift strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/strategy-logic.svg)
+
+![TrendShift signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Entry Logic
 

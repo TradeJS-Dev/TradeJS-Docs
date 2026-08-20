@@ -2,9 +2,18 @@
 title: 'AdaptiveTrendChannel'
 ---
 
-`AdaptiveTrendChannel` - встроенная TypeScript-стратегия из `@tradejs/strategy-adaptive-trend-channel`.
+`AdaptiveTrendChannel` ищет смену направления адаптивного ценового канала.
+Размер позиции рассчитывается по расстоянию до границы канала, которая служит
+структурным стопом.
 
-Она прогоняет свечи через adaptive channel engine, ищет bullish/bearish channel flips и рассчитывает вход от расстояния до границы канала, которая используется как stop.
+## Визуальная схема
+
+![Логика AdaptiveTrendChannel](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/strategy-logic.svg)
+
+![Пример сигнала AdaptiveTrendChannel](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -71,7 +80,7 @@ Side configs:
 - `LONG.enable`, `LONG.direction`, `LONG.minRiskRatio`
 - `SHORT.enable`, `SHORT.direction`, `SHORT.minRiskRatio`
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

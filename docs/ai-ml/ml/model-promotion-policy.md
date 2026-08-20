@@ -27,4 +27,4 @@ Define objective promotion gates before publishing model aliases.
 ## Rollback Rules
 
 - Roll back if critical quality or runtime health alerts fire.
-- Keep previous alias set immutable for quick restore.
+- Keep the previous alias set unchanged so it can be restored quickly.

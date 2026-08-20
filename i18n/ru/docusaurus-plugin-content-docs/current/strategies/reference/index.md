@@ -2,43 +2,74 @@
 title: Каталог встроенных стратегий
 ---
 
-Непустой preset `@tradejs/base` устанавливает 20 независимых strategy packages,
-которые предоставляют 21 стратегию. Это reference implementations и исходные
-точки, а не готовые торговые рекомендации. Перед runtime-пуском перепроверьте
-каждую стратегию на своих symbols, costs, interval, provider и risk limits.
+`@tradejs/base` устанавливает 20 пакетов с 21 реализацией стратегий. Это
+проверяемые исходные точки, а не торговые рекомендации или готовые наборы
+параметров. Каждую стратегию нужно тестировать на своих рынках, источниках
+данных, издержках, таймфреймах, ликвидности и ограничениях риска.
 
-TrendLine и ReverseTrendLine намеренно используют общий пакет
-`@tradejs/strategy-trend-line`; все остальные пакеты соответствуют одной
-стратегии.
+TrendLine и ReverseTrendLine входят в общий пакет
+`@tradejs/strategy-trend-line`; остальные стратегии поставляются отдельно.
 
-## Тренд и breakout
+## Тренд, моментум и пробой
 
-- [TrendLine](./trendline) и [ReverseTrendLine](./reverse-trendline)
-- [TrendFollow](./trend-follow) и [TrendShift](./trend-shift)
-- [Breakout](./breakout)
-- [AdaptiveTrendChannel](./adaptive-trend-channel)
-- [AdaptiveMomentumRibbon](./adaptive-momentum-ribbon)
-- [MaStrategy](./ma-strategy)
-- [VolatilityCompressionBreakout](./volatility-compression-breakout)
-- [RelativeRotation](./relative-rotation)
+- [TrendLine](./trendline) — пробой трендовой линии по экстремумам цены.
+- [ReverseTrendLine](./reverse-trendline) — отбой или разворот около линии
+  поддержки или сопротивления.
+- [TrendFollow](./trend-follow) — продолжение тренда со скользящей линией стопа.
+- [TrendShift](./trend-shift) — смена направления после разворота динамической
+  трендовой полосы.
+- [Breakout](./breakout) — взвешенное подтверждение условий пробоя вверх или вниз.
+- [AdaptiveTrendChannel](./adaptive-trend-channel) — смена направления
+  адаптивного канала со структурным стопом у его границы.
+- [AdaptiveMomentumRibbon](./adaptive-momentum-ribbon) — сигнал ленты моментума
+  с фильтром Кельтнера и структурной отменой.
+- [MaStrategy](./ma-strategy) — пересечение быстрой и медленной скользящих средних.
+- [VolatilityCompressionBreakout](./volatility-compression-breakout) — выход из
+  диапазона после сжатия ATR и ширины полос Боллинджера.
+- [RelativeRotation](./relative-rotation) — относительная сила и ротация
+  инструмента относительно BTC.
 
-## Структура и ликвидность
+## Ценовая структура, ликвидность и разворот
 
-- [DoubleTap](./double-tap)
-- [CupAndHandle](./cup-and-handle)
-- [HeadAndShoulders](./head-and-shoulders)
-- [LiquidityTails](./liquidity-tails)
-- [LiquidityZones](./liquidity-zones)
-- [StructureZones](./structure-zones)
-- [MarketFlushReversal](./market-flush-reversal)
-- [VolumeDivergence](./volume-divergence)
+- [DoubleTap](./double-tap) — двойная вершина или дно с последующим пробоем.
+- [CupAndHandle](./cup-and-handle) — обычная или перевёрнутая «чашка с ручкой» с
+  измеряемой целью.
+- [HeadAndShoulders](./head-and-shoulders) — обычная или перевёрнутая модель
+  «голова и плечи» с пробоем линии шеи.
+- [LiquidityTails](./liquidity-tails) — реакция после повторного теста зоны,
+  построенной по крупным теням свечей.
+- [LiquidityZones](./liquidity-zones) — реакция от зон ликвидности по локальным
+  максимумам и минимумам.
+- [StructureZones](./structure-zones) — реакция или переходный пробой зоны
+  рыночной структуры.
+- [MarketFlushReversal](./market-flush-reversal) — разворот после широкой
+  рыночной ликвидации или давления.
+- [VolumeDivergence](./volume-divergence) — разворот по расхождению ценовых
+  экстремумов и нормализованного объёма.
 
 ## Набор позиции и внешний контекст
 
-- [Grid](./grid) — directional pullback или breakout-retest grid
-- [GridClassic](./grid-classic) — range mean reversion или breakout continuation
-- [HyperliquidConsensus](./hyperliquid-consensus) — position-aware whale-flow context
+- [Grid](./grid) — направленный вход на откате или повторном тесте пробоя с
+  поэтапными добавлениями в пределах одного лимита риска.
+- [GridClassic](./grid-classic) — возврат к среднему в горизонтальном диапазоне,
+  продолжение пробоя или необязательный разворот ложного пробоя.
+- [HyperliquidConsensus](./hyperliquid-consensus) — направление по потоку позиций
+  выбранных счетов Hyperliquid.
 
-Большинство TypeScript-стратегий держат detector state replayable и строят
-figures из того же состояния, по которому принимается решение. Стратегии с
-optional market context делают skip, если signal-time context недоступен.
+## Как оценивать стратегию
+
+На странице каждой стратегии описаны последовательность решений, выходы,
+требуемые данные, поля конфигурации, результат и команды запуска. Диаграммы
+показывают логику, а не историческую эффективность.
+
+До сравнения результатов определите:
+
+1. рыночную гипотезу и режим, для которого предназначена стратегия;
+2. обязательные свечи и дополнительный контекст;
+3. правила входа, отмены, выхода и размера позиции;
+4. оборот, ожидаемый срок удержания и чувствительность к исполнению;
+5. параметры, заданные до теста, и план независимой проверки.
+
+См. [Сетка параметров бэктеста](../../getting-started/backtest-config),
+[Как работают бэктесты](../../runtime/backtesting/overview) и
+[Как рассчитываются сигналы](../../runtime/execution/signals).

@@ -2,9 +2,18 @@
 title: 'MarketFlushReversal'
 ---
 
-`MarketFlushReversal` ищет широкий market liquidation/pressure flush и
-последующую directional candle rejection. Стратегия использует закрытую свечу
-и `baseContext`, не запрашивая будущие или connector-backed данные из core.
+`MarketFlushReversal` ищет широкую рыночную ликвидацию или давление и
+последующую свечу направленного отбоя. Решение использует только закрытую свечу
+и рыночный контекст, доступный на тот момент.
+
+## Визуальная схема
+
+![Логика MarketFlushReversal](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/strategy-logic.svg)
+
+![Пример сигнала MarketFlushReversal](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика
 
@@ -22,4 +31,3 @@ Entry codes: `MFR_LONG_FLUSH_REVERSAL`, `MFR_SHORT_FLUSH_REVERSAL`.
 confirmation (`MFR_ENTRY_MODE`, `MFR_CONFIRMATION_BARS*`,
 `MFR_PENDING_MAX_BARS`) и risk (`MFR_STOP_*`, `MFR_TARGET_R_MULT`). Суффиксы
 `_LONG`/`_SHORT` переопределяют общее значение для направления.
-

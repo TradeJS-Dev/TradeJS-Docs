@@ -2,7 +2,17 @@
 title: 'Breakout'
 ---
 
-`Breakout` — встроенная TypeScript-стратегия из `@tradejs/strategy-breakout` с весовой моделью сигналов для long/short breakout-сценариев.
+`Breakout` использует взвешенную модель подтверждений для входа на пробой вверх
+или вниз.
+
+## Визуальная схема
+
+![Логика Breakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/strategy-logic.svg)
+
+![Пример сигнала Breakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -24,7 +34,7 @@ Long и short используют отдельные карты сигнало�
 
 ## Параметры конфига (что означает каждый)
 
-### Общие runtime-параметры
+### Общие параметры запуска
 
 - `ENV` — режим запуска.
 - `INTERVAL` — таймфрейм.
@@ -90,16 +100,14 @@ Long и short используют отдельные карты сигнало�
 
 - `correlation` — передается в `indicators` для анализа/ML.
 
-## Payload сигнала
+## Содержимое сигнала
 
 `additionalIndicators`:
 
 - `highLevel`, `lowLevel`
 - `signals` (карта всех булевых проверок)
 
-`figures` сейчас пустой (`buildBreakoutFigures()` возвращает `{}`).
-
-## Пример runtime-конфига
+## Пример рабочей конфигурации
 
 ```json
 {

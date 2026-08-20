@@ -2,9 +2,17 @@
 title: 'StructureZones'
 ---
 
-`StructureZones` - встроенная TypeScript-стратегия из `@tradejs/strategy-structure-zones`.
+`StructureZones` строит зоны рыночной структуры по экстремумам и входит на
+реакции от зоны либо на переходном пробое.
 
-Она исследует market-structure zones от swing points и торгует reactions или transition breakouts от этих зон.
+## Визуальная схема
+
+![Логика StructureZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/strategy-logic.svg)
+
+![Пример сигнала StructureZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -54,7 +62,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

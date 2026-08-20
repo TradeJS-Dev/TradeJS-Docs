@@ -7,6 +7,15 @@ title: 'GridClassic'
 `breakout_continuation` mode it waits for acceptance and an optional retest.
 It can also trade a failed-breakout reversal when enabled.
 
+## Visual overview
+
+![GridClassic strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/strategy-logic.svg)
+
+![GridClassic signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Decision flow
 
 1. Detect a range from alternating pivots, containment, width, age, slope, and boundary divergence.
@@ -26,4 +35,3 @@ It can also trade a failed-breakout reversal when enabled.
 This strategy has stateful multi-leg behavior. Compare continuous execution
 with replay and use [runtime parity](../../runtime/backtesting/runtime-parity)
 before live order placement.
-

@@ -7,6 +7,15 @@ compression. It combines ATR and Bollinger-width ranks with a local support or
 resistance breakout, then applies signal-time participation and acceptance
 filters.
 
+## Visual overview
+
+![VolatilityCompressionBreakout strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/strategy-logic.svg)
+
+![VolatilityCompressionBreakout signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Decision flow
 
 1. Require `baseContext` and detect compression from ATR/BB ranks.
@@ -27,4 +36,3 @@ Entry codes are `VCB_LONG_COMPRESSION_BREAKOUT` and
 - entry geometry: `VCB_MIN_BREAKOUT_DISTANCE_ATR*`, `VCB_MAX_BREAKOUT_DISTANCE_ATR`, `VCB_MIN_ACCEPTANCE_CLOSES`
 - context: `VCB_REQUIRE_MTF_ALIGNMENT`, `VCB_REQUIRE_TRADE_FLOW_ALIGNMENT`
 - risk: `VCB_STOP_ATR_BUFFER_MULT`, `VCB_FALLBACK_STOP_ATR_MULT`, `VCB_TARGET_R_MULT`
-

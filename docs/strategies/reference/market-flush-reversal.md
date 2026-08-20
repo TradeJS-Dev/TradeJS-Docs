@@ -2,10 +2,18 @@
 title: 'MarketFlushReversal'
 ---
 
-`MarketFlushReversal` is a TypeScript strategy that looks for a broad market
-liquidation/pressure flush followed by a directional candle rejection. It uses
-the closed candle and `baseContext`; it does not fetch future or connector data
-from the strategy core.
+`MarketFlushReversal` looks for broad-market liquidation or pressure followed
+by a directional rejection candle. Its decision uses only the closed candle and
+market context available at that timestamp.
+
+## Visual overview
+
+![MarketFlushReversal strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/strategy-logic.svg)
+
+![MarketFlushReversal signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Decision flow
 
@@ -30,4 +38,3 @@ position with `MFR_OPPOSITE_FLUSH_EXIT`.
 Fields ending in `_LONG` or `_SHORT` override the unsuffixed value for that
 direction. Validate coverage of liquidation and market-context inputs before
 interpreting a no-signal result.
-

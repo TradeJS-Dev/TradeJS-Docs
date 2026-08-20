@@ -2,9 +2,18 @@
 title: 'HyperliquidConsensus'
 ---
 
-`HyperliquidConsensus` trades position-aware consensus from a configured set of
-Hyperliquid whale accounts. The strategy declares `hyperliquidWhales` as a
-required core context and skips when current coverage is missing or stale.
+`HyperliquidConsensus` trades directional agreement in the position-aware flow
+of configured Hyperliquid accounts. It requires sufficiently complete and
+current whale-position data and skips when that context is missing or stale.
+
+## Visual overview
+
+![HyperliquidConsensus strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/strategy-logic.svg)
+
+![HyperliquidConsensus signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Decision flow
 
@@ -29,4 +38,3 @@ respond to opposite consensus or material position reduction.
 The default interval is five minutes. Start the ingest/backfill described in
 [Derivatives and spread ingest](../../operations/derivatives-ingest) and verify
 Timescale coverage before backtesting or runtime use.
-

@@ -1,27 +1,15 @@
 ---
-title: Create a backtest config
+title: Define a Backtest Parameter Grid
 ---
 
-`backtest` does not invent strategy parameters at runtime. It loads a config grid from Redis.
-
-The key format is:
-
-```text
-users:<user>:backtests:configs:<StrategyName:configName>
-```
-
-For example:
-
-```text
-users:root:backtests:configs:MaStrategy:base
-users:root:backtests:configs:TrendLine:base
-```
-
-The CLI reads the strategy name from the part before the first `:` in the config name. `MaStrategy:base` runs `MaStrategy`; `TrendLine:base` runs `TrendLine`.
+A backtest configuration defines the candidate values TradeJS should evaluate.
+The first-run installer creates `MaStrategy:base` for the web app. For custom
+research, save a named grid in the local project and select it with
+`--config <StrategyName:label>`.
 
 ## Grid Shape
 
-A backtest config is a JSON object where every value is an array:
+Every top-level value is an array, including fields with only one candidate:
 
 ```json
 {
@@ -50,24 +38,34 @@ A backtest config is a JSON object where every value is an array:
 }
 ```
 
-TradeJS expands the arrays into a test grid. If you only want one value, still wrap it in an array.
+TradeJS evaluates the Cartesian product of these arrays. This example contains
+four moving-average combinations because `MA_FAST` and `MA_SLOW` each have two
+values. Invalid relationships such as a fast period greater than a slow period
+should be excluded before running a large search.
 
-## Directional Overrides
+The prefix before the first colon selects the strategy: `MaStrategy:base`
+selects `MaStrategy`, while `TrendLine:conservative` selects `TrendLine`.
 
-Many built-in strategies resolve a numeric or boolean field in this order:
+## Direction-Specific Parameters
 
-1. `<KEY>_LONG` or `<KEY>_SHORT` for the current direction;
-2. unsuffixed `<KEY>`;
-3. the strategy fallback.
+Some built-in strategies support `<KEY>_LONG` and `<KEY>_SHORT` in addition to
+an unsuffixed `<KEY>`. For example, `TARGET_R_MULT_SHORT` can change the short
+target independently of `TARGET_R_MULT_LONG`.
 
-For example, `TARGET_R_MULT_SHORT` can tune short targets without changing
-`TARGET_R_MULT_LONG`. Only fields used through this convention support the
-suffix; consult the strategy reference/default config instead of assuming every
-field is directional. In a grid, each suffixed value is still an array.
+This convention applies only to fields documented by the strategy. Check its
+reference and default configuration instead of assuming every parameter is
+direction-specific.
 
-## Seed With `redis-cli`
+## Save a Grid Manually
 
-After `npx @tradejs/cli infra-up`, Redis is normally available on `127.0.0.1:6379`.
+Backtest grids are local research data stored in Redis. After starting the
+local services, the key is:
+
+```text
+users:<user>:backtests:configs:<StrategyName:label>
+```
+
+For example:
 
 ```bash
 redis-cli -h 127.0.0.1 -p 6379 SET \
@@ -78,74 +76,52 @@ redis-cli -h 127.0.0.1 -p 6379 SET \
 Then run:
 
 ```bash
-npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
+npx @tradejs/cli backtest \
+  --user root \
+  --config MaStrategy:base \
+  --tickers BTCUSDT \
+  --timeframe 15 \
+  --tests 1 \
+  --parallel 1
 ```
 
-## Seed With a Script
+For a long grid or password-protected Redis, use a small seed script in your
+own project. Keep that script in version control when the experiment should be
+reviewable and reproducible.
 
-Use a script when the config is longer or when your Redis requires auth.
+## Reproduce a Live Configuration
 
-```ts
-import Redis from 'ioredis';
+To test a configuration from `tradejs.config.ts`, copy the strategy parameters
+into one-value arrays and use the same strategy package version, timeframe,
+symbols, and data window. Do not copy live-operation fields such as `ENV` or
+`MAKE_ORDERS`; represent execution assumptions with the backtest's price, fee,
+slippage, and delay settings.
 
-const redis = new Redis({
-  host: process.env.REDIS_HOST || '127.0.0.1',
-  port: Number(process.env.REDIS_PORT || 6379),
-  password: process.env.REDIS_PASSWORD || undefined,
-});
-
-const key = 'users:root:backtests:configs:MaStrategy:base';
-const grid = {
-  INTERVAL: ['15'],
-  MAX_LOSS_VALUE: [10],
-  MA_FAST: [21],
-  MA_SLOW: [55],
-  LONG: [{ enable: true, direction: 'LONG', TP: 2, SL: 1, minRiskRatio: 1.2 }],
-  SHORT: [{ enable: true, direction: 'SHORT', TP: 2, SL: 1, minRiskRatio: 1.2 }],
-};
-
-await redis.set(key, JSON.stringify(grid));
-await redis.quit();
-```
-
-Keep a seed script like this in your own project when the config should be reproducible or reviewed in version control.
-
-## Project Config To Backtest Grid
-
-Production runtime strategy configs live in `tradejs.config.ts`. To reproduce
-one in a backtest, copy its values into a one-value Redis backtest grid. Remove
-invocation-only fields such as:
-
-- `ENV`
-- `INTERVAL`
-- `MAKE_ORDERS`
-- `CLOSE_OPPOSITE_POSITIONS`
-- `BACKTEST_PRICE_MODE`
-- `BACKTEST_ENTRY_DELAY_BARS`
-
-The production runtime never reads this backtest key or merges per-symbol
-research results into the committed config.
+Backtest grids and saved result lists do not change live strategy settings.
 
 ## Common Errors
 
 ### `Backtest config "<name>" not found`
 
-The Redis key is missing for the selected user. Check both the user and config name:
+The selected user has no grid with that name. Verify both parts:
 
 ```bash
-redis-cli -h 127.0.0.1 -p 6379 GET 'users:root:backtests:configs:MaStrategy:base'
+redis-cli -h 127.0.0.1 -p 6379 GET \
+  'users:root:backtests:configs:MaStrategy:base'
 ```
 
 ### `must include strategyName and strategyConfig grid`
 
-The payload is not a grid object. Every top-level value must be an array.
+The value is not a grid object. Every top-level field must be an array, and no
+array may be empty.
 
-### Backtest runs a different strategy than expected
+### The wrong strategy runs
 
-The strategy name is parsed from the config name. Use `StrategyName:label`, for example `TrendLine:base`.
+The strategy is selected from the prefix before the first colon. Use
+`StrategyName:label`.
 
 ## Next
 
 - [Run your first backtest](./first-backtest)
-- [Backtest a strategy](../guides/backtest-strategy)
-- [CLI API](../api/cli)
+- [Search a parameter grid](../runtime/backtesting/grid-config)
+- [How backtests work](../runtime/backtesting/overview)

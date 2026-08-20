@@ -6,6 +6,15 @@ title: 'DoubleTap'
 
 It detects double-bottom and double-top structures, then trades the breakout/breakdown with stop and target prices produced by the pattern engine.
 
+## Visual overview
+
+![DoubleTap strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/strategy-logic.svg)
+
+![DoubleTap signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 1. Replays candles through `createDoubleTapEngine(...)`.

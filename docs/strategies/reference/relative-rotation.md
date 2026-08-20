@@ -6,6 +6,15 @@ title: 'RelativeRotation'
 24-hour alpha and ratio return, one-hour relative strength, ratio trend,
 participation, correlation, and optional BTC/alt regime alignment.
 
+## Visual overview
+
+![RelativeRotation strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/strategy-logic.svg)
+
+![RelativeRotation signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Decision flow
 
 1. Require a complete current `baseContext`.
@@ -28,4 +37,3 @@ Entry codes are `RR_LONG_RELATIVE_ROTATION` and
 
 BTC reference values are resolved at or before the evaluated candle. Check BTC
 and symbol data coverage together when diagnosing missing entries.
-

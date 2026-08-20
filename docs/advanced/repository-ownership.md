@@ -12,8 +12,8 @@ also where that behavior is tested, versioned, and released.
 3. The preset installs public strategy packages, indicators, and connectors.
 4. The project owns `tradejs.config.ts`, its lockfile, local data and backtest
    artifacts, and any private strategy dependencies.
-5. For self-hosting, `TradeJS-Project` builds the application image and sends
-   an immutable image tag and project revision to `TradeJS-Deploy`.
+5. For self-hosting, `TradeJS-Project` builds a versioned application image and
+   supplies its tag and project revision to `TradeJS-Deploy`.
 6. `TradeJS-Deploy` owns Compose, TLS, persistent volumes, SSH, server resource
    limits, and production secrets.
 
@@ -55,6 +55,14 @@ Private registry authentication belongs to the generated project or its build
 environment. A publishing token for public TradeJS packages should never be
 copied into a runtime or deployment repository.
 
+## Updating packages in a deployed project
+
+Use stable package versions for live trading. Update the exact dependency and
+lockfile in the project, increment the affected strategy's configuration
+`version`, run the project checks, and build a new versioned application image.
+Deploying that image is a separate, reversible operation; publishing a package
+does not change a running TradeJS installation.
+
 ## Where to make a change
 
 - Change strategy decisions, figures, adapters, or family helpers in that
@@ -66,4 +74,3 @@ copied into a runtime or deployment repository.
 - Change server topology, credentials, TLS, volumes, or rollout policy in
   `TradeJS-Deploy`.
 - Change shared runtime semantics and public framework contracts in `TradeJS`.
-

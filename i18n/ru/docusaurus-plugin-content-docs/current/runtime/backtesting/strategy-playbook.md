@@ -1,109 +1,111 @@
 ---
-title: Шпаргалка по рантайму
+title: От бэктеста к реальной торговле
 ---
 
-Эта шпаргалка содержит copy-paste команды для текущей конфигурации:
+Этот процесс связывает исследование, проверку и реальную работу без привязки к
+конкретной стратегии, бирже или счёту. Замените значения в угловых скобках на
+настройки своего проекта.
 
-- user: `root`
-- connector: `bybit`
-- timeframe: `15`
-- стратегии: `TrendLine`, `AdaptiveMomentumRibbon`
+## 1. Опишите эксперимент
 
-## 1. Проверка доступных backtest-конфигов
+До запуска зафиксируйте гипотезу, версию стратегии, диапазон параметров,
+инструменты, таймфрейм, период данных, комиссии, проскальзывание, модель
+исполнения и критерии приёмки. Период вне выборки определите до выбора результата.
 
-```bash
-redis-cli --scan --pattern 'users:root:backtests:configs:TrendLine:*'
-redis-cli --scan --pattern 'users:root:backtests:configs:AdaptiveMomentumRibbon:*'
-```
+## 2. Проведите небольшой контрольный бэктест
 
-Берите ключи из вывода как значения `--config` в командах ниже.
-
-## 2. TrendLine: Backtest -> Review -> Project
-
-Бэктест:
+Начните с нескольких инструментов и ограниченного набора параметров:
 
 ```bash
-npx @tradejs/cli backtest --user root --config TrendLine:base --connector bybit --timeframe 15 --tests 500 --parallel 4
+npx @tradejs/cli backtest \
+  --user <user> \
+  --config <StrategyName:configName> \
+  --connector <connector> \
+  --timeframe <minutes> \
+  --tickers <SYMBOL1,SYMBOL2> \
+  --tests <small-limit> \
+  --parallel <workers> \
+  --cacheOnly
 ```
 
-Посмотреть лучших кандидатов:
+До масштабирования проверьте свечи, временные метки, направление и размер
+сделок, комиссии, входы и выходы.
+
+## 3. Выполните запланированный поиск
+
+Расширяйте запуск только до заранее заданных инструментов, периода и сетки
+параметров. Храните вместе команду, конфигурацию, версии пакетов и результат. Не
+добавляйте параметры после просмотра результата без оформления нового эксперимента.
+
+Просмотрите результаты и покрытие инструментов:
 
 ```bash
-npx @tradejs/cli results --strategy TrendLine --coverage --user root
+npx @tradejs/cli results \
+  --strategy <StrategyName> \
+  --coverage \
+  --user <user>
 ```
 
-Сохранить research winners локально:
+## 4. Проверьте выбранную конфигурацию
+
+Оцените её на нетронутых данных и разных рыночных режимах. Изменяйте комиссии,
+проскальзывание, задержку входа, спред и близкие значения параметров. Смотрите
+на просадку, восстановление, экспозицию, оборот, концентрацию и распределение
+всех сделок, а не только на итоговую прибыль.
+
+Отклоните вариант, если результат держится на одной узкой точке параметров,
+нереалистичном исполнении, нескольких инструментах или малом числе сделок.
+
+## 5. Зафиксируйте рабочие настройки
+
+Скопируйте одну полную проверенную конфигурацию в нужное развёртывание в
+`tradejs.config.ts`. Зафиксируйте пакет стратегии, увеличьте её `version` и
+проверьте счёт, коннектор, набор инструментов и ограничения риска.
 
 ```bash
-npx @tradejs/cli results --strategy TrendLine --merge --user root
+npx @tradejs/cli runtime-control verify \
+  --user <user> \
+  --deployment <deployment>
 ```
 
-Перенесите один reviewed полный config в Project declaration, увеличьте
-strategy version, задеплойте образ и выполните:
+## 6. Воспроизведите точное развёртывание
 
 ```bash
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli signals --user root --deployment production --cacheOnly
+npx @tradejs/cli replay \
+  --user <user> \
+  --deployment <deployment> \
+  --days <days> \
+  --cacheOnly
 ```
 
-## 3. AdaptiveMomentumRibbon: Backtest -> Review -> Project
+Исследуйте пропущенные и лишние входы, сдвиги времени и цены, различия фильтров
+и рыночного контекста. Не редактируйте исторические записи ради совпадения.
 
-Бэктест:
+## 7. Проверьте расчёт на текущем рынке
+
+Сначала запустите его без размещения ордеров:
 
 ```bash
-npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15 --tests 200 --parallel 4
+npx @tradejs/cli signals \
+  --user <user> \
+  --deployment <deployment> \
+  --cacheOnly
 ```
 
-Посмотреть лучших кандидатов:
+Проверьте свежесть свечей, набор инструментов, решения стратегий, уведомления и
+мониторинг. Убедитесь, что пауза новых входов не мешает управлению открытыми
+позициями.
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --coverage --user root
-```
+## 8. Начните ограниченный реальный запуск
 
-Сохранить research winners локально:
+Включайте размещение ордеров только с явным разрешением и настроенными правами
+счёта. Используйте небольшой фиксированный риск, заранее задайте максимальный
+убыток и операционные условия остановки, проверьте паузу и откат. Регулярно
+сравнивайте решения, ордера и исполнения с воспроизведением.
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
-```
+Дополнительные материалы:
 
-После commit reviewed config и bumped strategy version задеплойте образ:
-
-```bash
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli signals --user root --deployment production --cacheOnly
-```
-
-Опциональная проверка полезной нагрузки AMR в сигнале:
-
-```bash
-KEY=$(redis-cli --scan --pattern 'store:signals:BTCUSDT:*' | tail -n 1)
-redis-cli JSON.GET "$KEY" '$.additionalIndicators.amr'
-```
-
-## 4. Команды прокачки данных (ByBit)
-
-Регулярное обновление истории:
-
-```bash
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector bybit --timeframe 15
-```
-
-Проверка целостности и ремонт разрывов:
-
-```bash
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit --tickers BTCUSDT,ETHUSDT
-```
-
-## 5. Откат promoted results
-
-```bash
-npx @tradejs/cli results --strategy TrendLine --clear --user root
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --clear --user root
-```
-
-## 6. Связанные статьи
-
-- [Результаты бэктеста -> Project config](./results-runtime-config)
-- [Data Sync](../../getting-started/data-sync)
-- [Пошаговое создание стратегии на Pine Script](../../strategies/authoring/pine-strategy-step-by-step)
+- [Как работают бэктесты](./overview)
+- [Как использовать проверенную конфигурацию](./results-runtime-config)
+- [Проверка реальных решений через воспроизведение](./replay-evidence)
+- [Проверка перед реальным запуском](../../strategies/operations/pre-live-checklist)

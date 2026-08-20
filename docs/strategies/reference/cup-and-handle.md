@@ -2,9 +2,18 @@
 title: 'CupAndHandle'
 ---
 
-`CupAndHandle` is a replayable pivot-pattern strategy for bullish cup-and-handle
-and bearish inverted-cup structures. The detector derives the rim, cup depth,
-handle, breakout, stop, and measured target from closed candles.
+`CupAndHandle` detects bullish cup-and-handle and bearish inverted-cup patterns
+from closed-candle pivots. It derives the rim, cup depth, handle, breakout,
+stop, and measured target from the same historical window.
+
+## Visual overview
+
+![CupAndHandle strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-CupAndHandle/main/docs/strategy-logic.svg)
+
+![CupAndHandle signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-CupAndHandle/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Decision flow
 
@@ -25,4 +34,3 @@ The entry code is `CUPHANDLE_BREAKOUT` or
 - timing: `CUPHANDLE_MIN_CUP_BARS`, `CUPHANDLE_MAX_CUP_BARS`, `CUPHANDLE_MIN_HANDLE_BARS`, `CUPHANDLE_MAX_HANDLE_BARS`
 - entry: `CUPHANDLE_ENTRY_MODE`, `CUPHANDLE_CONFIRMATION_MAX_BARS`, `CUPHANDLE_RETEST_MAX_BARS`
 - target/stop: `CUPHANDLE_TARGET_DEPTH_PCT`, `CUPHANDLE_STOP_BUFFER_DEPTH_PCT`
-

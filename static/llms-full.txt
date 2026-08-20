@@ -9,7 +9,7 @@ Marketing site: https://tradejs.dev
 
 ## Product Focus
 
-TradeJS uses a TypeScript-first **write → backtest → run** workflow. Developers own the strategy code, market data, credentials, runtime infrastructure, and operations. Pine-backed strategy compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this primary workflow.
+TradeJS uses a TypeScript-first **define → backtest → validate → replay → run** workflow. Users own the strategy code, market data, credentials, infrastructure, and operations. Pine-backed strategy compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this primary workflow.
 
 ## Documentation Scope
 
@@ -18,12 +18,12 @@ The documentation covers:
 1. Framework introduction, TypeScript-first scope, and self-hosted setup
 2. One-command setup with `npx create-tradejs`, first-run password installation, market dashboard, and first backtest in the Web UI
 3. TypeScript strategy and indicator authoring
-4. Backtesting, configuration comparison, and runtime promotion
+4. Backtesting, configuration comparison, independent validation, and controlled live rollout
 5. Runtime signals and controlled execution
 6. Production operations, monitoring, security, and limitations
 7. Core concepts, public APIs, practical guides, and examples
 8. Optional Pine-backed strategy compatibility, AI/ML enrichment, and operational integrations
-9. TradeJS 3 package and repository ownership, named runtime scopes, persistent signals, and the complete independently published strategy catalog
+9. Package and repository ownership, named live deployments, per-strategy symbol selection, continuous signal evaluation, and the complete independently published strategy catalog
 
 ## Recommended Entry Points By Topic
 
@@ -31,10 +31,10 @@ The documentation covers:
 
 - Overview: https://docs.tradejs.dev/
 - What is TradeJS: https://docs.tradejs.dev/introduction/what-is-tradejs
+- Trading workflow and terms: https://docs.tradejs.dev/introduction/trading-workflow-and-terms
 - What TradeJS is not: https://docs.tradejs.dev/introduction/what-tradejs-is-not
 - Core API: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
-- TradeJS 3 migration: https://docs.tradejs.dev/getting-started/migration-v3
 - Ready-made project hook helpers (`closeOppositePositionsBeforeOpen`, `createCloseAllOnGlobalProfitBeforeSignalsHook`, `createMoveStopToBreakEvenOnBarHook`) are documented in Core API: https://docs.tradejs.dev/api/framework
 
 ### First-Time Setup
@@ -86,18 +86,19 @@ The documentation covers:
 ### Runtime and Execution
 
 - Runtime signals: https://docs.tradejs.dev/runtime/execution/signals
-- Persistent signals daemon, WebSocket/REST recovery, and named scope behavior are covered on the runtime signals page.
+- Continuous signal evaluation, per-strategy symbol selection, configuration reload, and WebSocket/REST recovery are covered on the live signals page.
 - Telegram notifications: https://docs.tradejs.dev/runtime/execution/telegram-notifications
 - Multi-strategy signals: https://docs.tradejs.dev/runtime/execution/multi-strategy-signals
-- Runtime parity: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
+- Compare live and replayed entries: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
 
 ### Backtesting
 
 - Create a backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Backtesting overview: https://docs.tradejs.dev/runtime/backtesting/overview
 - Grid config: https://docs.tradejs.dev/runtime/backtesting/grid-config
-- Promote backtest results into Project config: https://docs.tradejs.dev/runtime/backtesting/results-runtime-config
-- Runtime playbook: https://docs.tradejs.dev/runtime/backtesting/strategy-playbook
+- Use a tested configuration in live trading: https://docs.tradejs.dev/runtime/backtesting/results-runtime-config
+- Validate live decisions with replay: https://docs.tradejs.dev/runtime/backtesting/replay-evidence
+- From backtest to live trading: https://docs.tradejs.dev/runtime/backtesting/strategy-playbook
 - Backtesting caveats: https://docs.tradejs.dev/limitations/backtesting-caveats
 - Data quality guide: https://docs.tradejs.dev/guides/data-quality
 

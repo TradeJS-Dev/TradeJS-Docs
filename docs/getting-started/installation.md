@@ -38,9 +38,6 @@ and `@tradejs/app` on a compatible major release. `@tradejs/base`,
 commit the generated lockfile instead of forcing them to the engine's exact
 patch version.
 
-Upgrading an existing integration from TradeJS 2? Review the
-[TradeJS 3 migration guide](./migration-v3) before changing package versions.
-
 ## Add `tradejs.config.ts`
 
 ```ts

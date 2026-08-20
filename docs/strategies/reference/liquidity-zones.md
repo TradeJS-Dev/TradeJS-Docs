@@ -6,6 +6,15 @@ title: 'LiquidityZones'
 
 It builds liquidity zones from swing highs/lows, waits for retests, and trades reactions from those zones.
 
+## Visual overview
+
+![LiquidityZones strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/strategy-logic.svg)
+
+![LiquidityZones signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 1. Builds active liquidity zones from pivots.

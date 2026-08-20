@@ -1,117 +1,77 @@
 ---
-title: Runtime Parity
+title: Compare Live and Replayed Entries
 ---
 
-`runtime-parity` compares live/runtime entry records with a deterministic
-backtest replay over the same recent window.
+`runtime-parity` compares recorded live entries with entries reconstructed over
+the same symbols and time window. It answers one focused question:
 
-Use it after promoting backtest results into runtime config or after changing
-strategy runtime behavior. It answers a narrow question:
+> Did live evaluation and historical reconstruction produce comparable entry
+> decisions?
 
-> Did the shared runtime and the backtest replay produce comparable entry
-> orders for the selected strategies and symbols?
+Use [full replay with a runtime record](./replay-evidence) when you need an
+exact comparison of package versions, configurations, signals, orders, and
+fills.
 
-## Run It
-
-```bash
-npx @tradejs/cli runtime-parity --user root --connector bybit --days 3
-```
-
-Useful variants:
+## Run the Comparison
 
 ```bash
-npx @tradejs/cli runtime-parity --user root --connector bybit --days 3 --details
-npx @tradejs/cli runtime-parity --user root --connector bybit --strategy TrendLine --tickers BTC,ETH
-npx @tradejs/cli runtime-parity --user root --connector bybit --startTime 1714000000000 --endTime 1714260000000
-npx @tradejs/cli runtime-parity --user root --connector bybit --days 3 --notify
+npx @tradejs/cli runtime-parity \
+  --user root \
+  --connector bybit \
+  --days 3
 ```
 
-## What It Replays
+You can limit the comparison by strategy and symbols or set exact timestamps:
 
-The command builds replay targets from:
+```bash
+npx @tradejs/cli runtime-parity \
+  --user root \
+  --connector bybit \
+  --strategy <StrategyName> \
+  --tickers BTCUSDT,ETHUSDT \
+  --details
+```
 
-- saved runtime trade records
-- runtime signal/evaluation universe
-- explicit `--tickers`
-- latest strategy results when available
+## Inputs and Gates
 
-For each target it resolves the effective runtime config:
+The command builds targets from recorded live trades and evaluations, explicit
+`--tickers`, and locally saved strategy results when available. By default it
+reconstructs the strategy with `ENV=BACKTEST`, so configured external AI/ML
+gates are not called.
 
-- user strategy config from Redis
-- per-symbol `results` patch when available
-- replay runtime fields such as `ENV`
+Use `--runtimeGates` only when you intentionally want the comparison to call
+configured AI or ML services. This can create provider cost and makes the run
+dependent on external service availability.
 
-By default the replay runs with `ENV=BACKTEST`, so it checks core/runtime
-execution parity without calling live AI/ML gates.
-
-Use `--runtimeGates` only when you intentionally want parity replay to execute
-configured runtime gates. This may call external AI providers and ML inference.
+When exact deployed versions and settings matter, use a runtime record as
+described in [Validate live decisions with replay](./replay-evidence).
 
 ## Matching Rules
 
-Runtime and backtest entries are matched by:
+Entries are matched by strategy, symbol, direction, and timestamp tolerance.
+The default tolerance is one 15-minute bar. Change it with
+`--toleranceBars <count>`. Entry-price difference is reported for diagnosis but
+is not the primary match key.
 
-- strategy
-- symbol
-- direction
-- timestamp within the configured tolerance
+## Read the Result
 
-The default timestamp tolerance is one 15m bar. Change it with:
+- **matched:** a comparable live and reconstructed entry was found;
+- **runtime-only:** a live entry exists but reconstruction did not produce it;
+- **backtest-only:** reconstruction produced an entry absent from the live
+  record.
 
-```bash
-npx @tradejs/cli runtime-parity --toleranceBars 2
-```
+When possible, reconstructed-only entries are classified as:
 
-Entry price is reported as drift for diagnostics, but it is not the primary
-match key.
+- `gated_out` — a gate or policy blocked the live entry;
+- `order_failed` — order submission was attempted but failed;
+- `core_skipped` — the live strategy calculation skipped the entry;
+- `not_evaluated` — no comparable live evaluation was found;
+- `true_mismatch` — the available records contain no known explanation.
 
-## Output
+Investigate differences in candles, timestamps, symbols, configuration,
+strategy version, warm-up history, gates, and order lifecycle. A window with
+zero live and zero reconstructed entries means only that no comparable entry
+occurred in that sample.
 
-The console and Telegram report include:
-
-- replay window, connector, replay env, runtime-gates status, tolerance
-- target counts, compared targets, replay errors, and target sources
-- runtime entries, deduped runtime entries, duplicate entries, backtest entries
-- matched, runtime-only, and backtest-only counts
-- average/max entry price delta and timestamp drift for matched entries
-- per-strategy target and entry breakdown
-- backtest-only classifications when runtime signals/evaluations explain why an entry did not become a runtime trade
-- warnings when AI/ML gates are configured but `--runtimeGates` is not enabled
-
-When `--notify` is used, the same summary is sent to Telegram through the
-current user's saved Telegram settings.
-
-## Interpreting Results
-
-`matched` should be close to runtime entries when the replay window has enough
-market data and the runtime config matches what was live.
-
-`runtimeOnly` means a runtime trade record exists but the deterministic replay
-did not produce a comparable entry.
-
-`backtestOnly` means replay produced an entry that was not found in runtime
-trade records. The report classifies these when possible:
-
-- `gated_out` — runtime signal/evaluation existed but AI/ML or policy blocked the trade
-- `order_failed` — runtime tried but order placement failed
-- `core_skipped` — runtime evaluated but core skipped
-- `not_evaluated` — no comparable runtime evaluation was found
-- `true_mismatch` — no known runtime-side explanation was found
-
-If a strategy has `runtime=0` and `backtest=0`, the selected targets produced no
-comparable entries in that window. It does not mean AI/ML would approve a live
-trade every day.
-
-## Flags
-
-- `--user` selects the Redis user config and runtime journal.
-- `--connector` selects the connector provider/name for replay.
-- `--days` sets a recent replay window.
-- `--startTime` and `--endTime` set an explicit replay window.
-- `--strategy` limits replay to one strategy.
-- `--tickers` replays comma-separated symbols for all configured strategies.
-- `--cacheOnly` skips market history refresh before replay.
-- `--toleranceBars` changes timestamp matching tolerance.
-- `--runtimeGates` enables configured runtime AI/ML gates during replay.
-- `--details` prints unmatched entry details to stdout.
-- `--notify` sends the parity summary to Telegram.
+Useful options include `--startTime`, `--endTime`, `--strategy`, `--tickers`,
+`--cacheOnly`, `--toleranceBars`, `--runtimeGates`, `--details`, and `--notify`.

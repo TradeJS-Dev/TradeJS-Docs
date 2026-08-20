@@ -124,7 +124,7 @@ export const myStrategyManifest: StrategyManifest = {
 - это публичный способ кастомизировать поведение prompt для конкретной стратегии
 - базовый runtime-prompt все равно применяется; ваши add-on просто дописываются в system/human prompt
 
-## Реальный паттерн gate-логики
+## Логика фильтра перед размещением ордера
 
 ```ts
 const minAiQuality = runtime.ai?.minQuality ?? 4;

@@ -2,9 +2,17 @@
 title: 'ReverseTrendLine'
 ---
 
-`ReverseTrendLine` - встроенная TypeScript-стратегия из `@tradejs/strategy-trend-line`.
+`ReverseTrendLine` строит линии поддержки и сопротивления по недавним
+экстремумам и торгует отбой от них, а не пробой, используемый `TrendLine`.
 
-Она строит support/resistance trendlines по recent highs/lows и исследует rejection behavior вокруг линий, а не основной breakout path.
+## Визуальная схема
+
+![Логика TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
+
+![Пример сигналов TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -51,7 +59,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

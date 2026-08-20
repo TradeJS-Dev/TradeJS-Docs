@@ -2,9 +2,18 @@
 title: 'ReverseTrendLine'
 ---
 
-`ReverseTrendLine` is a built-in TypeScript strategy from `@tradejs/strategy-trend-line`.
+`ReverseTrendLine` builds support and resistance trendlines from recent highs
+and lows, then trades rejection behavior around those lines rather than the
+breakout path used by `TrendLine`.
 
-It builds support/resistance trendlines from recent highs and lows, then researches rejection behavior around those lines instead of the primary breakout path.
+## Visual overview
+
+![TrendLine and ReverseTrendLine strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
+
+![TrendLine and ReverseTrendLine signals on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Entry Logic
 

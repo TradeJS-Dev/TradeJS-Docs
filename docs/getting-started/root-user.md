@@ -1,63 +1,53 @@
 ---
-title: Root User Setup
+title: Local Root User
 ---
 
-TradeJS CLI defaults to `--user root`, so creating a valid `root` account is the fastest way to start.
+TradeJS CLI commands default to `--user root`. In a project created with
+`npx create-tradejs`, the installation page creates this local user and asks you
+to choose its password.
 
-## 1. Create or Update Root User
+Use the steps below only when setting up an existing project manually or
+rotating the password from the command line.
 
-```bash
-npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
-```
-
-What this does:
-
-- hashes password with `bcrypt`
-- writes user record to Redis key `users:index:root`
-- keeps account-level settings in the same Redis user record
-
-## 2. Check User in Redis
+## Create or Update the User
 
 ```bash
-redis-cli JSON.GET users:index:root
+npx @tradejs/cli user-add \
+  --user root \
+  --password 'StrongPassword123!'
 ```
 
-You should see at least:
+The command hashes the password with bcrypt and saves the local user record in
+Redis. Do not put the password in scripts, version control, screenshots, or
+shared shell history.
 
-- `userName`
-- `passwordHash`
-- `updatedAt`
+## Sign In and Configure Services
 
-After you save account settings in the UI, the same record can also contain:
+1. Open the TradeJS sign-in page.
+2. Sign in as `root` with the selected password.
+3. Open account settings from the gear icon in the left sidebar.
+4. Add only the settings you need, such as exchange credentials, an AI provider
+   key, or Telegram settings.
 
-- `BYBIT_API_KEY`
-- `BYBIT_API_SECRET`
-- `AI_API_KEY`
-- `AI_API_ENDPOINT`
-- `TG_BOT_TOKEN`
-- `TG_CHAT_ID`
+Secrets are stored per user and displayed masked in the web app. Exchange keys
+should have only the permissions required for the intended workflow; withdrawal
+permission is not required for trading.
 
-## 3. Sign In to the App
+## Rotate the Password
 
-1. Open your TradeJS sign-in page (or your API client).
-2. Log in with `root` and your password.
-3. Open the account settings drawer from the gear icon in the left sidebar.
-4. Configure the settings you need for this user:
-   - Bybit API key/secret
-   - password rotation
-   - AI provider API key/endpoint
-   - Telegram bot token/chat id
-
-## 4. Rotate Password
-
-Set new password:
+Change it from account settings or run:
 
 ```bash
-npx @tradejs/cli user-add -u root -p 'NewStrongPassword456!'
+npx @tradejs/cli user-add \
+  --user root \
+  --password 'NewStrongPassword456!'
 ```
 
-Notes:
+## Diagnose Manual Setup
 
-- Password can also be rotated from the account settings drawer after sign-in.
-- Secret values are stored in Redis per user and shown masked in the UI.
-- Legacy passwordless `token` fields are removed by the current account-settings API and are not accepted by `user-add`.
+If sign-in fails after manual setup, confirm that Redis is running, the command
+used the intended Redis instance, and the selected username is `root`. The
+stored record contains a password hash rather than the original password.
+
+For a normal first installation, return to
+[Run your first backtest](./first-backtest).

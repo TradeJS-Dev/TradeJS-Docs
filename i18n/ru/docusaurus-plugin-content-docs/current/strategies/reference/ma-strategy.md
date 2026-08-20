@@ -2,7 +2,16 @@
 title: 'MaStrategy'
 ---
 
-`MaStrategy` — встроенная TypeScript-стратегия из `@tradejs/strategy-ma-strategy` на пересечении fast/slow скользящих средних.
+`MaStrategy` входит по пересечению быстрой и медленной скользящих средних.
+
+## Визуальная схема
+
+![Логика MaStrategy](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/strategy-logic.svg)
+
+![Пример сигнала MaStrategy](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -24,7 +33,7 @@ title: 'MaStrategy'
 
 ## Параметры конфига (что означает каждый)
 
-### Общие runtime-параметры
+### Общие параметры запуска
 
 - `ENV` — режим запуска.
 - `INTERVAL` — таймфрейм.
@@ -73,7 +82,7 @@ title: 'MaStrategy'
 - `maSlow` — медленная MA, используется для детекции пересечения.
 - `correlation` — корреляция с BTC, используется как риск-guard.
 
-## Payload сигнала
+## Содержимое сигнала
 
 `figures`:
 
@@ -89,7 +98,7 @@ title: 'MaStrategy'
 - `maGap`
 - `correlation`
 
-## Пример runtime-конфига
+## Пример рабочей конфигурации
 
 ```json
 {

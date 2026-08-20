@@ -2,9 +2,17 @@
 title: 'LiquidityZones'
 ---
 
-`LiquidityZones` - встроенная TypeScript-стратегия из `@tradejs/strategy-liquidity-zones`.
+`LiquidityZones` строит зоны ликвидности по локальным максимумам и минимумам,
+ждёт повторного теста и входит на реакции от зоны.
 
-Она строит liquidity zones от swing highs/lows, ждет retest и торгует реакцию от этих зон.
+## Визуальная схема
+
+![Логика LiquidityZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/strategy-logic.svg)
+
+![Пример сигнала LiquidityZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -56,7 +64,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

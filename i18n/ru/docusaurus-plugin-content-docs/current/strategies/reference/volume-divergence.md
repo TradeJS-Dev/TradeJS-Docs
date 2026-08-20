@@ -2,7 +2,17 @@
 title: 'VolumeDivergence'
 ---
 
-`VolumeDivergence` — встроенная TypeScript-стратегия разворота из `@tradejs/strategy-volume-divergence`, которая сравнивает price pivots и pivots нормализованного объема.
+`VolumeDivergence` ищет разворот по расхождению ценовых экстремумов и
+экстремумов нормализованного объёма.
+
+## Визуальная схема
+
+![Логика VolumeDivergence](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/strategy-logic.svg)
+
+![Пример сигнала VolumeDivergence](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -24,7 +34,7 @@ title: 'VolumeDivergence'
 
 ## Параметры конфига (что означает каждый)
 
-### Общие runtime-параметры
+### Общие параметры запуска
 
 - `ENV` — режим запуска.
 - `INTERVAL` — таймфрейм.
@@ -79,7 +89,7 @@ title: 'VolumeDivergence'
 - `deltaAtPivot` — прокси дельты свечи в pivot (`volume * bodyBias`).
 - `correlation` — корреляция актива с BTC для риск-guard.
 
-## Payload сигнала
+## Содержимое сигнала
 
 `figures`:
 
@@ -93,7 +103,7 @@ title: 'VolumeDivergence'
 - `deltaAtPivot`
 - timestamps/indices/price уровни pivot
 
-## Пример runtime-конфига
+## Пример рабочей конфигурации
 
 ```json
 {

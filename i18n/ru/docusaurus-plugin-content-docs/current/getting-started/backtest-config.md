@@ -1,27 +1,15 @@
 ---
-title: Создать backtest config
+title: Сетка параметров бэктеста
 ---
 
-`backtest` не придумывает параметры стратегии сам. Он читает grid-конфиг из Redis.
+Конфигурация бэктеста задаёт значения параметров, которые должен проверить
+TradeJS. При первой установке для веб-приложения создаётся `MaStrategy:base`.
+Для собственного исследования сохраните именованную сетку в локальном проекте
+и выберите её через `--config <StrategyName:label>`.
 
-Формат ключа:
+## Формат сетки
 
-```text
-users:<user>:backtests:configs:<StrategyName:configName>
-```
-
-Примеры:
-
-```text
-users:root:backtests:configs:MaStrategy:base
-users:root:backtests:configs:TrendLine:base
-```
-
-CLI берет имя стратегии из части до первого `:`. `MaStrategy:base` запускает `MaStrategy`; `TrendLine:base` запускает `TrendLine`.
-
-## Форма grid
-
-Backtest config - JSON object, где каждое значение является массивом:
+Каждое поле верхнего уровня является массивом, даже если значение одно:
 
 ```json
 {
@@ -50,24 +38,32 @@ Backtest config - JSON object, где каждое значение являет
 }
 ```
 
-TradeJS разворачивает массивы в grid тестов. Даже одно значение нужно заворачивать в массив.
+TradeJS проверяет декартово произведение массивов. В примере четыре комбинации
+скользящих средних: у `MA_FAST` и `MA_SLOW` по два значения. Заранее исключите
+бессмысленные сочетания, например быструю среднюю с периодом больше медленной.
 
-## Directional overrides
+Часть до первого двоеточия выбирает стратегию: `MaStrategy:base` запускает
+`MaStrategy`, а `TrendLine:conservative` — `TrendLine`.
 
-Многие built-in стратегии разрешают numeric/boolean field в таком порядке:
+## Параметры для отдельных направлений
 
-1. `<KEY>_LONG` или `<KEY>_SHORT` для текущего направления;
-2. unsuffixed `<KEY>`;
-3. strategy fallback.
+Некоторые встроенные стратегии поддерживают `<KEY>_LONG` и `<KEY>_SHORT` в
+дополнение к общему `<KEY>`. Например, `TARGET_R_MULT_SHORT` может менять цель
+короткой позиции независимо от `TARGET_R_MULT_LONG`.
 
-Например, `TARGET_R_MULT_SHORT` может настраивать short target независимо от
-`TARGET_R_MULT_LONG`. Суффикс поддерживают только поля, которые используют эту
-конвенцию; сверяйтесь с reference/default config стратегии. В grid каждое
-suffixed value по-прежнему является массивом.
+Так работают только поля, указанные в документации стратегии. Не считайте, что
+любой параметр автоматически поддерживает суффиксы направления.
 
-## Seed через `redis-cli`
+## Ручное сохранение сетки
 
-После `npx @tradejs/cli infra-up` Redis обычно доступен на `127.0.0.1:6379`.
+Сетки относятся к локальным исследовательским данным и хранятся в Redis. После
+запуска локальных сервисов используется ключ:
+
+```text
+users:<user>:backtests:configs:<StrategyName:label>
+```
+
+Пример:
 
 ```bash
 redis-cli -h 127.0.0.1 -p 6379 SET \
@@ -78,72 +74,54 @@ redis-cli -h 127.0.0.1 -p 6379 SET \
 Запуск:
 
 ```bash
-npx @tradejs/cli backtest --user root --config MaStrategy:base --tickers BTCUSDT --timeframe 15 --tests 1 --parallel 1
+npx @tradejs/cli backtest \
+  --user root \
+  --config MaStrategy:base \
+  --tickers BTCUSDT \
+  --timeframe 15 \
+  --tests 1 \
+  --parallel 1
 ```
 
-## Seed через script
+Для длинной конфигурации или Redis с паролем используйте небольшой скрипт
+заполнения в своём проекте. Добавьте его в систему контроля версий, если
+эксперимент должен быть проверяемым и воспроизводимым.
 
-```ts
-import Redis from 'ioredis';
+## Воспроизведение рабочей конфигурации
 
-const redis = new Redis({
-  host: process.env.REDIS_HOST || '127.0.0.1',
-  port: Number(process.env.REDIS_PORT || 6379),
-  password: process.env.REDIS_PASSWORD || undefined,
-});
+Чтобы проверить конфигурацию из `tradejs.config.ts`, перенесите параметры
+стратегии в массивы с одним значением и используйте ту же версию пакета,
+таймфрейм, инструменты и период. Не копируйте поля реального запуска, например
+`ENV` и `MAKE_ORDERS`; допущения о цене, комиссиях, проскальзывании и задержке
+задавайте средствами бэктеста.
 
-const key = 'users:root:backtests:configs:MaStrategy:base';
-const grid = {
-  INTERVAL: ['15'],
-  MAX_LOSS_VALUE: [10],
-  MA_FAST: [21],
-  MA_SLOW: [55],
-  LONG: [{ enable: true, direction: 'LONG', TP: 2, SL: 1, minRiskRatio: 1.2 }],
-  SHORT: [{ enable: true, direction: 'SHORT', TP: 2, SL: 1, minRiskRatio: 1.2 }],
-};
-
-await redis.set(key, JSON.stringify(grid));
-await redis.quit();
-```
-
-Храните такой seed script в своем проекте, если config должен воспроизводиться или проходить review в version control.
-
-## Project config и backtest grid
-
-Production runtime configs находятся в `tradejs.config.ts`. Для
-воспроизведения config в бэктесте скопируйте его значения в one-value Redis
-backtest grid и удалите invocation-only keys:
-
-- `ENV`
-- `INTERVAL`
-- `MAKE_ORDERS`
-- `CLOSE_OPPOSITE_POSITIONS`
-- `BACKTEST_PRICE_MODE`
-- `BACKTEST_ENTRY_DELAY_BARS`
-
-Production runtime не читает этот backtest key и не объединяет per-symbol
-research results с committed config.
+Сетка бэктеста и сохранённые списки результатов не меняют настройки реальной
+торговли.
 
 ## Частые ошибки
 
 ### `Backtest config "<name>" not found`
 
-Ключ отсутствует у выбранного user. Проверьте user и config name:
+У выбранного пользователя нет сетки с таким именем. Проверьте пользователя и
+имя:
 
 ```bash
-redis-cli -h 127.0.0.1 -p 6379 GET 'users:root:backtests:configs:MaStrategy:base'
+redis-cli -h 127.0.0.1 -p 6379 GET \
+  'users:root:backtests:configs:MaStrategy:base'
 ```
 
 ### `must include strategyName and strategyConfig grid`
 
-Payload не является grid object. Каждое top-level значение должно быть массивом.
+Значение не является сеткой. Каждое поле верхнего уровня должно быть
+непустым массивом.
 
-### Запустилась не та стратегия
+### Запускается другая стратегия
 
-Имя стратегии берется из config name. Используйте `StrategyName:label`, например `TrendLine:base`.
+Стратегия выбирается по префиксу до первого двоеточия. Используйте формат
+`StrategyName:label`.
 
 ## Дальше
 
 - [Первый бэктест](./first-backtest)
-- [Бэктест стратегии](../guides/backtest-strategy)
-- [CLI API](../api/cli)
+- [Перебор сетки параметров](../runtime/backtesting/grid-config)
+- [Как работают бэктесты](../runtime/backtesting/overview)

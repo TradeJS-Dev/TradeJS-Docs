@@ -56,17 +56,6 @@ npx @tradejs/cli clean-tests --user root --cache
 npx @tradejs/cli user-add --user root --password 'secret'
 ```
 
-`user-add` принимает только username и password. Текущий account API не
-поддерживает legacy-аутентификацию через persistent token.
-
-## Миграция legacy-истории
-
-Перенос JSON свечей (`data/history/*.json`) в Timescale:
-
-```bash
-npx @tradejs/cli migration
-```
-
 ## Отладка коннектора / ордеров
 
 Ручной smoke-скрипт коннектора:

@@ -2,9 +2,18 @@
 title: 'HeadAndShoulders'
 ---
 
-`HeadAndShoulders` detects bearish head-and-shoulders and bullish inverse
-head-and-shoulders structures from replayable pivots. It models the shoulders,
-head prominence, neckline, breakout, stop, and measured target.
+`HeadAndShoulders` detects bearish and inverse head-and-shoulders patterns from
+closed-candle pivots. It models the shoulders, head prominence, neckline,
+breakout, stop, and measured target.
+
+## Visual overview
+
+![HeadAndShoulders strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/strategy-logic.svg)
+
+![HeadAndShoulders signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Decision flow
 
@@ -26,4 +35,3 @@ opposite-pattern exit uses `HEADSHOULDERS_OPPOSITE_PATTERN_EXIT`.
 
 The current built-in default enables the short side and disables the long side;
 enable inverse-pattern longs explicitly only after separate validation.
-

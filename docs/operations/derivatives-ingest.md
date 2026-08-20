@@ -117,4 +117,6 @@ For Coinalyze provider:
 - Ensure PostgreSQL/Timescale is running before ingest.
 - Begin with short lookback and small symbol set.
 - Keep `batchDays` moderate to reduce API/rate-limit pressure.
-- Treat whale registry and universe fingerprints as data lineage; changing the tracked set creates a distinct context series.
+- Record the whale registry and symbol-set fingerprint with the data. Changing
+  the tracked set creates a separate context series and should not be compared
+  as though the input universe were unchanged.

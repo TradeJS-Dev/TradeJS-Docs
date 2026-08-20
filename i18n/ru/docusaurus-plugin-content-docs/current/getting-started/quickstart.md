@@ -3,36 +3,34 @@ sidebar_position: 2
 title: Быстрый старт
 ---
 
-Создайте и запустите self-hosted TradeJS-проект из публичных npm-пакетов:
+Создайте локальный TradeJS-проект из публичных npm-пакетов:
 
 ```bash
 npx create-tradejs
 ```
 
-Это рекомендуемый старт для внешнего пользователя. Команда создаёт
-`tradejs-project`, устанавливает согласованные версии TradeJS-пакетов, запускает
-локальную Docker-инфраструктуру и открывает Web UI. На install-странице задайте
-и подтвердите пароль локального пользователя `root`. TradeJS автоматически
-авторизует пользователя и откроет dashboard.
+Команда создаёт папку `tradejs-project`, устанавливает совместимые версии
+пакетов, запускает локальные сервисы Docker и открывает веб-приложение. На
+странице установки задайте пароль локального пользователя `root`. После входа
+откроется главная страница с графиком Coinbase BTCUSDT.
 
-На dashboard загрузится график Coinbase BTCUSDT. Кнопка **Create backtest** в правом
-верхнем углу открывает форму запуска бэктеста. Полный сценарий описан в статье
-[Первый бэктест](./first-backtest).
+Кнопка **Create backtest** в правом верхнем углу открывает форму запуска.
+Пошаговый сценарий приведён в разделе [Первый бэктест](./first-backtest).
 
-## Что создаётся в проекте
+## Содержимое проекта
 
-- `tradejs.config.ts` с `basePreset`;
-- `.env` с локальными auth URL и сгенерированным auth secret;
+- `tradejs.config.ts` со стандартным набором `basePreset`;
+- `.env` с локальными адресами авторизации и сгенерированным секретом;
 - `docker-compose.dev.yml` для Redis и PostgreSQL/Timescale;
-- npm scripts для UI, CLI-бэктестов и инфраструктуры;
-- `.tradejs/app` как generated UI output после первого запуска приложения.
+- команды npm для приложения, бэктестов и инфраструктуры;
+- `.tradejs/app` — сгенерированная копия веб-приложения.
 
-`tradejs-app` создаёт `.tradejs/app` как generated UI output. Настраивайте
-TradeJS из корня проекта и не редактируйте сгенерированную копию приложения.
+Настраивайте TradeJS из корня проекта. Не редактируйте `.tradejs/app`: этот
+каталог создаётся заново при запуске приложения.
 
-## Ежедневные команды
+## Повседневный запуск
 
-Запускайте их из `tradejs-project`:
+Выполняйте команды из `tradejs-project`:
 
 ```bash
 npm run infra-up
@@ -40,13 +38,13 @@ npm run doctor
 npm run dev
 ```
 
-Полезные routes:
+Основные страницы:
 
-- `/routes/dashboard` — графики, сигналы и кнопка **Create backtest**;
-- `/routes/backtest` — запуск jobs и просмотр прогресса;
-- `/routes/strategies` — runtime strategy config.
+- `/routes/dashboard` — графики, сигналы и запуск бэктеста;
+- `/routes/backtest` — задания бэктеста, прогресс и результаты;
+- `/routes/strategies` — рабочие настройки стратегий, их состояние и пауза.
 
-Остановка локальных services:
+Остановка локальных сервисов:
 
 ```bash
 npm run infra-down
@@ -54,24 +52,25 @@ npm run infra-down
 
 ## Ручная установка пакетов
 
-Она нужна только для интеграции TradeJS в существующий проект. Держите engine
-packages на совместимой major-версии, а independently versioned Base и strategy
-packages фиксируйте lockfile:
+Используйте её только при добавлении TradeJS в существующий проект. Основные
+пакеты движка должны иметь совместимую старшую версию. Точные версии
+`@tradejs/base` и отдельных стратегий фиксируются lock-файлом.
 
 ```bash
 npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-После этого выполните ручную настройку из статьи [Установка](./installation).
+Затем настройте проект по инструкции [Установка](./installation).
 
 ## Частые ошибки
 
 ### Docker недоступен
 
-Запустите Docker Desktop или Docker daemon, проверьте `docker compose version` и
-повторите `npx create-tradejs` в новой пустой папке.
+Запустите Docker Desktop или Docker Engine и проверьте
+`docker compose version`. Затем повторите `npx create-tradejs` в новой пустой
+папке.
 
-### Папка по умолчанию уже существует
+### Папка уже существует
 
 Передайте другое имя:
 
@@ -81,6 +80,6 @@ npx create-tradejs my-trading-project
 
 ### Версии пакетов не совпадают
 
-Удалите `node_modules`, восстановите закоммиченный lockfile и повторите install.
-При обновлении меняйте engine packages вместе и регенерируйте lockfile; не
-выравнивайте каждый `@tradejs/strategy-*` пакет по exact patch-версии движка.
+Удалите `node_modules`, восстановите сохранённый lock-файл и повторите
+установку. При обновлении меняйте основные пакеты движка вместе, но не
+принуждайте каждый `@tradejs/strategy-*` к той же исправляющей версии.

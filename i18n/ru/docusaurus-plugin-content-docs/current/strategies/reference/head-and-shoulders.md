@@ -2,9 +2,18 @@
 title: 'HeadAndShoulders'
 ---
 
-`HeadAndShoulders` находит bearish head-and-shoulders и bullish inverse
-head-and-shoulders по replayable pivots. Модель включает shoulders, head
-prominence, neckline, breakout, stop и measured target.
+`HeadAndShoulders` ищет обычную и перевёрнутую модель «голова и плечи» по
+экстремумам закрытых свечей. Расчёт включает плечи, выраженность головы, линию
+шеи, пробой, стоп и измеряемую цель.
+
+## Визуальная схема
+
+![Логика HeadAndShoulders](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/strategy-logic.svg)
+
+![Пример сигнала HeadAndShoulders](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика
 
@@ -22,4 +31,3 @@ prominence, neckline, breakout, stop и measured target.
 
 В текущем default включен short и выключен long; inverse-pattern longs нужно
 включать явно после отдельной проверки.
-

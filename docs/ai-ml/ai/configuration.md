@@ -126,7 +126,7 @@ Notes:
 - this is the public way to customize prompt behavior per strategy
 - base runtime prompt is still applied; your add-ons are appended to system/human prompts
 
-## Real Runtime Gate Logic Pattern
+## Order Gate Logic
 
 ```ts
 const minAiQuality = runtime.ai?.minQuality ?? 4;

@@ -1,36 +1,49 @@
 ---
-title: Runtime
+title: Среда исполнения
 ---
 
-Runtime исполняет strategy decisions на market data.
+Среда исполнения применяет решения стратегий к рыночным данным. По возможности
+бэктест, воспроизведение и работа с текущим рынком используют один путь расчёта.
+Различия допустимы только там, где они явно нужны для моделирования или
+реального исполнения.
 
-Где возможно, backtests, replay, signals и automation используют общий runtime path. Это важно для parity: стратегия не должна иметь разные decision paths без явной причины.
+## Задачи среды исполнения
 
-Runtime:
+- загрузить конфигурацию проекта и плагины;
+- подготовить свечи и дополнительный рыночный контекст;
+- вызвать стратегию на закрытой свече;
+- добавить индикаторы, AI- и ML-данные;
+- применить риск-контроли и дополнительные фильтры;
+- разместить или отклонить ордер;
+- сохранить сигналы, расчёты, ордера и диагностические данные.
 
-- загружает config и plugins;
-- готовит market data/context;
-- вызывает strategy logic на closed candles;
-- enrichment signals через indicators/AI/ML;
-- применяет gates;
-- размещает или пропускает orders;
-- сохраняет signals, evaluations, orders и diagnostics.
+## Модель исполнения
 
-Текущая runtime-модель:
+- `signals` выполняет один расчёт всех включённых настроек, если параметры
+  команды не сужают запуск.
+- `signals-daemon` хранит только недавнее детерминированное состояние и
+  восстанавливает его после пропусков свечей или изменения конфигурации.
+- Каждый расчёт определяется коннектором, классом рынка, счётом,
+  развёртыванием, инструментом, интервалом, версией и конфигурацией стратегии.
+- `selection.tickers` отдельной стратегии ограничивает список инструментов
+  развёртывания. Инструменты с открытыми позициями продолжают обрабатываться
+  после изменения списка.
+- Настройки проекта и паузы перечитываются в каждом цикле, поэтому затронутая
+  стратегия перестраивается без перезапуска всего процесса.
+- Закрытые свечи Bybit могут поступать через постоянный WebSocket с резервным
+  получением через REST. График использует отдельный WebSocket-сервис.
+- Решение стратегии записывается до построения необязательных изображений.
+- Настройки реальной торговли читаются из `tradejs.config.ts`; Redis хранит
+  счета, состояние паузы, сигналы, расчёты, ордера и сведения о работе процесса.
 
-- `signals` один раз выполняет все активные Git-owned scopes, если explicit flags не сужают scope;
-- `signals-daemon` сохраняет bounded detector state между последовательными closed candles и безопасно rebuild-ит его после gaps/config changes;
-- runtime identity включает connector, universe, account/deployment, symbol, interval, strategy и её explicit version/config;
-- Bybit closed candles могут приходить через persistent WebSocket с REST recovery, а dashboard использует отдельный market WebSocket gateway;
-- signal/evaluation сохраняется до optional screenshots;
-- production config читается только из immutable Project image; Redis хранит accounts, optional pause overrides, heartbeat, signals, evaluations и trades.
-
-App показывает committed config read-only, strategy analytics, drawdown/orders
-и pause/resume. Research evidence может создаваться локально или в CI, но
-сервер и UI от него не зависят и не показывают evidence status.
+Веб-приложение показывает версионируемую конфигурацию без возможности её
+редактирования, аналитику стратегий, просадку, ордера и управление паузой.
+Исследовательские отчёты могут создаваться локально или в CI, но рабочему
+серверу они не нужны для запуска.
 
 Связанные страницы:
 
-- [Signals](../runtime/execution/signals)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
-- [Debug live](../strategies/operations/debug-live)
+- [Как рассчитываются сигналы](../runtime/execution/signals)
+- [Проверка реальных решений через воспроизведение](../runtime/backtesting/replay-evidence)
+- [Сравнение реальных и воспроизведённых входов](../runtime/backtesting/runtime-parity)
+- [Диагностика реальной работы](../strategies/operations/debug-live)

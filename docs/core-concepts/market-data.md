@@ -17,7 +17,10 @@ Runtime signal scans are designed around closed candles. Acting on still-forming
 
 ## Context Data
 
-Recent source changes added more context around runtime and backtests, including CoinMarketCap historical context, derivatives context, and onchain context support. Treat these as optional enrichment inputs. They should remain causality-safe: a strategy decision should only use data available at the decision timestamp.
+Strategies can also use historical global-market, derivatives, spread, and
+on-chain context. Treat these as optional inputs and apply the same timestamp
+discipline as candles: a decision may use only information available at its
+decision time.
 
 ## Data Quality
 

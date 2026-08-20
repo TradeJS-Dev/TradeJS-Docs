@@ -4,6 +4,15 @@ title: 'Breakout'
 
 `Breakout` is a built-in TypeScript strategy from `@tradejs/strategy-breakout` with weighted signal scoring for long/short breakout scenarios.
 
+## Visual overview
+
+![Breakout strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/strategy-logic.svg)
+
+![Breakout signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 On each bar, strategy computes boolean signals and opens a position only if:
@@ -96,8 +105,6 @@ Otherwise returns `POSITION_HELD`.
 
 - `highLevel`, `lowLevel`
 - `signals` (all boolean checks)
-
-`figures` is currently empty (`buildBreakoutFigures()` returns `{}`).
 
 ## Example Runtime Config
 

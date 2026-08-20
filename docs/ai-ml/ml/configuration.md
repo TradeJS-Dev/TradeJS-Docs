@@ -11,7 +11,7 @@ title: ML Pipeline and Configuration
 4. Python train container generates model artifacts and reports.
 5. Runtime inference uses gRPC (`ML_GRPC_ADDRESS`).
 
-## Real Commands
+## Commands
 
 ```bash
 npx @tradejs/cli backtest --config TrendLine:base --ml

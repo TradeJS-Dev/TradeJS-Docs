@@ -33,7 +33,7 @@ Before enabling order placement:
 
 - verify config and position sizing
 - account for fees and slippage
-- use small scope first
+- start with a small, fixed risk allocation
 - monitor connector errors
 - keep a rollback path
 

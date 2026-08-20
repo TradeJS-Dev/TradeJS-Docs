@@ -16,21 +16,27 @@ The current runtime path is shared across backtests, replay, signals, and automa
 - place or skip orders
 - store signals, evaluations, orders, and diagnostics
 
-## Current Runtime Model
+## Execution Model
 
-- `signals` runs every Git-declared active scope once unless explicit scope flags narrow it.
-- `signals-daemon` keeps bounded detector state across sequential closed candles and rebuilds safely after gaps or config changes.
-- runtime identity includes connector, universe, account/deployment, symbol, interval, strategy, and its explicit version/config.
+- `signals` evaluates every enabled setup once unless command-line filters narrow the run.
+- `signals-daemon` keeps only recent deterministic calculation state and rebuilds it safely after gaps or configuration changes.
+- each calculation is identified by its connector, market universe, account,
+  deployment, symbol, interval, strategy version, configuration, and symbol selection.
+- strategy-level `selection.tickers` overrides the deployment ticker list; active-position symbols remain managed after selection changes.
+- the daemon reloads project settings and pause controls every cycle, so an
+  affected strategy rebuilds without restarting the process.
 - Bybit closed candles can arrive through a persistent WebSocket with REST recovery; the dashboard has a separate market WebSocket gateway.
 - signal/evaluation persistence happens before optional screenshots.
-- production config is read only from the immutable Project image; Redis is used for accounts, optional pause overrides, heartbeats, signals, evaluations, and trades.
+- live strategy settings are read from `tradejs.config.ts`; Redis stores
+  accounts, optional pause state, heartbeats, signals, evaluations, and trades.
 
-The app exposes the committed strategy config read-only, strategy analytics,
+The app displays the version-controlled strategy configuration read-only, strategy analytics,
 drawdown, orders, and pause/resume. Research evidence may be produced locally
 or in CI, but the server and UI do not require it or show an evidence status.
 
 Related:
 
-- [Signals](../runtime/execution/signals)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
+- [How live signals work](../runtime/execution/signals)
+- [Validate live decisions with replay](../runtime/backtesting/replay-evidence)
+- [Compare live and replayed entries](../runtime/backtesting/runtime-parity)
 - [Debugging live mode](../strategies/operations/debug-live)

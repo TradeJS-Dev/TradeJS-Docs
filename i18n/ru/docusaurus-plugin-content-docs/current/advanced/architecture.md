@@ -25,6 +25,5 @@ TradeJS разделен на публичные пакеты:
 Не используйте их root imports и `@tradejs/*/src/*`. Не добавляйте
 `@tradejs/node` или `@tradejs/infra` в browser/client bundle.
 
-Подробнее: [владение репозиториями](./repository-ownership),
-[Core API](../api/framework) и
-[миграция на TradeJS 3](../getting-started/migration-v3).
+Подробнее: [владение репозиториями](./repository-ownership) и
+[Core API](../api/framework).

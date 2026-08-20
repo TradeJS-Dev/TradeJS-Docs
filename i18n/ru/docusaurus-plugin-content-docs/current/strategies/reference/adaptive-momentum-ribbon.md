@@ -2,9 +2,19 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
-`AdaptiveMomentumRibbon` — встроенная Pine-стратегия из `@tradejs/strategy-adaptive-momentum-ribbon`.
+`AdaptiveMomentumRibbon` объединяет ленту моментума на Pine, контекст канала
+Кельтнера, структурную отмену сигнала и размер позиции по риску. Pine
+рассчитывает сигнал, а TypeScript управляет состоянием позиции, выходами и
+планом ордера.
 
-Runtime передает в `core.ts` загрузчик скрипта (`loadPineScriptFile`), поэтому Pine-логика хранится отдельно и обновляется независимо от TypeScript-кода.
+## Визуальная схема
+
+![Логика AdaptiveMomentumRibbon](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/strategy-logic.svg)
+
+![Пример сигнала AdaptiveMomentumRibbon](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -37,7 +47,7 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 
 ## Параметры конфига (что означает каждый)
 
-### Общие runtime-параметры
+### Общие параметры запуска
 
 - `ENV` — режим запуска.
 - `INTERVAL` — таймфрейм.
@@ -109,7 +119,7 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 - все серии из `AMR_LINE_PLOTS` добавляются в `figures.lines`
 - это позволяет выбирать, какие Pine-линии отображать в UI и в бэктест-чартах
 
-## Payload сигнала
+## Содержимое сигнала
 
 `figures`:
 
@@ -123,7 +133,7 @@ Runtime передает в `core.ts` загрузчик скрипта (`loadPi
 - значения KC и invalidation-уровня
 - `lineValues` по выбранным plot
 
-## Пример runtime-конфига
+## Пример рабочей конфигурации
 
 ```json
 {

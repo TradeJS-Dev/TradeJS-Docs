@@ -19,7 +19,6 @@ There is no aggregate `@tradejs/infra/timescale` export.
 
 - PostgreSQL/Timescale service in your environment
 - schema bootstrap SQL for initial setup
-- migration workflow for schema updates
 
 Local start shortcut:
 
@@ -44,9 +43,3 @@ fingerprints so context from different tracked sets is not silently mixed.
 - Avoid full scans on wide windows without filters.
 - Ensure `symbol + interval + time` paths are indexed.
 - Watch for slow range queries used by backtest/signal APIs.
-
-## Migrations
-
-- Run schema changes in maintenance windows.
-- Always keep rollback SQL for destructive changes.
-- Version migrations and test them on staging snapshots first.

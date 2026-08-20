@@ -1,129 +1,97 @@
 ---
-title: Backtest Grid Config for Mass Parameter Search
+title: Search a Backtest Parameter Grid
 ---
 
-This guide explains how to configure a backtest grid in Redis and run mass tests with parameter combinations.
+A parameter search compares predefined strategy variants under the same market
+data and execution assumptions. TradeJS builds the Cartesian product of the
+arrays in a saved backtest grid and evaluates each combination for each symbol.
 
-## 1. How Grid Backtests Work
+## Estimate the Search Size
 
-`npx @tradejs/cli backtest` reads a Redis config and builds a Cartesian product of parameter arrays.
+If `MA_FAST` has three values and `MA_SLOW` has two, the grid has six parameter
+combinations. Across 20 symbols, the full suite contains 120 tests before the
+`--tests` limit.
 
-Code path:
+Keep the grid small enough to explain. A larger search increases compute cost
+and the chance of selecting noise. Parameters and ranges should follow from the
+strategy hypothesis rather than from repeated inspection of the same period.
 
-- `@tradejs/cli`
-- `@tradejs/node`
+## Example Grid
 
-Key points:
-
-- every grid field must be an array
-- one combination = one value from each field
-- total tests before `--tests` cap = `tickers_count * combinations_count`
-
-## 2. Redis Key Format
-
-Use this key pattern:
-
-- `users:<user>:backtests:configs:<Strategy>:<configName>`
-
-Example:
-
-- `users:root:backtests:configs:AdaptiveMomentumRibbon:grid-v1`
-
-Important:
-
-- `--config` must be `<Strategy>:<configName>`
-- strategy name is taken from the first part before `:`
-
-## 3. Example Grid Config
-
-Example for `AdaptiveMomentumRibbon`:
-
-```bash
-redis-cli JSON.SET users:root:backtests:configs:AdaptiveMomentumRibbon:grid-v1 '$' '{
-  "ENV": ["BACKTEST"],
+```json
+{
   "INTERVAL": ["15"],
-  "MAKE_ORDERS": [true],
-  "BACKTEST_PRICE_MODE": ["mid"],
-
-  "AMR_MOMENTUM_PERIOD": [14, 20, 28],
-  "AMR_BUTTERWORTH_SMOOTHING": [2, 3],
-  "AMR_ATR_MULTIPLIER": [1.8, 2.2],
-
-  "AMR_WAIT_CLOSE": [true],
-  "AMR_SHOW_INVALIDATION_LEVELS": [true],
-  "AMR_SHOW_KELTNER_CHANNEL": [true],
-  "AMR_KC_LENGTH": [20],
-  "AMR_KC_MA_TYPE": ["EMA"],
-  "AMR_ATR_LENGTH": [14],
-  "AMR_EXIT_ON_INVALIDATION": [true],
-  "AMR_LOOKBACK_BARS": [300],
-  "AMR_LINE_PLOTS": [["kcMidline", "kcUpper", "kcLower", "invalidationLevel"]],
-
+  "MAX_LOSS_VALUE": [10],
+  "MA_FAST": [14, 21, 34],
+  "MA_SLOW": [55, 89],
   "LONG": [
-    {"enable": true, "direction": "LONG", "TP": 1.5, "SL": 0.8},
-    {"enable": true, "direction": "LONG", "TP": 2.0, "SL": 1.0}
+    { "enable": true, "direction": "LONG", "TP": 2, "SL": 1 }
   ],
   "SHORT": [
-    {"enable": true, "direction": "SHORT", "TP": 2.0, "SL": 1.0}
-  ],
-
-  "AI_ENABLED": [false],
-  "ML_ENABLED": [false],
-  "ML_THRESHOLD": [0.1],
-  "MIN_AI_QUALITY": [3]
-}'
+    { "enable": true, "direction": "SHORT", "TP": 2, "SL": 1 }
+  ]
+}
 ```
 
-Combination count in this example:
+Every value must be an array. See
+[Define a backtest parameter grid](../../getting-started/backtest-config) for
+storage and naming.
 
-- `3 * 2 * 2 * 2 * 1 = 24` combinations
-- if ticker list has 120 symbols, full suite is `24 * 120 = 2880` tests
-
-## 4. Run Mass Backtests
-
-Run:
+## Run the Search
 
 ```bash
-npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:grid-v1 --connector bybit --timeframe 15 --tests 3000 --parallel 6
+npx @tradejs/cli backtest \
+  --user root \
+  --config MaStrategy:grid-v1 \
+  --connector bybit \
+  --timeframe 15 \
+  --tickers BTCUSDT,ETHUSDT \
+  --tests 12 \
+  --parallel 4 \
+  --cacheOnly
 ```
 
-Useful scaling flags:
+Useful controls:
 
-- `--tickers BTCUSDT,ETHUSDT,...`
-- `--tickersLimit 100`
-- `--exclude BTCUSDT,ETHUSDT`
-- `--tests 3000` hard cap for total suite
-- `--parallel 6` worker count
+- `--tickers` selects explicit symbols;
+- `--tickersLimit` caps a connector-derived symbol set;
+- `--exclude` removes symbols;
+- `--tests` caps the complete symbol × parameter suite;
+- `--parallel` controls worker count;
+- `--skip` and `--continue` help resume planned work.
 
-## 5. Validate and Iterate
+Use `--cacheOnly` when comparing configurations on a fixed historical dataset.
+If you refresh history, record that change as a new experiment input.
 
-Check config:
+## Select and Validate
+
+Inspect the saved results and symbol coverage:
 
 ```bash
-redis-cli JSON.GET users:root:backtests:configs:AdaptiveMomentumRibbon:grid-v1
+npx @tradejs/cli results \
+  --strategy MaStrategy \
+  --coverage \
+  --user root
 ```
 
-Inspect winners:
+When selection uses the same period as evaluation, the reported best result is
+in-sample. Reserve an independent period, test nearby parameter values, and
+stress costs before considering a live evaluation.
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --coverage --user root
-```
+`results --merge` can keep a local list of the highest recorded result for each
+symbol. It does not update `tradejs.config.ts` or create a portfolio decision.
 
-Promote best configs to runtime:
+## Common Mistakes
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
-```
+- using a scalar instead of an array;
+- leaving an empty array, which creates zero combinations;
+- omitting the strategy prefix from `StrategyName:label`;
+- changing the grid after seeing results without starting a new experiment;
+- searching too many combinations without an independent validation set;
+- ranking by profit alone.
 
-## 6. Common Mistakes
+## Related Guides
 
-- scalar value instead of array (`"INTERVAL": "15"` is invalid for grid)
-- empty array in any field (`[]`) produces zero combinations
-- config key without strategy prefix (`AdaptiveMomentumRibbon:<name>`)
-- too many combinations without `--tests` limit
-
-## 7. Related Guides
-
-- [How Backtests Work](./overview)
-- [Results -> Project Config Promotion](./results-runtime-config)
-- [Runtime Playbook](./strategy-playbook)
+- [How backtests work](./overview)
+- [Use a tested configuration in live trading](./results-runtime-config)
+- [From backtest to live trading](./strategy-playbook)

@@ -2,9 +2,17 @@
 title: 'DoubleTap'
 ---
 
-`DoubleTap` - встроенная TypeScript-стратегия из `@tradejs/strategy-double-tap`.
+`DoubleTap` ищет двойную вершину или двойное дно, затем входит на пробой с
+уровнями стопа и цели, рассчитанными по структуре модели.
 
-Она ищет double-bottom и double-top structures, затем торгует breakout/breakdown с stop и target, которые возвращает pattern engine.
+## Визуальная схема
+
+![Логика DoubleTap](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/strategy-logic.svg)
+
+![Пример сигнала DoubleTap](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -48,7 +56,7 @@ Shared groups:
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
-## Payload сигнала
+## Содержимое сигнала
 
 Стратегия сохраняет:
 

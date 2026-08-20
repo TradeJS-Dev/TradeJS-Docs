@@ -2,9 +2,18 @@
 title: 'RelativeRotation'
 ---
 
-`RelativeRotation` торгует ротацию символа относительно BTC. Он оценивает
-24-hour alpha и ratio return, one-hour relative strength, ratio trend,
-participation, correlation и optional BTC/alt regime alignment.
+`RelativeRotation` оценивает ротацию инструмента относительно BTC по суточной
+альфе и доходности отношения цен, часовой относительной силе, тренду отношения,
+участию объёма, корреляции и необязательному режиму BTC/альткоинов.
+
+## Визуальная схема
+
+![Логика RelativeRotation](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/strategy-logic.svg)
+
+![Пример сигнала RelativeRotation](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика
 
@@ -22,4 +31,3 @@ Entry codes: `RR_LONG_RELATIVE_ROTATION`, `RR_SHORT_RELATIVE_ROTATION`.
 `RR_MIN_TARGET_BTC_CORRELATION*`, `RR_MAX_ATR_PCT_RANK100*` и
 `RR_STOP_*`/`RR_TARGET_R_MULT*`. BTC reference разрешается не позже
 оцениваемой свечи.
-

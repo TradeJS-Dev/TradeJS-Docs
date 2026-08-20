@@ -108,10 +108,10 @@ If you compare two strategies, keep provider, timeframe, date window, cache mode
 3. Check continuity and missing context coverage.
 4. Repeat with `--cacheOnly` to confirm determinism.
 5. Expand symbols and date windows.
-6. Compare replay/runtime parity before enabling automation.
+6. Compare replayed and live decisions before enabling automation.
 
 Related:
 
 - [Backtesting caveats](../limitations/backtesting-caveats)
 - [Backtest a strategy](./backtest-strategy)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
+- [Compare live and replayed entries](../runtime/backtesting/runtime-parity)

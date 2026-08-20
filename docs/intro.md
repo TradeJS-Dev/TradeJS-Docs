@@ -4,40 +4,55 @@ title: Welcome
 slug: /
 ---
 
-TradeJS is a TypeScript framework for building, backtesting, and running programmable trading strategies. Its self-hosted runtime keeps infrastructure and execution under your control.
+TradeJS is a TypeScript framework for systematic trading research and
+self-hosted execution. You can implement a strategy once, test it on historical
+data, reproduce its decisions on closed candles, and run the same logic against
+live market data.
 
 Start here if you are opening the project for the first time:
 
 1. Read [What is TradeJS?](./introduction/what-is-tradejs).
-2. Install the public packages with [Installation](./getting-started/installation).
-3. Create the project and open the Backtest UI with `npx create-tradejs` in [Run your first backtest](./getting-started/first-backtest).
-4. Learn the main objects in [Core Concepts](./core-concepts/strategy).
-5. Copy from the practical [Examples](./examples).
+2. Review the [trading workflow and terminology](./introduction/trading-workflow-and-terms).
+3. Create a local project and run the [first backtest](./getting-started/first-backtest).
+4. Learn how TradeJS represents [strategies](./core-concepts/strategy),
+   [signals](./core-concepts/signals), and [orders and positions](./core-concepts/orders-positions).
+5. Use the practical [examples](./examples) as starting points.
 
-The primary workflow is **write → backtest → run**: keep strategy logic in TypeScript, compare it on historical data, and move selected configurations into a runtime you operate.
+The primary workflow is **define → backtest → validate → replay → run**.
+Backtest results are research evidence, not a live-trading decision by
+themselves. Before deploying a configuration, test it out of sample, include
+fees and realistic execution assumptions, and verify that replay reproduces
+the expected decisions.
 
-TradeJS is designed for research, backtesting, signal generation, and controlled automation on your infrastructure. It is not financial advice, not an HFT engine, and not a system that can promise future returns.
+TradeJS is designed for research, backtesting, signal generation, and
+controlled automation on infrastructure you operate. It is not financial
+advice, an HFT engine, or a system that can promise future returns.
 
 ## Product Focus
 
 - **TypeScript-native:** strategies, indicators, plugins, and runtime contracts are programmable and typed.
-- **One strategy lifecycle:** use the same strategy implementation for backtests and runtime evaluation.
+- **One strategy implementation:** use the same decision logic for backtests,
+  historical replay, and live evaluation.
 - **Self-hosted:** keep strategy code, market data, credentials, and execution infrastructure under your control.
 
 Pine-backed strategy compatibility, AI/ML enrichment, grid search, Telegram notifications, and the optional app extend this core workflow.
 
-## Public Packages
+## Packages
 
-- `@tradejs/core` - browser-safe authoring API, config helpers, shared indicator/math/time helpers
-- `@tradejs/node` - Node runtime for strategy execution, backtests, Pine strategy loading, connector/plugin registries
-- `@tradejs/cli` - operational commands for backtests, signals, bots, doctor checks, ML workflows
+- `@tradejs/core` - strategy authoring API, configuration helpers, indicators,
+  math, and time utilities
+- `@tradejs/node` - Node.js execution, backtests, Pine strategy loading, and
+  connector/plugin registries
+- `@tradejs/cli` - commands for infrastructure, backtests, signals, results,
+  replay, and diagnostics
 - `@tradejs/app` - optional installable Next.js UI for viewing backtests, dashboards, and runtime data
 - `@tradejs/base` - default preset that wires built-in strategies, indicators, and connectors
 - `@tradejs/types` - shared TypeScript contracts
 - `@tradejs/strategy-*` - independent strategy plugins installed by `@tradejs/base`
 - `@tradejs/indicators`, `@tradejs/connectors` - built-in indicator and connector catalogs
 
-Use explicit public subpaths such as `@tradejs/core/config`, `@tradejs/core/indicators`, `@tradejs/node/strategies`, and `@tradejs/types`. Avoid non-public deep imports from package `src` folders.
+Use documented package entry points such as `@tradejs/core/config`,
+`@tradejs/core/indicators`, `@tradejs/node/strategies`, and `@tradejs/types`.
 
 ## Links
 
@@ -46,7 +61,7 @@ Use explicit public subpaths such as `@tradejs/core/config`, `@tradejs/core/indi
 - npm organization: [npmjs.com/org/tradejs](https://www.npmjs.com/org/tradejs)
 - Examples: [Examples](./examples)
 - Licensing: [License overview](./introduction/licensing)
-- Repository map: [Repository and package ownership](./advanced/repository-ownership)
+- Package and repository map: [Repository and package ownership](./advanced/repository-ownership)
 
 ## Read Next
 

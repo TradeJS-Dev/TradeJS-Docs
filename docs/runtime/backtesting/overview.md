@@ -3,118 +3,101 @@ sidebar_position: 8
 title: How Backtests Work
 ---
 
-## Entry Point
+A TradeJS backtest applies one strategy configuration to historical candles and
+simulates its entries, exits, and position management. Use it to test a stated
+hypothesis and compare configurations under the same assumptions—not as a
+forecast of future returns.
 
-Run:
+## Define the Test Before Running It
+
+Record the following inputs so that another person can reproduce the result:
+
+- strategy and package version;
+- complete strategy configuration;
+- connector, symbols, and timeframe;
+- exact start and end timestamps;
+- candle source and data-adjustment rules;
+- fees, slippage, fill model, and entry delay;
+- parameter combinations and selection rule.
+
+Changing any of these inputs creates a different experiment.
+
+## Run a Backtest
+
+The quickest route is the web app described in
+[Run your first backtest](../../getting-started/first-backtest). For a saved
+configuration, use the CLI:
 
 ```bash
-npx @tradejs/cli backtest --config <StrategyName:configName>
+npx @tradejs/cli backtest \
+  --user root \
+  --config <StrategyName:configName> \
+  --connector <connector> \
+  --timeframe <minutes> \
+  --tickers <SYMBOLS> \
+  --tests <limit> \
+  --parallel <workers>
 ```
 
-The selected config must already exist in Redis. For a complete runnable
-example, start with [Run your first backtest](../../getting-started/first-backtest).
-
-Local infra prerequisite:
+Start local services first if they are not running:
 
 ```bash
-npx @tradejs/cli infra-init
 npx @tradejs/cli infra-up
 ```
 
-`infra-init` creates `docker-compose.dev.yml` once and keeps user changes if file already exists.
-`infra-up` starts Redis + PostgreSQL/Timescale using that file.
-Stop infra after work with `npx @tradejs/cli infra-down`.
+Use `--cacheOnly` when the required candles are already available and you want
+to prevent a data refresh during a reproducibility check.
 
-Main files:
+## What TradeJS Does
 
-- script: `@tradejs/cli`
-- worker runtime: `@tradejs/node`
+1. Loads the selected parameter grid.
+2. Resolves the symbol set and historical window.
+3. Loads or refreshes candles.
+4. Builds the requested parameter combinations.
+5. Runs the combinations in parallel workers.
+6. Stores trade-level output and aggregates performance statistics.
 
-## Real CLI Flags (from code)
+The same strategy implementation is used by backtests and live evaluation, but
+the surrounding execution environment is different. A backtest cannot fully
+reproduce queue position, market impact, exchange outages, network latency, or
+future liquidity.
 
-```ts
-args.option(['c', 'config'], 'Backtest config', 'breakout');
-args.option(['n', 'tests'], 'Tests limit', TESTS_LIMIT);
-args.option(['p', 'parallel'], 'Parallel tasks', MAX_PARALLEL);
-args.option('connector', 'Connector/provider', 'bybit');
-args.option(['m', 'ml'], 'Write ML dataset rows', false);
-args.option(['A', 'ai'], 'Write AI prompt rows', false);
-```
+## Parameter Search
 
-Example run for TrendLine-like setup:
+Each field in a backtest grid contains one or more candidate values. TradeJS
+evaluates their Cartesian product, subject to `--tests`. Keep the search space
+economically justified and record how the final candidate was selected.
 
-```bash
-npx @tradejs/cli backtest --config trendline --connector bybit --tests 500 --parallel 4 --ml --ai
-```
+A large search can produce an attractive result by chance. After selecting a
+candidate, validate it on data not used for selection and test sensitivity to
+nearby parameter values, fees, slippage, and market regimes.
 
-## Pipeline
+See [Backtest grid configuration](./grid-config) for the file shape and commands.
 
-1. Resolve backtest config from Redis (`users:<user>:backtests:configs:<config>`).
-1. Load symbols from selected connector.
-1. Refresh candle cache (unless `--cacheOnly`).
-1. Build test-suite grid.
-1. Split suite into chunks and run worker processes.
-1. Aggregate stats and store top results.
+## Read the Output
 
-## Real Worker Processing Pattern
+Do not rank configurations by net profit alone. At minimum, inspect:
 
-```ts
-import { testing } from '@tradejs/node/backtest';
+- trade count and exposure;
+- returns after fees and modeled slippage;
+- maximum drawdown and recovery time;
+- profit factor, expectancy, and payoff distribution;
+- long/short and per-symbol concentration;
+- stability across subperiods and market regimes;
+- sensitivity to small parameter and cost changes.
 
-for await (const test of testSuite) {
-  const testResult = await testing(test);
-  process.send?.({
-    stat: testResult.stat,
-    orderLogId: testResult.orderLogId,
-    test,
-  });
-}
-```
+The result is useful only if the data window, assumptions, and sample size are
+appropriate for the strategy's holding period and turnover.
 
-## ML Dataset During Backtest
+## Optional AI/ML Datasets
 
-Enable ML rows writing:
+`--ml` writes rows for the ML dataset and `--ai` writes rows for offline prompt
+evaluation. These flags add research output; they do not enable an AI or ML gate
+during the backtest. Merge the generated chunks with `ml-export` or `ai-export`.
 
-```bash
-npx @tradejs/cli backtest --ml
-```
+## Next Steps
 
-Workers write chunk files:
-
-- `ml-dataset-<strategy>-chunk-<chunkId>.jsonl`
-
-Later, merge with:
-
-```bash
-npx @tradejs/cli ml-export
-```
-
-## AI Prompt Dataset During Backtest
-
-Enable AI prompt dataset writing:
-
-```bash
-npx @tradejs/cli backtest --ai
-```
-
-Workers write chunk files:
-
-- `ai-dataset-<strategy>-chunk-<chunkId>.jsonl`
-
-Later, merge and replay with:
-
-```bash
-npx @tradejs/cli ai-export
-npx @tradejs/cli ai-train -n 50 --minQuality 4
-```
-
-## UI Note
-
-The built-in Next.js app is not yet distributed as a public external package.
-For external package users, the supported backtest flow is CLI-first.
-
-## Related Guides
-
-- [Backtest Grid Config for Mass Parameter Search](./grid-config)
-- [Results -> Project Config Promotion](./results-runtime-config)
-- [Data Sync](../../getting-started/data-sync)
+- [Understand backtest output](../../getting-started/understanding-output)
+- [Use a tested configuration in live trading](./results-runtime-config)
+- [Validate live decisions with replay](./replay-evidence)
+- [Backtesting caveats](../../limitations/backtesting-caveats)

@@ -2,9 +2,18 @@
 title: 'VolatilityCompressionBreakout'
 ---
 
-`VolatilityCompressionBreakout` торгует расширение после volatility
-compression. Он объединяет ATR/BB-width ranks с breakout локального range или
-support/resistance и signal-time participation filters.
+`VolatilityCompressionBreakout` входит на расширении диапазона после сжатия
+волатильности. Стратегия сочетает ранги ATR и ширины полос Боллинджера с пробоем
+локального диапазона, поддержки или сопротивления и фильтрами участия.
+
+## Визуальная схема
+
+![Логика VolatilityCompressionBreakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/strategy-logic.svg)
+
+![Пример сигнала VolatilityCompressionBreakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика
 
@@ -22,4 +31,3 @@ Entry codes: `VCB_LONG_COMPRESSION_BREAKOUT`,
 `VCB_MIN_RANGE_EXPANSION_RANK`, `VCB_MIN_VOLUME_REL20`,
 `VCB_MIN_BREAKOUT_DISTANCE_ATR*`, `VCB_REQUIRE_MTF_ALIGNMENT`,
 `VCB_REQUIRE_TRADE_FLOW_ALIGNMENT` и `VCB_STOP_*`/`VCB_TARGET_R_MULT`.
-

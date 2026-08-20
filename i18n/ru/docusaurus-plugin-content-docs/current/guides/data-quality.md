@@ -2,116 +2,124 @@
 title: Качество данных
 ---
 
-Качество backtest/runtime зависит от data path до того, как стратегия увидит свечу.
-
-Используйте этот checklist, когда результаты выглядят странно, при добавлении connector или перед сравнением стратегий.
+Качество бэктеста и реального расчёта зависит от данных, которые получает
+стратегия. Используйте этот список при подозрительном результате, добавлении
+коннектора и сравнении стратегий.
 
 ## Что проверять
 
-- Candle continuity: нет больших gaps на нужном interval.
-- Duplicate candles: нет повторных timestamp для одного symbol/provider/interval.
-- Timestamp alignment: context rows должны быть at or before strategy candle timestamp.
-- Provider identity: не смешивайте разные sources без понимания происхождения candles.
-- Symbol mapping: `BTCUSDT`, `BTC-USD` и provider-specific ids не всегда эквивалентны.
-- Volume fields: base volume, quote turnover, taker volume и derived values могут различаться по provider.
-- Derived context: CMC, derivatives, global market, spread и onchain rows могут отсутствовать или быть stale.
+- **Непрерывность:** нет необъяснимых пропусков свечей нужного интервала.
+- **Дубли:** для одного инструмента, поставщика и интервала нет повторных меток
+  времени.
+- **Выравнивание времени:** дополнительный контекст имеет метку не позже свечи
+  решения.
+- **Источник:** данные разных бирж и поставщиков не смешиваются без явного
+  происхождения.
+- **Символы:** `BTCUSDT`, `BTC-USD` и внутренние идентификаторы поставщика не
+  считаются автоматически одним инструментом.
+- **Объём:** базовый объём, оборот в котируемой валюте и объём тейкеров могут
+  иметь разный смысл у разных поставщиков.
+- **Дополнительный контекст:** данные глобального рынка, деривативов, спредов и
+  блокчейнов могут отсутствовать или запаздывать.
 
-## Data flow
+## Путь данных
 
 ```text
-exchange / provider
+биржа или поставщик
         |
         v
-connector fetch
+коннектор
         |
         v
-cache / Timescale
+кэш или Timescale
         |
         v
-closed candle window
+окно закрытых свечей
         |
         v
-indicator + market context builders
+индикаторы и рыночный контекст
         |
         v
-strategy decision
+решение стратегии
 ```
 
-Стратегия должна получать только данные, доступные на timestamp решения.
+Стратегия должна получать только данные, доступные к моменту решения.
 
 ## Полезные команды
 
-Обновить историю без запуска tests:
+Обновить историю без запуска тестов:
 
 ```bash
 npx @tradejs/cli backtest --updateOnly --connector bybit --timeframe 15
 ```
 
-Запуск из cache после подготовки данных:
+Использовать уже подготовленную историю:
 
 ```bash
-npx @tradejs/cli backtest --cacheOnly --config TrendLine:base --tickers BTCUSDT --timeframe 15
+npx @tradejs/cli backtest \
+  --cacheOnly \
+  --config TrendLine:base \
+  --tickers BTCUSDT \
+  --timeframe 15
 ```
 
-Проверить continuity:
+Проверить непрерывность:
 
 ```bash
 npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
 ```
 
-Signals без refresh:
+Рассчитать текущие сигналы без обновления данных:
 
 ```bash
 npx @tradejs/cli signals --cacheOnly --tickers BTCUSDT --timeframe 15
 ```
 
-## Context data
+## Дополнительные данные
 
-TradeJS может добавлять:
+TradeJS может добавлять эталонные свечи BTC, спреды Binance/Coinbase, глобальный
+контекст CoinMarketCap, данные деривативов Coinalyze и блокчейн-контекст. Их
+покрытие может отличаться от истории свечей. Если от такого поля зависит вход,
+сначала измерьте долю пропусков и задержку.
 
-- BTC reference candles;
-- Binance/Coinbase spread context;
-- CoinMarketCap global/index context;
-- Coinalyze derivatives context;
-- onchain context.
-
-Эти sources optional и могут иметь другое coverage, чем candle history. Если strategy gate зависит от них, проверьте missing coverage перед выводами.
-
-## Causality rules
+## Причинность
 
 Нужно:
 
-- использовать closed candles;
-- align context at or before evaluated candle;
-- отделять signal-time features от outcome fields;
-- не пропускать future labels в ML/AI features.
+- использовать закрытые свечи;
+- выбирать последнюю запись контекста не позже оцениваемой свечи;
+- отделять признаки момента сигнала от итогов сделки;
+- исключать будущие метки из признаков AI/ML.
 
 Нельзя:
 
-- принимать решения по still-forming newest candle;
-- align BTC/reference/context data на future row;
-- использовать realized exit price, PnL или final trade status как input того же signal;
-- сравнивать runtime/backtest без проверки fill timing assumptions.
+- принимать решение по формирующейся свече;
+- привязывать контекст к будущей записи;
+- использовать итоговую цену выхода, PnL или статус сделки как вход того же
+  сигнала;
+- сравнивать бэктест и реальное исполнение без учёта времени и модели
+  исполнения.
 
-## Cache modes
+## Режимы истории
 
-`--updateOnly` обновляет данные и не запускает tests.
+`--updateOnly` обновляет данные и завершает работу без тестов. `--cacheOnly`
+использует сохранённые данные без сетевого обновления. Второй режим удобен для
+воспроизводимости только после проверки полноты кэша.
 
-`--cacheOnly` использует cache без network refresh. Это удобно для repeatable runs, но только после проверки полноты cache.
+При сравнении стратегий фиксируйте поставщика, таймфрейм, точный период, режим
+кэша и настройки дополнительного контекста.
 
-При сравнении стратегий держите одинаковыми provider, timeframe, date window, cache mode и context settings.
+## Перед интерпретацией результата
 
-## Перед доверием к результату
-
-1. Запустите narrow backtest на одном symbol.
-2. Проверьте figures и trade timestamps.
-3. Проверьте continuity и missing context coverage.
-4. Повторите с `--cacheOnly`.
-5. Расширьте symbols/date windows.
-6. Сравните replay/runtime parity перед automation.
+1. Запустите небольшой бэктест одного инструмента.
+2. Проверьте сделки на графике и их временные метки.
+3. Проверьте непрерывность и покрытие дополнительного контекста.
+4. Повторите запуск с `--cacheOnly`.
+5. Расширьте инструменты и периоды.
+6. Сравните воспроизведённые и реальные решения до автоматизации.
 
 Связанные страницы:
 
 - [Ограничения бэктестинга](../limitations/backtesting-caveats)
 - [Бэктест стратегии](./backtest-strategy)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
+- [Сравнение реальных и воспроизведённых входов](../runtime/backtesting/runtime-parity)

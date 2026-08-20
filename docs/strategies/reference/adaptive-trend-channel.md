@@ -6,6 +6,15 @@ title: 'AdaptiveTrendChannel'
 
 It replays candles through an adaptive channel engine, watches for bullish/bearish channel flips, and sizes entries from the distance to the channel boundary used as the stop.
 
+## Visual overview
+
+![AdaptiveTrendChannel strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/strategy-logic.svg)
+
+![AdaptiveTrendChannel signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 1. Builds runtime state with `createAdaptiveTrendChannelEngine({ initialCandles, config })`.

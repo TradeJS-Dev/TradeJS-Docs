@@ -1,25 +1,27 @@
 ---
 sidebar_position: 9
-title: Как работают сигналы
+title: Как рассчитываются сигналы на текущем рынке
 ---
 
-В TradeJS есть one-shot команда и persistent production daemon. Оба пути
-оценивают только закрытые свечи через общий с replay/backtest strategy runtime.
+TradeJS рассчитывает стратегии только после закрытия свечи. Можно выполнить
+один цикл для проверки или запустить постоянный процесс, синхронизированный с
+границами свечей:
 
 ```bash
-# Один проход по всем configured scopes
+# Один расчёт всех активных настроек
 npx @tradejs/cli signals
 
-# Long-running process по границам свечей
+# Постоянная обработка новых закрытых свечей
 npx @tradejs/cli signals-daemon
-# Эквивалент: npx @tradejs/cli signals --watch
+# То же самое: npx @tradejs/cli signals --watch
 ```
 
-## Runtime-конфиги и scopes
+Без явного флага `--makeOrders` эти команды не размещают ордера.
 
-Production runtime настраивается в `tradejs.config.ts` проекта. Deployment
-задаёт connector/account/scope, а каждая стратегия содержит полный
-`{ version, enabled, config }`:
+## Настройка реальной работы
+
+Настройки объявляются в `tradejs.config.ts`. **Развёртывание** связывает
+коннектор и торговый счёт с одной или несколькими полными конфигурациями:
 
 ```ts
 export default defineConfig(basePreset, {
@@ -28,10 +30,12 @@ export default defineConfig(basePreset, {
       production: {
         connectorName: 'bybit',
         accountId: 'bybit-main',
+        tickers: ['BTCUSDT', 'ETHUSDT'],
         strategies: {
           DoubleTap: {
             version: 4,
             enabled: true,
+            selection: { tickers: ['BTCUSDT'] },
             config: { INTERVAL: '15', UNIVERSE: 'crypto', MAX_LOSS_VALUE: 1 },
           },
         },
@@ -41,56 +45,92 @@ export default defineConfig(basePreset, {
 });
 ```
 
-Runtime не объединяет Redis-конфиги стратегий, result overlays или deployment
-overrides. Credentials account остаются на сервере. Без явных scope flags
-`signals` один раз выполняет все активные declarations.
+У каждой стратегии есть версия, признак включения и полная конфигурация.
+`selection.tickers` ограничивает её частью инструментов развёртывания. Если оба
+списка отсутствуют, доступные инструменты определяются коннектором и `UNIVERSE`.
 
-Scope flags: `--user`, `--connector`, `--timeframe`,
-`--universe crypto|tradfi`, `--account`, `--deployment`, `--tickers`,
-`--exclude`, `--tickersLimit`, `--chunk`.
+Флаг `--tickers` временно переопределяет список для одной команды и не меняет
+`tradejs.config.ts`. Если удалить инструмент с открытой позицией, TradeJS
+сохранит его для решений о выходе и управления позицией.
 
-Две declarations одной стратегии могут работать одновременно, только
-если разрешаются в разные accounts. Same-strategy/same-account conflict
-завершает запуск явной ошибкой.
+Веб-приложение показывает рабочие настройки, но не переписывает их. Учётные
+данные торгового счёта остаются на сервере.
 
-## Один цикл
+## Выбор области расчёта
 
-1. Загружает project plugins, Git-owned deployments, trading accounts и optional pause overrides.
-2. Разрешает connector и ticker universe каждого scope.
-3. Готовит candles и обязательный signal-time market context.
-4. Выполняет project hook `beforeSignals`.
-5. Оценивает стратегии на последней закрытой свече.
-6. Сохраняет signal/evaluation до optional screenshots.
-7. Применяет AI/ML/policy gates и ставит ордера только с `--makeOrders`.
-8. Выполняет `afterSignals`, notifications, skip stats и cycle telemetry.
+Без фильтров `signals` обрабатывает все включённые настройки. Текущий запуск
+можно сузить параметрами:
 
-## Состояние daemon
+- `--deployment <name>`;
+- `--account <id>`;
+- `--connector <name>`;
+- `--timeframe <minutes>`;
+- `--universe crypto|tradfi`;
+- `--tickers`, `--exclude`, `--tickersLimit`, `--chunk`.
 
-Daemon сохраняет между последовательными свечами только bounded replayable
-detector state. Heavy runtimes и indicator controllers пересоздаются. После
-restart, candle gap, effective config change или
-`SIGNALS_DAEMON_MAX_LIVE_BARS` стратегия восстанавливается из rolling warmup.
+Два экземпляра одной стратегии могут работать в одном процессе только с
+разными счетами. Одинаковая стратегия и один счёт отклоняются как неоднозначная
+настройка.
 
-Lifecycle identity включает connector, universe, account/deployment, symbol,
-interval, strategy и её version/config. Удаленные scopes эвиктятся. Catch-up rebuild
-не ставит historical orders и не отправляет historical notifications.
+## Что происходит на закрытии свечи
 
-`users:<user>:runtime:controls` в Redis опционален. Отсутствующий ключ означает
-отсутствие ручных overrides. Pause записывает только `entriesPaused: true`, а
-resume удаляет override. Невалидный документ или недоступный Redis приводят к
-fail closed. Pause блокирует новые входы, но не управление открытыми позициями.
+1. Загружаются настройки проекта, счета, плагины и состояние паузы.
+2. Для каждой активной настройки определяются коннектор и инструменты.
+3. Загружаются свечи и необходимый рыночный контекст.
+4. Выполняется общий хук проекта `beforeSignals`.
+5. Каждая применимая стратегия обрабатывает последнюю закрытую свечу.
+6. Решения записываются до построения необязательных графиков.
+7. Применяются ограничения риска, правила, AI- и ML-фильтры.
+8. Ордер размещается только после всех проверок и при наличии `--makeOrders`.
+9. Выполняются `afterSignals`, уведомления и контроль цикла.
 
-Для Bybit crypto daemon по умолчанию использует один public kline WebSocket.
-Confirmed candles batch-записываются в Timescale; REST остается fallback для
-startup, gaps и reconnect. `SIGNALS_KLINE_WS_ENABLED=0` включает REST-only,
-`SIGNALS_KLINE_WS_WAIT_MS` настраивает ожидание close.
+Сигнал — решение стратегии, а не ордер или исполнение. Отклонения, пропуски,
+отмены и исполнения записываются отдельно для диагностики полного жизненного
+цикла ордера.
 
-## Ордера и notifications
+## Перезапуск и изменение настроек
 
-- `--makeOrders` разрешает placement, но strategy/account/AI/ML/policy могут его заблокировать;
-- `--notify` отправляет принятые signals и optional AI commentary;
-- skipped/canceled orders остаются в diagnostics, но не отправляются как trade notifications;
-- `signals-summary` строит recent runtime digest.
+Постоянный процесс хранит только недавнее детерминированное состояние расчёта.
+После перезапуска, пропуска свечей, существенного изменения конфигурации или
+достижения лимита живых свечей стратегия восстанавливается из прогревочной
+истории.
 
-В production управляйте daemon через supervisor, ограничивайте heap с
-`SIGNALS_DAEMON_HEAP_MB` и следите за cycle failures/stale candles.
+Настройки проекта и состояние паузы читаются в каждом цикле. Изменение версии,
+конфигурации, инструментов, счёта или развёртывания пересоздаёт только
+затронутый расчёт. Обработка пропущенной истории не размещает задним числом
+ордера и не отправляет торговые уведомления.
+
+Для крипторынков Bybit по умолчанию используется публичный WebSocket свечей, а
+REST служит резервным источником при запуске, пропусках и переподключении.
+`SIGNALS_KLINE_WS_ENABLED=0` включает только REST.
+
+## Проверка, пауза и возобновление
+
+```bash
+npx @tradejs/cli runtime-control verify \
+  --user root --deployment production
+
+npx @tradejs/cli runtime-control pause \
+  --user root --deployment production --strategy DoubleTap
+
+npx @tradejs/cli runtime-control resume \
+  --user root --deployment production --strategy DoubleTap
+```
+
+Пауза блокирует новые входы, но продолжает управление открытыми позициями.
+Возобновление снимает временную паузу, однако не включает развёртывание или
+стратегию с `enabled: false`. Если состояние паузы невозможно проверить, новые
+входы блокируются.
+
+## Ордера и мониторинг
+
+- `--makeOrders` разрешает размещение, но правила счёта, стратегии, риска, AI
+  или ML всё ещё могут его отклонить;
+- `--notify` отправляет уведомления о принятых сигналах и необязательный AI-комментарий;
+- `signals-summary` создаёт краткую сводку недавней работы.
+
+Запускайте постоянный процесс под supervisor, ограничьте память через
+`SIGNALS_DAEMON_HEAP_MB` и отслеживайте ошибки циклов и устаревшие свечи. См.
+[Работа нескольких стратегий](./multi-strategy-signals),
+[Telegram-уведомления](./telegram-notifications) и
+[Сравнение реальных и воспроизведённых входов](../backtesting/runtime-parity).

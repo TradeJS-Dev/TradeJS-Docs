@@ -1,82 +1,74 @@
 ---
 sidebar_position: 6
-title: CLI API
+title: Командная строка
 ---
 
-CLI в TradeJS предоставляется пакетом `@tradejs/cli`.
-После установки пакета запускайте команды так:
+Командный интерфейс TradeJS поставляется в пакете `@tradejs/cli`:
 
 ```bash
 npx @tradejs/cli <command> [flags]
 ```
 
-Для точного синтаксиса текущей версии используйте command-level help:
+Точный синтаксис установленной версии всегда можно получить через `--help`:
 
 ```bash
 npx @tradejs/cli backtest --help
 ```
 
-## Карта команд
+## Команды
 
-Setup и диагностика:
+Настройка и диагностика:
 
-- `doctor` - проверяет обязательные сервисы и опциональную ML-связность.
-- `infra-init` - инициализирует локальное infrastructure state.
-- `infra-up` / `infra-down` - запускает или останавливает локальную инфраструктуру.
-- `server-health` - проверяет health сервисов.
-- `user-add` - создает user config.
-- `migration` - запускает migration tasks.
+- `doctor` — проверка обязательных сервисов и необязательного ML-сервиса;
+- `infra-init` — создание файлов локальной инфраструктуры;
+- `infra-up` / `infra-down` — запуск и остановка локальных сервисов;
+- `server-health` — проверка состояния сервисов;
+- `user-add` — создание пользователя.
 
-Research и backtesting:
+Исследование и бэктестинг:
 
-- `backtest` - запускает strategy backtests или обновляет market cache.
-- `results` - смотрит, merge/update/clear selected strategy results в Redis.
-- `runtime-parity` - сверяет runtime entries с deterministic backtest replay.
-- `replay` - replay сохраненных runtime данных.
-- `runtime-evidence` - собирает runtime evidence.
-- `runtime-evidence-sync` - импортирует complete evidence bundles с другого runtime host.
-- `runtime-scorecard` - сравнивает recent runtime behavior с verified release envelope.
-- `replay-runtime-evidence` - replay собранного runtime evidence.
-- `execution-calibration` - проверяет runtime execution assumptions.
+- `backtest` — запуск бэктеста или обновление истории рынка;
+- `results` — просмотр и ведение локального списка выбранных результатов;
+- `runtime-parity` — сравнение записанных реальных входов с восстановленными;
+- `replay` — воспроизведение рабочей конфигурации на исторических свечах;
+- `runtime-evidence` — сбор журнала решений и версий за заданный период;
+- `runtime-evidence-sync` — проверка и импорт журнала с другого сервера;
+- `runtime-scorecard` — сводка расхождений и качества исполнения;
+- `replay-runtime-evidence` — объединение результата воспроизведения с журналом;
+- `execution-calibration` — сравнение времени сигнала, выхода на рынок и исполнения.
 
-Runtime и signals:
+Текущий рынок и сигналы:
 
-- `signals` - оценивает runtime strategies на последней закрытой свече.
-- `signals-daemon` - постоянно запускает configured scopes по closed-candle boundaries.
-- `signals-summary` - собирает summary по recent runtime signal/order state.
-- `market-ws` - поднимает dashboard candle WebSocket gateway.
-- `bot` - запускает Telegram bot.
+- `signals` — один расчёт стратегий на последней закрытой свече;
+- `signals-daemon` — постоянный расчёт на закрытии новых свечей;
+- `signals-summary` — сводка недавних сигналов и ордеров;
+- `runtime-control` — просмотр, проверка, пауза и возобновление стратегий;
+- `market-ws` — WebSocket-сервис свечей для графика;
+- `bot` — запуск Telegram-бота.
 
-`research:auto`, `research:core`, `strategy-release`, `agent-run`,
-`binance:breadth-universes:update` и `hyperliquid:whales:update` — maintainer
-workflows основного source repo, а не поддерживаемые команды для внешнего
-package-flow. Поэтому они намеренно не включены в этот публичный command map,
-хотя их launchers пока входят в пакет.
+Рыночные данные и обслуживание:
 
-Market data и maintenance:
+- `continuity` — проверка и исправление непрерывности свечей;
+- `binance:market-ingest` — загрузка рыночных данных Binance;
+- `derivatives:ingest` — загрузка данных рынка деривативов;
+- `derivatives:ingest:coinalyze:all` — загрузка данных Coinalyze для всех настроенных инструментов;
+- `spread:ingest` — загрузка спредов Binance и Coinbase;
+- `hyperliquid:whale-ingest` — поток контекста крупных позиций Hyperliquid;
+- `hyperliquid:whale-backfill` — заполнение заданного исторического периода Hyperliquid;
+- `maintenance:cleanup-market-context` — удаление устаревшего рыночного контекста;
+- `clean-dir`, `clean-redis`, `clean-tests` — команды точечной очистки.
 
-- `continuity` - проверяет или чинит candle continuity.
-- `binance:market-ingest` - ingest Binance market data.
-- `candles:migrate-provider` - мигрирует candle provider naming.
-- `derivatives:ingest` - ingest derivatives context.
-- `derivatives:ingest:coinalyze:all` - ingest Coinalyze derivatives context для всех configured targets.
-- `spread:ingest` - ingest Binance/Coinbase spread context.
-- `hyperliquid:whale-ingest` - stream position-aware whale execution context.
-- `hyperliquid:whale-backfill` - заполняет explicit historical whale-context window.
-- `maintenance:cleanup-market-context` - чистит старые market-context records.
-- `clean-dir`, `clean-redis`, `clean-tests` - maintenance cleanup helpers.
+AI и ML:
 
-ML и AI:
+- `ml-export` — экспорт набора данных для ML;
+- `ml-inspect` — проверка набора данных для ML;
+- `ml-train:latest` — обучение на последнем наборе и выбор модели;
+- `ai-export` — экспорт данных для проверки AI-промптов;
+- `ai-train` — повторная оценка данных и измерение поведения AI-фильтра;
+- `ai-pocket-search` — поиск устойчивых областей признаков для детерминированного фильтра;
+- `test-ml`, `test-script` — диагностические команды.
 
-- `ml-export` - export ML dataset rows.
-- `ml-inspect` - inspect ML datasets.
-- `ml-train:latest` - train/select latest ML dataset.
-- `ai-export` - export AI prompt/evaluation datasets.
-- `ai-train` - replay AI datasets и summary gate behavior.
-- `ai-pocket-search` - search deterministic AI-gate feature pockets.
-- `test-ml`, `test-script` - diagnostic test commands.
-
-## Частые примеры
+## Основные примеры
 
 ```bash
 # Проверить локальные зависимости
@@ -85,204 +77,241 @@ npx @tradejs/cli doctor
 # Обновить свечи без запуска тестов
 npx @tradejs/cli backtest --updateOnly --tickers BTCUSDT,ETHUSDT
 
-# Запустить cache-only backtest по одному символу
-npx @tradejs/cli backtest --config MaStrategy:base --tickers BTCUSDT --cacheOnly
+# Запустить бэктест одного инструмента на сохранённой истории
+npx @tradejs/cli backtest \
+  --config MaStrategy:base \
+  --tickers BTCUSDT \
+  --cacheOnly
 
-# Проверить runtime signals без выставления ордеров
-npx @tradejs/cli signals --tickers BTCUSDT --cacheOnly --skipScreenshots
+# Рассчитать сигналы без размещения ордеров
+npx @tradejs/cli signals \
+  --tickers BTCUSDT \
+  --cacheOnly \
+  --skipScreenshots
 
-# Посмотреть selected backtest results для одной стратегии
+# Показать выбранные результаты одной стратегии
 npx @tradejs/cli results --strategy TrendLine --coverage
 ```
 
-## Backtest
+## `backtest`
 
-`backtest` - основная research-команда.
+`backtest` — основная команда исторического тестирования.
 
-Ticker и execution scope:
+Инструменты и объём расчёта:
 
-- `-t, --tickers` - comma-separated symbols.
-- `-e, --exclude` - symbols, которые нужно пропустить.
-- `-l, --tickersLimit` - ограничить число symbols.
-- `-n, --tests` - ограничить число config tests.
-- `-s, --skip` - пропустить первые N tests.
-- `-p, --parallel` - число workers.
-- `-f, --timeframe` - interval в минутах.
-- `-d, --days` - запуск только за последние N days.
-- `--startTime`, `--endTime` - явное окно backtest, epoch seconds или milliseconds.
+- `-t, --tickers` — символы через запятую;
+- `-e, --exclude` — исключаемые символы;
+- `-l, --tickersLimit` — максимальное число символов;
+- `-n, --tests` — максимальное число тестов конфигурации;
+- `-s, --skip` — пропустить первые N тестов;
+- `-p, --parallel` — число параллельных процессов;
+- `-f, --timeframe` — интервал свечи в минутах;
+- `-d, --days` — период за последние N дней;
+- `--startTime`, `--endTime` — точный период в секундах или миллисекундах Unix.
 
-Данные и cache:
+Данные:
 
-- `-u, --updateOnly` - только обновить market cache.
-- `-C, --cacheOnly` - использовать только cached market data.
-- `-L, --showTickersList` - вывести resolved ticker list и выйти.
-- `-o, --connector` - connector provider/name, например `bybit`, `binance`, `coinbase`, `custom`.
+- `-u, --updateOnly` — только обновить историю;
+- `-C, --cacheOnly` — использовать только сохранённую историю;
+- `-L, --showTickersList` — вывести итоговый список символов и завершить работу;
+- `-o, --connector` — коннектор, например `bybit`, `binance`, `coinbase` или `custom`.
 
-Config и output:
+Конфигурация и вывод:
 
-- `-c, --config` - backtest config key, например `MaStrategy:base`.
-- `-T, --top` - сколько best result/config buckets печатать для grid runs.
-- `-g, --progressStep` - interval progress logging.
-- `-U, --user` - Redis user config, default `root`.
-- `--fast` - не сохранять per-test artifacts, оставить summary/dataset output.
-- `-K, --continue` - продолжить latest compatible interrupted run.
-- `-R, --runId` - explicit backtest run id для продолжения.
+- `-c, --config` — имя конфигурации, например `MaStrategy:base`;
+- `-T, --top` — число лучших групп результатов для сетки параметров;
+- `-g, --progressStep` — интервал вывода прогресса;
+- `-U, --user` — пользователь Redis, по умолчанию `root`;
+- `--fast` — не сохранять файлы каждого теста, оставить сводку и наборы данных;
+- `-K, --continue` — продолжить последний совместимый прерванный запуск;
+- `-R, --runId` — идентификатор запуска, который нужно продолжить.
 
-Execution assumptions:
+Допущения об исполнении:
 
-- `--backtestPriceMode` - delayed entry execution price mode: `open`, `close`, `mid`.
-- `--backtestEntryDelayBars` - delay entry execution на N закрытых баров после сигнала.
+- `--backtestPriceMode` — цена входа после задержки: `open`, `close` или `mid`;
+- `--backtestEntryDelayBars` — задержка входа на N закрытых свечей после сигнала.
 
-Dataset output:
+Дополнительные наборы данных:
 
-- `-m, --ml` - писать ML dataset rows в per-worker JSONL chunks.
-- `-A, --ai` - писать AI prompt rows в per-worker JSONL chunks.
+- `-m, --ml` — записывать строки ML в отдельные JSONL-файлы процессов;
+- `-A, --ai` — записывать строки для офлайн-проверки AI-промптов.
 
-Backtest config keys лежат в Redis по ключу `users:<user>:backtests:configs:<StrategyName:configName>`.
-См. [Create a backtest config](../getting-started/backtest-config).
+Сетка параметров сохраняется под именем
+`users:<user>:backtests:configs:<StrategyName:configName>`. Подробнее:
+[Создание конфигурации бэктеста](../getting-started/backtest-config).
 
-## Signals
+## `signals`
 
-`signals` оценивает configured runtime strategies на последней закрытой свече.
+`signals` рассчитывает включённые стратегии на последней закрытой свече.
 
-- `-t, --tickers` - comma-separated symbols.
-- `-e, --exclude` - symbols, которые нужно пропустить.
-- `-l, --tickersLimit` - ограничить число symbols.
-- `-f, --timeframe` - interval в минутах.
-- `-m, --makeOrders` - разрешить order placement, если strategy и connector config это допускают.
-- `-N, --notify` - отправить Telegram notifications.
-- `-S, --skipScreenshots` - пропустить screenshot generation.
-- `-u, --updateOnly` - только обновить market cache.
-- `-C, --cacheOnly` - использовать только cached market data.
-- `-L, --showTickersList` - вывести resolved ticker list и выйти.
-- `-p, --parallel` - signal evaluation worker count.
-- `-R, --showSkipStats` - показать aggregated skip stats by strategy.
-- `-c, --chunk` - разделить universe, например `1/3`.
-- `-U, --user` - Redis user config.
-- `-o, --connector` - connector provider/name.
-- `-V, --universe` - `crypto` или `tradfi`.
-- `-A, --account` - trading account id.
-- `-D, --deployment` - runtime deployment id.
-- `-w, --watch` - продолжать запуск по candle boundaries; `signals-daemon` включает этот режим напрямую.
-- `-d, --settleDelayMs` - delay после candle close перед daemon cycle.
+- `-t, --tickers` — символы через запятую;
+- `-e, --exclude` — исключаемые символы;
+- `-l, --tickersLimit` — максимальное число символов;
+- `-f, --timeframe` — интервал в минутах;
+- `-m, --makeOrders` — разрешить размещение ордеров после всех проверок;
+- `-N, --notify` — отправлять Telegram-уведомления;
+- `-S, --skipScreenshots` — не создавать изображения графиков;
+- `-u, --updateOnly` — только обновить историю;
+- `-C, --cacheOnly` — использовать только сохранённые данные;
+- `-L, --showTickersList` — вывести итоговый список символов и завершить работу;
+- `-p, --parallel` — число параллельных процессов;
+- `-R, --showSkipStats` — показать причины пропущенных решений по стратегиям;
+- `-c, --chunk` — обработать часть набора, например `1/3`;
+- `-U, --user` — пользователь Redis;
+- `-o, --connector` — имя коннектора;
+- `-V, --universe` — `crypto` или `tradfi`;
+- `-A, --account` — идентификатор торгового счёта;
+- `-D, --deployment` — идентификатор развёртывания;
+- `-w, --watch` — повторять расчёт на закрытии свечей;
+- `-d, --settleDelayMs` — задержка после закрытия свечи перед расчётом.
 
-Без explicit scope flags `signals` находит и запускает все active Git-owned
-runtime scopes. Подробнее: [Как работают сигналы](../runtime/execution/signals).
+Без фильтров команда обрабатывает все включённые настройки из
+`tradejs.config.ts`. Подробнее: [Как рассчитываются сигналы](../runtime/execution/signals).
 
-## Signals Summary
+## `runtime-control`
 
-`signals-summary` собирает recent runtime signal/order state.
+`runtime-control` читает настройки из `tradejs.config.ts`. Пауза и
+возобновление добавляют или снимают только временный запрет новых входов, не
+редактируя конфигурацию стратегии.
 
-- `-u, --user` - Redis user config.
-- `--connector` - connector provider/name для reconciliation.
-- `-H, --hours` - summary window в часах.
-- `-P, --printOnly` - напечатать summary вместо отправки в Telegram.
-- `--debugAttachment` - приложить runtime Redis debug JSON для replay diagnostics.
+```bash
+npx @tradejs/cli runtime-control inspect --user root --deployment production
+npx @tradejs/cli runtime-control verify --user root --deployment production
+npx @tradejs/cli runtime-control pause --user root --deployment production --strategy TrendFollow
+npx @tradejs/cli runtime-control resume --user root --deployment production --strategy TrendFollow
+```
 
-## Results
+- `inspect` выводит итоговые настройки; доступны фильтры `--deployment` и `--strategy`;
+- `verify` проверяет пакеты, счета, интервалы и связи стратегий;
+- `pause` и `resume` требуют `--deployment` и `--strategy`;
+- пауза блокирует новые входы, но сохраняет управление открытыми позициями;
+- возобновление не может включить стратегию с `enabled: false`.
 
-`results` смотрит и управляет selected strategy results в Redis.
+## `replay`
 
-- `-s, --strategy` - strategy name. Обязательный флаг.
-- `-C, --coverage` - показать coverage table.
-- `-u, --update` - update results config in Redis.
-- `-m, --merge` - merge results config in Redis.
-- `-c, --clear` - clear results config in Redis.
-- `-V, --verbose` - verbose output.
-- `-U, --user` - Redis user config.
+`replay` рассчитывает включённые стратегии одного развёртывания на историческом
+периоде. `--runtimeEvidence` позволяет воспроизвести версии стратегий, пакетов и
+конфигураций из собранного журнала.
 
-Используйте эту команду, чтобы проверить candidate configs перед promotion в runtime settings.
+- `--deployment` — идентификатор из `tradejs.config.ts`, по умолчанию `production`;
+- `--runtimeEvidence` — JSON-файл журнала с сохранённой настройкой;
+- `--days` или `--startTime` / `--endTime` — период воспроизведения;
+- `--tickers`, `--exclude`, `--tickersLimit` — временный набор инструментов;
+- `--timeframe` — должен совпадать у всех выбранных стратегий;
+- `--cacheOnly` — использовать только сохранённую историю;
+- `--chart` — сохранить компактные графики для страницы стратегий;
+- `--showTickersList` — вывести итоговый список инструментов и завершить работу.
 
-## Runtime Parity
+Подробнее: [Проверка реальных решений через воспроизведение](../runtime/backtesting/replay-evidence).
 
-`runtime-parity` сравнивает runtime entry records с deterministic backtest replay.
+## `signals-summary`
 
-- `-u, --user` - Redis user config и runtime journal.
-- `-o, --connector` - connector provider/name.
-- `-d, --days` - replay window в днях.
-- `-b, --startTime`, `-e, --endTime` - explicit replay window, epoch seconds или milliseconds.
-- `-s, --strategy` - сравнить только одну strategy.
-- `-t, --tickers` - replay comma-separated symbols для configured strategies.
-- `-C, --cacheOnly` - не обновлять market history перед replay.
-- `-a, --toleranceBars` - допустимый entry timestamp drift в барах.
-- `--fullUniverse` - replay every configured strategy across connector universe.
-- `--runtimeGates` - force runtime AI/ML gates для всех replay targets.
-- `-N, --notify` - отправить parity summary в Telegram.
-- `-D, --details` - напечатать unmatched entry details.
+`signals-summary` собирает сводку недавних сигналов и ордеров.
 
-## AI Train
+- `-u, --user` — пользователь Redis;
+- `--connector` — коннектор для сверки;
+- `-H, --hours` — длина периода в часах;
+- `-P, --printOnly` — напечатать сводку вместо отправки в Telegram;
+- `--debugAttachment` — приложить диагностический JSON для воспроизведения.
 
-`ai-train` replay exported AI rows и summary approval behavior.
+## `results`
 
-- `-o, --outDir` - dataset directory, default `data/ai/export`.
-- `-s, --strategy` - strategy filter для merged file.
-- `-f, --file` - explicit merged dataset file path.
-- `-n, --recent` - recent rows с конца, `0` значит все rows.
-- `-k, --skip` - recent rows, которые нужно пропустить перед выборкой.
-- `-p, --parallel` - concurrent AI requests.
-- `-m, --model` - model id override для replay.
-- `-M, --minQuality` - minimum quality required to approve entry.
-- `-l, --localOnly` - replay deterministic adapter gate без provider calls.
-- `-U, --user` - Redis user config.
-- `-c, --chart` - сохранить compact chart data для strategies UI.
-- `-j, --json` - печатать structured JSON summary.
-- `-S, --since`, `-u, --until` - ограничить rows по timestamp.
-- `-P, --period` - trailing selected-row period, например `last365d`, `last90d`, `last30d`.
-- `-q, --qualityThresholds` - comma-separated `qN+` thresholds.
-- `-d, --dumpEvaluations` - писать evaluated rows как JSONL.
-- `-G, --dumpFeatures` - feature snapshot для dump rows: `none`, `gateFeatures`, `baseContext`.
-- `-Q, --symbolQuarantine` - применить per-strategy/per-symbol quarantine overlay к approved rows.
+`results` просматривает и ведёт локальный список выбранных результатов.
 
-## AI Pocket Search
+- `-s, --strategy` — имя стратегии, обязательно;
+- `-C, --coverage` — показать покрытие инструментов;
+- `-u, --update` — полностью заменить сохранённый список;
+- `-m, --merge` — объединить новые результаты с сохранёнными;
+- `-c, --clear` — удалить список;
+- `-V, --verbose` — подробный вывод;
+- `-U, --user` — пользователь Redis.
 
-`ai-pocket-search` ищет deterministic gate feature pockets по AI exports.
+Команда помогает отобрать варианты для независимой проверки. Она не меняет
+настройки реальной торговли.
 
-Dataset selection:
+## `runtime-parity`
 
-- `-o, --outDir`, `-s, --strategy`, `-f, --file`
-- `-n, --recent`, `-k, --skip`
-- `-S, --since`, `-u, --until`, `-P, --period`
+`runtime-parity` сравнивает записанные реальные входы с исторически
+восстановленными.
 
-Gate и search shape:
+- `-u, --user` — пользователь и журнал реальной работы;
+- `-o, --connector` — коннектор;
+- `-d, --days` — период в днях;
+- `-b, --startTime`, `-e, --endTime` — точный период в секундах или миллисекундах Unix;
+- `-s, --strategy` — ограничить сравнение одной стратегией;
+- `-t, --tickers` — символы через запятую;
+- `-C, --cacheOnly` — не обновлять историю;
+- `-a, --toleranceBars` — допустимое расхождение времени в свечах;
+- `--fullUniverse` — проверить все настроенные стратегии на всех инструментах коннектора;
+- `--runtimeGates` — вызвать настроенные AI/ML-фильтры;
+- `-N, --notify` — отправить сводку в Telegram;
+- `-D, --details` — вывести несовпавшие входы.
 
-- `-M, --minQuality`
-- `-q, --qualityThresholds`
-- `-g, --scope` - `all`, `approved`, `rejected`, `candidates`.
-- `-d, --maxDepth`
-- `-m, --minSupport`
-- `-F, --minProfitFactor`
-- `-W, --minWinRate`
-- `-R, --minTotalProfit`
-- `-a, --maxAtomicPredicates`
-- `-C, --maxCombinations`
-- `-V, --validationSplit`
-- `-N, --minValidationSupport`
-- `-D, --dedupeEquivalentSelections`
+## `ai-train`
 
-Output и feature scope:
+`ai-train` повторно оценивает экспортированные строки и измеряет работу
+AI-фильтра.
 
-- `-t, --top`
-- `-Y, --includeSymbol`
-- `-E, --includeGateContext`
-- `-p, --featureProfile` - `compact` или `all`.
-- `-r, --reportDir`
-- `-B, --reportFile`
-- `-j, --json`
-- `-O, --output`
+- `-o, --outDir` — каталог данных, по умолчанию `data/ai/export`;
+- `-s, --strategy` — фильтр по стратегии;
+- `-f, --file` — явный путь к объединённому файлу;
+- `-n, --recent` — число последних строк, `0` означает все строки;
+- `-k, --skip` — число последних строк, которые нужно пропустить;
+- `-p, --parallel` — число параллельных запросов;
+- `-m, --model` — другая модель для проверки;
+- `-M, --minQuality` — минимальная оценка для разрешения входа;
+- `-l, --localOnly` — использовать детерминированный фильтр без внешнего AI;
+- `-U, --user` — пользователь Redis;
+- `-c, --chart` — сохранить графики для страницы стратегий;
+- `-j, --json` — вывести структурированную сводку JSON;
+- `-S, --since`, `-u, --until` — ограничить строки по времени;
+- `-P, --period` — период, например `last365d`, `last90d` или `last30d`;
+- `-q, --qualityThresholds` — пороги `qN+` через запятую;
+- `-d, --dumpEvaluations` — записать оценки в JSONL;
+- `-G, --dumpFeatures` — признаки в выгрузке: `none`, `gateFeatures` или `baseContext`;
+- `-Q, --symbolQuarantine` — применить карантин отдельных инструментов.
 
-## Doctor
+## `ai-pocket-search`
 
-`doctor` проверяет infrastructure assumptions перед workflows.
+`ai-pocket-search` ищет области признаков с заданными статистическими
+характеристиками в экспортированных AI-данных.
 
-- `--require-ml` - считать ML gRPC connectivity обязательной.
-- `--skip-ml` - пропустить ML gRPC checks.
+Выбор данных:
+
+- `-o, --outDir`, `-s, --strategy`, `-f, --file`;
+- `-n, --recent`, `-k, --skip`;
+- `-S, --since`, `-u, --until`, `-P, --period`.
+
+Условия поиска:
+
+- `-M, --minQuality`, `-q, --qualityThresholds`;
+- `-g, --scope` — `all`, `approved`, `rejected` или `candidates`;
+- `-d, --maxDepth`, `-m, --minSupport`;
+- `-F, --minProfitFactor`, `-W, --minWinRate`, `-R, --minTotalProfit`;
+- `-a, --maxAtomicPredicates`, `-C, --maxCombinations`;
+- `-V, --validationSplit`, `-N, --minValidationSupport`;
+- `-D, --dedupeEquivalentSelections`.
+
+Вывод:
+
+- `-t, --top`, `-Y, --includeSymbol`, `-E, --includeGateContext`;
+- `-p, --featureProfile` — `compact` или `all`;
+- `-r, --reportDir`, `-B, --reportFile`;
+- `-j, --json`, `-O, --output`.
+
+## `doctor`
+
+`doctor` проверяет инфраструктуру перед запуском рабочих процессов.
+
+- `--require-ml` — считать доступность ML-сервиса обязательной;
+- `--skip-ml` — не проверять ML-сервис.
 
 ## Подробные статьи
 
-- [Run your first backtest](../getting-started/first-backtest)
-- [Create a backtest config](../getting-started/backtest-config)
-- [Grid-конфиги бэктестов](../runtime/backtesting/grid-config)
-- [Results и promotion в Project config](../runtime/backtesting/results-runtime-config)
-- [Runtime parity](../runtime/backtesting/runtime-parity)
-- [Data Sync](../getting-started/data-sync)
-- [Data quality guide](../guides/data-quality)
+- [Первый бэктест](../getting-started/first-backtest)
+- [Создание конфигурации бэктеста](../getting-started/backtest-config)
+- [Сетка параметров](../runtime/backtesting/grid-config)
+- [Как использовать проверенную конфигурацию](../runtime/backtesting/results-runtime-config)
+- [Сравнение реальных и воспроизведённых входов](../runtime/backtesting/runtime-parity)
+- [Синхронизация данных](../getting-started/data-sync)
+- [Качество данных](../guides/data-quality)

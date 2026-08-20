@@ -1,127 +1,98 @@
 ---
-title: Grid-конфигурация бэктеста для массового перебора параметров
+title: Перебор сетки параметров
 ---
 
-В этой статье показано, как настроить grid-конфиг в Redis и запустить массовые бэктесты с перебором комбинаций параметров.
+Перебор параметров сравнивает заранее заданные варианты стратегии на одних и
+тех же рыночных данных и при одинаковых допущениях об исполнении. TradeJS строит
+декартово произведение массивов сетки и проверяет каждую комбинацию для каждого
+инструмента.
 
-## 1. Как работает grid-бэктест
+## Оценка размера поиска
 
-`npx @tradejs/cli backtest` читает конфиг из Redis и строит декартово произведение массивов параметров.
+Если у `MA_FAST` три значения, а у `MA_SLOW` два, сетка содержит шесть
+комбинаций. Для 20 инструментов полный набор состоит из 120 тестов до применения
+ограничения `--tests`.
 
-Код:
+Сетка должна оставаться объяснимой. Большой поиск требует больше вычислений и
+повышает вероятность выбрать шум. Параметры и диапазоны должны следовать из
+гипотезы стратегии, а не из многократного просмотра одного периода.
 
-- `@tradejs/cli`
-- `@tradejs/node`
+## Пример сетки
 
-Ключевые правила:
-
-- каждое поле grid-конфига должно быть массивом
-- одна комбинация = одно значение из каждого поля
-- число тестов до ограничения `--tests` = `кол-во_тикеров * кол-во_комбинаций`
-
-## 2. Формат Redis-ключа
-
-Используйте ключ:
-
-- `users:<user>:backtests:configs:<Strategy>:<configName>`
-
-Пример:
-
-- `users:root:backtests:configs:AdaptiveMomentumRibbon:grid-v1`
-
-Важно:
-
-- `--config` должен быть в формате `<Strategy>:<configName>`
-- имя стратегии берется из первой части до `:`
-
-## 3. Пример grid-конфига
-
-Пример для `AdaptiveMomentumRibbon`:
-
-```bash
-redis-cli JSON.SET users:root:backtests:configs:AdaptiveMomentumRibbon:grid-v1 '$' '{
-  "ENV": ["BACKTEST"],
+```json
+{
   "INTERVAL": ["15"],
-  "MAKE_ORDERS": [true],
-  "BACKTEST_PRICE_MODE": ["mid"],
-
-  "AMR_MOMENTUM_PERIOD": [14, 20, 28],
-  "AMR_BUTTERWORTH_SMOOTHING": [2, 3],
-  "AMR_ATR_MULTIPLIER": [1.8, 2.2],
-
-  "AMR_WAIT_CLOSE": [true],
-  "AMR_SHOW_INVALIDATION_LEVELS": [true],
-  "AMR_SHOW_KELTNER_CHANNEL": [true],
-  "AMR_KC_LENGTH": [20],
-  "AMR_KC_MA_TYPE": ["EMA"],
-  "AMR_ATR_LENGTH": [14],
-  "AMR_EXIT_ON_INVALIDATION": [true],
-  "AMR_LOOKBACK_BARS": [300],
-  "AMR_LINE_PLOTS": [["kcMidline", "kcUpper", "kcLower", "invalidationLevel"]],
-
+  "MAX_LOSS_VALUE": [10],
+  "MA_FAST": [14, 21, 34],
+  "MA_SLOW": [55, 89],
   "LONG": [
-    {"enable": true, "direction": "LONG", "TP": 1.5, "SL": 0.8},
-    {"enable": true, "direction": "LONG", "TP": 2.0, "SL": 1.0}
+    { "enable": true, "direction": "LONG", "TP": 2, "SL": 1 }
   ],
   "SHORT": [
-    {"enable": true, "direction": "SHORT", "TP": 2.0, "SL": 1.0}
-  ],
-
-  "AI_ENABLED": [false],
-  "ML_ENABLED": [false],
-  "ML_THRESHOLD": [0.1],
-  "MIN_AI_QUALITY": [3]
-}'
+    { "enable": true, "direction": "SHORT", "TP": 2, "SL": 1 }
+  ]
+}
 ```
 
-Количество комбинаций в примере:
+Каждое значение должно быть массивом. Хранение и правила имени описаны в
+разделе [Сетка параметров бэктеста](../../getting-started/backtest-config).
 
-- `3 * 2 * 2 * 2 * 1 = 24` комбинации
-- если тикеров 120, полный suite будет `24 * 120 = 2880` тестов
-
-## 4. Запуск массового бэктеста
+## Запуск поиска
 
 ```bash
-npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:grid-v1 --connector bybit --timeframe 15 --tests 3000 --parallel 6
+npx @tradejs/cli backtest \
+  --user root \
+  --config MaStrategy:grid-v1 \
+  --connector bybit \
+  --timeframe 15 \
+  --tickers BTCUSDT,ETHUSDT \
+  --tests 12 \
+  --parallel 4 \
+  --cacheOnly
 ```
 
-Полезные флаги масштаба:
+Основные ограничения:
 
-- `--tickers BTCUSDT,ETHUSDT,...`
-- `--tickersLimit 100`
-- `--exclude BTCUSDT,ETHUSDT`
-- `--tests 3000` жесткий лимит на весь suite
-- `--parallel 6` число воркеров
+- `--tickers` задаёт явный список инструментов;
+- `--tickersLimit` ограничивает список, полученный от коннектора;
+- `--exclude` исключает инструменты;
+- `--tests` ограничивает полный набор инструмент × комбинация;
+- `--parallel` задаёт число параллельных процессов;
+- `--skip` и `--continue` помогают продолжить запланированную работу.
 
-## 5. Проверка и итерации
+Используйте `--cacheOnly`, чтобы сравнивать варианты на неизменной истории. Если
+история обновилась, зафиксируйте это как новый вход эксперимента.
 
-Проверить конфиг:
+## Выбор и проверка
+
+Просмотрите результаты и покрытие инструментов:
 
 ```bash
-redis-cli JSON.GET users:root:backtests:configs:AdaptiveMomentumRibbon:grid-v1
+npx @tradejs/cli results \
+  --strategy MaStrategy \
+  --coverage \
+  --user root
 ```
 
-Посмотреть лучших кандидатов:
+Если выбор и оценка используют один период, лучший результат остаётся
+внутривыборочным. Зарезервируйте независимый период, проверьте близкие значения
+параметров и увеличенные издержки до работы с текущим рынком.
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --coverage --user root
-```
+`results --merge` может хранить локальный список лучшего записанного результата
+по каждому инструменту. Команда не меняет `tradejs.config.ts` и не создаёт
+портфельное решение.
 
-Промоутнуть лучшие конфиги в runtime:
+## Частые ошибки
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
-```
+- скаляр вместо массива;
+- пустой массив, который создаёт ноль комбинаций;
+- отсутствие имени стратегии в `StrategyName:label`;
+- изменение сетки после просмотра результатов без нового эксперимента;
+- слишком большой поиск без независимой проверочной выборки;
+- ранжирование только по прибыли.
 
-## 6. Частые ошибки
-
-- скаляр вместо массива (`"INTERVAL": "15"` невалидно для grid)
-- пустой массив в любом поле (`[]`) дает ноль комбинаций
-- ключ без префикса стратегии (`AdaptiveMomentumRibbon:<name>`)
-- слишком большой перебор без ограничения `--tests`
-
-## 7. Связанные статьи
+## Связанные статьи
 
 - [Как работают бэктесты](./overview)
-- [Результаты бэктеста -> Project config](./results-runtime-config)
-- [Runtime Playbook](./strategy-playbook)
+- [Как использовать проверенную конфигурацию](./results-runtime-config)
+- [От бэктеста к реальной торговле](./strategy-playbook)

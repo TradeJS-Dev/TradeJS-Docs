@@ -4,6 +4,15 @@ title: 'TrendLine'
 
 `TrendLine` is a built-in TypeScript strategy from `@tradejs/strategy-trend-line` that opens trades on trendline breakouts with risk guards.
 
+## Visual overview
+
+![TrendLine and ReverseTrendLine strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
+
+![TrendLine and ReverseTrendLine signals on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
+
 ## Entry Logic
 
 1. Builds trendlines from highs/lows via `createTrendlineEngine`.

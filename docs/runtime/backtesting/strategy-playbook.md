@@ -1,109 +1,114 @@
 ---
-title: Runtime Playbook
+title: From Backtest to Live Trading
 ---
 
-This playbook is a copy-paste command set for your current setup:
+This playbook connects research, validation, and live operation without tying
+the process to a particular strategy, exchange, or account. Replace angle-
+bracketed values with settings from your project.
 
-- user: `root`
-- connector: `bybit`
-- timeframe: `15`
-- strategies: `TrendLine`, `AdaptiveMomentumRibbon`
+## 1. State the Experiment
 
-## 1. Check Available Backtest Configs
+Before running commands, record the hypothesis, strategy version, parameter
+range, symbols, timeframe, data window, fees, slippage, fill model, and
+acceptance criteria. Define the out-of-sample window before selecting a result.
 
-```bash
-redis-cli --scan --pattern 'users:root:backtests:configs:TrendLine:*'
-redis-cli --scan --pattern 'users:root:backtests:configs:AdaptiveMomentumRibbon:*'
-```
+## 2. Run a Small Reproducibility Check
 
-Use keys from output as `--config` values in commands below.
-
-## 2. TrendLine: Backtest -> Review -> Project
-
-Backtest:
+Start with a few symbols and a limited parameter set:
 
 ```bash
-npx @tradejs/cli backtest --user root --config TrendLine:base --connector bybit --timeframe 15 --tests 500 --parallel 4
+npx @tradejs/cli backtest \
+  --user <user> \
+  --config <StrategyName:configName> \
+  --connector <connector> \
+  --timeframe <minutes> \
+  --tickers <SYMBOL1,SYMBOL2> \
+  --tests <small-limit> \
+  --parallel <workers> \
+  --cacheOnly
 ```
 
-Inspect winners:
+Confirm that candles, timestamps, trade direction, sizing, fees, entries, and
+exits match the intended rules before scaling the run.
+
+## 3. Run the Planned Search
+
+Expand only to the predefined symbols, time window, and parameter grid. Keep
+the command, configuration, package versions, and output together. Avoid adding
+parameters after seeing results unless you start a new experiment.
+
+Inspect the result set and symbol coverage:
 
 ```bash
-npx @tradejs/cli results --strategy TrendLine --coverage --user root
+npx @tradejs/cli results \
+  --strategy <StrategyName> \
+  --coverage \
+  --user <user>
 ```
 
-Record research winners locally:
+## 4. Validate the Candidate
+
+Evaluate the selected configuration on untouched data and across relevant
+market regimes. Stress fees, slippage, entry delay, spread, and nearby parameter
+values. Review drawdown, recovery time, exposure, turnover, concentration, and
+the full trade distribution—not only aggregate profit.
+
+Reject the candidate if its result depends on a narrow parameter point,
+unrealistic fills, a few symbols, or a small number of trades.
+
+## 5. Freeze the Live Settings
+
+Copy one complete reviewed configuration into the target deployment in
+`tradejs.config.ts`. Pin the strategy package, increment its `version`, and
+review the account, connector, symbol selection, and risk limits.
+
+Verify the resolved settings:
 
 ```bash
-npx @tradejs/cli results --strategy TrendLine --merge --user root
+npx @tradejs/cli runtime-control verify \
+  --user <user> \
+  --deployment <deployment>
 ```
 
-Copy one reviewed complete config into the Project declaration, bump its
-strategy version, deploy the image, then run:
+## 6. Replay the Exact Deployment
 
 ```bash
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli signals --user root --deployment production --cacheOnly
+npx @tradejs/cli replay \
+  --user <user> \
+  --deployment <deployment> \
+  --days <days> \
+  --cacheOnly
 ```
 
-## 3. AdaptiveMomentumRibbon: Backtest -> Review -> Project
+Investigate missing entries, extra entries, timestamp drift, price drift, and
+differences in gates or market context. Do not edit historical records to make
+them agree.
 
-Backtest:
+## 7. Observe Current-Market Evaluation
+
+Run without order placement first:
 
 ```bash
-npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15 --tests 200 --parallel 4
+npx @tradejs/cli signals \
+  --user <user> \
+  --deployment <deployment> \
+  --cacheOnly
 ```
 
-Inspect winners:
+Check candle freshness, resolved symbols, strategy decisions, notifications,
+and monitoring. Confirm that pausing new entries does not prevent management of
+existing positions.
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --coverage --user root
-```
+## 8. Start a Bounded Live Rollout
 
-Record research winners locally:
+Enable order placement only with explicit authorization and venue credentials.
+Use a small fixed risk allocation, define maximum loss and operational stop
+conditions, and retain a tested pause/rollback procedure. Compare decisions,
+orders, and fills with replay regularly.
 
-```bash
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --merge --user root
-```
+Related reading:
 
-After committing one reviewed config and bumped strategy version, deploy and run:
-
-```bash
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli signals --user root --deployment production --cacheOnly
-```
-
-Optional check for AMR signal payload:
-
-```bash
-KEY=$(redis-cli --scan --pattern 'store:signals:BTCUSDT:*' | tail -n 1)
-redis-cli JSON.GET "$KEY" '$.additionalIndicators.amr'
-```
-
-## 4. Data Pump Commands (ByBit)
-
-Regular history refresh:
-
-```bash
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector bybit --timeframe 15
-```
-
-Continuity repair (gap scan + auto-fix):
-
-```bash
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit --tickers BTCUSDT,ETHUSDT
-```
-
-## 5. Roll Back Promoted Results
-
-```bash
-npx @tradejs/cli results --strategy TrendLine --clear --user root
-npx @tradejs/cli results --strategy AdaptiveMomentumRibbon --clear --user root
-```
-
-## 6. Related Docs
-
-- [Results -> Project Config Promotion](./results-runtime-config)
-- [Data Sync](../../getting-started/data-sync)
-- [Pine Strategy Step by Step](../../strategies/authoring/pine-strategy-step-by-step)
+- [How backtests work](./overview)
+- [Use a tested configuration in live trading](./results-runtime-config)
+- [Validate live decisions with replay](./replay-evidence)
+- [Pre-live checklist](../../strategies/operations/pre-live-checklist)

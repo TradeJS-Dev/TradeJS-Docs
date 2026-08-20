@@ -1,26 +1,27 @@
 ---
 sidebar_position: 9
-title: How Signals Work
+title: How Live Signals Work
 ---
 
-TradeJS has a one-shot signal command and a persistent production daemon. Both
-evaluate only closed candles through the same strategy runtime used by replay
-and backtests where practical.
+TradeJS evaluates strategies only after a candle closes. You can run one
+evaluation cycle for inspection or keep a daemon aligned with candle boundaries:
 
 ```bash
-# One pass over every configured scope
+# Evaluate every active setup once
 npx @tradejs/cli signals
 
-# Long-running process aligned to candle boundaries
+# Continue evaluating newly closed candles
 npx @tradejs/cli signals-daemon
 # Equivalent: npx @tradejs/cli signals --watch
 ```
 
-## Runtime configuration and scopes
+Neither command places orders unless `--makeOrders` is explicitly present.
 
-Production runtime configuration is declared in the project's
-`tradejs.config.ts`. A deployment owns its connector/account/scope and every
-strategy owns one complete `{ version, enabled, config }` entry:
+## Configure a Live Setup
+
+Live settings are declared in the project's `tradejs.config.ts`. A
+**deployment** binds a connector and account to one or more complete strategy
+configurations:
 
 ```ts
 export default defineConfig(basePreset, {
@@ -29,10 +30,12 @@ export default defineConfig(basePreset, {
       production: {
         connectorName: 'bybit',
         accountId: 'bybit-main',
+        tickers: ['BTCUSDT', 'ETHUSDT'],
         strategies: {
           DoubleTap: {
             version: 4,
             enabled: true,
+            selection: { tickers: ['BTCUSDT'] },
             config: { INTERVAL: '15', UNIVERSE: 'crypto', MAX_LOSS_VALUE: 1 },
           },
         },
@@ -42,68 +45,93 @@ export default defineConfig(basePreset, {
 });
 ```
 
-The runtime does not merge Redis strategy configs, result overlays, or
-deployment overrides. Account credentials remain server-owned. Without
-explicit scope flags, `signals` evaluates all declared active scopes once.
+Each strategy entry contains its version, enabled state, and complete
+configuration. `selection.tickers` narrows that strategy to a subset of the
+deployment's symbols. If neither symbol list is present, the connector and
+`UNIVERSE` determine the available set.
 
-Useful scope flags:
+`--tickers` is a temporary override for one command and does not edit
+`tradejs.config.ts`. When a symbol with an open position is removed from the
+selection, TradeJS retains it for exit and position-management decisions.
 
-- `--user`, `--connector`, `--timeframe`
-- `--universe crypto|tradfi`
+The web app displays deployed settings but does not rewrite them. Account
+credentials remain server-side.
+
+## Choose What to Evaluate
+
+Without filters, `signals` evaluates every enabled setup. These options narrow
+the current command:
+
+- `--deployment <name>`
 - `--account <id>`
-- `--deployment <id>`
-- `--tickers`, `--exclude`, `--tickersLimit`, `--chunk`
+- `--connector <name>`
+- `--timeframe <minutes>`
+- `--universe crypto|tradfi`
+- `--tickers`, `--exclude`, `--tickersLimit`, and `--chunk`
 
-Two declarations for the same strategy may share a runtime only when they
-resolve to different accounts. A same-strategy/same-account conflict fails
-clearly instead of selecting one silently.
+Two enabled declarations of the same strategy may share a process only when
+they use different accounts. The same strategy and account combination is
+rejected as ambiguous.
 
-## One cycle
+## What Happens on Each Closed Candle
 
-1. Load project plugins, Git-owned deployments, trading accounts, and optional pause overrides.
-2. Resolve each scope's connector and ticker universe.
-3. Prepare candles and required signal-time market context.
-4. Run the project `beforeSignals` hook.
-5. Evaluate strategies on the latest closed candle.
-6. Persist signal/evaluation state before optional screenshots.
-7. Apply AI/ML/policy gates and place orders only when `--makeOrders` permits it.
-8. Run `afterSignals`, notifications, skip stats, and cycle telemetry.
+1. Load the project configuration, accounts, plugins, and pause state.
+2. Resolve the connector and symbols for each active setup.
+3. Load the candles and required market context.
+4. Run the project-level `beforeSignals` hook.
+5. Evaluate every applicable strategy on the latest closed candle.
+6. Record decisions before producing optional charts.
+7. Apply risk, policy, AI, and ML filters.
+8. Place an order only when all checks pass and `--makeOrders` is enabled.
+9. Run `afterSignals`, notifications, and cycle monitoring.
 
-`beforeSignals` and `afterSignals` are project-level batch hooks. Strategy
-cores read the decision candle through `StrategyAPI`; full connector history is
-not exposed to strategy code.
+A signal is a strategy decision, not an order or fill. Rejections, skips,
+cancellations, and fills are recorded separately so the order lifecycle can be
+diagnosed.
 
-## Persistent daemon state
+## Restarts and Configuration Changes
 
-The daemon keeps only bounded replayable detector state between sequential
-closed candles. Heavy runtimes and indicator controllers are disposable. A
-strategy is rebuilt from rolling warmup history after restart, a candle gap,
-an effective config change, or `SIGNALS_DAEMON_MAX_LIVE_BARS`.
+The daemon retains only recent deterministic calculation state. It reconstructs
+a strategy from warm-up candles after a restart, a candle gap, a relevant
+configuration change, or the configured live-bar limit. This avoids depending
+on unbounded in-memory state.
 
-The lifecycle identity includes connector, universe, account/deployment,
-symbol, interval, strategy, and the strategy version/config. Removed scopes are evicted.
-Catch-up rebuilding does not place historical orders or send historical
-notifications.
+The project configuration and pause state are read on every cycle. Changing a
+strategy version, configuration, symbols, account, or deployment rebuilds only
+the affected calculation. Catch-up processing does not place historical orders
+or send historical trade notifications.
 
-Redis `users:<user>:runtime:controls` is optional. An absent key means no
-manual overrides. Pause stores only `entriesPaused: true`; resume removes the
-override. Invalid controls or an unavailable Redis fail closed. Pausing blocks
-new entries but does not stop management of existing positions.
+For Bybit crypto markets, the daemon uses a public kline WebSocket by default
+and falls back to REST for startup, gaps, and reconnection. Set
+`SIGNALS_KLINE_WS_ENABLED=0` for REST-only operation.
 
-For Bybit crypto scopes, the daemon uses one public kline WebSocket by default.
-Confirmed candles are batch-written to Timescale; REST remains the startup,
-gap, and reconnect fallback. Set `SIGNALS_KLINE_WS_ENABLED=0` for REST-only
-operation or tune `SIGNALS_KLINE_WS_WAIT_MS`.
+## Pause, Resume, and Verify
 
-## Orders and notifications
+```bash
+npx @tradejs/cli runtime-control verify \
+  --user root --deployment production
 
-- `--makeOrders` permits order placement; strategy, account, AI/ML, and policy checks can still block it.
-- `--notify` sends accepted signal notifications and optional AI commentary.
-- skipped or canceled orders are retained for diagnostics but not forwarded as trade notifications.
-- `signals-summary` creates a recent runtime digest.
+npx @tradejs/cli runtime-control pause \
+  --user root --deployment production --strategy DoubleTap
 
-Production should supervise the daemon, cap heap with
-`SIGNALS_DAEMON_HEAP_MB`, and alert on cycle failures and stale candles. See
-[Multi-strategy runtime](./multi-strategy-signals),
+npx @tradejs/cli runtime-control resume \
+  --user root --deployment production --strategy DoubleTap
+```
+
+Pause blocks new entries but continues managing open positions. Resume removes
+the temporary pause; it cannot enable a deployment or strategy configured with
+`enabled: false`. If the pause state cannot be validated, TradeJS blocks new
+entries.
+
+## Order Placement and Monitoring
+
+- `--makeOrders` permits order placement; account, strategy, risk, AI, or ML
+  rules can still reject it.
+- `--notify` sends accepted-signal notifications and optional AI commentary.
+- `signals-summary` creates a recent operational summary.
+
+Run the daemon under a process supervisor, set a memory limit with
+`SIGNALS_DAEMON_HEAP_MB`, and alert on failed cycles and stale candles. See
+[Running multiple strategies](./multi-strategy-signals),
 [Telegram notifications](./telegram-notifications), and
-[Runtime parity](../backtesting/runtime-parity).
+[Compare live and replayed entries](../backtesting/runtime-parity).

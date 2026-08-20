@@ -4,6 +4,15 @@ title: 'TrendLine'
 
 `TrendLine` — встроенная TypeScript-стратегия из `@tradejs/strategy-trend-line` для входа по пробою трендовой линии с риск-ограничениями.
 
+## Визуальная схема
+
+![Логика TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
+
+![Пример сигналов TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
+
 ## Логика входа
 
 1. Строит трендлайны по high/low через `createTrendlineEngine`.
@@ -25,7 +34,7 @@ title: 'TrendLine'
 
 ## Параметры конфига (что означает каждый)
 
-### Общие runtime-параметры
+### Общие параметры запуска
 
 - `ENV` — режим запуска (`BACKTEST`, `CRON`, `LIVE` и т.д.).
 - `INTERVAL` — рабочий таймфрейм стратегии.
@@ -74,7 +83,7 @@ title: 'TrendLine'
 - `correlation` — корреляция актива с BTC; используется как runtime guard (`MAX_CORRELATION`).
 - `trendLine` (производная геометрия, не базовый индикатор) — выбранная линия из trendline engine, от нее зависит направление и параметры входа.
 
-## Payload сигнала
+## Содержимое сигнала
 
 `figures`:
 
@@ -87,7 +96,7 @@ title: 'TrendLine'
 - `distance`
 - `trendLine`
 
-## Пример runtime-конфига
+## Пример рабочей конфигурации
 
 ```json
 {

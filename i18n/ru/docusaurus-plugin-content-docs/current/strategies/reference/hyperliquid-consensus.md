@@ -2,9 +2,18 @@
 title: 'HyperliquidConsensus'
 ---
 
-`HyperliquidConsensus` торгует position-aware consensus выбранного набора
-Hyperliquid whale accounts. Стратегия объявляет `hyperliquidWhales` обязательным
-core context и делает skip при недостаточном или устаревшем coverage.
+`HyperliquidConsensus` определяет направление по согласованному потоку позиций
+выбранных счетов Hyperliquid. При недостаточном, неполном или устаревшем
+контексте крупных позиций вход пропускается.
+
+## Визуальная схема
+
+![Логика HyperliquidConsensus](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/strategy-logic.svg)
+
+![Пример сигнала HyperliquidConsensus](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/signal-example.svg)
+
+Иллюстрации показывают общую логику и не являются рыночными данными.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика
 
@@ -25,4 +34,3 @@ Entry codes: `HLC_LONG_CONSENSUS`, `HLC_SHORT_CONSENSUS`. Optional exits
 Default interval — пять минут. Запустите ingest/backfill из статьи
 [Derivatives and spread ingest](../../operations/derivatives-ingest) и проверьте
 Timescale coverage.
-

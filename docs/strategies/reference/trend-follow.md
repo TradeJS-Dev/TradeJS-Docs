@@ -2,9 +2,17 @@
 title: 'TrendFollow'
 ---
 
-`TrendFollow` is a built-in TypeScript strategy from `@tradejs/strategy-trend-follow`.
+`TrendFollow` trades trend-continuation setups using a trailing stop line and
+deterministic entry filters.
 
-It researches continuation-style trend setups, using a trailing stop line and strategy-specific deterministic guardrails.
+## Visual overview
+
+![TrendFollow strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/strategy-logic.svg)
+
+![TrendFollow signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/signal-example.svg)
+
+The illustrations are schematic, not market data. Exact thresholds,
+confirmation rules, and risk parameters come from the active strategy config.
 
 ## Entry Logic
 

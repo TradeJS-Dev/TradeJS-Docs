@@ -1,70 +1,99 @@
 ---
-title: Promote Backtest Results Into Project Config
+title: Use a Tested Configuration in Live Trading
 ---
 
-This page explains how to inspect positive backtest candidates and promote one
-reviewed config into the Git-owned production declaration.
+Moving from a good backtest to live trading is a controlled change, not an
+automatic export. The goal is to preserve the exact strategy, configuration,
+and risk limits that were reviewed while avoiding selection based on a single
+headline metric.
 
-## 1. What `npx @tradejs/cli results` Does
+## Inspect Saved Results
 
-`npx @tradejs/cli results` scans saved test configs/stats and builds per-symbol winners for one strategy.
-
-Main command:
-
-```bash
-npx @tradejs/cli results --strategy TrendLine --coverage --user root
-```
-
-Useful modes:
-
-- `--update`: overwrite saved strategy results with current winners
-- `--merge`: update only symbols where new profit is better than saved one
-- `--clear`: remove saved promoted results
-
-Examples:
+`results` summarizes saved backtests and can show symbol coverage for one
+strategy:
 
 ```bash
-npx @tradejs/cli results --strategy TrendLine --merge --user root
-npx @tradejs/cli results --strategy TrendLine --update --user root
-npx @tradejs/cli results --strategy TrendLine --clear --user root
+npx @tradejs/cli results \
+  --strategy <StrategyName> \
+  --coverage \
+  --user root
 ```
 
-## 2. Where Research Results Are Stored
+The command can also maintain a local research record of the best result seen
+for each symbol:
 
-The `results` command may store per-symbol research winners in local Redis:
+- `--merge` replaces a symbol only when the new recorded profit is higher;
+- `--update` replaces the complete saved record;
+- `--clear` removes that local record.
 
-- `users:<user>:strategies:<strategy>:results`
+These modes organize research output. They do not change live strategy
+settings, enable a strategy, or authorize order placement. The current
+`--coverage` denominator uses the Bybit symbol universe.
 
-Each symbol entry contains:
+## Review the Candidate
 
-- `config` (strategy config for that symbol)
-- `stats` (backtest metrics)
+Before using a configuration with current market data, verify:
 
-These records are research inputs only. Production never merges them into a
-strategy config.
+1. **Data integrity:** no unexplained gaps, duplicates, time shifts, or
+   look-ahead leakage.
+2. **Execution assumptions:** fees, slippage, fill rules, latency, funding, and
+   borrow constraints are appropriate for the venue and turnover.
+3. **Independent validation:** the candidate performs acceptably outside the
+   data used for parameter selection.
+4. **Robustness:** nearby parameter values and plausible cost changes do not
+   destroy the result.
+5. **Risk:** drawdown, exposure, concentration, loss per trade, and failure
+   behavior fit the intended account.
+6. **Capacity:** expected order size is reasonable for observed liquidity.
 
-## 3. Promote One Config
+Preserve the complete report and selection rationale. A per-symbol winner list
+is not, by itself, a portfolio or deployment configuration.
 
-1. Select one complete, deterministic config from the reviewed evidence.
-2. Update that strategy's `config` in `tradejs.config.ts`.
-3. Update its exact strategy package dependency when code changed.
-4. Increment that strategy's positive integer `version`.
-5. Commit package, lockfile, config, and version together.
-6. Run project checks and a production-like image smoke before deployment.
+## Update the Live Configuration
 
-The runtime UI renders this committed config read-only. The only mutable server
-operation is a manual pause/resume override; there is no Redis config write or
-release-pointer switch.
+Live settings are declared in `tradejs.config.ts`. To use a reviewed candidate:
 
-## 4. Recommended Workflow
+1. Copy the complete strategy configuration into the intended deployment.
+2. Pin the exact strategy package version used during validation.
+3. Increment the strategy's positive integer `version`.
+4. Review symbol selection, account binding, risk limits, and whether the
+   strategy is enabled.
+5. Commit the configuration and lockfile together so the change is auditable
+   and reversible.
+6. Run project checks and verify the resolved setup:
 
-1. Run backtests for a strategy config grid.
-2. Run `npx @tradejs/cli results --strategy <Strategy> --coverage` to inspect winners.
-3. Review the candidate against the full release criteria; do not select by PnL alone.
-4. Copy the selected complete config into the Project declaration and bump its version.
-5. Deploy the immutable Project image, run `runtime-control verify`, and observe a bounded forward test.
+```bash
+npx @tradejs/cli runtime-control verify \
+  --user root \
+  --deployment <deployment>
+```
 
-## 5. Notes
+The strategies page displays this configuration but does not rewrite it.
+Pause/resume controls temporarily block new entries; they do not edit strategy
+parameters.
 
-- `--coverage` currently uses ByBit ticker universe for coverage denominator.
-- `--merge` affects only the local research results record.
+## Validate Before Placing Orders
+
+Run a historical replay of the exact deployment, then run one live evaluation
+cycle without `--makeOrders`:
+
+```bash
+npx @tradejs/cli replay \
+  --user root \
+  --deployment <deployment> \
+  --days 7 \
+  --cacheOnly
+
+npx @tradejs/cli signals \
+  --user root \
+  --deployment <deployment> \
+  --cacheOnly
+```
+
+Only enable order placement after reviewing the replay, current market-data
+health, account permissions, risk controls, monitoring, and rollback path. Use
+a bounded initial allocation and define stop conditions in advance.
+
+See [From backtest to live trading](./strategy-playbook) for the complete
+sequence and [Validate live decisions with replay](./replay-evidence) for
+diagnostics.

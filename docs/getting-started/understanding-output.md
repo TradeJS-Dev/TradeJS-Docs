@@ -9,8 +9,8 @@ TradeJS output is meant for analysis and comparison, not for promises about futu
 A backtest usually produces:
 
 - console progress and summary lines
-- per-test statistics in Redis
-- result artifacts for orders/positions when available
+- statistics for each tested configuration
+- order and position records when available
 - optional AI or ML dataset chunks
 - result indexes that the app can display
 
@@ -45,12 +45,13 @@ A signal describes a strategy decision at a candle timestamp. It commonly includ
 
 When enabled, AI/ML layers may add:
 
-- AI analysis records such as `analysis:<symbol>:<signalId>`
+- AI evaluations and explanations
 - ML feature rows
 - approval or rejection metadata
 - quality and threshold values
 
-These are research and gating artifacts. They should be validated on historical data and monitored in runtime.
+These are research and order-filtering outputs. Validate them on historical
+data and monitor their behavior during live evaluation.
 
 ## How To Read Results
 
@@ -60,6 +61,6 @@ Use results to answer practical questions:
 - Are entries and exits explainable from the candle data?
 - Do metrics remain stable across symbols and periods?
 - Are fees, slippage, and fill timing assumptions realistic?
-- Does the same logic behave consistently in backtest and runtime?
+- Does the same logic behave consistently in backtest, replay, and live evaluation?
 
 Next: [Backtesting caveats](../limitations/backtesting-caveats).
