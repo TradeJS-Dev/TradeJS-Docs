@@ -53,10 +53,16 @@ Keep the docs standalone, buildable with plain `npm`, and deployable through its
   with TrendLine and ReverseTrendLine as the only grouped exception.
 - Do not reintroduce monorepo-only commands like `yarn workspace @tradejs/docs ...` into the README or workflow examples.
 - Document production runtime config as Git-owned
-  `tradejs.config.ts` declarations with per-strategy versions. Do not publish
-  instructions that write `users:<user>:strategies:*`, Redis deployment docs,
-  release pointers, or evidence artifacts as production config. Redis controls
-  are optional pause overrides only.
+  `tradejs.config.ts` declarations with computed `strategyRevision` and
+  `deploymentCompositionId` values. Never document a manually incremented
+  runtime version. Do not publish instructions that write
+  `users:<user>:strategies:*`, Redis deployment docs, release pointers, or
+  evidence artifacts as production config. Redis controls are optional pause
+  overrides only.
+- Keep the repository-to-repository GitHub secret map aligned with Project and
+  Deploy: npm credentials stay in publishing repositories, the immutable
+  handoff token belongs to Project's `production` environment, and server
+  secrets belong only to Deploy's `production` environment.
 
 ## Local Clone Policy
 

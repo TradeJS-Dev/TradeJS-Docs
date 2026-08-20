@@ -74,8 +74,19 @@ TradeJS также хранит account-specific настройки в Redis-з�
 ## Владение репозиториями
 
 В официальной self-hosted схеме secret-free application defaults коммитятся в
-`TradeJS-Project/deploy/runtime.env`. `PG_PASSWORD`, auth secrets, API
-credentials, SSH keys и server-only values инжектируются из `TradeJS-Deploy`
-или аналогичного secret manager. npm publishing credentials принадлежат только
-source repositories пакетов; для установки private стратегий проект использует
-отдельный read-only registry token.
+`TradeJS-Project/deploy/runtime.env`. У каждой группы GitHub Actions secrets есть
+один канонический владелец:
+
+| Имя | Канонический владелец | Правило миграции |
+| --- | --- | --- |
+| `NPM_TOKEN` | каждый публикующий npm source repository или один organization secret, ограниченный этим набором | Не переносите в Project или Deploy. |
+| `DEPLOY_REPOSITORY_TOKEN` | защищённое окружение `production` в `TradeJS-Project` | Перенесите сюда; token разрешает только неизменяемую передачу в `TradeJS-Deploy`. |
+| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | защищённое окружение `production` в `TradeJS-Deploy` | Уберите server access из TradeJS и Project. |
+| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | `TradeJS-Deploy` → `production` | Эти credentials принадлежат server-side research agent. |
+| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | `TradeJS-Deploy` → `production` | Deploy инжектирует значения; fallback на старый server `.env` для `PG_PASSWORD` отсутствует. |
+| `RELEASE_DEPLOY_KEY` | нигде | Удалите: stable release в TradeJS использует workflow-scoped `GITHUB_TOKEN`. |
+
+`GITHUB_TOKEN` создаётся GitHub для каждого workflow run; его нельзя копировать
+между репозиториями. Текущие workflows не используют `${{ vars.* }}`. Локальные
+research secrets остаются в `TradeJS-Project/.env`, а private стратегии
+устанавливаются с отдельным read-only registry token.

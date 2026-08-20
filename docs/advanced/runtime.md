@@ -21,7 +21,7 @@ The current runtime path is shared across backtests, replay, signals, and automa
 - `signals` evaluates every enabled setup once unless command-line filters narrow the run.
 - `signals-daemon` keeps only recent deterministic calculation state and rebuilds it safely after gaps or configuration changes.
 - each calculation is identified by its connector, market universe, account,
-  deployment, symbol, interval, strategy version, configuration, and symbol selection.
+  deployment composition, symbol, interval, and computed strategy revision.
 - strategy-level `selection.tickers` overrides the deployment ticker list; active-position symbols remain managed after selection changes.
 - the daemon reloads project settings and pause controls every cycle, so an
   affected strategy rebuilds without restarting the process.
@@ -29,6 +29,12 @@ The current runtime path is shared across backtests, replay, signals, and automa
 - signal/evaluation persistence happens before optional screenshots.
 - live strategy settings are read from `tradejs.config.ts`; Redis stores
   accounts, optional pause state, heartbeats, signals, evaluations, and trades.
+
+`strategyRevision` covers the exact strategy package, its direct TradeJS
+runtime dependencies, `@tradejs/node`, and the parsed complete config.
+`deploymentCompositionId` covers the execution target, enabled states, ticker
+and asset-class selections, and all strategy revisions. Both are recomputed from
+the strict runtime package manifest; neither is an operator-maintained counter.
 
 The app displays the version-controlled strategy configuration read-only, strategy analytics,
 drawdown, orders, and pause/resume. Research evidence may be produced locally

@@ -96,10 +96,10 @@ a strategy from warm-up candles after a restart, a candle gap, a relevant
 configuration change, or the configured live-bar limit. This avoids depending
 on unbounded in-memory state.
 
-The project configuration and pause state are read on every cycle. Changing a
-strategy version, configuration, symbols, account, or deployment rebuilds only
-the affected calculation. Catch-up processing does not place historical orders
-or send historical trade notifications.
+The project configuration and pause state are read on every cycle. A changed
+computed strategy revision, deployment composition, account, or selection
+rebuilds only the affected calculation. Catch-up processing does not place
+historical orders or send historical trade notifications.
 
 For Bybit crypto markets, the daemon uses a public kline WebSocket by default
 and falls back to REST for startup, gaps, and reconnection. Set

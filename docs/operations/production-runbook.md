@@ -29,11 +29,14 @@ to Deploy; Deploy does not rebuild application source. See
 ## Configuration and rollout
 
 - Keep full deployment and strategy config in `tradejs.config.ts`.
-- Increment only the affected strategy's `version` when its package, config,
-  or ticker selection changes; exact npm versions remain in the lockfile and
-  image manifest.
+- Keep exact npm versions in the lockfile and image manifest. Do not maintain a
+  runtime version map: strict Project validation computes `strategyRevision`
+  and `deploymentCompositionId` from the resolved composition.
 - Use stable package versions for live trading. Test upgrades in an isolated
   environment before building the application image.
+- A Project push does not publish or deploy. Explicitly dispatch image
+  publication only after checks; the same workflow must complete the immutable
+  handoff to Deploy.
 - After deploy, run `runtime-control verify`. Redis is not a deployment/config
   source; it holds accounts, optional pause overrides, audit events, heartbeat,
   signals, evaluations, and trades.

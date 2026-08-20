@@ -59,8 +59,10 @@ unrealistic fills, a few symbols, or a small number of trades.
 ## 5. Freeze the Live Settings
 
 Copy one complete reviewed configuration into the target deployment in
-`tradejs.config.ts`. Pin the strategy package, increment its `version`, and
-review the account, connector, symbol selection, and risk limits.
+`tradejs.config.ts`. Pin the exact strategy package and lockfile, then review
+the account, connector, symbol selection, and risk limits. Do not add a manual
+version; Project checks parse the complete config and compute both runtime
+identifiers.
 
 Verify the resolved settings:
 
@@ -69,6 +71,9 @@ npx @tradejs/cli runtime-control verify \
   --user <user> \
   --deployment <deployment>
 ```
+
+Record the returned `strategyRevision` and `deploymentCompositionId` with the
+candidate evidence.
 
 ## 6. Replay the Exact Deployment
 

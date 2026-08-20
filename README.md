@@ -14,6 +14,7 @@ public repositories.
 - First backtest: https://docs.tradejs.dev/getting-started/first-backtest
 - Examples: https://docs.tradejs.dev/examples
 - Repository ownership: https://docs.tradejs.dev/advanced/repository-ownership
+- Environment and secret ownership: https://docs.tradejs.dev/operations/env-reference
 - GitHub: https://github.com/TradeJS-Dev/TradeJS
 - Site: https://tradejs.dev
 

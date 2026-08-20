@@ -55,12 +55,13 @@ Live settings are declared in `tradejs.config.ts`. To use a reviewed candidate:
 
 1. Copy the complete strategy configuration into the intended deployment.
 2. Pin the exact strategy package version used during validation.
-3. Increment the strategy's positive integer `version`.
-4. Review symbol selection, account binding, risk limits, and whether the
+3. Review symbol selection, account binding, risk limits, and whether the
    strategy is enabled.
-5. Commit the configuration and lockfile together so the change is auditable
+4. Commit the configuration and lockfile together so the change is auditable
    and reversible.
-6. Run project checks and verify the resolved setup:
+5. Run project checks and verify the resolved setup. The strict parser rejects
+   unknown config fields and the runtime computes `strategyRevision` and
+   `deploymentCompositionId`; do not maintain a numeric version field.
 
 ```bash
 npx @tradejs/cli runtime-control verify \
