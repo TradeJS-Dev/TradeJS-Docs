@@ -80,10 +80,10 @@ TradeJS также хранит account-specific настройки в Redis-з�
 | Имя | Канонический владелец | Правило миграции |
 | --- | --- | --- |
 | `NPM_TOKEN` | каждый публикующий npm source repository или один organization secret, ограниченный этим набором | Не переносите в Project или Deploy. |
-| `DEPLOY_REPOSITORY_TOKEN` | защищённое окружение `production` в `TradeJS-Project` | Перенесите сюда; token разрешает только неизменяемую передачу в `TradeJS-Deploy`. |
-| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | защищённое окружение `production` в `TradeJS-Deploy` | Уберите server access из TradeJS и Project. |
-| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | `TradeJS-Deploy` → `production` | Эти credentials принадлежат server-side research agent. |
-| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | `TradeJS-Deploy` → `production` | Deploy инжектирует значения; fallback на старый server `.env` для `PG_PASSWORD` отсутствует. |
+| `DEPLOY_REPOSITORY_TOKEN` | repository secret в `TradeJS-Project` | Token разрешает только неизменяемую передачу в `TradeJS-Deploy`. |
+| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | repository secrets в `TradeJS-Deploy` или organization secrets, доступные только Deploy | Уберите server access из TradeJS, Project, Site и Docs. |
+| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | repository secrets в `TradeJS-Deploy` | Эти credentials принадлежат server-side research agent. |
+| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | repository secrets в `TradeJS-Deploy` | Deploy инжектирует значения; fallback на старый server `.env` для `PG_PASSWORD` отсутствует. |
 | `RELEASE_DEPLOY_KEY` | нигде | Удалите: stable release в TradeJS использует workflow-scoped `GITHUB_TOKEN`. |
 
 `GITHUB_TOKEN` создаётся GitHub для каждого workflow run; его нельзя копировать
