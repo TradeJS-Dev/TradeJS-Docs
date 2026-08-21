@@ -33,7 +33,6 @@ export default defineConfig(basePreset, {
         tickers: ['BTCUSDT', 'ETHUSDT'],
         strategies: {
           DoubleTap: {
-            version: 4,
             enabled: true,
             selection: { tickers: ['BTCUSDT'] },
             config: { INTERVAL: '15', UNIVERSE: 'crypto', MAX_LOSS_VALUE: 1 },
@@ -45,10 +44,11 @@ export default defineConfig(basePreset, {
 });
 ```
 
-Each strategy entry contains its version, enabled state, and complete
-configuration. `selection.tickers` narrows that strategy to a subset of the
-deployment's symbols. If neither symbol list is present, the connector and
-`UNIVERSE` determine the available set.
+Each strategy entry contains its enabled state and complete configuration.
+TradeJS derives `strategyRevision` from the verified package and parsed
+configuration; there is no manual version field. `selection.tickers` narrows
+that strategy to a subset of the deployment's symbols. If neither symbol list
+is present, the connector and `UNIVERSE` determine the available set.
 
 `--tickers` is a temporary override for one command and does not edit
 `tradejs.config.ts`. When a symbol with an open position is removed from the

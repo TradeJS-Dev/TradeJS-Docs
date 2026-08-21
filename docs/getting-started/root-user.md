@@ -50,4 +50,6 @@ used the intended Redis instance, and the selected username is `root`. The
 stored record contains a password hash rather than the original password.
 
 For a normal first installation, return to
-[Run your first backtest](./first-backtest).
+[Run your first backtest](./first-backtest). Before live execution, add the
+intended exchange account and continue with
+[Run a Strategy in Production](./run-strategy-in-production).

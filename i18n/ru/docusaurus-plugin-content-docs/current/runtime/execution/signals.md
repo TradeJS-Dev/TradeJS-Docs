@@ -33,7 +33,6 @@ export default defineConfig(basePreset, {
         tickers: ['BTCUSDT', 'ETHUSDT'],
         strategies: {
           DoubleTap: {
-            version: 4,
             enabled: true,
             selection: { tickers: ['BTCUSDT'] },
             config: { INTERVAL: '15', UNIVERSE: 'crypto', MAX_LOSS_VALUE: 1 },
@@ -45,9 +44,11 @@ export default defineConfig(basePreset, {
 });
 ```
 
-У каждой стратегии есть версия, признак включения и полная конфигурация.
-`selection.tickers` ограничивает её частью инструментов развёртывания. Если оба
-списка отсутствуют, доступные инструменты определяются коннектором и `UNIVERSE`.
+Для каждой стратегии задаются состояние `enabled` и полная конфигурация.
+`strategyRevision` вычисляется из проверенного пакета и итоговой конфигурации;
+ручного поля версии нет. `selection.tickers` ограничивает стратегию частью
+инструментов развёртывания. Если оба списка отсутствуют, доступные инструменты
+определяются коннектором и `UNIVERSE`.
 
 Флаг `--tickers` временно переопределяет список для одной команды и не меняет
 `tradejs.config.ts`. Если удалить инструмент с открытой позицией, TradeJS

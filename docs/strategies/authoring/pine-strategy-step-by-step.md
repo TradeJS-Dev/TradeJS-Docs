@@ -644,7 +644,6 @@ export default defineConfig(basePreset, {
         accountId: 'bybit-main',
         strategies: {
           AdaptiveMomentumRibbon: {
-            version: 1,
             enabled: true,
             config: {
               INTERVAL: '15',
@@ -684,9 +683,10 @@ export default defineConfig(basePreset, {
 
 After that, `AdaptiveMomentumRibbon` is available to runtime/backtests as a standard plugin strategy.
 
-`tradejs.config.ts` is the source of live strategy settings. Increment the strategy
-version whenever its package or config changes. Redis retains the trading
-account and optional pause override only.
+`tradejs.config.ts` is the source of live strategy settings. Pin its package
+and lockfile with the configuration; TradeJS derives the runtime identifiers
+from the verified composition. Redis retains the trading account and optional
+pause override only.
 
 ## 9. Backtest Grid Config
 

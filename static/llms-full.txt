@@ -45,6 +45,7 @@ The documentation covers:
 - Create a backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Understanding output: https://docs.tradejs.dev/getting-started/understanding-output
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
+- Run a strategy in production: https://docs.tradejs.dev/getting-started/run-strategy-in-production
 - Data sync: https://docs.tradejs.dev/getting-started/data-sync
 
 ### Core Concepts
@@ -85,6 +86,7 @@ The documentation covers:
 
 ### Runtime and Execution
 
+- Production strategy launch: https://docs.tradejs.dev/getting-started/run-strategy-in-production
 - Runtime signals: https://docs.tradejs.dev/runtime/execution/signals
 - Continuous signal evaluation, per-strategy symbol selection, configuration reload, and WebSocket/REST recovery are covered on the live signals page.
 - Telegram notifications: https://docs.tradejs.dev/runtime/execution/telegram-notifications

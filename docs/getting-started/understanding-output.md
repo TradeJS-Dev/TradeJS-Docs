@@ -63,4 +63,6 @@ Use results to answer practical questions:
 - Are fees, slippage, and fill timing assumptions realistic?
 - Does the same logic behave consistently in backtest, replay, and live evaluation?
 
-Next: [Backtesting caveats](../limitations/backtesting-caveats).
+Next: review the [backtesting caveats](../limitations/backtesting-caveats), then
+follow the controlled [production rollout](./run-strategy-in-production) when
+the strategy is ready.

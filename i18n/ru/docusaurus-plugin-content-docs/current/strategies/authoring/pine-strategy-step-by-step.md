@@ -644,7 +644,6 @@ export default defineConfig(basePreset, {
         accountId: 'bybit-main',
         strategies: {
           AdaptiveMomentumRibbon: {
-            version: 1,
             enabled: true,
             config: {
               INTERVAL: '15',
@@ -684,9 +683,10 @@ export default defineConfig(basePreset, {
 
 После этого `AdaptiveMomentumRibbon` доступна runtime/backtest как обычная plugin-стратегия.
 
-`tradejs.config.ts` — источник настроек реальной торговли. Увеличивайте `version`
-стратегии при изменении package или config. Redis хранит только account и
-optional pause override.
+`tradejs.config.ts` — источник настроек реальной торговли. Зафиксируйте пакет
+стратегии и lock-файл вместе с конфигурацией; TradeJS сам вычислит
+идентификаторы среды исполнения из проверенной сборки. Redis хранит только
+торговый счёт и временную паузу.
 
 ## 9. Backtest grid config
 

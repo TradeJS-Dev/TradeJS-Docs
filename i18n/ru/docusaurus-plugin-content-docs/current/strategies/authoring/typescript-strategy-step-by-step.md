@@ -192,7 +192,6 @@ export default defineConfig(basePreset, {
         accountId: 'bybit-main',
         strategies: {
           SimpleMa: {
-            version: 1,
             enabled: true,
             config: {
               INTERVAL: '15',
@@ -212,9 +211,11 @@ export default defineConfig(basePreset, {
 });
 ```
 
-Production config теперь полностью хранится и review-ится в Git. Увеличивайте
-`SimpleMa.version` при каждом изменении production package или config. Redis
-хранит account и optional pause state, но не config стратегии.
+Теперь вся рабочая конфигурация хранится и проверяется в Git. Зафиксируйте с
+ней пакет стратегии и lock-файл. `strategyRevision` и
+`deploymentCompositionId` вычисляются из проверенной сборки; ручного поля
+версии нет. Redis хранит торговый счёт и временную паузу, но не конфигурацию
+стратегии.
 
 ## 6. Добавьте backtest grid
 

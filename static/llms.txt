@@ -18,6 +18,7 @@ Marketing site: https://tradejs.dev
 - Backtest config: https://docs.tradejs.dev/getting-started/backtest-config
 - Understanding output: https://docs.tradejs.dev/getting-started/understanding-output
 - Root user setup: https://docs.tradejs.dev/getting-started/root-user
+- Run a strategy in production: https://docs.tradejs.dev/getting-started/run-strategy-in-production
 - Examples: https://docs.tradejs.dev/examples
 - Core API: https://docs.tradejs.dev/api/framework
 - Built-in strategy catalog: https://docs.tradejs.dev/strategies/reference
@@ -31,6 +32,7 @@ Marketing site: https://tradejs.dev
 - Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
 - Validate live decisions with replay: https://docs.tradejs.dev/runtime/backtesting/replay-evidence
 - Live signals: https://docs.tradejs.dev/runtime/execution/signals
+- Production strategy launch: https://docs.tradejs.dev/getting-started/run-strategy-in-production
 - Running multiple strategies: https://docs.tradejs.dev/runtime/execution/multi-strategy-signals
 - Self-hosting: https://docs.tradejs.dev/operations/production-runbook
 - Architecture: https://docs.tradejs.dev/advanced/architecture

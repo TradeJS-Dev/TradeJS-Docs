@@ -192,7 +192,6 @@ export default defineConfig(basePreset, {
         accountId: 'bybit-main',
         strategies: {
           SimpleMa: {
-            version: 1,
             enabled: true,
             config: {
               INTERVAL: '15',
@@ -212,10 +211,11 @@ export default defineConfig(basePreset, {
 });
 ```
 
-The production config is now complete and reviewable in Git. Increment
-`SimpleMa.version` whenever its production package or config changes. Redis
-stores the referenced trading account and optional pause state, not strategy
-config.
+The production config is now complete and reviewable in Git. Pin the strategy
+package and lockfile with this configuration. TradeJS computes
+`strategyRevision` and `deploymentCompositionId` from the verified composition;
+there is no manual version field. Redis stores the referenced trading account
+and optional pause state, not strategy config.
 
 ## 6. Add a Backtest Grid
 

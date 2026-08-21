@@ -19,6 +19,11 @@ The dashboard loads the default Coinbase BTCUSDT chart. Select **Create backtest
 the top-right corner to open the backtest launcher. See
 [Run your first backtest](./first-backtest) for the complete UI walkthrough.
 
+After validating a strategy, continue with
+[Run a Strategy in Production](./run-strategy-in-production). Production uses
+an exact Git-owned configuration and a separately deployed runtime; a backtest
+does not enable live execution.
+
 ## Generated Project
 
 The project contains:
@@ -31,6 +36,12 @@ The project contains:
 
 `tradejs-app` creates `.tradejs/app` as generated UI output. Configure TradeJS
 from the project root; do not edit the generated app copy.
+
+The generated `basePreset` registers the built-in strategy catalog. It does not
+start strategies by itself. A running strategy must be selected explicitly in
+a named `runtime.deployments` entry; see
+[Run a Strategy in Production](./run-strategy-in-production) for the config and
+launch sequence.
 
 ## Daily Commands
 

@@ -48,7 +48,10 @@ export default defineConfig(basePreset);
 ```
 
 This loads independently published public strategy packages, indicators,
-connectors, and base runtime hooks.
+connectors, and base runtime hooks. It makes the strategy catalog available but
+does not start a strategy. To select strategies, accounts, and symbols for
+continuous evaluation, add a named `runtime.deployments` entry and follow
+[Run a Strategy in Production](./run-strategy-in-production).
 
 For ownership and private-package composition, see
 [Repository and package ownership](../advanced/repository-ownership).

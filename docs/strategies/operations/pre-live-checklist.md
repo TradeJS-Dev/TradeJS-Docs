@@ -36,8 +36,8 @@ signal-only run is not sufficient authorization for live execution.
 
 - The reviewed strategy package and lockfile versions are pinned.
 - `tradejs.config.ts` contains the complete reviewed configuration.
-- Strategy `version`, account, connector, timeframe, universe, symbols, and
-  `enabled` state are correct.
+- The computed strategy revision, deployment composition, account, connector,
+  timeframe, universe, symbols, and `enabled` state are correct.
 - `runtime-control verify` passes for the target deployment.
 - Historical replay of the exact deployment matches the expected decisions.
 - A current-market `signals` run without `--makeOrders` is clean.

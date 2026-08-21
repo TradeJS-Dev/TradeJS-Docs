@@ -29,6 +29,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/backtest-config',
         'getting-started/understanding-output',
         'getting-started/root-user',
+        'getting-started/run-strategy-in-production',
         'getting-started/data-sync',
       ],
     },
