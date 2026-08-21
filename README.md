@@ -53,28 +53,23 @@ yarn checks
 
 ## Container Image
 
-Pushes to `main` publish `ghcr.io/tradejs-dev/tradejs-docs`.
+Pushes to `main` publish
+`ghcr.io/tradejs-dev/tradejs-docs:<full-source-sha>`. Mutable `latest` tags are
+not part of the production contract.
 
 ## Production Deploy
 
-The repository can also deploy `docs` on the existing production server through `~/docker-compose.prod.yml`.
-
-Required repository configuration:
-
-- secrets: `SSH_HOST`, `SSH_USER`, `SSH_KEY`
+This repository does not have production SSH access. After an image is
+published, deploy its full source SHA through the `Deploy production component`
+workflow in `TradeJS-Deploy` with `component=docs`.
 
 Optional registry bootstrap secrets when org-level `GITHUB_TOKEN` cannot publish packages:
 
 - `GHCR_USERNAME`
 - `GHCR_TOKEN`
 
-Pushes to `main` publish the image and then run:
-
-```bash
-docker compose -f ~/docker-compose.prod.yml pull docs
-docker compose -f ~/docker-compose.prod.yml up -d docs
-```
-
-GHCR package `tradejs-docs` must stay public so the production host can pull it without registry login.
+`TradeJS-Deploy` alone owns Compose, the server credentials, and the exact
+production release state. GHCR package `tradejs-docs` must stay public so the
+production host can pull it without registry login.
 
 Keywords: ai, claude, codex.

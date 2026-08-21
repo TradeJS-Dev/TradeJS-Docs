@@ -80,10 +80,10 @@ canonical owner per capability:
 | Name | Canonical owner | Migration rule |
 | --- | --- | --- |
 | `NPM_TOKEN` | each npm-publishing source repository, or one organization secret restricted to that exact set | Keep it out of Project and Deploy. |
-| `DEPLOY_REPOSITORY_TOKEN` | `TradeJS-Project` protected `production` environment | Move it here; it authorizes only the immutable dispatch to `TradeJS-Deploy`. |
-| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | `TradeJS-Deploy` protected `production` environment | Move all server access out of TradeJS and Project. |
-| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | `TradeJS-Deploy` protected `production` environment | These belong to the server-side research agent. |
-| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | `TradeJS-Deploy` protected `production` environment | Deploy injects them; `PG_PASSWORD` has no existing-server fallback. |
+| `DEPLOY_REPOSITORY_TOKEN` | `TradeJS-Project` repository secret | It authorizes only the immutable dispatch to `TradeJS-Deploy`. |
+| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | `TradeJS-Deploy` repository secrets, or organization secrets restricted to Deploy | Keep all server access out of TradeJS, Project, Site, and Docs. |
+| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | `TradeJS-Deploy` repository secrets | These belong to the server-side research agent. |
+| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | `TradeJS-Deploy` repository secrets | Deploy injects them; `PG_PASSWORD` has no existing-server fallback. |
 | `RELEASE_DEPLOY_KEY` | none | Delete it; TradeJS stable release commits use workflow-scoped `GITHUB_TOKEN`. |
 
 GitHub creates `GITHUB_TOKEN` for each workflow run; never copy it between

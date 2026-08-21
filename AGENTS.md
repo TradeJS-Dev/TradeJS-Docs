@@ -7,7 +7,8 @@ These rules apply to the `TradeJS-Docs` repository.
 ## Purpose
 
 This repository is the source of truth for `docs.tradejs.dev`.
-Keep the docs standalone, buildable with plain `npm`, and deployable through its own GitHub Actions workflow.
+Keep the docs standalone, buildable with plain `npm`, and publish its immutable
+container image without owning production server access.
 
 ## Workspace Routing
 
@@ -37,11 +38,13 @@ Keep the docs standalone, buildable with plain `npm`, and deployable through its
 
 ## Deploy Rules
 
-- Image publishing runs automatically on pushes to `main`.
-- Production deploy runs automatically after image publishing on pushes to `main`.
+- Image publishing runs automatically on pushes to `main` and uses the full
+  source SHA as its only image tag.
+- Production SSH, Compose, and release state belong to `TradeJS-Deploy`.
 - If `GITHUB_TOKEN` cannot publish to GHCR in the organization, use repository secrets `GHCR_USERNAME` and `GHCR_TOKEN`.
-- Required secrets are `SSH_HOST`, `SSH_USER`, and `SSH_KEY`.
-- The workflow should refresh only the `docs` service on the target host unless explicitly changing infra ownership.
+- Do not add `SSH_HOST`, `SSH_USER`, or `SSH_KEY` to this repository.
+- Deploy the published SHA through the typed `docs` component workflow in
+  `TradeJS-Deploy`.
 
 ## Editing Policy
 
@@ -61,8 +64,8 @@ Keep the docs standalone, buildable with plain `npm`, and deployable through its
   overrides only.
 - Keep the repository-to-repository GitHub secret map aligned with Project and
   Deploy: npm credentials stay in publishing repositories, the immutable
-  handoff token belongs to Project's `production` environment, and server
-  secrets belong only to Deploy's `production` environment.
+  handoff token is a Project repository secret, and server secrets belong only
+  to Deploy repository or Deploy-scoped organization secrets.
 
 ## Local Clone Policy
 

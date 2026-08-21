@@ -57,8 +57,7 @@ jobs:
         with:
           images: ghcr.io/tradejs-dev/tradejs-docs
           tags: |
-            type=raw,value=latest
-            type=sha
+            type=raw,value=${{ github.sha }}
 
       - name: Build and push image
         uses: docker/build-push-action@v6
@@ -68,20 +67,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: publish
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy on server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/
-            docker compose -f docker-compose.prod.yml pull docs
-            docker compose -f docker-compose.prod.yml up -d docs
