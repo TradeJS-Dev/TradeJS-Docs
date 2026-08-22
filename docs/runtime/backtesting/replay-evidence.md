@@ -56,7 +56,9 @@ Runtime evidence has one accepted runtime contract:
   immutable strategy configuration;
 - every evaluation, signal, trade, and persisted lineage scope uses runtime
   lineage schema v3 and matches that embedded composition;
-- mutable `strategyConfigs` data is not part of the record.
+- mutable `strategyConfigs` and lineage-less `evaluationStatsBuckets` are not
+  part of the record. Aggregate debug telemetry cannot be attributed to an
+  immutable composition.
 
 The publisher, sync, replay, and scorecard commands reject a record that does
 not satisfy this contract. They do not translate older runtime formats or infer

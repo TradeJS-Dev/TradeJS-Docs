@@ -55,7 +55,9 @@ npx @tradejs/cli runtime-evidence \
   конфигурации стратегий;
 - каждая evaluation, signal, trade и сохранённый lineage scope использует
   runtime lineage v3 и совпадает с embedded composition;
-- изменяемые данные `strategyConfigs` не входят в журнал.
+- изменяемые данные `strategyConfigs` и не содержащие lineage агрегаты
+  `evaluationStatsBuckets` не входят в журнал. Агрегированную debug-телеметрию
+  нельзя приписывать неизменяемой composition.
 
 Команды публикации, синхронизации, replay и scorecard отклоняют журнал, который
 не соответствует этому контракту. Они не преобразуют прежние runtime-форматы и
