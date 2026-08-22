@@ -32,8 +32,8 @@ Research and backtesting:
 - `results` - inspect, merge, update, or clear selected strategy results in Redis.
 - `runtime-parity` - compare recorded live entries with reconstructed entries.
 - `replay` - evaluate a deployed configuration over historical closed candles.
-- `runtime-evidence` - collect a timestamped record of live decisions and versions.
-- `runtime-evidence-sync` - verify and import a runtime record from another host.
+- `runtime-evidence` - collect a timestamped current-contract deployment v2 / lineage v3 record.
+- `runtime-evidence-sync` - verify the current contract and import a runtime record from another host.
 - `runtime-scorecard` - summarize live/replay differences and execution quality.
 - `replay-runtime-evidence` - combine a replay result with a runtime record.
 - `execution-calibration` - compare signal, arrival, and fill behavior.

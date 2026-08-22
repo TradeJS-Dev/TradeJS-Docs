@@ -49,6 +49,19 @@ also set `--startTime` and `--endTime`, or use `--hours` for a trailing window.
 The bundle contains recorded decisions and version metadata, plus a manifest
 and checksums for integrity verification.
 
+Runtime evidence has one accepted runtime contract:
+
+- the embedded deployment snapshot uses schema v2 and declares the deployment,
+  account, enabled strategies, exact strategy revisions, package versions, and
+  immutable strategy configuration;
+- every evaluation, signal, trade, and persisted lineage scope uses runtime
+  lineage schema v3 and matches that embedded composition;
+- mutable `strategyConfigs` data is not part of the record.
+
+The publisher, sync, replay, and scorecard commands reject a record that does
+not satisfy this contract. They do not translate older runtime formats or infer
+missing identity from Redis, current source code, or evaluation names.
+
 These records can contain sensitive operational information. Restrict access,
 exclude credentials, and do not commit them to the application repository.
 
@@ -62,9 +75,10 @@ npx @tradejs/cli runtime-evidence-sync \
   --deployment production
 ```
 
-The command verifies the manifest and payload hashes before storing the bundle.
-Use the project revision with strategy and runtime package versions matching the
-record. Do not edit the record to work around a mismatch.
+The command verifies the manifest, payload hashes, and current runtime contract
+before storing the bundle. Use the project revision with strategy and runtime
+package versions matching the record. Do not edit the record to work around a
+mismatch.
 
 ## Replay the Recorded Setup
 
