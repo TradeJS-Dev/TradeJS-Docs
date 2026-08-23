@@ -12,6 +12,7 @@ public repositories.
 - Getting started: https://docs.tradejs.dev/getting-started/quickstart
 - Installation: https://docs.tradejs.dev/getting-started/installation
 - First backtest: https://docs.tradejs.dev/getting-started/first-backtest
+- Codex strategy skills: https://docs.tradejs.dev/guides/codex-strategy-skills
 - Examples: https://docs.tradejs.dev/examples
 - Repository ownership: https://docs.tradejs.dev/advanced/repository-ownership
 - Environment and secret ownership: https://docs.tradejs.dev/operations/env-reference
