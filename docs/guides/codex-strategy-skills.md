@@ -16,7 +16,7 @@ request that can publish or deploy code.
 | `$strategy-improvement-plan` | Analyze source and evidence and rank causal improvement hypotheses | No |
 | `$strategy-improvement-research` | Start a new bounded core + deterministic-gate research lineage and freeze the best reproducible candidate | No |
 | `$strategy-period-revalidate` | Recheck production and strong prior candidates on an extended common period without retuning | No |
-| `$strategy-forward-start` | Publish and start the selected candidate at `MAX_LOSS_VALUE=1` | Yes |
+| `$strategy-forward-start` | Publish and start the latest eligible candidate—or an explicitly named reproducible historical candidate—at `MAX_LOSS_VALUE=1` | Yes |
 | `$strategy-forward-status` | Inspect identity, parity, orders, execution, and normalized live evidence | No |
 | `$strategy-risk-scale` | Change only `MAX_LOSS_VALUE` for the same deployed composition | Yes |
 
@@ -53,8 +53,8 @@ records a hard causal blocker for every remaining family.
 ## What forward start does
 
 `$strategy-forward-start <Strategy>` is the explicit authorization boundary
-for a bounded live forward test. It consumes the latest checksum-verified,
-forward-eligible candidate and sets `MAX_LOSS_VALUE=1`.
+for a bounded live forward test. By default, it consumes the latest
+checksum-verified, forward-eligible candidate and sets `MAX_LOSS_VALUE=1`.
 
 - If the strategy is missing from the target deployment, the skill adds and
   enables its full reviewed declaration.
@@ -62,6 +62,22 @@ forward-eligible candidate and sets `MAX_LOSS_VALUE=1`.
   context, or direction policy, the skill performs one guarded replacement.
 - If the exact risk-1 composition already runs, it makes no configuration
   change and verifies the rollout idempotently.
+
+### Explicitly named historical candidate
+
+The operator may instead name one different historically promising candidate
+for prospective-only learning. This does not rewrite the earlier selection or
+turn contrary recent evidence into a positive historical verdict. The exact
+expression, direction policy, effective config, source/data lineage, evidence
+hashes, full-period metrics, and chart must remain reproducible; the maximum
+covered period must have positive net PnL and profit factor above 1.
+
+Before rollout, Codex writes a new immutable operator-authorization artifact
+that references the original selection and the contrary or underpowered
+evidence. Missing hashes, non-positive maximum-period economics, or a candidate
+that would require fresh tuning remain blockers. The mode changes only the
+authority for a risk-1 prospective test—it does not manufacture historical
+eligibility.
 
 When the selected candidate includes unpublished strategy source, the skill
 uses the repository's configured release workflow to commit and push the
