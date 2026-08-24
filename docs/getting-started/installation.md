@@ -21,7 +21,9 @@ npx create-tradejs
 
 This installs the packages, starts local infrastructure, creates the initial
 user and backtest config, and opens the Web UI. Continue with
-[Run your first backtest](./first-backtest).
+[Run your first backtest](./first-backtest). The generated project also includes
+[focused Codex strategy skills](../guides/codex-strategy-skills) under
+`.codex/skills`.
 
 ## Manual Installation
 

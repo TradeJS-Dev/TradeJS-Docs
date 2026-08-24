@@ -68,6 +68,7 @@ The documentation covers:
 - Compare strategies: https://docs.tradejs.dev/guides/compare-strategies
 - Pine-backed strategy workflows: https://docs.tradejs.dev/guides/pine-workflows
 - AI/ML workflows: https://docs.tradejs.dev/guides/ai-ml-workflows
+- Codex strategy workflow skills: https://docs.tradejs.dev/guides/codex-strategy-skills
 
 ### Strategy Authoring
 

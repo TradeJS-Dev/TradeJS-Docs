@@ -134,6 +134,7 @@ const sidebars: SidebarsConfig = {
         'runtime/backtesting/replay-evidence',
         'runtime/backtesting/runtime-parity',
         'runtime/backtesting/strategy-playbook',
+        'guides/codex-strategy-skills',
       ],
     },
     {
