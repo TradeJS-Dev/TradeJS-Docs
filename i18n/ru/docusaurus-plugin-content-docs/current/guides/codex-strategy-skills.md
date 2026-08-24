@@ -2,12 +2,36 @@
 title: Codex skills для работы со стратегиями
 ---
 
-`npx create-tradejs` устанавливает в `.codex/skills` созданного проекта набор
-узких Codex skills. Каждый вызов получает имя одной стратегии и выполняет один
-тип работы. Поэтому запрос метрик не может незаметно превратиться в публикацию
-пакета или деплой.
+`npx create-tradejs` устанавливает в `.codex/skills` созданного проекта полный
+checksum-managed набор TradeJS skills. У каждого вызова есть один владелец
+workflow. Поэтому отдельный core-эксперимент не смешивается с полным улучшением
+стратегии, анализом gate, отчётностью и production-изменениями.
 
-## Карта skills
+## Выбор владельца workflow
+
+- `$strategy-improvement-research` выбирает семейства гипотез, управляет
+  ограниченным trial ledger, выбирает лучшего кандидата и фиксирует полный
+  handoff core + gate.
+- `$strategy-backtest-research` реализует или запускает один заранее
+  зарегистрированный core-эксперимент. Он возвращает сверенное evidence и не
+  выбирает следующего кандидата.
+- `$ai-train-local-research` используется после фиксации core/export. Он
+  отвечает за deterministic-gate analysis и не открывает заново core selection.
+
+Improvement workflow последовательно использует оба специализированных этапа.
+Прямой вызов specialist skill не запускает полный improvement lineage.
+
+## Вспомогательные skills
+
+| Skill | Назначение |
+| --- | --- |
+| `$strategy-backtest-research` | Выполнить одну ограниченную реализацию или заранее зарегистрированный core-backtest эксперимент |
+| `$ai-train-local-research` | Исследовать deterministic gate для одного зафиксированного core/export |
+| `$backtest-config-redis` | Прочитать именованный исследовательский grid из локального Redis без продвижения |
+| `$save-strategy-config-from-backtest` | Явно перенести исследовательский grid в Git-owned декларацию Project |
+| `$runtime-parity-mismatch-analysis` | Разобрать готовый runtime-parity mismatch artifact до решения о новом replay |
+
+## Карта lifecycle skills
 
 | Skill | Назначение | Может изменить production? |
 | --- | --- | --- |
@@ -20,6 +44,10 @@ title: Codex skills для работы со стратегиями
 | `$strategy-forward-status` | Проверить identity, parity, ордера, исполнение и нормализованный live evidence | Нет |
 | `$strategy-risk-scale` | Изменить только `MAX_LOSS_VALUE` у той же запущенной composition | Да |
 
+`$strategy-release` оставлен как deprecated compatibility router. Он выбирает
+ровно один focused lifecycle skill и не должен воссоздавать прежний общий
+workflow исследования, публикации, деплоя и изменения риска.
+
 Промпты остаются короткими:
 
 ```text
@@ -27,6 +55,38 @@ $strategy-candidate-report MarketFlushReversal
 $strategy-improvement-research MarketFlushReversal
 $strategy-forward-start MarketFlushReversal
 ```
+
+## Установка и обновление
+
+Canonical source skills находится в репозитории TradeJS framework. Все
+официальные TradeJS skills входят в один SHA-256 manifest; созданные Projects
+не поддерживают независимые копии. Полный официальный snapshot обновляется
+только через явно выбранную версию `create-tradejs`:
+
+```bash
+npx create-tradejs@<approved-version> --update-skills .
+```
+
+Updater сохраняет несвязанные custom skills и отклоняет изменения уже
+управляемого файла. Когда новая версия впервые включает существующий
+официальный skill в bundle, явное обновление принимает canonical snapshot с
+тем же именем.
+
+## Корни исследования
+
+Advanced source-aware research разделяет три ответственности:
+
+- `PROJECT_CWD` владеет `.env`, конфигурацией, datasets, notes и reports.
+- `TRADEJS_SOURCE_REPOSITORY_ROOT` указывает точный Git checkout framework или
+  standalone strategy, чей build и lineage исследуются.
+- `TRADEJS_FRAMEWORK_REPOSITORY_ROOT` предоставляет собранный framework runtime
+  для исследования. Он обязателен для gate-ablation tool, когда source root —
+  standalone strategy; если source — framework, оба root могут указывать на
+  один checkout.
+
+Ablation tool импортирует `strategyEntries` из build standalone strategy,
+поэтому принятый strategy path не заменяется незаметно опубликованным пакетом
+из Project.
 
 ## Как выбирается кандидат
 

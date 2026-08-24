@@ -2,12 +2,36 @@
 title: Codex strategy workflow skills
 ---
 
-`npx create-tradejs` installs focused Codex skills in the generated project's
-`.codex/skills` directory. Each invocation takes one strategy name and performs
-one kind of work. This keeps a request to inspect metrics separate from a
-request that can publish or deploy code.
+`npx create-tradejs` installs the complete checksum-managed TradeJS skill set in
+the generated project's `.codex/skills` directory. Each invocation has one
+workflow owner. This keeps one core experiment separate from end-to-end
+improvement research, gate analysis, reporting, and production mutations.
 
-## Skill map
+## Choose one workflow owner
+
+- Use `$strategy-improvement-research` to choose hypothesis families, manage
+  the bounded trial ledger, select the best candidate, and freeze the complete
+  core + gate handoff.
+- Use `$strategy-backtest-research` to implement or execute one already
+  preregistered core experiment. It returns reconciled evidence and does not
+  choose the next candidate.
+- Use `$ai-train-local-research` only after the core/export is frozen. It owns
+  deterministic-gate analysis and does not reopen core selection.
+
+The improvement workflow composes the two specialist stages. Invoking a
+specialist directly does not implicitly start the full improvement lineage.
+
+## Supporting skills
+
+| Skill | Purpose |
+| --- | --- |
+| `$strategy-backtest-research` | Execute one scoped implementation or preregistered core-backtest experiment |
+| `$ai-train-local-research` | Analyze and tune the deterministic gate for one frozen core/export |
+| `$backtest-config-redis` | Read a named research grid from local Redis without promoting it |
+| `$save-strategy-config-from-backtest` | Explicitly promote a research grid into the Project's Git-owned declaration |
+| `$runtime-parity-mismatch-analysis` | Diagnose an existing runtime-parity mismatch artifact before considering a rerun |
+
+## Lifecycle skill map
 
 | Skill | Purpose | May change production? |
 | --- | --- | --- |
@@ -20,6 +44,10 @@ request that can publish or deploy code.
 | `$strategy-forward-status` | Inspect identity, parity, orders, execution, and normalized live evidence | No |
 | `$strategy-risk-scale` | Change only `MAX_LOSS_VALUE` for the same deployed composition | Yes |
 
+`$strategy-release` is a deprecated compatibility router. It selects exactly
+one focused lifecycle skill and must not recreate the former all-in-one
+research, publication, deployment, and risk workflow.
+
 Example prompts stay short:
 
 ```text
@@ -27,6 +55,38 @@ $strategy-candidate-report MarketFlushReversal
 $strategy-improvement-research MarketFlushReversal
 $strategy-forward-start MarketFlushReversal
 ```
+
+## Installation and updates
+
+The canonical skill source lives in the TradeJS framework repository. Every
+official TradeJS skill is included in one SHA-256 manifest; generated Projects
+must not maintain independent copies. Update the complete official snapshot
+only through an explicitly selected `create-tradejs` version:
+
+```bash
+npx create-tradejs@<approved-version> --update-skills .
+```
+
+The updater preserves unrelated custom skills and rejects changes to an
+already managed file. When a release first brings an existing official skill
+under bundle management, the explicit update adopts that same-named official
+snapshot.
+
+## Research roots
+
+Advanced source-aware research keeps three responsibilities separate:
+
+- `PROJECT_CWD` owns `.env`, configuration, datasets, notes, and reports.
+- `TRADEJS_SOURCE_REPOSITORY_ROOT` is the exact framework or standalone
+  strategy Git checkout whose build and lineage are under study.
+- `TRADEJS_FRAMEWORK_REPOSITORY_ROOT` supplies the built framework research
+  runtime. It is required by the gate-ablation tool when the source root is a
+  standalone strategy; when the source is the framework, both roots may be the
+  same checkout.
+
+The ablation tool imports `strategyEntries` from the standalone strategy build,
+so accepting a strategy path never silently falls back to the Project's
+published package.
 
 ## How candidates are ranked
 
