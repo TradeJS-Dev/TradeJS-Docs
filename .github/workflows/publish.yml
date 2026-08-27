@@ -37,6 +37,20 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Lighthouse CI
+        run: npm run lighthouse:ci
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: |
+            .lighthouseci
+            .lighthouseci-reports
+          if-no-files-found: ignore
+          retention-days: 14
+
   publish:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build

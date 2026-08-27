@@ -4,6 +4,8 @@
 
 # Production
 /build
+.lighthouseci/
+.lighthouseci-reports/
 
 # Generated files
 .docusaurus

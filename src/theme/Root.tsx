@@ -4,6 +4,13 @@ import { useLocation } from '@docusaurus/router';
 
 const YANDEX_METRIKA_ID = 107255958;
 const YANDEX_METRIKA_SRC = `https://mc.yandex.ru/metrika/tag.js?id=${YANDEX_METRIKA_ID}`;
+const YANDEX_METRIKA_FALLBACK_DELAY_MS = 8000;
+const YANDEX_METRIKA_IDLE_TIMEOUT_MS = 2000;
+const YANDEX_METRIKA_INTERACTION_EVENTS = [
+  'pointerdown',
+  'keydown',
+  'touchstart',
+] as const;
 
 type YmFn = {
   (...args: unknown[]): void;
@@ -68,6 +75,94 @@ function ensureYandexMetrikaInit(): void {
   window.__tradejsYmInit = true;
 }
 
+function scheduleYandexMetrikaInit(): () => void {
+  let disposed = false;
+  let pageLoaded = document.readyState === 'complete';
+  let interactionObserved = false;
+  let fallbackTimeoutId: number | undefined;
+  let idleCallbackId: number | undefined;
+
+  const removeInteractionListeners = () => {
+    for (const eventName of YANDEX_METRIKA_INTERACTION_EVENTS) {
+      window.removeEventListener(eventName, handleInteraction, true);
+    }
+  };
+
+  const initializeWhenIdle = () => {
+    if (disposed || window.__tradejsYmInit) {
+      return;
+    }
+
+    removeInteractionListeners();
+    if (fallbackTimeoutId !== undefined) {
+      window.clearTimeout(fallbackTimeoutId);
+      fallbackTimeoutId = undefined;
+    }
+
+    if (typeof window.requestIdleCallback === 'function') {
+      idleCallbackId = window.requestIdleCallback(ensureYandexMetrikaInit, {
+        timeout: YANDEX_METRIKA_IDLE_TIMEOUT_MS,
+      });
+    } else {
+      fallbackTimeoutId = globalThis.window.setTimeout(
+        ensureYandexMetrikaInit,
+        0,
+      );
+    }
+  };
+
+  const scheduleFallback = () => {
+    fallbackTimeoutId = window.setTimeout(
+      initializeWhenIdle,
+      YANDEX_METRIKA_FALLBACK_DELAY_MS,
+    );
+  };
+
+  function handleInteraction(): void {
+    interactionObserved = true;
+    if (pageLoaded) {
+      initializeWhenIdle();
+    }
+  }
+
+  function handleLoad(): void {
+    pageLoaded = true;
+    if (interactionObserved) {
+      initializeWhenIdle();
+    } else {
+      scheduleFallback();
+    }
+  }
+
+  for (const eventName of YANDEX_METRIKA_INTERACTION_EVENTS) {
+    window.addEventListener(eventName, handleInteraction, {
+      capture: true,
+      passive: true,
+    });
+  }
+
+  if (pageLoaded) {
+    scheduleFallback();
+  } else {
+    window.addEventListener('load', handleLoad, { once: true });
+  }
+
+  return () => {
+    disposed = true;
+    window.removeEventListener('load', handleLoad);
+    removeInteractionListeners();
+    if (fallbackTimeoutId !== undefined) {
+      window.clearTimeout(fallbackTimeoutId);
+    }
+    if (
+      idleCallbackId !== undefined &&
+      typeof window.cancelIdleCallback === 'function'
+    ) {
+      window.cancelIdleCallback(idleCallbackId);
+    }
+  };
+}
+
 export default function Root({ children }: Props): React.ReactElement {
   const location = useLocation();
   const lastTrackedHrefRef = useRef<string | null>(null);
@@ -97,7 +192,7 @@ export default function Root({ children }: Props): React.ReactElement {
   };
 
   useEffect(() => {
-    ensureYandexMetrikaInit();
+    return scheduleYandexMetrikaInit();
   }, []);
 
   useEffect(() => {

@@ -84,7 +84,23 @@ const sidebars: SidebarsConfig = {
               ],
             },
             'strategies/authoring/typescript-strategy-step-by-step',
-            'strategies/authoring/pine-strategy-step-by-step',
+            {
+              type: 'category',
+              label: t(
+                'Pine Strategy Step by Step',
+                'Pine-стратегия пошагово',
+              ),
+              link: {
+                type: 'doc',
+                id: 'strategies/authoring/pine-strategy-step-by-step',
+              },
+              items: [
+                'strategies/authoring/pine-strategy-pine-and-config',
+                'strategies/authoring/pine-strategy-figures',
+                'strategies/authoring/pine-strategy-runtime-bridge',
+                'strategies/authoring/pine-strategy-registration-and-backtest',
+              ],
+            },
             'strategies/authoring/plugin-e2e',
           ],
         },

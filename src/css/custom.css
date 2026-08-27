@@ -185,8 +185,15 @@ article[class*='docItemContainer'] {
   border: 1px solid #22364a;
 }
 
-.markdown a {
+.theme-doc-markdown a:not(.hash-link) {
+  text-decoration-line: underline;
   text-decoration-color: rgba(52, 209, 201, 0.45);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+.theme-doc-markdown a:not(.hash-link):hover {
+  text-decoration-color: currentColor;
 }
 
 .markdown code {

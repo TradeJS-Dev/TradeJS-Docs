@@ -55,11 +55,17 @@ const config: Config = {
           priority: null,
           createSitemapItems: async ({ defaultCreateSitemapItems, ...params }) => {
             const items = await defaultCreateSitemapItems(params);
+            const buildDate = new Date().toISOString().slice(0, 10);
 
-            return items.filter(({ url }) => {
-              const pathname = new URL(url).pathname.replace(/\/+$/, '');
-              return !pathname.endsWith('/search');
-            });
+            return items
+              .filter(({ url }) => {
+                const pathname = new URL(url).pathname.replace(/\/+$/, '');
+                return !pathname.endsWith('/search');
+              })
+              .map((item) => ({
+                ...item,
+                lastmod: item.lastmod ?? buildDate,
+              }));
           },
         },
         theme: {
@@ -110,6 +116,8 @@ const config: Config = {
       logo: {
         alt: 'TradeJS',
         src: 'img/logo.svg',
+        width: 32,
+        height: 32,
       },
       items: [
         {
