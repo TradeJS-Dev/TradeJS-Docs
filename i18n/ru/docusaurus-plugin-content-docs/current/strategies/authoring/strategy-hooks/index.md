@@ -13,18 +13,18 @@ Project-level hooks применяются ко всем стратегиям, �
 
 ## Порядок вызова
 
-1. [onInit](./on-init) — один раз при создании runtime
-2. [onBar](./on-bar) — на каждой свече до `core.ts`
-3. [afterCoreDecision](./after-core-decision) — после `core.ts`, только если `core.ts` вообще выполнялся
-4. [afterBarDecision](./after-bar-decision) — после финального решения по свече, независимо от того, пришло оно из `onBar` или из `core.ts`
-5. [onSkip](./on-skip) — только для `skip`
-6. [beforeClosePosition](./before-close-position) — gate, может заблокировать закрытие
-7. [afterEnrichMl](./after-enrich-ml) — только когда есть `decision.signal`
-8. [afterEnrichAi](./after-enrich-ai) — только когда есть `decision.signal`
-9. [beforeEntryGate](./before-entry-gate) — gate, может заблокировать вход
-10. [beforePlaceOrder](./before-place-order) — прямо перед вызовом коннектора
-11. [afterPlaceOrder](./after-place-order) — после успешной постановки ордера
-12. [onRuntimeError](./on-runtime-error) — на любой runtime/hook error
+1. [onInit](./strategy-hooks/on-init) — один раз при создании runtime
+2. [onBar](./strategy-hooks/on-bar) — на каждой свече до `core.ts`
+3. [afterCoreDecision](./strategy-hooks/after-core-decision) — после `core.ts`, только если `core.ts` вообще выполнялся
+4. [afterBarDecision](./strategy-hooks/after-bar-decision) — после финального решения по свече, независимо от того, пришло оно из `onBar` или из `core.ts`
+5. [onSkip](./strategy-hooks/on-skip) — только для `skip`
+6. [beforeClosePosition](./strategy-hooks/before-close-position) — gate, может заблокировать закрытие
+7. [afterEnrichMl](./strategy-hooks/after-enrich-ml) — только когда есть `decision.signal`
+8. [afterEnrichAi](./strategy-hooks/after-enrich-ai) — только когда есть `decision.signal`
+9. [beforeEntryGate](./strategy-hooks/before-entry-gate) — gate, может заблокировать вход
+10. [beforePlaceOrder](./strategy-hooks/before-place-order) — прямо перед вызовом коннектора
+11. [afterPlaceOrder](./strategy-hooks/after-place-order) — после успешной постановки ордера
+12. [onRuntimeError](./strategy-hooks/on-runtime-error) — на любой runtime/hook error
 
 ## Канонический shape params
 

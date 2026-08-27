@@ -1,5 +1,6 @@
 ---
 title: What is TradeJS?
+description: 'Learn how TradeJS uses one TypeScript strategy implementation for reproducible backtests, historical replay, market scanning, and self-hosted execution.'
 ---
 
 TradeJS is a TypeScript framework for systematic trading research,

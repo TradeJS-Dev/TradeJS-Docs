@@ -1,6 +1,8 @@
 ---
 sidebar_position: 8
-title: How Backtests Work
+sidebar_label: How Backtests Work
+title: How TradeJS Backtests Trading Strategies
+description: 'Learn how TradeJS replays a trading strategy over historical candles, models entries and exits, records assumptions, and produces reproducible backtest evidence.'
 ---
 
 A TradeJS backtest applies one strategy configuration to historical candles and

@@ -1,5 +1,7 @@
 ---
-title: Production Runbook
+sidebar_label: Production Runbook
+title: Self-Hosted TradeJS Production Runbook
+description: 'Operate TradeJS on infrastructure you control with explicit deployment configuration, TLS, secrets, monitoring, backups, runtime checks, and incident procedures.'
 ---
 
 Use this runbook as a daily operational checklist.

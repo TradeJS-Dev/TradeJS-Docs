@@ -80,11 +80,6 @@ export default function Root({ children }: Props): React.ReactElement {
         url: 'https://docs.tradejs.dev',
         inLanguage: ['en-US', 'ru-RU'],
         about: 'Technical documentation for the TradeJS TypeScript framework',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: 'https://docs.tradejs.dev/?q={search_term_string}',
-          'query-input': 'required name=search_term_string',
-        },
       },
       {
         '@type': 'CollectionPage',

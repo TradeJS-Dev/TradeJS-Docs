@@ -1,6 +1,7 @@
 ---
 sidebar_position: 10
 title: ML Pipeline and Configuration
+description: 'Configure the TradeJS machine-learning pipeline from backtest dataset export and model training to versioned artifacts and runtime inference over gRPC.'
 ---
 
 ## Main Flow

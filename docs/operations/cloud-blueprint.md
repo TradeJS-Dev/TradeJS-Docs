@@ -1,5 +1,7 @@
 ---
-title: Cloud Deployment Blueprint
+sidebar_label: Cloud Deployment Blueprint
+title: Self-Hosted Trading Infrastructure
+description: 'Plan a self-hosted TradeJS deployment with Nginx, Redis, TimescaleDB, application services, ML inference, backups, monitoring, and horizontal scaling.'
 ---
 
 Use this as a reference architecture for cloud deployments.

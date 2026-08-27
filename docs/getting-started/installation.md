@@ -1,5 +1,7 @@
 ---
-title: Installation
+sidebar_label: Installation
+title: Install TradeJS for TypeScript Algorithmic Trading
+description: 'Install TradeJS with create-tradejs or add its public npm packages to an existing TypeScript project, including the required Node.js and Docker setup.'
 ---
 
 Use `create-tradejs` for a new project. Install packages manually only when

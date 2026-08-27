@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
-title: Quickstart
+sidebar_label: Quickstart
+title: TypeScript Trading Quickstart
+description: 'Create a self-hosted TypeScript trading project, start its Docker infrastructure, open the TradeJS UI, and prepare your first strategy backtest.'
 ---
 
 Create and start a self-hosted TradeJS project from the public npm packages:

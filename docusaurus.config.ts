@@ -16,6 +16,7 @@ const config: Config = {
 
   url: 'https://docs.tradejs.dev',
   baseUrl: '/',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   markdown: {
@@ -48,6 +49,19 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
         },
         blog: false,
+        sitemap: {
+          lastmod: 'date',
+          changefreq: null,
+          priority: null,
+          createSitemapItems: async ({ defaultCreateSitemapItems, ...params }) => {
+            const items = await defaultCreateSitemapItems(params);
+
+            return items.filter(({ url }) => {
+              const pathname = new URL(url).pathname.replace(/\/+$/, '');
+              return !pathname.endsWith('/search');
+            });
+          },
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -79,10 +93,6 @@ const config: Config = {
         name: 'keywords',
         content:
           'TradeJS, TypeScript trading strategies, self-hosted trading framework, algorithmic trading, backtesting, runtime',
-      },
-      {
-        name: 'robots',
-        content: 'index,follow,max-image-preview:large,max-snippet:-1',
       },
       {
         name: 'author',

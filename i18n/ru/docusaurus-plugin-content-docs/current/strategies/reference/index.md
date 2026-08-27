@@ -12,48 +12,48 @@ TrendLine и ReverseTrendLine входят в общий пакет
 
 ## Тренд, моментум и пробой
 
-- [TrendLine](./trendline) — пробой трендовой линии по экстремумам цены.
-- [ReverseTrendLine](./reverse-trendline) — отбой или разворот около линии
+- [TrendLine](./reference/trendline) — пробой трендовой линии по экстремумам цены.
+- [ReverseTrendLine](./reference/reverse-trendline) — отбой или разворот около линии
   поддержки или сопротивления.
-- [TrendFollow](./trend-follow) — продолжение тренда со скользящей линией стопа.
-- [TrendShift](./trend-shift) — смена направления после разворота динамической
+- [TrendFollow](./reference/trend-follow) — продолжение тренда со скользящей линией стопа.
+- [TrendShift](./reference/trend-shift) — смена направления после разворота динамической
   трендовой полосы.
-- [Breakout](./breakout) — взвешенное подтверждение условий пробоя вверх или вниз.
-- [AdaptiveTrendChannel](./adaptive-trend-channel) — смена направления
+- [Breakout](./reference/breakout) — взвешенное подтверждение условий пробоя вверх или вниз.
+- [AdaptiveTrendChannel](./reference/adaptive-trend-channel) — смена направления
   адаптивного канала со структурным стопом у его границы.
-- [AdaptiveMomentumRibbon](./adaptive-momentum-ribbon) — сигнал ленты моментума
+- [AdaptiveMomentumRibbon](./reference/adaptive-momentum-ribbon) — сигнал ленты моментума
   с фильтром Кельтнера и структурной отменой.
-- [MaStrategy](./ma-strategy) — пересечение быстрой и медленной скользящих средних.
-- [VolatilityCompressionBreakout](./volatility-compression-breakout) — выход из
+- [MaStrategy](./reference/ma-strategy) — пересечение быстрой и медленной скользящих средних.
+- [VolatilityCompressionBreakout](./reference/volatility-compression-breakout) — выход из
   диапазона после сжатия ATR и ширины полос Боллинджера.
-- [RelativeRotation](./relative-rotation) — относительная сила и ротация
+- [RelativeRotation](./reference/relative-rotation) — относительная сила и ротация
   инструмента относительно BTC.
 
 ## Ценовая структура, ликвидность и разворот
 
-- [DoubleTap](./double-tap) — двойная вершина или дно с последующим пробоем.
-- [CupAndHandle](./cup-and-handle) — обычная или перевёрнутая «чашка с ручкой» с
+- [DoubleTap](./reference/double-tap) — двойная вершина или дно с последующим пробоем.
+- [CupAndHandle](./reference/cup-and-handle) — обычная или перевёрнутая «чашка с ручкой» с
   измеряемой целью.
-- [HeadAndShoulders](./head-and-shoulders) — обычная или перевёрнутая модель
+- [HeadAndShoulders](./reference/head-and-shoulders) — обычная или перевёрнутая модель
   «голова и плечи» с пробоем линии шеи.
-- [LiquidityTails](./liquidity-tails) — реакция после повторного теста зоны,
+- [LiquidityTails](./reference/liquidity-tails) — реакция после повторного теста зоны,
   построенной по крупным теням свечей.
-- [LiquidityZones](./liquidity-zones) — реакция от зон ликвидности по локальным
+- [LiquidityZones](./reference/liquidity-zones) — реакция от зон ликвидности по локальным
   максимумам и минимумам.
-- [StructureZones](./structure-zones) — реакция или переходный пробой зоны
+- [StructureZones](./reference/structure-zones) — реакция или переходный пробой зоны
   рыночной структуры.
-- [MarketFlushReversal](./market-flush-reversal) — разворот после широкой
+- [MarketFlushReversal](./reference/market-flush-reversal) — разворот после широкой
   рыночной ликвидации или давления.
-- [VolumeDivergence](./volume-divergence) — разворот по расхождению ценовых
+- [VolumeDivergence](./reference/volume-divergence) — разворот по расхождению ценовых
   экстремумов и нормализованного объёма.
 
 ## Набор позиции и внешний контекст
 
-- [Grid](./grid) — направленный вход на откате или повторном тесте пробоя с
+- [Grid](./reference/grid) — направленный вход на откате или повторном тесте пробоя с
   поэтапными добавлениями в пределах одного лимита риска.
-- [GridClassic](./grid-classic) — возврат к среднему в горизонтальном диапазоне,
+- [GridClassic](./reference/grid-classic) — возврат к среднему в горизонтальном диапазоне,
   продолжение пробоя или необязательный разворот ложного пробоя.
-- [HyperliquidConsensus](./hyperliquid-consensus) — направление по потоку позиций
+- [HyperliquidConsensus](./reference/hyperliquid-consensus) — направление по потоку позиций
   выбранных счетов Hyperliquid.
 
 ## Как оценивать стратегию
@@ -70,6 +70,6 @@ TrendLine и ReverseTrendLine входят в общий пакет
 4. оборот, ожидаемый срок удержания и чувствительность к исполнению;
 5. параметры, заданные до теста, и план независимой проверки.
 
-См. [Сетка параметров бэктеста](../../getting-started/backtest-config),
-[Как работают бэктесты](../../runtime/backtesting/overview) и
-[Как рассчитываются сигналы](../../runtime/execution/signals).
+См. [Сетка параметров бэктеста](../getting-started/backtest-config),
+[Как работают бэктесты](../runtime/backtesting/overview) и
+[Как рассчитываются сигналы](../runtime/execution/signals).

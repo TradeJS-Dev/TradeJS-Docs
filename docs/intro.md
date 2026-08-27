@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
-title: Welcome
+sidebar_label: Welcome
+title: TypeScript Algorithmic Trading Framework
+description: 'TradeJS is a self-hosted TypeScript framework for building, backtesting, replaying, and running programmable algorithmic trading strategies.'
 slug: /
 ---
 

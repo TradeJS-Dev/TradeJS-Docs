@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
-title: Быстрый старт
+sidebar_label: Быстрый старт
+title: Быстрый старт TradeJS на TypeScript
+description: 'Создайте локальный торговый проект на TypeScript, запустите Docker-инфраструктуру и интерфейс TradeJS и подготовьте первый бэктест стратегии.'
 ---
 
 Создайте локальный TradeJS-проект из публичных npm-пакетов:

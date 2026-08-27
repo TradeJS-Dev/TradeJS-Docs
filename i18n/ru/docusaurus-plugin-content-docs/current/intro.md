@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
-title: Добро пожаловать
+sidebar_label: Добро пожаловать
+title: Алгоритмическая торговля на TypeScript с TradeJS
+description: 'TradeJS — самостоятельный TypeScript-фреймворк для разработки, бэктестинга, воспроизведения и запуска программируемых торговых стратегий.'
 slug: /
 ---
 

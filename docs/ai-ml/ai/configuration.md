@@ -1,6 +1,7 @@
 ---
 sidebar_position: 11
 title: AI Runtime and Configuration
+description: 'Configure the optional TradeJS AI review layer that evaluates strategy signals, records prompt lineage, and can gate live order execution under explicit policy.'
 ---
 
 ## Purpose

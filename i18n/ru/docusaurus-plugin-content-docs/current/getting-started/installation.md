@@ -1,5 +1,7 @@
 ---
-title: Установка
+sidebar_label: Установка
+title: Установка TradeJS в TypeScript-проект
+description: 'Установите TradeJS через create-tradejs или добавьте публичные npm-пакеты в существующий TypeScript-проект с необходимыми настройками Node.js и Docker.'
 ---
 
 Для нового проекта используйте `create-tradejs`. Ручная установка нужна только

@@ -18,7 +18,7 @@ TradeJS does not optimize for microsecond latency, colocated order routing, orde
 
 Backtests are historical simulations. They depend on data quality, assumptions, and implementation details.
 
-Read [Backtesting caveats](./backtesting-caveats) before interpreting results.
+Read [Backtesting caveats](./limitations/backtesting-caveats) before interpreting results.
 
 ## Data Quality
 

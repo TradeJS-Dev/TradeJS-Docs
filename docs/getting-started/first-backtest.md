@@ -1,5 +1,7 @@
 ---
-title: Run your first backtest
+sidebar_label: Run your first backtest
+title: Run Your First TypeScript Trading Strategy Backtest
+description: 'Create a local TradeJS project and run a reproducible TypeScript trading strategy backtest from the web interface without cloning the monorepo.'
 ---
 
 Create a complete local TradeJS project and run the first backtest from the Web

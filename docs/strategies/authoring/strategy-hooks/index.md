@@ -13,18 +13,18 @@ Project-level hooks apply to every strategy loaded by the current project config
 
 ## Runtime Order
 
-1. [onInit](./on-init) — once, at strategy creation
-2. [onBar](./on-bar) — every candle before `core.ts`
-3. [afterCoreDecision](./after-core-decision) — after `core.ts`, only if `core.ts` actually ran
-4. [afterBarDecision](./after-bar-decision) — after the final candle decision, whether it came from `onBar` or `core.ts`
-5. [onSkip](./on-skip) — only for `skip` decisions
-6. [beforeClosePosition](./before-close-position) — gate, can block close
-7. [afterEnrichMl](./after-enrich-ml) — only when `decision.signal` exists
-8. [afterEnrichAi](./after-enrich-ai) — only when `decision.signal` exists
-9. [beforeEntryGate](./before-entry-gate) — gate, can block entry
-10. [beforePlaceOrder](./before-place-order) — right before connector order placement
-11. [afterPlaceOrder](./after-place-order) — after successful order placement
-12. [onRuntimeError](./on-runtime-error) — on any runtime or hook error
+1. [onInit](./strategy-hooks/on-init) — once, at strategy creation
+2. [onBar](./strategy-hooks/on-bar) — every candle before `core.ts`
+3. [afterCoreDecision](./strategy-hooks/after-core-decision) — after `core.ts`, only if `core.ts` actually ran
+4. [afterBarDecision](./strategy-hooks/after-bar-decision) — after the final candle decision, whether it came from `onBar` or `core.ts`
+5. [onSkip](./strategy-hooks/on-skip) — only for `skip` decisions
+6. [beforeClosePosition](./strategy-hooks/before-close-position) — gate, can block close
+7. [afterEnrichMl](./strategy-hooks/after-enrich-ml) — only when `decision.signal` exists
+8. [afterEnrichAi](./strategy-hooks/after-enrich-ai) — only when `decision.signal` exists
+9. [beforeEntryGate](./strategy-hooks/before-entry-gate) — gate, can block entry
+10. [beforePlaceOrder](./strategy-hooks/before-place-order) — right before connector order placement
+11. [afterPlaceOrder](./strategy-hooks/after-place-order) — after successful order placement
+12. [onRuntimeError](./strategy-hooks/on-runtime-error) — on any runtime or hook error
 
 ## Canonical Params Shape
 

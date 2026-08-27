@@ -1,5 +1,7 @@
 ---
-title: Pine Strategy Step by Step
+sidebar_label: Pine Strategy Step by Step
+title: Add and Backtest a Pine Script Strategy in TradeJS
+description: 'Add a Pine Script strategy to TradeJS as a registered module with its runtime bridge, configuration, figures, adapters, and historical backtest workflow.'
 ---
 
 This walkthrough shows how to add a Pine strategy to TradeJS as a normal first-class strategy module.

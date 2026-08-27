@@ -12,49 +12,49 @@ strategy has its own package.
 
 ## Trend, Momentum, and Breakout
 
-- [TrendLine](./trendline) — breakout through a trendline fitted to swing highs
+- [TrendLine](./reference/trendline) — breakout through a trendline fitted to swing highs
   or lows.
-- [ReverseTrendLine](./reverse-trendline) — rejection or reversal around a
+- [ReverseTrendLine](./reference/reverse-trendline) — rejection or reversal around a
   fitted support/resistance line.
-- [TrendFollow](./trend-follow) — trend continuation with a trailing stop line.
-- [TrendShift](./trend-shift) — directional change after a dynamic trend-band flip.
-- [Breakout](./breakout) — weighted confirmation of long or short breakout conditions.
-- [AdaptiveTrendChannel](./adaptive-trend-channel) — direction change in an
+- [TrendFollow](./reference/trend-follow) — trend continuation with a trailing stop line.
+- [TrendShift](./reference/trend-shift) — directional change after a dynamic trend-band flip.
+- [Breakout](./reference/breakout) — weighted confirmation of long or short breakout conditions.
+- [AdaptiveTrendChannel](./reference/adaptive-trend-channel) — direction change in an
   adaptive channel with a structural stop at its boundary.
-- [AdaptiveMomentumRibbon](./adaptive-momentum-ribbon) — momentum-ribbon signal
+- [AdaptiveMomentumRibbon](./reference/adaptive-momentum-ribbon) — momentum-ribbon signal
   with Keltner bias and structural invalidation.
-- [MaStrategy](./ma-strategy) — fast/slow moving-average crossover.
-- [VolatilityCompressionBreakout](./volatility-compression-breakout) — range
+- [MaStrategy](./reference/ma-strategy) — fast/slow moving-average crossover.
+- [VolatilityCompressionBreakout](./reference/volatility-compression-breakout) — range
   expansion after low ATR and Bollinger-width ranks.
-- [RelativeRotation](./relative-rotation) — relative strength and rotation of a
+- [RelativeRotation](./reference/relative-rotation) — relative strength and rotation of a
   symbol versus BTC.
 
 ## Price Structure, Liquidity, and Reversal
 
-- [DoubleTap](./double-tap) — double top/bottom structure followed by a
+- [DoubleTap](./reference/double-tap) — double top/bottom structure followed by a
   breakout or breakdown.
-- [CupAndHandle](./cup-and-handle) — bullish cup-and-handle or bearish inverted
+- [CupAndHandle](./reference/cup-and-handle) — bullish cup-and-handle or bearish inverted
   cup with a measured target.
-- [HeadAndShoulders](./head-and-shoulders) — standard or inverse
+- [HeadAndShoulders](./reference/head-and-shoulders) — standard or inverse
   head-and-shoulders neckline breakout.
-- [LiquidityTails](./liquidity-tails) — reaction after a retest of a zone formed
+- [LiquidityTails](./reference/liquidity-tails) — reaction after a retest of a zone formed
   by large candle wicks.
-- [LiquidityZones](./liquidity-zones) — reaction at liquidity zones derived from
+- [LiquidityZones](./reference/liquidity-zones) — reaction at liquidity zones derived from
   swing highs and lows.
-- [StructureZones](./structure-zones) — reaction or transition breakout at
+- [StructureZones](./reference/structure-zones) — reaction or transition breakout at
   market-structure zones.
-- [MarketFlushReversal](./market-flush-reversal) — rejection after broad market
+- [MarketFlushReversal](./reference/market-flush-reversal) — rejection after broad market
   liquidation or pressure.
-- [VolumeDivergence](./volume-divergence) — reversal based on divergence between
+- [VolumeDivergence](./reference/volume-divergence) — reversal based on divergence between
   price pivots and normalized-volume pivots.
 
 ## Position Building and External Context
 
-- [Grid](./grid) — directional pullback or breakout-retest entries with staged
+- [Grid](./reference/grid) — directional pullback or breakout-retest entries with staged
   additions inside one risk budget.
-- [GridClassic](./grid-classic) — horizontal-range mean reversion, breakout
+- [GridClassic](./reference/grid-classic) — horizontal-range mean reversion, breakout
   continuation, or optional failed-breakout reversal.
-- [HyperliquidConsensus](./hyperliquid-consensus) — direction derived from the
+- [HyperliquidConsensus](./reference/hyperliquid-consensus) — direction derived from the
   position-aware flow of configured Hyperliquid accounts.
 
 ## How to Evaluate a Strategy

@@ -1,5 +1,7 @@
 ---
-title: Backtest a strategy
+sidebar_label: Backtest a strategy
+title: How to Backtest a Trading Strategy in TypeScript
+description: 'Run a TypeScript trading strategy over historical candles with the TradeJS CLI, inspect stored metrics, and compare configurations under consistent assumptions.'
 ---
 
 Backtesting runs strategy logic over historical candles and stores metrics/artifacts for inspection.

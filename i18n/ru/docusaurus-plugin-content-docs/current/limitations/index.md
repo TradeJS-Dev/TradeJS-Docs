@@ -14,7 +14,7 @@ TradeJS не предназначен для HFT.
 
 Бэктесты зависят от data quality, assumptions и реализации.
 
-Прочитайте [Ограничения бэктестинга](./backtesting-caveats) перед интерпретацией результатов.
+Прочитайте [Ограничения бэктестинга](./limitations/backtesting-caveats) перед интерпретацией результатов.
 
 ## Fees и slippage
 
