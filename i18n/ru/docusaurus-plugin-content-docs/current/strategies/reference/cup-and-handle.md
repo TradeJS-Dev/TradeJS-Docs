@@ -19,6 +19,8 @@ title: 'CupAndHandle'
 
 1. Прогоняет pivots через `createCupAndHandleEngine(...)`.
 2. Проверяет depth, symmetry, duration, handle depth и pattern age.
+   `CUPHANDLE_REQUIRE_PATH_QUALITY` может дополнительно требовать, чтобы обе
+   стороны чашки прогрессировали более чем на половине сравнимых закрытий.
 3. Входит по `breakout`, `close_acceptance` или `retest` из `CUPHANDLE_ENTRY_MODE`.
 4. Опционально требует relative breakout volume.
 5. Проверяет `minRiskRatio` стороны и size от `MAX_LOSS_VALUE`.
@@ -27,4 +29,9 @@ title: 'CupAndHandle'
 `CUPHANDLE_RIM_TOLERANCE_PCT`, `CUPHANDLE_MIN_CUP_DEPTH_ATR`,
 `CUPHANDLE_MIN/MAX_CUP_BARS`, `CUPHANDLE_MIN/MAX_HANDLE_BARS`,
 `CUPHANDLE_ENTRY_MODE`, `CUPHANDLE_TARGET_DEPTH_PCT` и
-`CUPHANDLE_STOP_BUFFER_DEPTH_PCT`.
+`CUPHANDLE_STOP_BUFFER_DEPTH_PCT`. Optional filters:
+`CUPHANDLE_REQUIRE_PATH_QUALITY` и `CUPHANDLE_MIN_BREAKOUT_VOLUME_REL20`.
+
+При deterministic `AI_MODE: "gate"` локальный gate одобряет сигнал, только
+когда у ближайшего resistance не менее 19 касаний, а 20-периодная beta
+инструмента к ETH неотрицательна. Отсутствующие gate features дают отказ.

@@ -49,6 +49,7 @@ Zone model:
 - `STRUCTURE_ZONES_REACTION_CLOSE_BEYOND_ZONE`
 - `STRUCTURE_ZONES_REQUIRE_REACTION_BODY`
 - `STRUCTURE_ZONES_TRADE_TRANSITION_BREAKOUTS`
+- `STRUCTURE_ZONES_TRANSITION_BREAKOUT_ONLY`
 - `STRUCTURE_ZONES_STOP_ZONE_BUFFER_MULT`
 - `STRUCTURE_ZONES_STOP_BUFFER_PCT`
 - `STRUCTURE_ZONES_TARGET_R_MULT`
@@ -84,6 +85,13 @@ The strategy stores:
 ## Validation Notes
 
 Keep zone detection causal and inspect chart artifacts before trusting aggregate metrics. `STRUCTURE_ZONES_TRADE_TRANSITION_BREAKOUTS` changes the strategy surface, so compare it as a separate experiment.
+
+`STRUCTURE_ZONES_TRANSITION_BREAKOUT_ONLY=true` suppresses support and
+resistance reactions and emits only accepted structural breakouts while the
+market state is `Transition`. With deterministic `AI_MODE: "gate"`, the
+strategy-local gate currently admits only SHORT transition-breakout setups
+whose benchmark-relative strength and trailing-stop distance pass the frozen
+causal thresholds; missing features fail closed.
 
 Related:
 

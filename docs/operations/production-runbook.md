@@ -32,7 +32,9 @@ to Deploy; Deploy does not rebuild application source. See
 - Keep exact npm versions in the lockfile and image manifest. Do not maintain a
   runtime version map: strict Project validation computes `strategyRevision`
   and `deploymentCompositionId` from the resolved composition.
-- Use stable package versions for live trading. Test upgrades in an isolated
+- Pin one exact framework cohort: either canonical stable or one verified
+  `x.y.z-beta.N` version shared by every framework package. Keep Base, Strategy
+  Kit, and strategy packages stable-only, and test every upgrade in an isolated
   environment before building the application image.
 - A Project push does not publish or deploy. Explicitly dispatch image
   publication only after checks; the same workflow must complete the immutable
@@ -41,6 +43,10 @@ to Deploy; Deploy does not rebuild application source. See
   source; it holds accounts, optional pause overrides, audit events, heartbeat,
   signals, evaluations, and trades.
 - The UI is read-only for config and may only pause/resume new entries.
+- In the official repository split, the server produces daily runtime evidence
+  and then replays the closed window with the exact recorded image digest in an
+  isolated, read-only environment. Do not recreate that feedback run from the
+  current local checkout.
 
 ## Daily Health Checks
 

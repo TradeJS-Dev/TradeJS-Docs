@@ -14,9 +14,12 @@ npx @tradejs/cli runtime-control verify \
   --deployment <deployment>
 ```
 
-Confirm the strategy package version, strategy `version`, complete
-configuration, account, connector, timeframe, symbol selection, enabled state,
-and pause state. Compare them with the reviewed revision, not with a local draft.
+Confirm the strategy package version, computed `strategyRevision`,
+`deploymentCompositionId`, complete configuration, account, connector,
+timeframe, symbol selection, enabled state, and pause state. Compare them with
+the reviewed revision, not with a local draft. In the app, use the strategy's
+**Revisions** action and chart markers to locate changes recorded in the trade
+window.
 
 ## 2. Verify Market Data
 

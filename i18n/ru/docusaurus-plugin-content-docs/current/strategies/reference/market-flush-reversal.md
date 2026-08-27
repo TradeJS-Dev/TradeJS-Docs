@@ -29,5 +29,13 @@ Entry codes: `MFR_LONG_FLUSH_REVERSAL`, `MFR_SHORT_FLUSH_REVERSAL`.
 Ключевые группы: evidence (`MFR_MIN_VOLUME_REL20`,
 `MFR_MIN_MARKET_LIQ_SPIKE_RATIO`), rejection (`MFR_MIN_REJECTION_*`),
 confirmation (`MFR_ENTRY_MODE`, `MFR_CONFIRMATION_BARS*`,
-`MFR_PENDING_MAX_BARS`) и risk (`MFR_STOP_*`, `MFR_TARGET_R_MULT`). Суффиксы
-`_LONG`/`_SHORT` переопределяют общее значение для направления.
+`MFR_PENDING_MAX_BARS`), deterministic gate
+(`MFR_REQUIRE_CALIBRATED_LONG_REBOUND_POCKET`,
+`MFR_ENABLE_PROTECTED_V1_H1_RANGE50_SHORT_POCKET`) и risk (`MFR_STOP_*`,
+`MFR_TARGET_R_MULT`). Суффиксы `_LONG`/`_SHORT` переопределяют общее значение
+для направления.
+
+При deterministic `AI_MODE: "gate"` LONG и SHORT сигналы должны попасть в
+проверенные causal context pockets. Protected SHORT flag добавляет более узкий
+путь одобрения с требованиями к breadth, rejection wick, derivatives и позиции
+в 1h range. Отсутствующие обязательные features дают отказ.

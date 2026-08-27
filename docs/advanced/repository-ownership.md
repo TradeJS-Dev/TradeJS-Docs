@@ -63,14 +63,16 @@ copied into a runtime or deployment repository.
 
 ## Updating packages in a deployed project
 
-Use stable package versions for live trading. Update the exact dependency and
-lockfile in the project, update the complete strategy declaration, and run the
-project checks. Every strategy parser rejects unknown fields and materializes
-defaults. Validation computes `strategyRevision` from the exact strategy
-package, its direct TradeJS dependencies, the runtime package, and parsed
-effective config. `deploymentCompositionId` binds the deployment target,
-enabled state, selections, and all strategy revisions. There is no manual
-runtime version.
+Pin exact package versions for live trading. The framework cohort may be one
+canonical stable version or one exact verified `x.y.z-beta.N` version shared by
+all framework packages; Base, Strategy Kit, and strategy packages remain
+stable-only. Update the dependency and lockfile in the project, update the
+complete strategy declaration, and run the project checks. Every strategy
+parser rejects unknown fields and materializes defaults. Validation computes
+`strategyRevision` from the exact strategy package, its direct TradeJS
+dependencies, the runtime package, and parsed effective config.
+`deploymentCompositionId` binds the deployment target, enabled state,
+selections, and all strategy revisions. There is no manual runtime version.
 
 A push to Project updates source only. Publishing its immutable application
 image and dispatching that exact SHA to Deploy is a separate explicit workflow.

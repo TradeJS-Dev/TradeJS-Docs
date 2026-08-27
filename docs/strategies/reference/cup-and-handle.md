@@ -19,6 +19,8 @@ confirmation rules, and risk parameters come from the active strategy config.
 
 1. Replay pivots through `createCupAndHandleEngine(...)`.
 2. Validate cup depth, symmetry, duration, handle depth, and pattern age.
+   `CUPHANDLE_REQUIRE_PATH_QUALITY` can additionally require both cup legs to
+   progress on more than half of their comparable closes.
 3. Enter on `breakout`, `close_acceptance`, or `retest` according to `CUPHANDLE_ENTRY_MODE`.
 4. Optionally require relative breakout volume.
 5. Size against the engine stop and target with the side's `minRiskRatio`.
@@ -33,4 +35,9 @@ The entry code is `CUPHANDLE_BREAKOUT` or
 - geometry: `CUPHANDLE_PIVOT_LOOKBACK`, `CUPHANDLE_RIM_TOLERANCE_PCT`, `CUPHANDLE_MIN_CUP_DEPTH_ATR`
 - timing: `CUPHANDLE_MIN_CUP_BARS`, `CUPHANDLE_MAX_CUP_BARS`, `CUPHANDLE_MIN_HANDLE_BARS`, `CUPHANDLE_MAX_HANDLE_BARS`
 - entry: `CUPHANDLE_ENTRY_MODE`, `CUPHANDLE_CONFIRMATION_MAX_BARS`, `CUPHANDLE_RETEST_MAX_BARS`
+- optional filters: `CUPHANDLE_REQUIRE_PATH_QUALITY`, `CUPHANDLE_MIN_BREAKOUT_VOLUME_REL20`
 - target/stop: `CUPHANDLE_TARGET_DEPTH_PCT`, `CUPHANDLE_STOP_BUFFER_DEPTH_PCT`
+
+With deterministic `AI_MODE: "gate"`, the strategy-local gate approves a
+signal only when the nearest resistance has at least 19 hits and the target's
+20-period beta to ETH is non-negative. Missing gate features fail closed.

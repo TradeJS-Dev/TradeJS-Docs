@@ -49,6 +49,7 @@ Zone model:
 - `STRUCTURE_ZONES_REACTION_CLOSE_BEYOND_ZONE`
 - `STRUCTURE_ZONES_REQUIRE_REACTION_BODY`
 - `STRUCTURE_ZONES_TRADE_TRANSITION_BREAKOUTS`
+- `STRUCTURE_ZONES_TRANSITION_BREAKOUT_ONLY`
 - `STRUCTURE_ZONES_STOP_ZONE_BUFFER_MULT`
 - `STRUCTURE_ZONES_STOP_BUFFER_PCT`
 - `STRUCTURE_ZONES_TARGET_R_MULT`
@@ -84,6 +85,13 @@ Shared groups:
 ## Что проверять
 
 Держите zone detection causal и проверяйте chart artifacts перед выводами по метрикам. `STRUCTURE_ZONES_TRADE_TRANSITION_BREAKOUTS` меняет поверхность стратегии, поэтому сравнивайте этот режим как отдельный experiment.
+
+`STRUCTURE_ZONES_TRANSITION_BREAKOUT_ONLY=true` отключает реакции от support и
+resistance и оставляет только принятые structural breakouts в состоянии рынка
+`Transition`. При deterministic `AI_MODE: "gate"` локальный gate сейчас
+допускает только SHORT transition-breakout setups, которые проходят
+зафиксированные causal thresholds по benchmark-relative strength и расстоянию
+до trailing stop; отсутствующие features дают отказ.
 
 Related:
 

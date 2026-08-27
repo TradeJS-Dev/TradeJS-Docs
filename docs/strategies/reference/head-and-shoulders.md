@@ -33,5 +33,10 @@ opposite-pattern exit uses `HEADSHOULDERS_OPPOSITE_PATTERN_EXIT`.
 - entry: `HEADSHOULDERS_ENTRY_MODE`, `HEADSHOULDERS_CONFIRMATION_MAX_BARS`, `HEADSHOULDERS_RETEST_MAX_BARS`
 - target/stop: `HEADSHOULDERS_TARGET_HEIGHT_PCT*`, `HEADSHOULDERS_STOP_BUFFER_HEIGHT_PCT`
 
+With deterministic `AI_MODE: "gate"`, SHORT setups are checked against
+candle-wick and alt-basket breadth context, while LONG setups use
+point-of-control distance and adaptive-channel slope. Missing required gate
+features fail closed.
+
 The current built-in default enables the short side and disables the long side;
 enable inverse-pattern longs explicitly only after separate validation.

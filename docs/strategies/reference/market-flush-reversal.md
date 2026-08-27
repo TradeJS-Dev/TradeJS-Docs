@@ -32,9 +32,16 @@ position with `MFR_OPPOSITE_FLUSH_EXIT`.
 - evidence: `MFR_MIN_VOLUME_REL20`, `MFR_MIN_MARKET_LIQ_SPIKE_RATIO`
 - rejection: `MFR_MIN_SWEEP_WICK_PCT`, `MFR_MIN_REJECTION_CLOSE_POSITION*`, `MFR_MIN_REJECTION_BODY_ATR*`
 - confirmation: `MFR_ENTRY_MODE`, `MFR_CONFIRMATION_BARS*`, `MFR_PENDING_MAX_BARS`
+- deterministic gate: `MFR_REQUIRE_CALIBRATED_LONG_REBOUND_POCKET`, `MFR_ENABLE_PROTECTED_V1_H1_RANGE50_SHORT_POCKET`
 - risk: `MFR_STOP_ATR_BUFFER_MULT`, `MFR_STOP_BUFFER_PCT`, `MFR_FALLBACK_STOP_ATR_MULT`, `MFR_TARGET_R_MULT`
 - side policy: `LONG.*`, `SHORT.*`
 
 Fields ending in `_LONG` or `_SHORT` override the unsuffixed value for that
 direction. Validate coverage of liquidation and market-context inputs before
 interpreting a no-signal result.
+
+In deterministic `AI_MODE: "gate"`, LONG and SHORT signals must match their
+validated causal context pockets. Enabling the protected SHORT flag adds a
+narrower approval path that requires supportive breadth, rejection wick,
+derivatives, and 1h range-position context. Missing required features fail
+closed.

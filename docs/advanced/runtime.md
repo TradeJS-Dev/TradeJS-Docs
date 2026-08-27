@@ -36,9 +36,12 @@ runtime dependencies, `@tradejs/node`, and the parsed complete config.
 and asset-class selections, and all strategy revisions. Both are recomputed from
 the strict runtime package manifest; neither is an operator-maintained counter.
 
-The app displays the version-controlled strategy configuration read-only, strategy analytics,
-drawdown, orders, and pause/resume. Research evidence may be produced locally
-or in CI, but the server and UI do not require it or show an evidence status.
+The app displays the version-controlled strategy configuration read-only,
+strategy analytics, drawdown, orders, and pause/resume. Runtime charts mark
+recorded strategy-revision changes, and the **Revisions** action lists the
+current revision together with changes observed in the selected trade window.
+Research evidence may be produced locally or in CI, but the server and UI do
+not require it or show an evidence status.
 
 Related:
 

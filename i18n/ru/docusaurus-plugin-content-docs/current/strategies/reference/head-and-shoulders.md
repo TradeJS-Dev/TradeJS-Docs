@@ -29,5 +29,10 @@ title: 'HeadAndShoulders'
 `HEADSHOULDERS_ENTRY_MODE`, `HEADSHOULDERS_TARGET_HEIGHT_PCT*` и
 `HEADSHOULDERS_STOP_BUFFER_HEIGHT_PCT`.
 
+При deterministic `AI_MODE: "gate"` SHORT setups проверяются по контексту
+candle wick и ширины alt-basket, а LONG setups — по расстоянию до
+point-of-control и наклону adaptive channel. Отсутствующие обязательные gate
+features дают отказ.
+
 В текущем default включен short и выключен long; inverse-pattern longs нужно
 включать явно после отдельной проверки.

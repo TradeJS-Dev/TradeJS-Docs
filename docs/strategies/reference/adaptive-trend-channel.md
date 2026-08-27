@@ -19,7 +19,8 @@ confirmation rules, and risk parameters come from the active strategy config.
 
 1. Builds runtime state with `createAdaptiveTrendChannelEngine({ initialCandles, config })`.
 2. On each candle, reads `runtimeState.signal` and `runtimeState.snapshot`.
-3. Skips until a channel flip signal exists.
+3. Skips until a channel flip passes the configured bar confirmation; optional
+   price acceptance also requires the close beyond the recent peak or trough.
 4. Selects `LONG` or `SHORT` side config from the signal direction.
 5. Applies context filters through `getAdaptiveTrendChannelFilterSkipCode(...)`.
 6. Uses the signal floor/roof as stop-loss:
@@ -41,6 +42,11 @@ When a position exists:
 - `ADAPTIVE_TREND_CHANNEL_BREAK_EXIT` when `ADAPTIVE_TREND_CHANNEL_EXIT_ON_CHANNEL_BREAK=true` and price breaks the active channel boundary.
 - `ADAPTIVE_TREND_CHANNEL_OPPOSITE_FLIP_EXIT` when `ADAPTIVE_TREND_CHANNEL_EXIT_ON_OPPOSITE_FLIP=true` and the engine emits the opposite flip.
 - otherwise `POSITION_EXISTS`.
+
+`ADAPTIVE_TREND_CHANNEL_EXIT_CONFIRMATION_BARS` delays either exit until its
+condition persists. Directional `_LONG` and `_SHORT` overrides take precedence.
+`ADAPTIVE_TREND_CHANNEL_REENTRY_COOLDOWN_MS` controls the post-trade entry
+cooldown.
 
 ## Config Parameters
 
@@ -67,12 +73,19 @@ Channel model:
 - `ADAPTIVE_TREND_CHANNEL_TARGET_R_MULT`
 - `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_PCT`
 - `ADAPTIVE_TREND_CHANNEL_MAX_BREAKOUT_DISTANCE_PCT`
+- `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_ATR` with `_LONG` and `_SHORT` overrides
+- `ADAPTIVE_TREND_CHANNEL_MAX_BREAKOUT_DISTANCE_ATR`
 - `ADAPTIVE_TREND_CHANNEL_MIN_CHANNEL_WIDTH_PCT`
 - `ADAPTIVE_TREND_CHANNEL_MAX_CHANNEL_WIDTH_PCT`
 - `ADAPTIVE_TREND_CHANNEL_MIN_VOLUME_REL20`
 - `ADAPTIVE_TREND_CHANNEL_REQUIRE_CONTEXT_ALIGNMENT`
+- `ADAPTIVE_TREND_CHANNEL_MIN_CONTEXT_ALIGNMENTS`
+- `ADAPTIVE_TREND_CHANNEL_FLIP_CONFIRMATION_BARS`
+- `ADAPTIVE_TREND_CHANNEL_REQUIRE_PRICE_ACCEPTANCE`
 - `ADAPTIVE_TREND_CHANNEL_EXIT_ON_OPPOSITE_FLIP`
 - `ADAPTIVE_TREND_CHANNEL_EXIT_ON_CHANNEL_BREAK`
+- `ADAPTIVE_TREND_CHANNEL_EXIT_CONFIRMATION_BARS` with `_LONG` and `_SHORT` overrides
+- `ADAPTIVE_TREND_CHANNEL_REENTRY_COOLDOWN_MS`
 - `ADAPTIVE_TREND_CHANNEL_MAX_FIGURE_POINTS`
 
 Side configs:

@@ -19,7 +19,9 @@ title: 'AdaptiveTrendChannel'
 
 1. Создает runtime state через `createAdaptiveTrendChannelEngine({ initialCandles, config })`.
 2. На каждой свече читает `runtimeState.signal` и `runtimeState.snapshot`.
-3. Ждет channel flip signal.
+3. Ждёт, пока channel flip пройдёт настроенное подтверждение по свечам;
+   optional price acceptance дополнительно требует закрытие за недавним
+   максимумом или минимумом.
 4. Выбирает side config `LONG` или `SHORT` по направлению сигнала.
 5. Применяет context filters через `getAdaptiveTrendChannelFilterSkipCode(...)`.
 6. Использует границу канала как stop-loss:
@@ -41,6 +43,12 @@ Entry codes:
 - `ADAPTIVE_TREND_CHANNEL_BREAK_EXIT`, когда `ADAPTIVE_TREND_CHANNEL_EXIT_ON_CHANNEL_BREAK=true` и цена пробивает активную границу канала.
 - `ADAPTIVE_TREND_CHANNEL_OPPOSITE_FLIP_EXIT`, когда `ADAPTIVE_TREND_CHANNEL_EXIT_ON_OPPOSITE_FLIP=true` и engine дает opposite flip.
 - иначе `POSITION_EXISTS`.
+
+`ADAPTIVE_TREND_CHANNEL_EXIT_CONFIRMATION_BARS` задерживает оба типа выхода,
+пока условие не сохранится заданное число свечей. Directional overrides
+`_LONG` и `_SHORT` имеют приоритет.
+`ADAPTIVE_TREND_CHANNEL_REENTRY_COOLDOWN_MS` задаёт паузу перед новым входом
+после сделки.
 
 ## Параметры
 
@@ -67,12 +75,19 @@ Channel model:
 - `ADAPTIVE_TREND_CHANNEL_TARGET_R_MULT`
 - `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_PCT`
 - `ADAPTIVE_TREND_CHANNEL_MAX_BREAKOUT_DISTANCE_PCT`
+- `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_ATR` с overrides `_LONG` и `_SHORT`
+- `ADAPTIVE_TREND_CHANNEL_MAX_BREAKOUT_DISTANCE_ATR`
 - `ADAPTIVE_TREND_CHANNEL_MIN_CHANNEL_WIDTH_PCT`
 - `ADAPTIVE_TREND_CHANNEL_MAX_CHANNEL_WIDTH_PCT`
 - `ADAPTIVE_TREND_CHANNEL_MIN_VOLUME_REL20`
 - `ADAPTIVE_TREND_CHANNEL_REQUIRE_CONTEXT_ALIGNMENT`
+- `ADAPTIVE_TREND_CHANNEL_MIN_CONTEXT_ALIGNMENTS`
+- `ADAPTIVE_TREND_CHANNEL_FLIP_CONFIRMATION_BARS`
+- `ADAPTIVE_TREND_CHANNEL_REQUIRE_PRICE_ACCEPTANCE`
 - `ADAPTIVE_TREND_CHANNEL_EXIT_ON_OPPOSITE_FLIP`
 - `ADAPTIVE_TREND_CHANNEL_EXIT_ON_CHANNEL_BREAK`
+- `ADAPTIVE_TREND_CHANNEL_EXIT_CONFIRMATION_BARS` с overrides `_LONG` и `_SHORT`
+- `ADAPTIVE_TREND_CHANNEL_REENTRY_COOLDOWN_MS`
 - `ADAPTIVE_TREND_CHANNEL_MAX_FIGURE_POINTS`
 
 Side configs:
