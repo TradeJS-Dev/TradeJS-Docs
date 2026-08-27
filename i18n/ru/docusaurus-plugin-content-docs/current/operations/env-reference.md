@@ -2,19 +2,21 @@
 title: Справочник переменных окружения
 ---
 
-На этой странице собраны основные переменные окружения по группам.
+TradeJS читает следующие переменные окружения для приложения, инфраструктуры
+и необязательных сервисов.
 
 ## Приложение
 
 - `APP_URL` — публичный URL приложения.
 - `HOST` / `PORT` — адрес и порт запуска.
 - `NODE_ENV` — `development` или `production`.
-- `NEXTAUTH_SECRET` — обязательный секрет для auth-сессий.
-- `NEXTAUTH_URL` — публичный URL для auth callback.
+- `NEXTAUTH_SECRET` — обязательный секрет для сессий входа.
+- `NEXTAUTH_URL` — публичный URL для обратных вызовов авторизации.
 
 ## Пользовательские настройки в Redis
 
-TradeJS также хранит account-specific настройки в Redis-записи пользователя (`users:index:<user>`):
+TradeJS также хранит настройки конкретного счёта в Redis-записи пользователя
+(`users:index:<user>`):
 
 - `BYBIT_API_KEY`
 - `BYBIT_API_SECRET`
@@ -23,34 +25,35 @@ TradeJS также хранит account-specific настройки в Redis-з�
 - `TG_BOT_TOKEN`
 - `TG_CHAT_ID`
 
-В web UI этими значениями управляет drawer настроек аккаунта, который открывается через шестеренку в левом сайдбаре.
+В веб-интерфейсе эти значения находятся в панели настроек счёта. Она открывается
+кнопкой с шестерёнкой в левом боковом меню.
 
 ## Сервисы данных
 
 - `REDIS_HOST`, `REDIS_PORT`
 - `PG_HOST`, `PG_PORT`, `PG_USER`, `PG_PASSWORD`, `PG_DATABASE`
-- `ML_GRPC_ADDRESS` (для runtime-инференса)
+- `ML_GRPC_ADDRESS` (адрес сервиса ML-инференса)
 
-## Signals daemon и streaming
+## Фоновая обработка сигналов и поток свечей
 
-- `SIGNALS_PARALLEL` — concurrent symbol evaluations, default `4`.
-- `SIGNALS_DAEMON_SETTLE_DELAY_MS` — delay после candle boundary, default `5000`.
-- `SIGNALS_DAEMON_MAX_LIVE_BARS` — bounded sequential bars до detector-state rebuild.
-- `SIGNALS_DAEMON_HEAP_MB` — heap cap daemon в supplied container entrypoint.
-- `SIGNALS_KLINE_WS_ENABLED` — Bybit daemon kline stream; `0` включает REST-only.
-- `SIGNALS_KLINE_WS_WAIT_MS` — ожидание confirmed WebSocket closes до REST recovery.
-- `MARKET_WS_HOST`, `MARKET_WS_PORT` — binding dashboard candle gateway.
-- `MARKET_WS_HEAP_MB` — heap cap gateway в supplied container entrypoint.
+- `SIGNALS_PARALLEL` — число символов, одновременно обрабатываемых для сигналов. По умолчанию `4`.
+- `SIGNALS_DAEMON_SETTLE_DELAY_MS` — задержка после границы свечи. По умолчанию `5000` мс.
+- `SIGNALS_DAEMON_MAX_LIVE_BARS` — предел числа последовательных свечей до пересборки состояния детектора.
+- `SIGNALS_DAEMON_HEAP_MB` — ограничение кучи для фонового процесса в стандартной точке входа контейнера.
+- `SIGNALS_KLINE_WS_ENABLED` — поток свечей Bybit для фонового процесса. Значение `0` оставляет только REST.
+- `SIGNALS_KLINE_WS_WAIT_MS` — время ожидания подтверждённого закрытия свечи по WebSocket до повтора через REST.
+- `MARKET_WS_HOST`, `MARKET_WS_PORT` — адрес и порт WebSocket-шлюза свечей для панели мониторинга.
+- `MARKET_WS_HEAP_MB` — ограничение кучи шлюза в стандартной точке входа контейнера.
 
-## Hyperliquid whale context
+## Контекст крупных участников Hyperliquid
 
-- `HYPERLIQUID_WHALE_CONTEXT_ENABLED` — разрешить whale context для runtime mode.
-- `HYPERLIQUID_WHALE_BACKFILL_ENABLED` — разрешить automatic network backfill; default off.
-- `HYPERLIQUID_WHALE_MIN_COVERAGE_PCT` — minimum signal-time coverage.
-- `HYPERLIQUID_WHALE_CONCURRENCY` — historical recovery concurrency.
-- `HYPERLIQUID_WHALE_RATE_LIMIT_WEIGHT` — request-rate budget weight.
-- `HYPERLIQUID_WHALE_CONTEXT_STAGE_TIMEOUT_MS` — market-context stage timeout.
-- `HYPERLIQUID_WS_URL` — optional public stream endpoint override.
+- `HYPERLIQUID_WHALE_CONTEXT_ENABLED` — разрешить учёт крупных участников в текущем режиме исполнения.
+- `HYPERLIQUID_WHALE_BACKFILL_ENABLED` — разрешить автоматическую дозагрузку из сети. По умолчанию отключена.
+- `HYPERLIQUID_WHALE_MIN_COVERAGE_PCT` — минимальное покрытие к моменту сигнала.
+- `HYPERLIQUID_WHALE_CONCURRENCY` — число параллельных запросов при восстановлении истории.
+- `HYPERLIQUID_WHALE_RATE_LIMIT_WEIGHT` — доля бюджета частоты запросов.
+- `HYPERLIQUID_WHALE_CONTEXT_STAGE_TIMEOUT_MS` — предел времени для этапа рыночного контекста.
+- `HYPERLIQUID_WS_URL` — необязательный адрес публичного потока.
 
 ## Обучение ML
 
@@ -65,28 +68,30 @@ TradeJS также хранит account-specific настройки в Redis-з�
 ## Практические рекомендации
 
 - Не храните секреты в репозитории.
-- Для продакшена используйте secret manager.
+- В рабочей среде получайте секреты из системы управления секретами.
 - Для локального запуска выполните `npx @tradejs/cli infra-init` один раз, затем `npx @tradejs/cli infra-up`.
-- Перед live-запуском проверяйте окружение через `npx @tradejs/cli doctor`.
-- Для user-scoped API keys и токенов предпочитайте drawer настроек аккаунта вместо одного общего `.env` секрета на всех операторов.
-- `AI_API_*` и `TG_*` являются полями user record, а не app environment variables; храните их в Redis-записи пользователя.
+- Перед рабочим запуском проверяйте окружение через `npx @tradejs/cli doctor`.
+- Ключи API и токены конкретного пользователя храните через панель настроек счёта, а не в общем
+  секрете `.env` для всех операторов.
+- `AI_API_*` и `TG_*` — поля записи пользователя, а не переменные окружения приложения. Храните их в Redis-записи
+  пользователя.
 
 ## Владение репозиториями
 
-В официальной self-hosted схеме secret-free application defaults коммитятся в
-`TradeJS-Project/deploy/runtime.env`. У каждой группы GitHub Actions secrets есть
+В официальной схеме самостоятельного размещения базовые настройки без секретов хранятся в
+`TradeJS-Project/deploy/runtime.env`. У каждой группы секретов GitHub Actions есть
 один канонический владелец:
 
 | Имя | Канонический владелец | Правило миграции |
 | --- | --- | --- |
-| `NPM_TOKEN` | каждый публикующий npm source repository или один organization secret, ограниченный этим набором | Не переносите в Project или Deploy. |
-| `DEPLOY_REPOSITORY_TOKEN` | repository secret в `TradeJS-Project` | Token разрешает только неизменяемую передачу в `TradeJS-Deploy`. |
-| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | repository secrets в `TradeJS-Deploy` или organization secrets, доступные только Deploy | Уберите server access из TradeJS, Project, Site и Docs. |
-| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | repository secrets в `TradeJS-Deploy` | Эти credentials принадлежат server-side research agent. |
-| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | repository secrets в `TradeJS-Deploy` | Deploy инжектирует значения; fallback на старый server `.env` для `PG_PASSWORD` отсутствует. |
-| `RELEASE_DEPLOY_KEY` | нигде | Удалите: stable release в TradeJS использует workflow-scoped `GITHUB_TOKEN`. |
+| `NPM_TOKEN` | каждый публикующий npm-пакеты репозиторий или один секрет организации, ограниченный этим набором | Не переносите в Project или Deploy. |
+| `DEPLOY_REPOSITORY_TOKEN` | секрет репозитория `TradeJS-Project` | Токен разрешает только неизменяемую передачу в `TradeJS-Deploy`. |
+| `SSH_HOST`, `SSH_USER`, `SSH_KEY` | секреты репозитория `TradeJS-Deploy` или секреты организации, доступные только Deploy | Уберите доступ к серверу из TradeJS, Project, Site и Docs. |
+| `GIT_SSH_PRIVATE_KEY`, `AGENT_GITHUB_TOKEN` | секреты репозитория `TradeJS-Deploy` | Эти учётные данные принадлежат исследовательскому агенту на сервере. |
+| `NEXTAUTH_SECRET`, `PG_PASSWORD`, `REDISINSIGHT_HTPASSWD`, `COINALYZE_API_KEY` | секреты репозитория `TradeJS-Deploy` | Deploy передаёт значения в окружение. Для `PG_PASSWORD` нет запасного чтения из старого `.env` сервера. |
+| `RELEASE_DEPLOY_KEY` | нигде | Удалите: стабильный выпуск TradeJS использует `GITHUB_TOKEN`, ограниченный текущим процессом GitHub Actions. |
 
-`GITHUB_TOKEN` создаётся GitHub для каждого workflow run; его нельзя копировать
-между репозиториями. Текущие workflows не используют `${{ vars.* }}`. Локальные
-research secrets остаются в `TradeJS-Project/.env`, а private стратегии
-устанавливаются с отдельным read-only registry token.
+GitHub создаёт `GITHUB_TOKEN` для каждого запуска GitHub Actions. Этот токен нельзя копировать между
+репозиториями. Текущие процессы не используют `${{ vars.* }}`. Локальные секреты для исследований
+остаются в `TradeJS-Project/.env`, а закрытые стратегии устанавливаются с отдельным токеном реестра, который
+имеет только право чтения.

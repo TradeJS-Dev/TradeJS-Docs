@@ -2,7 +2,8 @@
 title: Maintenance and Debug CLI Scripts
 ---
 
-This page covers operational scripts that are useful but easy to miss.
+The CLI includes commands for local services, diagnostics, data maintenance,
+and smoke tests.
 
 ## Dev Infra
 

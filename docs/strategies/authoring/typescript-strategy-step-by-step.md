@@ -4,7 +4,8 @@ title: Build a TypeScript Trading Strategy Step by Step
 description: 'Build a complete moving-average crossover strategy in TypeScript with TradeJS StrategyAPI, public package imports, configuration, registration, and tests.'
 ---
 
-This guide shows the shortest practical path to build a custom TypeScript strategy with `StrategyAPI`.
+Build a custom TypeScript strategy with `StrategyAPI`, register it as a plugin,
+and verify it with tests.
 
 Example strategy: simple MA crossover.
 

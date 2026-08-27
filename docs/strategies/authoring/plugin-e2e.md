@@ -2,7 +2,8 @@
 title: Plugin Development End-to-End
 ---
 
-This guide outlines the full plugin flow from local coding to reuse.
+A reusable plugin starts as a package, is registered in `tradejs.config.ts`,
+and is then tested through the public TradeJS interfaces.
 
 ## 1. Create Plugin Package
 

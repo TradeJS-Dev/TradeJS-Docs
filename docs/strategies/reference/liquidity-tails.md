@@ -111,6 +111,7 @@ The strategy stores:
 
 ## Validation Notes
 
-Check zone age, broken-zone behavior, and retest distance before comparing results. This strategy can be materially affected by candle wick quality and provider differences.
-When scale-ins are enabled, evaluate basket-level maximum loss and connector
-support for increasing an existing position, not just the first entry.
+Check zone age, broken-zone behavior, and retest distance before comparing
+results. Candle wick quality and provider differences can change the result.
+When scale-ins are enabled, evaluate basket-level maximum loss and confirm that
+the connector can increase an existing position.

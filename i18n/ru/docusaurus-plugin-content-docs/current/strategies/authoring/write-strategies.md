@@ -3,7 +3,9 @@ sidebar_position: 7
 title: Как создавать стратегии
 ---
 
-Эта страница объясняет базовый контракт стратегии в TradeJS и показывает, где именно размещать логику.
+В TradeJS решение стратегии описывается небольшим типизированным
+контрактом. Его можно реализовать на TypeScript или связать с отдельным
+файлом Pine.
 
 TradeJS поддерживает два пути создания стратегий:
 
@@ -12,8 +14,7 @@ TradeJS поддерживает два пути создания стратег
 
 ## Типовая структура стратегии
 
-В каждом пакете стратегии — публичном `@tradejs/strategy-*` или вашем
-публичном/private npm-пакете — обычно есть:
+В публичном пакете `@tradejs/strategy-*` или в вашем npm-пакете обычно есть:
 
 - `config.ts`
 - `core.ts`
@@ -24,7 +25,7 @@ TradeJS поддерживает два пути создания стратег
 - `adapters/ml.ts` (опционально)
 - `hooks.ts` (опционально)
 
-## Контракт runtime
+## Контракт среды исполнения
 
 `core.ts` возвращает один из трех вариантов:
 
@@ -32,25 +33,25 @@ TradeJS поддерживает два пути создания стратег
 - `entry`
 - `exit`
 
-Общий runtime выполняет:
+Общая среда исполнения отвечает за:
 
-- enrichment сигнала (AI/ML)
-- policy-гейты
+- дополнение сигнала данными ИИ и модели машинного обучения
+- проверки правил
 - исполнение ордера
-- lifecycle-хуки
+- хуки жизненного цикла
 
 Файлы:
 
 - `@tradejs/node/strategies`
 - `@tradejs/core/strategies`
-- [Strategy Runtime Hooks](./strategy-hooks) (каталог lifecycle-хуков)
+- [Хуки жизненного цикла стратегий](./strategy-hooks)
 
 Правило импортов:
 
-- импортируйте Node runtime wiring из `@tradejs/node/strategies`
-- импортируйте pure strategy helper’ы из `@tradejs/core/strategies`
+- импортируйте код среды исполнения Node.js из `@tradejs/node/strategies`
+- импортируйте чистые вспомогательные функции стратегии из `@tradejs/core/strategies`
 - импортируйте общие контракты из `@tradejs/types`
-- избегайте непубличных deep-imports
+- не импортируйте непубличные внутренние модули напрямую
 
 ## Пример минимального `core.ts`
 
@@ -89,13 +90,13 @@ export const createMyStrategyCore: CreateStrategyCore<
 
 ## Правила доступа к данным через StrategyAPI
 
-- Используйте `getDecisionPriceContext()` для текущей закрытой свечи, timestamp и цены в момент сигнала.
-- Используйте `getCurrentIndicatorsContext()` для типизированного indicator snapshot и `baseContext`. Тип snapshot наследуется из `CreateStrategyCore`; не передавайте generic-параметр самому методу.
+- Используйте `getDecisionPriceContext()` для текущей закрытой свечи, времени и цены в момент сигнала.
+- Используйте `getCurrentIndicatorsContext()` для типизированного снимка индикаторов и `baseContext`. Тип снимка наследуется из `CreateStrategyCore`; не передавайте параметр типа самому методу.
 - Вызывайте `getCurrentPosition()` один раз и определяйте наличие позиции по `qty`.
-- Полная история рынка не доступна через `StrategyAPI`. Stateful detector должен восстановиться из initialization data и хранить только необходимое bounded rolling window.
-- Возвращайте выход через `strategyApi.exit({ code, direction })`. Цена и timestamp выхода определяются по текущей закрытой свече и не могут быть переопределены стратегией.
+- Полная история рынка недоступна через `StrategyAPI`. Детектор с внутренним состоянием должен восстановиться из начальных данных и хранить только необходимое скользящее окно ограниченного размера.
+- Возвращайте выход через `strategyApi.exit({ code, direction })`. Цена и время выхода определяются по текущей закрытой свече и не могут быть переопределены стратегией.
 
-## Где задается runtime-поведение
+## Где настраивается среда исполнения
 
 - `manifest.ts`:
 
@@ -107,17 +108,17 @@ export const createMyStrategyCore: CreateStrategyCore<
 - `tradejs.config.ts`:
 
   - `hooks` для общей логики сразу на все стратегии текущего проекта
-  - удобно для общих risk rules, cross-strategy управления позициями и shared order filters
+  - подходит для общих правил риска, управления позициями нескольких стратегий и общих фильтров ордеров
 
 - `adapters/*`:
 
-  - mapping policy из конфига (`mapEntryRuntimeFromConfig`)
-  - нормализация payload для AI/ML
+  - преобразование правил из конфигурации (`mapEntryRuntimeFromConfig`)
+  - подготовка данных для ИИ и модели машинного обучения
 
 ## Пошаговые руководства
 
-- [TypeScript Strategy Step by Step](./typescript-strategy-step-by-step) — полный путь для TypeScript-стратегии
-- [Pine Strategy Step by Step](./pine-strategy-step-by-step) — полный путь для Pine-стратегии
+- [Стратегия на TypeScript: пошаговое руководство](./typescript-strategy-step-by-step)
+- [Стратегия на Pine: пошаговое руководство](./pine-strategy-step-by-step)
 
 ## Внешняя стратегия как npm-плагин
 

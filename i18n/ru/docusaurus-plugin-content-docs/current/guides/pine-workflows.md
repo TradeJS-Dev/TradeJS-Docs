@@ -1,20 +1,21 @@
 ---
-title: Pine Script-inspired workflows
+title: Рабочий процесс для Pine Script
 ---
 
-TradeJS поддерживает Pine Script-inspired workflow через Node runtime helpers и Pine-backed strategy modules.
+TradeJS позволяет хранить исходник Pine близко к исходной форме, а для бэктеста,
+запуска и сохранения результатов использовать обычный модуль стратегии.
 
 Типовая форма:
 
-- Pine source лежит в отдельном `.pine` файле;
-- strategy runtime загружает его;
-- Pine output мапится в TradeJS signals, figures и order plans;
-- поведение проверяется backtests.
+- исходник Pine хранится в отдельном файле `.pine`;
+- среда исполнения стратегии загружает его;
+- результат Pine преобразуется в сигналы, графики и планы ордеров TradeJS;
+- поведение проверяется бэктестами.
 
-Built-in пример:
+Встроенный пример:
 
 - [AdaptiveMomentumRibbon](../strategies/reference/adaptive-momentum-ribbon)
 
-Deep dive:
+Пошаговое руководство:
 
-- [Pine strategy step by step](../strategies/authoring/pine-strategy-step-by-step)
+- [Как создать Pine-стратегию](../strategies/authoring/pine-strategy-step-by-step)

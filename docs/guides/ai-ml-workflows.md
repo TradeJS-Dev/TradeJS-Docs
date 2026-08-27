@@ -21,8 +21,8 @@ npx @tradejs/cli ai-train --localOnly
 npx @tradejs/cli ai-pocket-search --strategy TrendLine
 ```
 
-Evaluate sample size, returns after costs, drawdown, period stability, and
-overfitting risk—not only the approval rate.
+The approval rate alone is not enough. Evaluate sample size, returns after
+costs, drawdown, period stability, and overfitting risk.
 
 ## Prepare an ML Model
 

@@ -26,7 +26,8 @@ Bad data can make a strategy look better or worse than it is. Check gaps, duplic
 
 ## Fees and Slippage
 
-Fees and slippage can materially change results. Model them explicitly where possible, and compare backtest assumptions with observed runtime fills.
+Fees and slippage can change results. Model them explicitly where possible,
+and compare the backtest assumptions with actual fills from the running system.
 
 ## No Guarantees
 

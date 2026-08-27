@@ -2,7 +2,8 @@
 title: Strategy Runtime Hooks
 ---
 
-This section documents the lifecycle hook contract used by the shared strategy runtime.
+The shared strategy runtime calls lifecycle hooks at defined points before and
+after strategy decisions, enrichment, and order placement.
 
 Hooks can be declared in two places:
 
@@ -158,7 +159,9 @@ type GateOutput = {
 - Keep strategy-only behavior in `manifest.hooks` when it should apply to one strategy only.
 - `entry.runtime.raw` is the raw runtime returned by `core.ts` through `strategyApi.entry(...)`.
 - `entry.runtime.resolved` is the runtime actually used by the shared runtime after merging manifest defaults, adapter config, and the raw decision runtime.
-- `afterEnrichMl` is about the ML stage, not only ML success. Use `ml.attempted`, `ml.applied`, and `ml.skippedReason` to tell whether ML actually ran.
+- `afterEnrichMl` reports the whole ML stage, including attempts that did not
+  apply a model. Use `ml.attempted`, `ml.applied`, and `ml.skippedReason` to
+  tell whether ML actually ran.
 - `afterEnrichAi` uses the same pattern for AI with the `ai` object.
 - `afterCoreDecision` is strict post-`core.ts`. If the candle was short-circuited in `onBar`, use `afterBarDecision` for logic that still must observe the final result of that candle.
 - Non-blocking hooks swallow errors: the runtime logs the failure, calls `onRuntimeError`, and continues.

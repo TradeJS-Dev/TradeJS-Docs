@@ -2,9 +2,12 @@
 title: Синхронизация данных
 ---
 
-В этой статье: как обновлять исторические данные через `npx @tradejs/cli backtest --updateOnly` и `npx @tradejs/cli continuity`, и как выбирать конкретную биржу.
+Обновляйте историю рынка командой
+`npx @tradejs/cli backtest --updateOnly`, а пропуски ищите через
+`npx @tradejs/cli continuity`. Обе команды позволяют выбрать конкретную
+биржу.
 
-Требование к локальной инфраструктуре:
+Сначала запустите локальные сервисы:
 
 ```bash
 npx @tradejs/cli infra-init
@@ -15,7 +18,7 @@ npx @tradejs/cli infra-up
 
 ## 1. `npx @tradejs/cli backtest --updateOnly`
 
-Используйте `backtest` в update-only режиме:
+Запустите `backtest` только для обновления данных:
 
 ```bash
 npx @tradejs/cli backtest --updateOnly

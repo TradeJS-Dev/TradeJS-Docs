@@ -2,33 +2,37 @@
 title: Хуки жизненного цикла стратегий
 ---
 
-В этом разделе описан контракт lifecycle-хуков, который использует shared runtime стратегии.
+Среда исполнения вызывает хуки, то есть обработчики жизненного цикла, до и
+после решения стратегии, оценки с помощью ИИ и машинного обучения, а также
+постановки ордера.
 
 Хуки можно объявлять в двух местах:
 
 - локально для стратегии в `manifest.ts` через `manifest.hooks`
 - на уровне проекта в `tradejs.config.ts` через `hooks`
 
-Project-level hooks применяются ко всем стратегиям, которые загружены текущим config. Strategy hooks из manifest при этом не исчезают: они merge’ятся дополнительно. Для одного и того же stage сначала выполняются project hooks, потом hooks из manifest стратегии.
+Обработчики из `tradejs.config.ts` применяются ко всем стратегиям проекта.
+Обработчики из `manifest.ts` добавляются к ним. На каждом этапе сначала работают
+обработчики проекта, а затем обработчики стратегии.
 
 ## Порядок вызова
 
-1. [onInit](./strategy-hooks/on-init) — один раз при создании runtime
+1. [onInit](./strategy-hooks/on-init) — один раз при создании среды исполнения
 2. [onBar](./strategy-hooks/on-bar) — на каждой свече до `core.ts`
 3. [afterCoreDecision](./strategy-hooks/after-core-decision) — после `core.ts`, только если `core.ts` вообще выполнялся
 4. [afterBarDecision](./strategy-hooks/after-bar-decision) — после финального решения по свече, независимо от того, пришло оно из `onBar` или из `core.ts`
 5. [onSkip](./strategy-hooks/on-skip) — только для `skip`
-6. [beforeClosePosition](./strategy-hooks/before-close-position) — gate, может заблокировать закрытие
+6. [beforeClosePosition](./strategy-hooks/before-close-position) — проверка, которая может заблокировать закрытие
 7. [afterEnrichMl](./strategy-hooks/after-enrich-ml) — только когда есть `decision.signal`
 8. [afterEnrichAi](./strategy-hooks/after-enrich-ai) — только когда есть `decision.signal`
-9. [beforeEntryGate](./strategy-hooks/before-entry-gate) — gate, может заблокировать вход
+9. [beforeEntryGate](./strategy-hooks/before-entry-gate) — проверка, которая может заблокировать вход
 10. [beforePlaceOrder](./strategy-hooks/before-place-order) — прямо перед вызовом коннектора
 11. [afterPlaceOrder](./strategy-hooks/after-place-order) — после успешной постановки ордера
-12. [onRuntimeError](./strategy-hooks/on-runtime-error) — на любой runtime/hook error
+12. [onRuntimeError](./strategy-hooks/on-runtime-error) — при любой ошибке среды исполнения или хука
 
-## Канонический shape params
+## Общая структура параметров
 
-Теперь каждый хук получает stage-specific подмножество одного и того же вложенного объекта:
+Каждый хук получает нужную для своего этапа часть одного и того же вложенного объекта:
 
 ```ts
 {
@@ -142,7 +146,7 @@ Project-level hooks применяются ко всем стратегиям, �
 }
 ```
 
-Gate-хуки возвращают такой shape, если хотят заблокировать исполнение:
+Хуки-проверки возвращают такой объект, если хотят заблокировать исполнение:
 
 ```ts
 {
@@ -153,13 +157,13 @@ Gate-хуки возвращают такой shape, если хотят заб�
 
 ## Важные замечания
 
-- Используйте `tradejs.config.ts -> hooks`, когда логика должна применяться сразу ко всем стратегиям проекта: например, для общих risk rules, cross-strategy управления позициями или общих фильтров на постановку ордеров.
-- `beforeSignals` и `afterSignals` тоже являются project-level hooks в `tradejs.config.ts`, но относятся к lifecycle команды `signals`, а не к per-strategy runtime, который описан на этой странице.
+- Используйте `tradejs.config.ts -> hooks`, когда логика должна применяться сразу ко всем стратегиям проекта: например, для общих правил риска, управления позициями нескольких стратегий или общих фильтров ордеров.
+- `beforeSignals` и `afterSignals` тоже задаются на уровне проекта в `tradejs.config.ts`, но относятся к жизненному циклу команды `signals`, а не к среде исполнения отдельной стратегии, описанной на этой странице.
 - Логику, которая нужна только одной стратегии, оставляйте в `manifest.hooks`.
-- `entry.runtime.raw` — это raw runtime, который вернул `core.ts` через `strategyApi.entry(...)`.
-- `entry.runtime.resolved` — это runtime, который реально использует shared runtime после merge manifest defaults, adapter config и raw decision runtime.
-- `afterEnrichMl` описывает именно ML stage, а не только успешный ML. Смотри `ml.attempted`, `ml.applied` и `ml.skippedReason`.
-- `afterEnrichAi` использует тот же паттерн через объект `ai`.
-- `afterCoreDecision` теперь строго post-`core.ts`. Если свеча была short-circuit’нута в `onBar`, а тебе все равно нужно увидеть итоговое решение по свече, используй `afterBarDecision`.
-- Ошибки non-blocking хуков проглатываются: runtime логирует их, вызывает `onRuntimeError` и продолжает выполнение.
-- Ошибки в gate-хуках (`beforeClosePosition`, `beforeEntryGate`) тоже проглатываются; runtime ведет себя так, будто хук вернул `undefined`.
+- `entry.runtime.raw` содержит исходные настройки, которые `core.ts` вернул через `strategyApi.entry(...)`.
+- `entry.runtime.resolved` содержит итоговые настройки после объединения значений из манифеста, конфигурации адаптера и решения стратегии.
+- `afterEnrichMl` описывает весь этап машинного обучения, а не только успешный результат. Проверяйте `ml.attempted`, `ml.applied` и `ml.skippedReason`.
+- `afterEnrichAi` работает так же через объект `ai`.
+- `afterCoreDecision` вызывается строго после `core.ts`. Если `onBar` завершил обработку свечи раньше, а вам всё равно нужно итоговое решение, используйте `afterBarDecision`.
+- Ошибки неблокирующих хуков не прерывают работу: среда исполнения записывает их в журнал, вызывает `onRuntimeError` и продолжает выполнение.
+- Ошибки в хуках-проверках (`beforeClosePosition`, `beforeEntryGate`) тоже не прерывают работу. Среда исполнения ведёт себя так, будто хук вернул `undefined`.

@@ -2,7 +2,7 @@
 title: Плагины
 ---
 
-TradeJS загружает strategies, indicators и connectors как plugins.
+TradeJS загружает стратегии, индикаторы и коннекторы как плагины.
 
 Регистрация в `tradejs.config.ts`:
 
@@ -17,12 +17,13 @@ export default defineConfig(basePreset, {
 });
 ```
 
-Ожидаемые exports:
+Каждый вид плагина экспортирует своё поле:
 
-- strategy plugin: `strategyEntries`;
-- indicator plugin: `indicatorEntries`;
-- connector plugin: `connectorEntries`.
+- плагин стратегии: `strategyEntries`;
+- плагин индикатора: `indicatorEntries`;
+- плагин коннектора: `connectorEntries`.
 
-Используйте helpers из `@tradejs/core/config`: `defineStrategyPlugin`, `defineIndicatorPlugin`, `defineConnectorPlugin`.
+Для определения плагинов используйте `defineStrategyPlugin`,
+`defineIndicatorPlugin` и `defineConnectorPlugin` из `@tradejs/core/config`.
 
 Не импортируйте из `@tradejs/*/src/*`.

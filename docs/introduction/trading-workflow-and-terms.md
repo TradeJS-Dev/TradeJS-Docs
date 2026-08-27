@@ -2,9 +2,8 @@
 title: Trading Workflow and Terms
 ---
 
-TradeJS uses standard systematic-trading terminology wherever possible. This
-page defines the few terms needed to follow the documentation and separates
-research, validation, and live execution.
+TradeJS uses standard systematic-trading terms. The terms below distinguish
+research, validation, and live execution throughout the documentation.
 
 ## Trading Objects
 
@@ -34,7 +33,7 @@ research, validation, and live execution.
   the configuration.
 - **Replay:** evaluation of a specific deployed configuration over historical
   closed candles. Replay is used to reproduce decisions and diagnose
-  differences; it is not a substitute for a robust research design.
+  differences; it is not a substitute for a sound research design.
 - **Runtime parity:** comparison between decisions recorded during live
   evaluation and decisions reconstructed for the same symbols and time window.
 

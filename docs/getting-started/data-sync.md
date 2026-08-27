@@ -2,9 +2,11 @@
 title: Data Sync
 ---
 
-This page explains how to refresh market history via `npx @tradejs/cli backtest --updateOnly` and `npx @tradejs/cli continuity`, and how to select a specific exchange.
+Use `npx @tradejs/cli backtest --updateOnly` to refresh market history and
+`npx @tradejs/cli continuity` to find gaps. Both commands can target a specific
+exchange.
 
-Local infra prerequisite:
+Start the local services first:
 
 ```bash
 npx @tradejs/cli infra-init

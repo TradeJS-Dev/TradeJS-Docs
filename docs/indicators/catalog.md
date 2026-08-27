@@ -2,7 +2,8 @@
 title: Indicator Catalog
 ---
 
-This page lists indicators produced by the shared indicator pipeline and consumed by strategy runtime.
+The shared indicator pipeline calculates the fields listed below for the
+strategy runtime.
 
 Primary implementation:
 

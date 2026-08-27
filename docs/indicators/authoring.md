@@ -3,7 +3,8 @@ title: Write Custom TypeScript Indicators
 description: 'Create a custom TypeScript indicator plugin, register it in tradejs.config.ts, calculate values from market data, and render the result in a TradeJS chart.'
 ---
 
-This guide shows how to add your own TypeScript indicator and render it in the TradeJS chart.
+Create a TypeScript indicator plugin, register it in `tradejs.config.ts`, and
+add its values to a TradeJS chart.
 
 Custom TradeJS indicators are authored as TypeScript plugins. Standalone Pine indicator plugins are not currently supported; Pine support is limited to strategy modules.
 

@@ -50,8 +50,8 @@ npx @tradejs/cli results \
 
 Evaluate the selected configuration on untouched data and across relevant
 market regimes. Stress fees, slippage, entry delay, spread, and nearby parameter
-values. Review drawdown, recovery time, exposure, turnover, concentration, and
-the full trade distribution—not only aggregate profit.
+values. Review the full trade distribution, including drawdown, recovery time,
+exposure, turnover, and concentration. Aggregate profit alone is not enough.
 
 Reject the candidate if its result depends on a narrow parameter point,
 unrealistic fills, a few symbols, or a small number of trades.

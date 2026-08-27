@@ -24,7 +24,8 @@ Avoid treating any backtest result as proof that a strategy will work live. Mark
 
 ## Not a Magic Trading Bot
 
-TradeJS can automate parts of a trading workflow, but automation only executes configured logic. It does not create a robust strategy by itself.
+TradeJS can automate parts of a trading workflow, but automation only executes
+configured logic. It does not create a sound strategy by itself.
 
 Before live execution, validate:
 

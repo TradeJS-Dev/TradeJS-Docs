@@ -2,19 +2,20 @@
 title: Каталог индикаторов
 ---
 
-На этой странице перечислены индикаторы, которые строит общий indicator pipeline и использует strategy runtime.
+Общий конвейер индикаторов рассчитывает перечисленные ниже поля для среды
+исполнения стратегий.
 
 Основная реализация:
 
 - `@tradejs/core/indicators`
 
-## 1. Базовый Indicator Snapshot
+## 1. Базовый снимок индикаторов
 
 Поля `IndicatorSnapshot` на каждую свечу:
 
 - `maFast`, `maMedium`, `maSlow` (SMA)
 - `atr`
-- `atrPct` (отношение short ATR% SMA к long ATR% SMA)
+- `atrPct` (отношение короткой SMA для ATR% к длинной)
 - `bbUpper`, `bbMiddle`, `bbLower`
 - `obv`, `smaObv`
 - `macd`, `macdSignal`, `macdHistogram`

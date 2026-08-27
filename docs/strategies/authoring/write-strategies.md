@@ -3,7 +3,8 @@ sidebar_position: 7
 title: Creating Strategies
 ---
 
-This page explains the core strategy contract in TradeJS and where to place strategy logic.
+TradeJS keeps strategy decisions in a small, typed contract. You can implement
+that contract in TypeScript or connect a dedicated Pine source file.
 
 TradeJS supports two strategy creation paths:
 
@@ -12,8 +13,8 @@ TradeJS supports two strategy creation paths:
 
 ## Typical Strategy Layout
 
-Each strategy package—whether a public `@tradejs/strategy-*` repository or your
-own public/private npm package—usually has:
+Each public `@tradejs/strategy-*` package and each custom npm package usually
+has:
 
 - `config.ts`
 - `core.ts`

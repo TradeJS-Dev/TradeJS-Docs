@@ -7,8 +7,8 @@ description: 'Learn how TradeJS replays a trading strategy over historical candl
 
 A TradeJS backtest applies one strategy configuration to historical candles and
 simulates its entries, exits, and position management. Use it to test a stated
-hypothesis and compare configurations under the same assumptions—not as a
-forecast of future returns.
+hypothesis and compare configurations under the same assumptions. A backtest
+does not forecast future returns.
 
 ## Define the Test Before Running It
 

@@ -2,7 +2,8 @@
 title: Add a New Exchange Connector
 ---
 
-This guide explains how to add a new exchange connector and where integration points are.
+Add an exchange connector as a typed plugin, register it in
+`tradejs.config.ts`, and verify the CLI paths that use it.
 
 Important:
 

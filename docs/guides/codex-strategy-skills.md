@@ -129,15 +129,14 @@ The operator may instead name one different historically promising candidate
 for prospective-only learning. This does not rewrite the earlier selection or
 turn contrary recent evidence into a positive historical verdict. The exact
 expression, direction policy, effective config, source/data lineage, evidence
-hashes, full-period metrics, and chart must remain reproducible; the maximum
+hashes, full-period metrics, and chart must remain reproducible. The maximum
 covered period must have positive net PnL and profit factor above 1.
 
 Before rollout, Codex writes a new immutable operator-authorization artifact
 that references the original selection and the contrary or underpowered
 evidence. Missing hashes, non-positive maximum-period economics, or a candidate
 that would require fresh tuning remain blockers. The mode changes only the
-authority for a risk-1 prospective test—it does not manufacture historical
-eligibility.
+authority for a risk-1 prospective test. Historical eligibility is unchanged.
 
 When the selected candidate includes unpublished strategy source, the skill
 uses the repository's configured release workflow to commit and push the

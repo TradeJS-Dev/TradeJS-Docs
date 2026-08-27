@@ -19,7 +19,7 @@ confirmation rules, and risk parameters come from the active strategy config.
 
 1. Replay pivots through `createCupAndHandleEngine(...)`.
 2. Validate cup depth, symmetry, duration, handle depth, and pattern age.
-   `CUPHANDLE_REQUIRE_PATH_QUALITY` can additionally require both cup legs to
+   `CUPHANDLE_REQUIRE_PATH_QUALITY` can also require both cup legs to
    progress on more than half of their comparable closes.
 3. Enter on `breakout`, `close_acceptance`, or `retest` according to `CUPHANDLE_ENTRY_MODE`.
 4. Optionally require relative breakout volume.

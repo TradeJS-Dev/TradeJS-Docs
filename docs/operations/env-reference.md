@@ -2,7 +2,8 @@
 title: Environment Variables Reference
 ---
 
-This page groups the most important environment variables by area.
+TradeJS reads the following environment variables for the app, infrastructure,
+and optional services.
 
 ## Application
 

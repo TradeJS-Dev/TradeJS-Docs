@@ -2,18 +2,19 @@
 title: Коннекторы
 ---
 
-Connectors дают доступ к market data и execution.
+Коннекторы дают стратегиям доступ к рыночным данным и исполнению ордеров.
 
-Default `basePreset` регистрирует built-in connector catalog из `@tradejs/connectors`.
+Стандартный `basePreset` регистрирует встроенный каталог коннекторов из
+`@tradejs/connectors`.
 
-Connector может поддерживать:
+Коннектор может поддерживать:
 
-- candle history;
-- ticker universe;
-- current prices;
-- positions;
-- order placement;
-- take-profit/stop-loss updates.
+- историю свечей;
+- список торгуемых символов;
+- текущие цены;
+- позиции;
+- постановку ордеров;
+- обновление тейк-профита и стоп-лосса.
 
 Пример:
 
@@ -22,7 +23,7 @@ npx @tradejs/cli backtest --connector bybit
 npx @tradejs/cli signals --connector bybit
 ```
 
-Custom connector подключается через `tradejs.config.ts`:
+Пользовательский коннектор подключается через `tradejs.config.ts`:
 
 ```ts
 export default defineConfig(basePreset, {
