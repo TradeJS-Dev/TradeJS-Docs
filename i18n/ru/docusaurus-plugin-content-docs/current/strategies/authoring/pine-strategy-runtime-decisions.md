@@ -7,7 +7,7 @@ description: 'Запустите подготовленный Pine-скрипт,
 Продолжите тот же файл `core.ts` фабрикой стратегии. Она использует функции из
 [предыдущего этапа](./pine-strategy-runtime-setup).
 
-```ts
+```text
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
   AdaptiveMomentumRibbonConfig
 > = async ({ config, symbol, data, loadPineScriptFile, strategyApi }) => {

@@ -7,7 +7,7 @@ description: 'Подключите функции Pine, преобразуйте
 Начните `core.ts` с импортов, имён значений, преобразования параметров и функции
 чтения результата, которые понадобятся стратегии.
 
-```ts
+```text
 import {
   getLatestPineBooleanPlotValues,
   getLatestPineNumberPlotValues,

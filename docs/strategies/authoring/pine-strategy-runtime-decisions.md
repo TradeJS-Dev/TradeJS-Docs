@@ -7,7 +7,7 @@ description: 'Run the prepared Pine script, handle position exits and invalidati
 Continue the same `core.ts` file with the strategy factory. It uses the helpers
 from the [previous step](./pine-strategy-runtime-setup).
 
-```ts
+```text
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
   AdaptiveMomentumRibbonConfig
 > = async ({ config, symbol, data, loadPineScriptFile, strategyApi }) => {

@@ -7,7 +7,7 @@ description: 'Import the Pine runtime helpers, map strategy configuration to Pin
 Start `core.ts` with the imports, plot names, input mapping, and snapshot reader
 used by the strategy decision function.
 
-```ts
+```text
 import {
   getLatestPineBooleanPlotValues,
   getLatestPineNumberPlotValues,
