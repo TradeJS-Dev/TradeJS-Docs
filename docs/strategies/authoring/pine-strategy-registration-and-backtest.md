@@ -214,4 +214,4 @@ In app (`/routes/backtest`) verify:
 - AMR entry/exit events
 - Pine-derived figures (`kcMidline`, `kcUpper`, `kcLower`, `invalidationLevel`)
 
-**Previous:** [Implement the runtime bridge](./pine-strategy-runtime-bridge). Return to the [walkthrough overview](./pine-strategy-step-by-step).
+**Previous:** [Run Pine and return strategy decisions](./pine-strategy-runtime-decisions). Return to the [walkthrough overview](./pine-strategy-step-by-step).

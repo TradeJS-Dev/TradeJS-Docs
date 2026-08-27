@@ -2,7 +2,8 @@ const auditUrls = [
   'http://localhost/',
   'http://localhost/getting-started/quickstart.html',
   'http://localhost/strategies/authoring/pine-strategy-step-by-step.html',
-  'http://localhost/strategies/authoring/pine-strategy-runtime-bridge.html',
+  'http://localhost/strategies/authoring/pine-strategy-runtime-setup.html',
+  'http://localhost/strategies/authoring/pine-strategy-runtime-decisions.html',
   'http://localhost/ru/getting-started/quickstart.html',
 ];
 

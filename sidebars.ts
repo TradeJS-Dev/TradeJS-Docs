@@ -97,7 +97,18 @@ const sidebars: SidebarsConfig = {
               items: [
                 'strategies/authoring/pine-strategy-pine-and-config',
                 'strategies/authoring/pine-strategy-figures',
-                'strategies/authoring/pine-strategy-runtime-bridge',
+                {
+                  type: 'category',
+                  label: t('Pine Runtime Bridge', 'Связь с Pine'),
+                  link: {
+                    type: 'doc',
+                    id: 'strategies/authoring/pine-strategy-runtime-bridge',
+                  },
+                  items: [
+                    'strategies/authoring/pine-strategy-runtime-setup',
+                    'strategies/authoring/pine-strategy-runtime-decisions',
+                  ],
+                },
                 'strategies/authoring/pine-strategy-registration-and-backtest',
               ],
             },

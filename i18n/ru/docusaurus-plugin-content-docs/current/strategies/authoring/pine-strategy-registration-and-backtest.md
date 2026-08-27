@@ -214,4 +214,4 @@ npx @tradejs/cli signals --user root --cacheOnly
 - события входа/выхода AMR
 - Pine-figures (`kcMidline`, `kcUpper`, `kcLower`, `invalidationLevel`)
 
-**Назад:** [реализуйте runtime-мост](./pine-strategy-runtime-bridge). Вернуться к [обзору руководства](./pine-strategy-step-by-step).
+**Назад:** [запустите Pine и верните решение стратегии](./pine-strategy-runtime-decisions). Вернуться к [обзору руководства](./pine-strategy-step-by-step).
