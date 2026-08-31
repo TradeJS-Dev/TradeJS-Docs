@@ -2,7 +2,7 @@
 title: Built-In Strategy Catalog
 ---
 
-`@tradejs/base` installs 20 packages that provide 21 strategy implementations.
+`@tradejs/base` installs 21 packages that provide 22 strategy implementations.
 They are inspectable starting points, not trading recommendations or validated
 parameter sets. Test every strategy with your own market, data source, costs,
 timeframe, liquidity, and risk limits.
@@ -37,6 +37,8 @@ strategy has its own package.
   cup with a measured target.
 - [HeadAndShoulders](./reference/head-and-shoulders) — standard or inverse
   head-and-shoulders neckline breakout.
+- [Dragon](./reference/dragon) — reversal from four pivots confirmed at a
+  projected trendline from head to hump.
 - [LiquidityTails](./reference/liquidity-tails) — reaction after a retest of a zone formed
   by large candle wicks.
 - [LiquidityZones](./reference/liquidity-zones) — reaction at liquidity zones derived from

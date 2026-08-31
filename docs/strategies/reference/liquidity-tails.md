@@ -66,6 +66,8 @@ Liquidity-tail model:
 - `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL`
 - `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS`
 - `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO`
+- `LIQUIDITY_TAILS_MIN_ORIGIN_VOLUME_REL20`
+- `LIQUIDITY_TAILS_REQUIRE_ORIGIN_BODY_ALIGNED`
 - `LIQUIDITY_TAILS_CLOSE_HOLD_BARS`
 - `LIQUIDITY_TAILS_STOP_ATR_BUFFER_MULT`
 - `LIQUIDITY_TAILS_STOP_BUFFER_PCT`
@@ -90,6 +92,10 @@ Shared groups:
 - AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
 - risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
+
+With deterministic `AI_MODE: "gate"`, the current local gate requires broad
+participation among the five largest market assets and a low negative
+directional indicator reading. Missing required context rejects the entry.
 
 ## Signal Payload
 

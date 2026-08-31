@@ -77,8 +77,8 @@ The documentation covers:
 - Pine strategy guide: https://docs.tradejs.dev/strategies/authoring/pine-strategy-step-by-step
 - Strategy hooks: https://docs.tradejs.dev/strategies/authoring/strategy-hooks
 - Plugin E2E: https://docs.tradejs.dev/strategies/authoring/plugin-e2e
-- Built-in strategy catalog (21 strategies): https://docs.tradejs.dev/strategies/reference
-- Newer built-ins include MarketFlushReversal, VolatilityCompressionBreakout, RelativeRotation, CupAndHandle, HeadAndShoulders, Grid, GridClassic, and HyperliquidConsensus.
+- Built-in strategy catalog (22 strategies): https://docs.tradejs.dev/strategies/reference
+- Newer built-ins include Dragon, MarketFlushReversal, VolatilityCompressionBreakout, RelativeRotation, CupAndHandle, HeadAndShoulders, Grid, GridClassic, and HyperliquidConsensus.
 
 ### Indicators
 
