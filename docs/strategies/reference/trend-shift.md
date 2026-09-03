@@ -38,28 +38,19 @@ When a position exists:
 - `TRENDSHIFT_OPPOSITE_FLIP_EXIT` when `TRENDSHIFT_EXIT_ON_OPPOSITE_FLIP=true` and the engine emits the opposite flip.
 - otherwise `POSITION_EXISTS`.
 
-## Config Parameters
+## Configuration keys
 
-Trend-band model:
+The keys are grouped by purpose. A listed `_LONG` or `_SHORT` key overrides
+the unsuffixed value for that direction.
 
-- `TRENDSHIFT_MULTIPLICATIVE_FACTOR`
-- `TRENDSHIFT_SLOPE`
-- `TRENDSHIFT_ATR_LENGTH`
-- `TRENDSHIFT_WIDTH_PCT`
-- `TRENDSHIFT_CONFIRM_FLIP_WITH_CLOSE`
-- `TRENDSHIFT_MIN_FLIP_DISTANCE_ATR`
-- `TRENDSHIFT_STOP_ATR_BUFFER_MULT`
-- `TRENDSHIFT_STOP_BUFFER_PCT`
-- `TRENDSHIFT_TARGET_R_MULT`
-- `TRENDSHIFT_EXIT_ON_OPPOSITE_FLIP`
-- `TRENDSHIFT_MAX_FIGURE_POINTS`
-
-Shared groups:
-
-- runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
-- AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
-- shared indicators: MA, OBV, ATR, BB, MACD fields
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the periods used to build shared market context and signal filters. |
+| Trend band | `TRENDSHIFT_MULTIPLICATIVE_FACTOR`, `TRENDSHIFT_SLOPE`, `TRENDSHIFT_ATR_LENGTH`, `TRENDSHIFT_WIDTH_PCT` | Set the dynamic band response, slope, ATR period, and width. |
+| Entry quality | `TRENDSHIFT_CONFIRM_FLIP_WITH_CLOSE`, `TRENDSHIFT_MIN_FLIP_DISTANCE_ATR`, `TRENDSHIFT_MIN_SIGNAL_BODY_STRENGTH`, `TRENDSHIFT_MIN_ADX` | Require close confirmation and set distance, candle-body, and trend-strength floors. |
+| Target, stop, and exit | `TRENDSHIFT_STOP_ATR_BUFFER_MULT`, `TRENDSHIFT_STOP_BUFFER_PCT`, `TRENDSHIFT_TARGET_R_MULT`, `TRENDSHIFT_TARGET_R_MULT_LONG`, `TRENDSHIFT_TARGET_R_MULT_SHORT`, `TRENDSHIFT_EXIT_ON_OPPOSITE_FLIP`, `TRENDSHIFT_OPPOSITE_EXIT_CONFIRMATION_BARS` | Set stop and directional target distances and configure a confirmed opposite-flip exit. |
+| Figures and side policy | `TRENDSHIFT_MAX_FIGURE_POINTS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Limit chart output, set the loss budget, and configure each direction. |
 
 ## Signal Payload
 

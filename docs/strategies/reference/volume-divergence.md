@@ -31,52 +31,21 @@ confirmation rules, and risk parameters come from the active strategy config.
 The strategy opens only when there is no active position.
 `core.ts` does not perform active exit management; closing is handled by TP/SL and runtime.
 
-## Config Parameters (What Each One Means)
+## Configuration keys
 
-### Shared Runtime Parameters
+Keys are grouped by the part of the strategy they control. A value of `0` or
+`false` disables the corresponding optional filter unless stated otherwise.
 
-- `ENV` — runtime mode.
-- `INTERVAL` — strategy timeframe.
-- `MAKE_ORDERS` — whether to execute orders.
-- `BACKTEST_PRICE_MODE` — backtest execution price mode.
-
-### AI/ML Parameters
-
-- `AI_ENABLED` — enables AI enrichment/gating.
-- `MIN_AI_QUALITY` — minimum AI quality.
-- `ML_ENABLED` — enables ML enrichment.
-- `ML_THRESHOLD` — ML threshold in runtime policy.
-
-### Trading and Risk Parameters
-
-- `CLOSE_OPPOSITE_POSITIONS` — close opposite position before new entry (hook-level).
-- `FEE_PERCENT` — fee in risk/reward calculations.
-- `MAX_LOSS_VALUE` — max loss value for quantity sizing.
-- `MAX_CORRELATION` — maximum allowed BTC correlation.
-
-### Divergence Model Parameters
-
-- `NORMALIZATION_LENGTH` — window used to normalize volume.
-- `PIVOT_LOOKBACK_LEFT` — candles to the left for pivot confirmation.
-- `PIVOT_LOOKBACK_RIGHT` — candles to the right for pivot confirmation.
-- `MIN_BARS_BETWEEN_PIVOTS` — minimum distance between pivot confirmations.
-- `MAX_BARS_BETWEEN_PIVOTS` — maximum distance between pivot confirmations.
-
-### `BULLISH` Scenario Parameters
-
-- `BULLISH.enable` — enable/disable bullish scenario.
-- `BULLISH.direction` — order direction.
-- `BULLISH.TP` — take-profit in percent.
-- `BULLISH.SL` — stop-loss in percent.
-- `BULLISH.minRiskRatio` — minimum allowed risk/reward.
-
-### `BEARISH` Scenario Parameters
-
-- `BEARISH.enable` — enable/disable bearish scenario.
-- `BEARISH.direction` — order direction.
-- `BEARISH.TP` — take-profit in percent.
-- `BEARISH.SL` — stop-loss in percent.
-- `BEARISH.minRiskRatio` — minimum allowed risk/reward.
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
+| AI and ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Control optional AI and ML enrichment and their acceptance thresholds. |
+| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `VOLUME_DIVERGENCE_STOP_ATR_BUFFER_MULT`, `VOLUME_DIVERGENCE_STOP_BUFFER_PCT`, `VOLUME_DIVERGENCE_TARGET_R_MULT` | Account for fees, size positions, and set the stop buffers and target R multiple. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the lookback periods used by market context and signal filters. |
+| Pivot search | `NORMALIZATION_LENGTH`, `PIVOT_LOOKBACK_LEFT`, `PIVOT_LOOKBACK_RIGHT`, `MIN_BARS_BETWEEN_PIVOTS`, `MAX_BARS_BETWEEN_PIVOTS` | Normalize volume and define how pivots are confirmed and spaced. |
+| Entry quality | `ALLOW_STRUCTURE_ADVANCE_ENTRY`, `MIN_DIVERGENCE_AMPLITUDE_ATR_RATIO`, `MIN_RECLAIM_PCT`, `MIN_CONFIRMATION_CANDLE_QUALITY` | Choose whether early structural entries are allowed and set the global divergence, reclaim, and candle-quality thresholds. |
+| Strength cap | `VOLUME_DIVERGENCE_MAX_STRENGTH`, `VOLUME_DIVERGENCE_MAX_STRENGTH_LONG`, `VOLUME_DIVERGENCE_MAX_STRENGTH_SHORT` | Reject signals above the global or directional divergence-strength limit. |
+| Direction policy | `BULLISH.*`, `BEARISH.*` | Enable each direction and set its minimum risk/reward, divergence amplitude, reclaim, confirmation quality, retest requirement, tolerance, age, and maximum confirmation distance. |
 
 ## Indicators Used (What Each One Means)
 

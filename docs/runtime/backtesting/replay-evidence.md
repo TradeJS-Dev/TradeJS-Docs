@@ -64,6 +64,12 @@ The publisher, sync, replay, and scorecard commands reject a record that does
 not satisfy this contract. They do not translate older runtime formats or infer
 missing identity from Redis, current source code, or evaluation names.
 
+If the selected window spans more than one deployment composition, publishing
+resolves every row against the current or a previously published verified
+snapshot and creates a separate immutable bundle for each
+`deploymentCompositionId`. A missing or conflicting snapshot stops publication
+instead of assigning historical rows to the current composition.
+
 These records can contain sensitive operational information. Restrict access,
 exclude credentials, and do not commit them to the application repository.
 
@@ -104,6 +110,11 @@ npx @tradejs/cli replay-runtime-evidence \
 ```
 
 Use `--replayKey` if several replay results cover the same window.
+
+The comparison keeps compact runs of closed-candle skip reasons and lists
+backtest entries excluded by lineage or window scope. This distinguishes a
+strategy that evaluated and skipped from an entry that was not comparable to
+the recorded runtime composition.
 
 ## Compare Execution
 

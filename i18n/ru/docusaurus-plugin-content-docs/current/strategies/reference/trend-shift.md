@@ -38,7 +38,19 @@ Entry codes:
 - `TRENDSHIFT_OPPOSITE_FLIP_EXIT`, когда `TRENDSHIFT_EXIT_ON_OPPOSITE_FLIP=true` и engine дает opposite flip.
 - иначе `POSITION_EXISTS`.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Суффиксы `_LONG` и `_SHORT` переопределяют
+общее значение для соответствующего направления.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста и фильтров сигнала. |
+| Полоса тренда | `TRENDSHIFT_MULTIPLICATIVE_FACTOR`, `TRENDSHIFT_SLOPE`, `TRENDSHIFT_ATR_LENGTH`, `TRENDSHIFT_WIDTH_PCT` | Задают отклик динамической полосы, её наклон, период ATR и ширину. |
+| Качество входа | `TRENDSHIFT_CONFIRM_FLIP_WITH_CLOSE`, `TRENDSHIFT_MIN_FLIP_DISTANCE_ATR`, `TRENDSHIFT_MIN_SIGNAL_BODY_STRENGTH`, `TRENDSHIFT_MIN_ADX` | Требуют подтверждение закрытием и задают минимальные расстояние, силу тела свечи и силу тренда. |
+| Цель, стоп и выход | `TRENDSHIFT_STOP_ATR_BUFFER_MULT`, `TRENDSHIFT_STOP_BUFFER_PCT`, `TRENDSHIFT_TARGET_R_MULT`, `TRENDSHIFT_TARGET_R_MULT_LONG`, `TRENDSHIFT_TARGET_R_MULT_SHORT`, `TRENDSHIFT_EXIT_ON_OPPOSITE_FLIP`, `TRENDSHIFT_OPPOSITE_EXIT_CONFIRMATION_BARS` | Задают стоп, цели по направлениям и выход после подтверждённого противоположного разворота. |
+| Графика и направления | `TRENDSHIFT_MAX_FIGURE_POINTS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Ограничивают объём графики, задают лимит убытка и настройки направлений. |
 
 Trend-band model:
 

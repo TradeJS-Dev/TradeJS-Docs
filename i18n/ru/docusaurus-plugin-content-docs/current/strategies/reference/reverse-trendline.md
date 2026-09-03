@@ -36,7 +36,22 @@ Entry code:
 - `REVERSE_TRENDLINE_FAILED_BOUNCE_EXIT`, когда expected bounce/rejection не подтверждается.
 - иначе `POSITION_EXISTS`.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по части стратегии, которой они управляют. Значение `0`
+или `false` отключает соответствующий необязательный фильтр, если не указано иное.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
+| AI | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY` | Управляют необязательным решением AI и порогом допуска. |
+| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `REVERSE_TRENDLINE_STOP_BASE_PCT`, `REVERSE_TRENDLINE_TARGET_R_MULT` | Учитывают комиссию, задают размер позиции, расстояние стопа и множитель цели. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для контекста линии и фильтров сигнала. |
+| Геометрия линии | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Задают расстояние между экстремумами, число касаний и допуск цены для построенной линии. |
+| Качество отбоя | `REVERSE_TRENDLINE_MIN_REJECTION_WICK_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_LONG`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_SHORT`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_LONG`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_SHORT` | Требуют заметный отбой и ограничивают проход цены за линию, общее или по направлениям. |
+| Согласование рынка | `REVERSE_TRENDLINE_MAX_BTC_MA_SPREAD_PCT`, `REVERSE_TRENDLINE_MAX_BTC_MA_SPREAD_PCT_LONG`, `REVERSE_TRENDLINE_MAX_BTC_MA_SPREAD_PCT_SHORT`, `REVERSE_TRENDLINE_REQUIRE_COIN_BIAS_ALIGNMENT`, `REVERSE_TRENDLINE_REQUIRE_BTC_BIAS_ALIGNMENT` | Ограничивают разрыв средних BTC и при необходимости требуют согласия направления инструмента и BTC со сделкой. |
+| Момент входа и выхода | `REVERSE_TRENDLINE_ALLOWED_ENTRY_TIMINGS`, `REVERSE_TRENDLINE_FAILED_BOUNCE_EXIT_PCT` | Выбирают допустимые состояния детектора и движение против позиции для выхода из неудачного отбоя. |
+| Направления | `HIGHS.*`, `LOWS.*` | Включают отбой от верхней или нижней линии и задают направление и минимальное отношение доходности к риску. |
 
 Trendline model:
 

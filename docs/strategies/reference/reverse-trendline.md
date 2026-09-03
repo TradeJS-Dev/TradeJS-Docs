@@ -37,28 +37,22 @@ When a position exists:
 - `REVERSE_TRENDLINE_FAILED_BOUNCE_EXIT` when the expected bounce/rejection fails.
 - otherwise `POSITION_EXISTS`.
 
-## Config Parameters
+## Configuration keys
 
-Trendline model:
+Keys are grouped by the part of the strategy they control. A value of `0` or
+`false` disables the corresponding optional filter unless stated otherwise.
 
-- `TRENDLINE.minTouches`
-- `TRENDLINE.offset`
-- `TRENDLINE.epsilon`
-- `TRENDLINE.epsilonOffset`
-- `REVERSE_TRENDLINE_STOP_BASE_PCT`
-- `REVERSE_TRENDLINE_TARGET_R_MULT`
-
-Side configs:
-
-- `HIGHS.enable`, `HIGHS.direction`, `HIGHS.minRiskRatio`
-- `LOWS.enable`, `LOWS.direction`, `LOWS.minRiskRatio`
-
-Shared groups:
-
-- runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
-- AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`
-- shared indicators: MA, OBV, ATR, BB, MACD fields
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
+| AI | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY` | Control optional AI enrichment and its acceptance threshold. |
+| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `REVERSE_TRENDLINE_STOP_BASE_PCT`, `REVERSE_TRENDLINE_TARGET_R_MULT` | Account for fees, size positions, and set the stop distance and target R multiple. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the lookback periods used by the trendline context and signal filters. |
+| Line geometry | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Define pivot spacing, required touches, and price tolerance for fitted lines. |
+| Rejection quality | `REVERSE_TRENDLINE_MIN_REJECTION_WICK_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_LONG`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_SHORT`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_LONG`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_SHORT` | Require a visible rejection and limit how far price may pass through the line, globally or by direction. |
+| Market alignment | `REVERSE_TRENDLINE_MAX_BTC_MA_SPREAD_PCT`, `REVERSE_TRENDLINE_MAX_BTC_MA_SPREAD_PCT_LONG`, `REVERSE_TRENDLINE_MAX_BTC_MA_SPREAD_PCT_SHORT`, `REVERSE_TRENDLINE_REQUIRE_COIN_BIAS_ALIGNMENT`, `REVERSE_TRENDLINE_REQUIRE_BTC_BIAS_ALIGNMENT` | Limit BTC trend spread and optionally require coin and BTC bias to agree with the trade. |
+| Entry and exit timing | `REVERSE_TRENDLINE_ALLOWED_ENTRY_TIMINGS`, `REVERSE_TRENDLINE_FAILED_BOUNCE_EXIT_PCT` | Choose accepted detector states and the adverse move that closes a failed bounce. |
+| Direction policy | `HIGHS.*`, `LOWS.*` | Enable rejection from high or low trendlines and set its direction and minimum risk/reward ratio. |
 
 ## Signal Payload
 

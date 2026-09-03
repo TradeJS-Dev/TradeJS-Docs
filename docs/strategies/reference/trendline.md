@@ -32,51 +32,23 @@ confirmation rules, and risk parameters come from the active strategy config.
 `core.ts` does not implement active position management.
 Position lifecycle is handled by TP/SL and shared runtime/order execution.
 
-## Config Parameters (What Each One Means)
+## Configuration keys
 
-### Shared Runtime Parameters
+Keys are grouped by the part of the strategy they control. A value of `0` or
+`false` disables the corresponding optional filter unless stated otherwise.
 
-- `ENV` — runtime mode (`BACKTEST`, `CRON`, `LIVE`, etc.).
-- `INTERVAL` — strategy timeframe.
-- `MAKE_ORDERS` — if `false`, orders are not executed.
-- `BACKTEST_PRICE_MODE` — backtest execution price mode (`open`/`close`/`mid`).
-
-### AI/ML Parameters
-
-- `AI_ENABLED` — enables AI enrichment and AI gating.
-- `MIN_AI_QUALITY` — minimum AI quality for order execution outside `BACKTEST`.
-- `ML_ENABLED` — enables ML enrichment.
-- `ML_THRESHOLD` — ML threshold used by runtime policy.
-
-### Trading and Risk Parameters
-
-- `CLOSE_OPPOSITE_POSITIONS` — close opposite position before new entry (hook-level).
-- `FEE_PERCENT` — fee used in risk/reward calculations.
-- `MAX_LOSS_VALUE` — max allowed loss value to size `qty`.
-- `MAX_CORRELATION` — max allowed correlation with BTC.
-
-### Trendline Detection Parameters
-
-- `TRENDLINE.minTouches` — minimum touches required for a valid line.
-- `TRENDLINE.offset` — offset used for pivot capture.
-- `TRENDLINE.epsilon` — base tolerance from trendline.
-- `TRENDLINE.epsilonOffset` — extra tolerance for noisy markets.
-
-### `HIGHS` Scenario Parameters
-
-- `HIGHS.enable` — enable/disable scenario.
-- `HIGHS.direction` — trade direction (`LONG`/`SHORT`).
-- `HIGHS.TP` — take-profit in percent.
-- `HIGHS.SL` — stop-loss in percent.
-- `HIGHS.minRiskRatio` — minimum allowed risk/reward.
-
-### `LOWS` Scenario Parameters
-
-- `LOWS.enable` — enable/disable scenario.
-- `LOWS.direction` — trade direction (`LONG`/`SHORT`).
-- `LOWS.TP` — take-profit in percent.
-- `LOWS.SL` — stop-loss in percent.
-- `LOWS.minRiskRatio` — minimum allowed risk/reward.
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
+| AI and ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Control optional AI and ML enrichment and their acceptance thresholds. |
+| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRENDLINE_STOP_BASE_PCT`, `TRENDLINE_TARGET_R_MULT` | Account for fees, size positions, and set the stop distance and target R multiple. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the lookback periods used by market context and signal filters. |
+| Line geometry | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Define pivot spacing, required touches, and price tolerance for fitted lines. |
+| Break quality | `TRENDLINE_MIN_BREAK_ATR_RATIO`, `TRENDLINE_MAX_BREAK_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MAX_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MIN_VOLUME_REL20` | Require a meaningful line break and apply a stricter volume rule to weak breaks. |
+| Volume | `TRENDLINE_MIN_VOLUME_REL20`, `TRENDLINE_MIN_VOLUME_REL20_LONG`, `TRENDLINE_MIN_VOLUME_REL20_SHORT` | Require minimum relative volume globally or by direction. |
+| Volatility | `TRENDLINE_MAX_BB_WIDTH_PCT`, `TRENDLINE_MAX_BB_WIDTH_PCT_LONG`, `TRENDLINE_MAX_BB_WIDTH_PCT_SHORT` | Reject entries when Bollinger Band width exceeds the global or directional limit. |
+| Alignment and timing | `TRENDLINE_REQUIRE_SLOPE_ALIGNMENT`, `TRENDLINE_REQUIRE_BTC_BIAS_ALIGNMENT`, `TRENDLINE_ALLOWED_ENTRY_TIMINGS` | Optionally align the line slope and BTC bias, and choose accepted detector states. |
+| Direction policy | `HIGHS.*`, `LOWS.*` | Enable high- or low-line breakouts and set their direction and minimum risk/reward ratio. |
 
 ## Indicators Used (What Each One Means)
 

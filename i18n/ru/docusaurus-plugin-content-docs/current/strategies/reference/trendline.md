@@ -32,7 +32,23 @@ title: 'TrendLine'
 В `core.ts` нет отдельного активного сопровождения позиции.
 Позиция завершается через TP/SL и runtime/order engine.
 
-## Параметры конфига (что означает каждый)
+## Ключи конфигурации
+
+Ключи сгруппированы по части стратегии, которой они управляют. Значение `0`
+или `false` отключает соответствующий необязательный фильтр, если не указано иное.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
+| AI и ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Управляют необязательными решениями AI и ML и их порогами допуска. |
+| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRENDLINE_STOP_BASE_PCT`, `TRENDLINE_TARGET_R_MULT` | Учитывают комиссию, задают размер позиции, расстояние стопа и множитель цели. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Задают периоды индикаторов для рыночного контекста и фильтров сигнала. |
+| Геометрия линии | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Задают расстояние между экстремумами, число касаний и допуск цены для построенной линии. |
+| Качество пробоя | `TRENDLINE_MIN_BREAK_ATR_RATIO`, `TRENDLINE_MAX_BREAK_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MAX_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MIN_VOLUME_REL20` | Требуют значимый пробой линии и больший объём для слабых пробоев. |
+| Объём | `TRENDLINE_MIN_VOLUME_REL20`, `TRENDLINE_MIN_VOLUME_REL20_LONG`, `TRENDLINE_MIN_VOLUME_REL20_SHORT` | Задают минимальный относительный объём, общий или по направлениям. |
+| Волатильность | `TRENDLINE_MAX_BB_WIDTH_PCT`, `TRENDLINE_MAX_BB_WIDTH_PCT_LONG`, `TRENDLINE_MAX_BB_WIDTH_PCT_SHORT` | Отсекают входы при слишком широкой полосе Боллинджера. |
+| Согласование и момент | `TRENDLINE_REQUIRE_SLOPE_ALIGNMENT`, `TRENDLINE_REQUIRE_BTC_BIAS_ALIGNMENT`, `TRENDLINE_ALLOWED_ENTRY_TIMINGS` | При необходимости согласуют наклон линии и направление BTC и выбирают допустимые состояния детектора. |
+| Направления | `HIGHS.*`, `LOWS.*` | Включают пробой верхней или нижней линии и задают направление и минимальное отношение доходности к риску. |
 
 ### Общие параметры запуска
 

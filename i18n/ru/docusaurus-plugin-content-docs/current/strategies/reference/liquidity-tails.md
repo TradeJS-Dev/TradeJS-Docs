@@ -46,7 +46,22 @@ Entry codes:
 - qualifying improved retest может создать `LIQUIDITY_TAILS_*_SCALE_IN`, пока не исчерпаны addition count или basket risk budget.
 - иначе `POSITION_EXISTS`.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Суффиксы `_LONG` и `_SHORT` переопределяют
+общее значение для соответствующего направления.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста и фильтров сигнала. |
+| Источник зоны | `LIQUIDITY_TAILS_ATR_LENGTH`, `LIQUIDITY_TAILS_ATR_MULT`, `LIQUIDITY_TAILS_MIN_WICK_RATIO`, `LIQUIDITY_TAILS_MIN_WICK_RATIO_LONG`, `LIQUIDITY_TAILS_MIN_WICK_RATIO_SHORT`, `LIQUIDITY_TAILS_WICK_DOMINANCE`, `LIQUIDITY_TAILS_WICK_DOMINANCE_LONG`, `LIQUIDITY_TAILS_WICK_DOMINANCE_SHORT`, `LIQUIDITY_TAILS_MIN_GAP`, `LIQUIDITY_TAILS_MIN_ORIGIN_VOLUME_REL20`, `LIQUIDITY_TAILS_REQUIRE_ORIGIN_BODY_ALIGNED` | Задают подходящую тень, шкалу ATR, направленное превосходство тени, расстояние между зонами, объём и направление тела свечи. |
+| Срок жизни зоны | `LIQUIDITY_TAILS_MAX_AGE`, `LIQUIDITY_TAILS_KEEP_BROKEN`, `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS`, `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS_LONG`, `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS_SHORT` | Управляют сроком действия зоны и сохранением пробитых зон. |
+| Геометрия повторного теста | `LIQUIDITY_TAILS_REACTION_CLOSE_BEYOND_ZONE`, `LIQUIDITY_TAILS_REQUIRE_REACTION_BODY`, `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT`, `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT_LONG`, `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT_SHORT`, `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS`, `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS_LONG`, `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS_SHORT` | Задают место закрытия реакции, её тело и допустимые расстояние и задержку повторного теста. |
+| Качество повторного теста | `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES`, `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES_LONG`, `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES_SHORT`, `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL`, `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL_LONG`, `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL_SHORT`, `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO`, `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO_LONG`, `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO_SHORT`, `LIQUIDITY_TAILS_CLOSE_HOLD_BARS`, `LIQUIDITY_TAILS_CLOSE_HOLD_BARS_LONG`, `LIQUIDITY_TAILS_CLOSE_HOLD_BARS_SHORT` | Требуют достаточно касаний, ограничивают номер теста и проверяют эффективность отбоя и удержание закрытий. |
+| Цель, стоп и выход | `LIQUIDITY_TAILS_STOP_ATR_BUFFER_MULT`, `LIQUIDITY_TAILS_STOP_BUFFER_PCT`, `LIQUIDITY_TAILS_TARGET_R_MULT`, `LIQUIDITY_TAILS_TARGET_R_MULT_LONG`, `LIQUIDITY_TAILS_TARGET_R_MULT_SHORT`, `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST`, `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION`, `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION_LONG`, `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION_SHORT`, `LIQUIDITY_TAILS_EXIT_ON_SCALE_IN_RETEST` | Задают стоп, цели по направлениям и события повторного теста или отмены зоны, которые закрывают позицию. |
+| Добавление позиции | `LIQUIDITY_TAILS_SCALE_IN_ENABLED`, `LIQUIDITY_TAILS_SCALE_IN_COUNT`, `LIQUIDITY_TAILS_INITIAL_RISK_FRACTION`, `LIQUIDITY_TAILS_SCALE_IN_MIN_IMPROVEMENT_ATR` | Включают добавления и задают их число, начальную долю риска и требуемое улучшение цены. |
+| Графика и направления | `LIQUIDITY_TAILS_MAX_FIGURE_ZONES`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Ограничивают число зон на графике, задают лимит убытка и настройки направлений. |
 
 Liquidity-tail model:
 

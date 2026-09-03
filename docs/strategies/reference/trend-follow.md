@@ -38,26 +38,20 @@ When a position exists:
 - `TRENDFOLLOW_OPPOSITE_SIGNAL_EXIT` when `TRENDFOLLOW_EXIT_ON_OPPOSITE_SIGNAL=true` and the engine emits an opposite trend signal.
 - otherwise `POSITION_EXISTS`.
 
-## Config Parameters
+## Configuration keys
 
-Trend model:
+The keys are grouped by purpose. A listed `_LONG` or `_SHORT` key overrides
+the unsuffixed value for that direction.
 
-- `TRENDFOLLOW_PIVOT_LENGTH`
-- `TRENDFOLLOW_MIN_BARS_BETWEEN_SIGNALS`
-- `TRENDFOLLOW_ATR_LENGTH`
-- `TRENDFOLLOW_ATR_MULT`
-- `TRENDFOLLOW_SIGNAL_OFFSET_ATR`
-- `TRENDFOLLOW_TARGET_R_MULT`
-- `TRENDFOLLOW_EXIT_ON_TRAIL_STOP`
-- `TRENDFOLLOW_EXIT_ON_OPPOSITE_SIGNAL`
-- `TRENDFOLLOW_MAX_FIGURE_POINTS`
-
-Shared groups:
-
-- runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
-- AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
-- shared indicators: MA, OBV, ATR, BB, MACD fields
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the periods used to build shared market context and signal filters. |
+| Trend line | `TRENDFOLLOW_PIVOT_LENGTH`, `TRENDFOLLOW_ATR_LENGTH`, `TRENDFOLLOW_ATR_MULT`, `TRENDFOLLOW_SIGNAL_OFFSET_ATR`, `TRENDFOLLOW_MIN_BARS_BETWEEN_SIGNALS` | Define confirmed pivots, trailing-line ATR scale, signal offset, and signal cooldown. |
+| Entry structure | `TRENDFOLLOW_REQUIRE_STRUCTURE_BREAKOUT`, `TRENDFOLLOW_REQUIRE_TREND_ALIGNMENT`, `TRENDFOLLOW_REQUIRE_BENCHMARK_ALIGNMENT`, `TRENDFOLLOW_MIN_STRUCTURE_ACCEPTANCE_CLOSES`, `TRENDFOLLOW_MIN_BREAKOUT_BODY_ATR`, `TRENDFOLLOW_MIN_BREAKOUT_DISTANCE_PCT`, `TRENDFOLLOW_MIN_BREAKOUT_DISTANCE_PCT_LONG`, `TRENDFOLLOW_MIN_BREAKOUT_DISTANCE_PCT_SHORT`, `TRENDFOLLOW_MAX_BREAKOUT_DISTANCE_PCT` | Require a confirmed structure break and trend or benchmark agreement inside the configured breakout distance. |
+| Participation and regime | `TRENDFOLLOW_MIN_VOLUME_REL20`, `TRENDFOLLOW_MIN_TREND_PERSISTENCE`, `TRENDFOLLOW_MIN_TREND_PERSISTENCE_LONG`, `TRENDFOLLOW_MIN_TREND_PERSISTENCE_SHORT`, `TRENDFOLLOW_MAX_RSI`, `TRENDFOLLOW_MAX_RSI_LONG`, `TRENDFOLLOW_MAX_RSI_SHORT`, `TRENDFOLLOW_MAX_BB_WIDTH_PCT`, `TRENDFOLLOW_MAX_BB_WIDTH_PCT_LONG`, `TRENDFOLLOW_MAX_BB_WIDTH_PCT_SHORT` | Set volume, trend-persistence, RSI, and Bollinger-width filters, with directional overrides. |
+| Target and exits | `TRENDFOLLOW_TARGET_R_MULT`, `TRENDFOLLOW_TARGET_R_MULT_LONG`, `TRENDFOLLOW_TARGET_R_MULT_SHORT`, `TRENDFOLLOW_EXIT_ON_TRAIL_STOP`, `TRENDFOLLOW_EXIT_ON_OPPOSITE_SIGNAL` | Set directional target distance and enable trailing-stop or opposite-signal exits. |
+| Figures and side policy | `TRENDFOLLOW_MAX_FIGURE_POINTS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Limit chart output, set the loss budget, and configure each direction. |
 
 ## Signal Payload
 

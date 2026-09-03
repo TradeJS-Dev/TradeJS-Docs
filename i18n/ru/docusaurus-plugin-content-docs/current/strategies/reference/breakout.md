@@ -32,7 +32,21 @@ Long и short используют отдельные карты сигнало�
 
 Иначе возвращает `POSITION_HELD`.
 
-## Параметры конфига (что означает каждый)
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Общие настройки среды и сервисов решений
+работают так же, как в других встроенных стратегиях.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы и уровни | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Задают периоды индикаторов и локальных уровней поддержки и сопротивления. |
+| Взвешенная оценка | `SIGNALS_LONG`, `SIGNALS_SHORT`, `REQUIRED_SCORE_LONG`, `REQUIRED_SCORE_SHORT`, `ATR_OPEN` | Задают условия и веса для направлений, требуемую сумму баллов и порог волатильности для `VOLATILE`. |
+| Механизм входа | `BREAKOUT_USE_ENGINE`, `BREAKOUT_ENGINE_LOOKBACK`, `BREAKOUT_ENGINE_DELAY`, `BREAKOUT_TREND_LOOKBACK`, `BREAKOUT_ENTRY_MODE`, `BREAKOUT_CONFIRMATION_BARS`, `BREAKOUT_RETEST_MAX_BARS`, `BREAKOUT_RETEST_TOLERANCE_ATR`, `BREAKOUT_RETEST_TOLERANCE_ATR_LONG`, `BREAKOUT_RETEST_TOLERANCE_ATR_SHORT` | Включают воспроизводимый поиск пробоя и задают историю, задержку уровня, окно тренда, подтверждение и повторный тест. |
+| Направление и качество пробоя | `BREAKOUT_LONG_ENABLED`, `BREAKOUT_SHORT_ENABLED`, `BREAKOUT_REQUIRE_FRESH_LEVEL_CROSS`, `BREAKOUT_REQUIRE_DIRECTIONAL_BODY`, `BREAKOUT_MIN_BODY_ATR`, `BREAKOUT_MIN_VOLUME_REL20`, `BREAKOUT_MIN_ACCEPTANCE_CLOSES` | Включают направления и требуют свежий пробой, направленную свечу, достаточные тело, объём и число закрытий. |
+| Расстояние, диапазон и пауза | `BREAKOUT_MAX_DISTANCE_ATR`, `BREAKOUT_MAX_DISTANCE_ATR_LONG`, `BREAKOUT_MAX_DISTANCE_ATR_SHORT`, `BREAKOUT_MIN_TREND_MOVE_ATR`, `BREAKOUT_MIN_RANGE_ATR`, `BREAKOUT_MIN_RANGE_ATR_LONG`, `BREAKOUT_MIN_RANGE_ATR_SHORT`, `BREAKOUT_MAX_RANGE_ATR`, `BREAKOUT_MAX_RANGE_ATR_LONG`, `BREAKOUT_MAX_RANGE_ATR_SHORT`, `BREAKOUT_COOLDOWN_HOURS` | Ограничивают расстояние пробоя, движение тренда, размер исходного диапазона и повторные входы. |
+| Позиция и выходы | `LIMIT`, `TP_LONG`, `TP_SHORT`, `SL_LONG`, `SL_SHORT` | Задают размер позиции в котируемой валюте, лестницы целей и стопы по направлениям. |
 
 ### Общие параметры запуска
 

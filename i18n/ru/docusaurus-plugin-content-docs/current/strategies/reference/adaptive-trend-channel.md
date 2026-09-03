@@ -50,7 +50,20 @@ Entry codes:
 `ADAPTIVE_TREND_CHANNEL_REENTRY_COOLDOWN_MS` задаёт паузу перед новым входом
 после сделки.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Общие настройки среды, AI, ML, индикаторов и
+размера позиции работают так же, как в других встроенных стратегиях.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста. |
+| Построение канала | `ADAPTIVE_TREND_CHANNEL_REGRESSION_BARS`, `ADAPTIVE_TREND_CHANNEL_ENVELOPE_BARS`, `ADAPTIVE_TREND_CHANNEL_ATR_STRETCH`, `ADAPTIVE_TREND_CHANNEL_VOLATILITY_LOOKBACK`, `ADAPTIVE_TREND_CHANNEL_MIN_CHANNEL_WIDTH_PCT`, `ADAPTIVE_TREND_CHANNEL_MAX_CHANNEL_WIDTH_PCT` | Задают окно регрессии, оболочку, поправку на волатильность и допустимую ширину канала. |
+| Качество пробоя | `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_PCT`, `ADAPTIVE_TREND_CHANNEL_MAX_BREAKOUT_DISTANCE_PCT`, `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_ATR`, `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_ATR_LONG`, `ADAPTIVE_TREND_CHANNEL_MIN_BREAKOUT_DISTANCE_ATR_SHORT`, `ADAPTIVE_TREND_CHANNEL_MAX_BREAKOUT_DISTANCE_ATR`, `ADAPTIVE_TREND_CHANNEL_MIN_VOLUME_REL20` | Ограничивают расстояние пробоя и относительный объём с минимальными значениями по направлениям. |
+| Контекст и подтверждение | `ADAPTIVE_TREND_CHANNEL_REQUIRE_CONTEXT_ALIGNMENT`, `ADAPTIVE_TREND_CHANNEL_MIN_CONTEXT_ALIGNMENTS`, `ADAPTIVE_TREND_CHANNEL_FLIP_CONFIRMATION_BARS`, `ADAPTIVE_TREND_CHANNEL_REQUIRE_PRICE_ACCEPTANCE` | Требуют согласия рыночного контекста и управляют подтверждением разворота и закрепления цены. |
+| Цель и жизненный цикл | `ADAPTIVE_TREND_CHANNEL_TARGET_R_MULT`, `ADAPTIVE_TREND_CHANNEL_EXIT_ON_OPPOSITE_FLIP`, `ADAPTIVE_TREND_CHANNEL_EXIT_ON_CHANNEL_BREAK`, `ADAPTIVE_TREND_CHANNEL_EXIT_CONFIRMATION_BARS`, `ADAPTIVE_TREND_CHANNEL_REENTRY_COOLDOWN_MS` | Задают цель, условия и подтверждение выхода и паузу перед повторным входом. Для подтверждения выхода допустимы переопределения по направлениям. |
+| Графика и направления | `ADAPTIVE_TREND_CHANNEL_MAX_FIGURE_POINTS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Ограничивают объём графики, задают лимит убытка и настройки направлений. |
 
 Runtime:
 

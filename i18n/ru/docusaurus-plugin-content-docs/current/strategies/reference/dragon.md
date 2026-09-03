@@ -35,7 +35,22 @@ title: 'Dragon'
 входа. При `DRAGON_EXIT_ON_OPPOSITE_PATTERN=true` подтверждённая встречная
 модель может закрыть позицию с кодом `DRAGON_OPPOSITE_PATTERN_EXIT`.
 
-## Основные параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Общие настройки среды, AI, ML, индикаторов и
+размера позиции работают так же, как в других встроенных стратегиях.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста. |
+| Форма экстремумов | `DRAGON_PIVOT_LENGTH`, `DRAGON_MIN_REAR_FOOT_OFFSET_PCT`, `DRAGON_MAX_REAR_FOOT_OFFSET_PCT`, `DRAGON_MIN_HUMP_RETRACEMENT_PCT`, `DRAGON_MAX_HUMP_RETRACEMENT_PCT` | Задают подтверждение экстремумов и допустимую геометрию задней лапы и горба. |
+| Размер и возраст | `DRAGON_MIN_PATTERN_HEIGHT_PCT`, `DRAGON_MIN_PATTERN_HEIGHT_ATR`, `DRAGON_ATR_PERIOD`, `DRAGON_MIN_LEG_BARS`, `DRAGON_MAX_PATTERN_AGE_BARS`, `DRAGON_MAX_BREAKOUT_AFTER_REAR_FOOT_BARS` | Задают минимальный размер модели и отсекают короткие ноги, старые модели и поздние пробои. |
+| Качество пробоя | `DRAGON_MIN_TRENDLINE_SLOPE_PCT_PER_BAR`, `DRAGON_MIN_BREAKOUT_DISTANCE_ATR`, `DRAGON_MAX_BREAKOUT_DISTANCE_HEIGHT_RATIO` | Ограничивают наклон линии и минимальное и максимальное расстояние пробоя. |
+| Момент входа | `DRAGON_ENTRY_MODE`, `DRAGON_CONFIRMATION_MAX_BARS`, `DRAGON_RETEST_MAX_BARS`, `DRAGON_RETEST_TOLERANCE_ATR` | Выбирают вход по пробою, закреплению или повторному тесту и ограничивают окно подтверждения. |
+| Цель, стоп и выход | `DRAGON_TARGET_FIB_PCT`, `DRAGON_STOP_FIB_PCT`, `DRAGON_EXIT_ON_OPPOSITE_PATTERN` | Задают цель и стоп от высоты модели и выход по противоположной модели. |
+| Риск и направления | `MAX_LOSS_VALUE`, `LONG.enable`, `LONG.direction`, `LONG.minRiskRatio`, `SHORT.enable`, `SHORT.direction`, `SHORT.minRiskRatio` | Задают лимит убытка и включают направления с минимальным отношением доходности к риску. |
 
 - экстремумы и форма: `DRAGON_PIVOT_LENGTH`,
   `DRAGON_MIN_REAR_FOOT_OFFSET_PCT`, `DRAGON_MAX_REAR_FOOT_OFFSET_PCT`,

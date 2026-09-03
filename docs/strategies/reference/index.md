@@ -2,7 +2,7 @@
 title: Built-In Strategy Catalog
 ---
 
-`@tradejs/base` installs 21 packages that provide 22 strategy implementations.
+`@tradejs/base` installs 23 packages that provide 24 strategy implementations.
 They are inspectable starting points, not trading recommendations or validated
 parameter sets. Test every strategy with your own market, data source, costs,
 timeframe, liquidity, and risk limits.
@@ -19,6 +19,8 @@ strategy has its own package.
 - [TrendFollow](./reference/trend-follow) — trend continuation with a trailing stop line.
 - [TrendShift](./reference/trend-shift) — directional change after a dynamic trend-band flip.
 - [Breakout](./reference/breakout) — weighted confirmation of long or short breakout conditions.
+- [Flag](./reference/flag) — continuation after a strong pole, compact
+  counter-trend channel, and directional breakout.
 - [AdaptiveTrendChannel](./reference/adaptive-trend-channel) — direction change in an
   adaptive channel with a structural stop at its boundary.
 - [AdaptiveMomentumRibbon](./reference/adaptive-momentum-ribbon) — momentum-ribbon signal
@@ -39,6 +41,8 @@ strategy has its own package.
   head-and-shoulders neckline breakout.
 - [Dragon](./reference/dragon) — reversal from four pivots confirmed at a
   projected trendline from head to hump.
+- [Gartley](./reference/gartley) — harmonic XABCD reversal validated by
+  Fibonacci ratios and a confirmed break of B.
 - [LiquidityTails](./reference/liquidity-tails) — reaction after a retest of a zone formed
   by large candle wicks.
 - [LiquidityZones](./reference/liquidity-zones) — reaction at liquidity zones derived from

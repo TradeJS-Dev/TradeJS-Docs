@@ -45,61 +45,22 @@ confirmation rules, and risk parameters come from the active strategy config.
 - `CLOSE_BY_AMR_SIGNAL` — opposite signal
 - `CLOSE_BY_AMR_INVALIDATION` — invalidation when `AMR_EXIT_ON_INVALIDATION=true`
 
-## Config Parameters (What Each One Means)
+## Configuration keys
 
-### Shared Runtime Parameters
+The keys are grouped by purpose. Common runtime, AI, ML, and position-sizing
+keys keep the same meaning across the built-in strategies.
 
-- `ENV` — runtime mode.
-- `INTERVAL` — strategy timeframe.
-- `MAKE_ORDERS` — whether to execute orders.
-- `BACKTEST_PRICE_MODE` — backtest execution price mode.
-
-### AI/ML Parameters
-
-- `AI_ENABLED` — enables AI enrichment/gating.
-- `MIN_AI_QUALITY` — minimum AI quality.
-- `ML_ENABLED` — enables ML enrichment.
-- `ML_THRESHOLD` — ML threshold in runtime policy.
-
-### AMR Pine Model Parameters
-
-- `AMR_MOMENTUM_PERIOD` — Pine input `Momentum Period`.
-- `AMR_BUTTERWORTH_SMOOTHING` — Pine input `Butterworth Smoothing`.
-- `AMR_WAIT_CLOSE` — confirm signals only on closed bars.
-- `AMR_CONFIRM_ON_NEXT_BAR` — require the next closed bar to confirm a candidate.
-- `AMR_MIN_SIGNAL_OSC_ABS`, `AMR_MIN_SIGNAL_OSC_ABS_LONG`, `AMR_MIN_SIGNAL_OSC_ABS_SHORT` — oscillator-strength floor with directional overrides.
-- `AMR_REQUIRE_KC_BIAS` — require the signal to agree with Keltner bias.
-- `AMR_MIN_BARS_BETWEEN_SIGNALS` — detector cooldown.
-- `AMR_SHOW_INVALIDATION_LEVELS` — render invalidation levels.
-- `AMR_SHOW_KELTNER_CHANNEL` — render Keltner Channel.
-- `AMR_KC_LENGTH` — Keltner midline period.
-- `AMR_KC_MA_TYPE` — MA type for Keltner midline (`SMA`, `EMA`, `SMMA (RMA)`, `WMA`, `VWMA`).
-- `AMR_ATR_LENGTH` — ATR period for Keltner bands.
-- `AMR_ATR_MULTIPLIER` — ATR multiplier for Keltner bands.
-
-### Execution/Visualization Parameters
-
-- `AMR_LOOKBACK_BARS` — number of candles passed to Pine per calculation.
-- `AMR_STOP_BUFFER_PCT` — buffer beyond the structural invalidation level.
-- `AMR_TARGET_R_MULT` — target distance in initial-risk multiples.
-- `AMR_MIN_TP_DISTANCE_BPS*` — optional minimum target distance.
-- `AMR_MAX_DELAY_RISK_TP_RATIO*` and `AMR_DELAY_RISK_MOVE_MULT*` — optional signal-time delayed-entry risk guard.
-- `AMR_EXIT_ON_OPPOSITE_SIGNAL` — exit on the opposite AMR signal.
-- `AMR_EXIT_ON_INVALIDATION` — exit on invalidation signal.
-- `AMR_LINE_PLOTS` — Pine plot names mapped into `figures.lines`.
-- `CLOSE_OPPOSITE_POSITIONS` — present in shared config template, not used by current `AdaptiveMomentumRibbon` hook logic.
-
-### `LONG` Scenario Parameters
-
-- `LONG.enable` — enable/disable long scenario.
-- `LONG.direction` — order direction (`LONG`).
-- `LONG.minRiskRatio` — minimum net reward/risk after costs.
-
-### `SHORT` Scenario Parameters
-
-- `SHORT.enable` — enable/disable short scenario.
-- `SHORT.direction` — order direction (`SHORT`).
-- `SHORT.minRiskRatio` — minimum net reward/risk after costs.
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. `CLOSE_OPPOSITE_POSITIONS` is not used by the current AMR hook logic. |
+| Momentum model | `AMR_LOOKBACK_BARS`, `AMR_MOMENTUM_PERIOD`, `AMR_BUTTERWORTH_SMOOTHING`, `AMR_WAIT_CLOSE`, `AMR_CONFIRM_ON_NEXT_BAR` | Set the input history, oscillator period and smoothing, and closed-bar confirmation behavior. |
+| Signal quality | `AMR_MIN_SIGNAL_OSC_ABS`, `AMR_MIN_SIGNAL_OSC_ABS_LONG`, `AMR_MIN_SIGNAL_OSC_ABS_SHORT`, `AMR_REQUIRE_KC_BIAS`, `AMR_MIN_BARS_BETWEEN_SIGNALS` | Set the oscillator-strength floor, optional Keltner bias, and signal cooldown, with directional oscillator overrides. |
+| Keltner channel | `AMR_KC_LENGTH`, `AMR_KC_MA_TYPE`, `AMR_ATR_LENGTH`, `AMR_ATR_MULTIPLIER` | Set the channel midline, moving-average type, ATR period, and band multiplier. |
+| Delayed-entry risk | `AMR_MIN_TP_DISTANCE_BPS`, `AMR_MAX_DELAY_RISK_TP_RATIO`, `AMR_DELAY_RISK_MOVE_MULT` | Reject entries with too little target distance or too much signal-to-fill risk movement. |
+| Target, stop, and exit | `AMR_STOP_BUFFER_PCT`, `AMR_TARGET_R_MULT`, `AMR_EXIT_ON_OPPOSITE_SIGNAL`, `AMR_EXIT_ON_INVALIDATION` | Set the structural stop buffer, target distance, and exit triggers. |
+| Figures | `AMR_SHOW_INVALIDATION_LEVELS`, `AMR_SHOW_KELTNER_CHANNEL`, `AMR_LINE_PLOTS` | Choose the levels, channel, and Pine plots included in chart figures. |
+| Risk and side policy | `MAX_LOSS_VALUE`, `LONG.enable`, `LONG.direction`, `LONG.minRiskRatio`, `SHORT.enable`, `SHORT.direction`, `SHORT.minRiskRatio` | Set the loss budget and enable each direction with its minimum reward-to-risk ratio. |
 
 ## Indicators Used (What Each One Means)
 

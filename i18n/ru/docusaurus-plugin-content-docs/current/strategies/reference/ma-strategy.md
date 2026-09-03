@@ -31,7 +31,22 @@ title: 'MaStrategy'
 Если позиция открыта, противоположный MA-cross закрывает ее с кодом `CLOSE_BY_OPPOSITE_MA_CROSS`.
 Иначе стратегия возвращает `POSITION_HELD`.
 
-## Параметры конфига (что означает каждый)
+## Ключи конфигурации
+
+Ключи сгруппированы по части стратегии, которой они управляют. Значение `0`
+или `false` отключает соответствующий необязательный фильтр, если не указано иное.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
+| AI и ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Управляют необязательными решениями AI и ML и их порогами допуска. |
+| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRADE_COOLDOWN_MS` | Учитывают комиссию, задают размер позиции по лимиту убытка и паузу между входами. |
+| Скользящие средние | `MA_FAST`, `MA_SLOW` | Задают периоды быстрой и медленной средних для поиска пересечения. |
+| Разрыв средних | `MA_MIN_CROSS_GAP_ATR`, `MA_MIN_CROSS_GAP_ATR_LONG`, `MA_MIN_CROSS_GAP_ATR_SHORT`, `MA_MAX_CROSS_GAP_ATR`, `MA_MAX_CROSS_GAP_ATR_LONG`, `MA_MAX_CROSS_GAP_ATR_SHORT` | Ограничивают расстояние между средними после пересечения в единицах ATR, общее или по направлениям. |
+| Качество сигнала | `MA_MIN_FAST_SLOPE_ATR`, `MA_REQUIRE_SLOW_SLOPE_ALIGNMENT`, `MA_REQUIRE_DIRECTIONAL_BODY`, `MA_MIN_BODY_ATR`, `MA_MIN_VOLUME_REL20`, `MA_MIN_VOLUME_REL20_LONG`, `MA_MIN_VOLUME_REL20_SHORT`, `MA_MAX_PRICE_DISTANCE_FAST_ATR` | Требуют достаточный наклон, направление и размер свечи, относительный объём и близость к быстрой средней. |
+| Фильтр ориентира | `MA_MAX_CORRELATION`, `MA_MAX_CORRELATION_LONG`, `MA_MAX_CORRELATION_SHORT` | Отсекают сигналы с корреляцией к BTC выше общего или направленного предела. |
+| Политика выхода | `MA_EXIT_ON_OPPOSITE_CROSS_LONG`, `MA_EXIT_ON_OPPOSITE_CROSS_SHORT` | Определяют, закрывает ли противоположное пересечение каждое направление. |
+| Направления | `LONG.*`, `SHORT.*` | Включают направления и задают тип ордера, цель, стоп и минимальное отношение доходности к риску. |
 
 ### Общие параметры запуска
 

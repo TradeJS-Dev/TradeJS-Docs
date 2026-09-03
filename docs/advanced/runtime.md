@@ -40,6 +40,9 @@ The app displays the version-controlled strategy configuration read-only,
 strategy analytics, drawdown, orders, and pause/resume. Runtime charts mark
 recorded strategy-revision changes, and the **Revisions** action lists the
 current revision together with changes observed in the selected trade window.
+Strategy-card returns, win rate, drawdown, exposure, and related statistics use
+closed trades only. Active trades remain visible in the summary and order list,
+but their unrealized PnL does not enter those statistics until the trade closes.
 Research evidence may be produced locally or in CI, but the server and UI do
 not require it or show an evidence status.
 

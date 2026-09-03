@@ -37,7 +37,20 @@ Entry codes:
 - `DOUBLETAP_OPPOSITE_PATTERN_EXIT`, когда `DOUBLETAP_EXIT_ON_OPPOSITE_PATTERN=true` и engine видит opposite pattern.
 - иначе `POSITION_EXISTS`.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Общие настройки среды, AI, ML и размера позиции
+работают так же, как в других встроенных стратегиях.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста и фильтров сигнала. |
+| Геометрия модели | `DOUBLETAP_PIVOT_LENGTH`, `DOUBLETAP_PIVOT_TOLERANCE_PCT`, `DOUBLETAP_MIN_PATTERN_HEIGHT_PCT`, `DOUBLETAP_MIN_PATTERN_HEIGHT_ATR`, `DOUBLETAP_ATR_PERIOD`, `DOUBLETAP_MIN_TAP_SPACING_BARS`, `DOUBLETAP_MAX_PATTERN_AGE_BARS`, `DOUBLETAP_MIN_LEG_SYMMETRY_RATIO` | Задают подтверждение экстремумов, сходство вершин, минимальную высоту, расстояние, возраст и симметрию модели. |
+| Качество пробоя | `DOUBLETAP_MIN_BREAKOUT_DISTANCE_ATR`, `DOUBLETAP_MAX_BREAKOUT_DISTANCE_HEIGHT_RATIO`, `DOUBLETAP_MAX_BREAKOUT_DISTANCE_PCT`, `DOUBLETAP_MAX_BB_WIDTH_PCT`, `DOUBLETAP_MAX_BB_WIDTH_PCT_LONG`, `DOUBLETAP_MAX_BB_WIDTH_PCT_SHORT` | Ограничивают расстояние пробоя и ширину полос Боллинджера с переопределениями по направлениям. |
+| Момент входа | `DOUBLETAP_ENTRY_MODE`, `DOUBLETAP_CONFIRMATION_MAX_BARS`, `DOUBLETAP_MAX_ENTRY_CONFIRMATION_BARS`, `DOUBLETAP_MAX_ENTRY_CONFIRMATION_BARS_LONG`, `DOUBLETAP_MAX_ENTRY_CONFIRMATION_BARS_SHORT`, `DOUBLETAP_RETEST_MAX_BARS`, `DOUBLETAP_RETEST_TOLERANCE_ATR` | Выбирают режим входа и ограничивают время подтверждения и повторного теста. |
+| Цель, стоп и выход | `DOUBLETAP_TARGET_FIB_PCT`, `DOUBLETAP_STOP_FIB_PCT`, `DOUBLETAP_EXIT_ON_OPPOSITE_PATTERN` | Задают цель и стоп от высоты модели и выход по противоположной модели. |
+| Риск и направления | `MAX_LOSS_VALUE`, `LONG.enable`, `LONG.direction`, `LONG.minRiskRatio`, `SHORT.enable`, `SHORT.direction`, `SHORT.minRiskRatio` | Задают лимит убытка и включают направления с минимальным отношением доходности к риску. |
 
 Pattern model:
 

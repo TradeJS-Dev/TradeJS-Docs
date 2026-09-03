@@ -27,14 +27,23 @@ Entry codes are `MFR_LONG_FLUSH_REVERSAL` and
 `MFR_SHORT_FLUSH_REVERSAL`. `MFR_EXIT_ON_OPPOSITE_SIGNAL` optionally closes a
 position with `MFR_OPPOSITE_FLUSH_EXIT`.
 
-## Key configuration
+## Configuration keys
 
-- evidence: `MFR_MIN_VOLUME_REL20`, `MFR_MIN_MARKET_LIQ_SPIKE_RATIO`
-- rejection: `MFR_MIN_SWEEP_WICK_PCT`, `MFR_MIN_REJECTION_CLOSE_POSITION*`, `MFR_MIN_REJECTION_BODY_ATR*`
-- confirmation: `MFR_ENTRY_MODE`, `MFR_CONFIRMATION_BARS*`, `MFR_PENDING_MAX_BARS`
-- deterministic gate: `MFR_REQUIRE_CALIBRATED_LONG_REBOUND_POCKET`, `MFR_ENABLE_PROTECTED_V1_H1_RANGE50_SHORT_POCKET`
-- risk: `MFR_STOP_ATR_BUFFER_MULT`, `MFR_STOP_BUFFER_PCT`, `MFR_FALLBACK_STOP_ATR_MULT`, `MFR_TARGET_R_MULT`
-- side policy: `LONG.*`, `SHORT.*`
+The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
+and position-sizing keys keep the same meaning across the built-in strategies.
+
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
+| Shared indicators and levels | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the periods used to build shared market context, local levels, and signal filters. |
+| Market evidence | `MFR_MIN_VOLUME_REL20`, `MFR_MIN_MARKET_LIQ_SPIKE_RATIO`, `MFR_REQUIRE_MARKET_FLUSH_CONFIRMATION` | Set the required target volume and broad-market liquidation evidence. |
+| Deterministic gate | `MFR_REQUIRE_CALIBRATED_LONG_REBOUND_POCKET`, `MFR_ENABLE_PROTECTED_V1_H1_RANGE50_SHORT_POCKET` | Enable the validated long rebound rule and the protected short approval path. |
+| Rejection candle | `MFR_MIN_SWEEP_WICK_PCT`, `MFR_MIN_REJECTION_CLOSE_POSITION`, `MFR_MIN_REJECTION_CLOSE_POSITION_LONG`, `MFR_MIN_REJECTION_CLOSE_POSITION_SHORT`, `MFR_MIN_REJECTION_BODY_ATR`, `MFR_MIN_REJECTION_BODY_ATR_LONG`, `MFR_MIN_REJECTION_BODY_ATR_SHORT`, `MFR_MIN_ENTRY_BODY_STRENGTH`, `MFR_MIN_ENTRY_BODY_STRENGTH_LONG`, `MFR_MIN_ENTRY_BODY_STRENGTH_SHORT` | Define wick, close-location, body-size, and body-strength floors, with directional overrides. |
+| Confirmation quality | `MFR_MIN_CONFIRMATION_DISPLACEMENT_ATR`, `MFR_MIN_CONFIRMATION_DISPLACEMENT_ATR_LONG`, `MFR_MIN_CONFIRMATION_DISPLACEMENT_ATR_SHORT`, `MFR_MIN_AVG_TURNOVER_20`, `MFR_MIN_AVG_TURNOVER_20_LONG`, `MFR_MIN_AVG_TURNOVER_20_SHORT`, `MFR_MAX_LONG_RANGE_POSITION`, `MFR_MIN_SHORT_RANGE_POSITION` | Require enough confirmation movement, turnover, and a valid range location for each direction. |
+| Entry timing | `MFR_ENTRY_MODE`, `MFR_CONFIRMATION_BARS`, `MFR_CONFIRMATION_BARS_LONG`, `MFR_CONFIRMATION_BARS_SHORT`, `MFR_PENDING_MAX_BARS`, `MFR_REQUIRE_DIRECTIONAL_CONFIRMATION_BODY`, `MFR_USE_FROZEN_PENDING_STOP` | Choose immediate or delayed entry, bound pending state, and control confirmation-body and stop behavior. |
+| Target, stop, and exit | `MFR_STOP_ATR_BUFFER_MULT`, `MFR_STOP_BUFFER_PCT`, `MFR_FALLBACK_STOP_ATR_MULT`, `MFR_TARGET_R_MULT`, `MFR_EXIT_ON_OPPOSITE_SIGNAL` | Set structural and fallback stops, target distance, and opposite-signal exit behavior. |
+| Risk and side policy | `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Set the loss budget and configure each direction and its minimum reward-to-risk ratio. |
 
 Fields ending in `_LONG` or `_SHORT` override the unsuffixed value for that
 direction. Validate coverage of liquidation and market-context inputs before

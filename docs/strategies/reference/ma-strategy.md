@@ -31,50 +31,22 @@ confirmation rules, and risk parameters come from the active strategy config.
 If a position exists, opposite MA cross closes it with `CLOSE_BY_OPPOSITE_MA_CROSS`.
 Otherwise strategy returns `POSITION_HELD`.
 
-## Config Parameters (What Each One Means)
+## Configuration keys
 
-### Shared Runtime Parameters
+Keys are grouped by the part of the strategy they control. A value of `0` or
+`false` disables the corresponding optional filter unless stated otherwise.
 
-- `ENV` — runtime mode.
-- `INTERVAL` — strategy timeframe.
-- `MAKE_ORDERS` — whether to execute orders.
-- `BACKTEST_PRICE_MODE` — backtest execution price mode.
-
-### AI/ML Parameters
-
-- `AI_ENABLED` — enables AI enrichment/gating.
-- `MIN_AI_QUALITY` — minimum AI quality for execution.
-- `ML_ENABLED` — enables ML enrichment.
-- `ML_THRESHOLD` — ML threshold in runtime policy.
-
-### Trading and Risk Parameters
-
-- `CLOSE_OPPOSITE_POSITIONS` — close opposite position before opening a new one (hook-level).
-- `FEE_PERCENT` — fee in risk/reward calculations.
-- `MAX_LOSS_VALUE` — max loss value for quantity sizing.
-- `MAX_CORRELATION` — maximum allowed BTC correlation.
-- `TRADE_COOLDOWN_MS` — cooldown between trades in milliseconds.
-
-### Indicator Parameters
-
-- `MA_FAST` — fast MA period.
-- `MA_SLOW` — slow MA period.
-
-### `LONG` Scenario Parameters
-
-- `LONG.enable` — enable/disable long scenario.
-- `LONG.direction` — order direction (`LONG`).
-- `LONG.TP` — take-profit in percent.
-- `LONG.SL` — stop-loss in percent.
-- `LONG.minRiskRatio` — minimum allowed risk/reward.
-
-### `SHORT` Scenario Parameters
-
-- `SHORT.enable` — enable/disable short scenario.
-- `SHORT.direction` — order direction (`SHORT`).
-- `SHORT.TP` — take-profit in percent.
-- `SHORT.SL` — stop-loss in percent.
-- `SHORT.minRiskRatio` — minimum allowed risk/reward.
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
+| AI and ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Control optional AI and ML enrichment and their acceptance thresholds. |
+| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRADE_COOLDOWN_MS` | Account for fees, size positions by maximum loss, and pause between entries. |
+| Moving averages | `MA_FAST`, `MA_SLOW` | Set the fast and slow average periods used to detect a cross. |
+| Cross gap | `MA_MIN_CROSS_GAP_ATR`, `MA_MIN_CROSS_GAP_ATR_LONG`, `MA_MIN_CROSS_GAP_ATR_SHORT`, `MA_MAX_CROSS_GAP_ATR`, `MA_MAX_CROSS_GAP_ATR_LONG`, `MA_MAX_CROSS_GAP_ATR_SHORT` | Limit the post-cross distance between the averages in ATR units, globally or by direction. |
+| Signal quality | `MA_MIN_FAST_SLOPE_ATR`, `MA_REQUIRE_SLOW_SLOPE_ALIGNMENT`, `MA_REQUIRE_DIRECTIONAL_BODY`, `MA_MIN_BODY_ATR`, `MA_MIN_VOLUME_REL20`, `MA_MIN_VOLUME_REL20_LONG`, `MA_MIN_VOLUME_REL20_SHORT`, `MA_MAX_PRICE_DISTANCE_FAST_ATR` | Require sufficient slope, candle direction and size, relative volume, and proximity to the fast average. |
+| Benchmark filter | `MA_MAX_CORRELATION`, `MA_MAX_CORRELATION_LONG`, `MA_MAX_CORRELATION_SHORT` | Reject signals whose BTC correlation is above the global or directional limit. |
+| Exit policy | `MA_EXIT_ON_OPPOSITE_CROSS_LONG`, `MA_EXIT_ON_OPPOSITE_CROSS_SHORT` | Choose whether an opposite average cross closes each side. |
+| Direction policy | `LONG.*`, `SHORT.*` | Enable each direction and set its order direction, take-profit, stop-loss, and minimum risk/reward ratio. |
 
 ## Indicators Used (What Each One Means)
 

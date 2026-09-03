@@ -38,7 +38,20 @@ Entry codes:
 - `TRENDFOLLOW_OPPOSITE_SIGNAL_EXIT`, когда `TRENDFOLLOW_EXIT_ON_OPPOSITE_SIGNAL=true` и engine дает opposite trend signal.
 - иначе `POSITION_EXISTS`.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Суффиксы `_LONG` и `_SHORT` переопределяют
+общее значение для соответствующего направления.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста и фильтров сигнала. |
+| Линия тренда | `TRENDFOLLOW_PIVOT_LENGTH`, `TRENDFOLLOW_ATR_LENGTH`, `TRENDFOLLOW_ATR_MULT`, `TRENDFOLLOW_SIGNAL_OFFSET_ATR`, `TRENDFOLLOW_MIN_BARS_BETWEEN_SIGNALS` | Задают подтверждённые экстремумы, шкалу линии от ATR, отступ сигнала и паузу между сигналами. |
+| Структура входа | `TRENDFOLLOW_REQUIRE_STRUCTURE_BREAKOUT`, `TRENDFOLLOW_REQUIRE_TREND_ALIGNMENT`, `TRENDFOLLOW_REQUIRE_BENCHMARK_ALIGNMENT`, `TRENDFOLLOW_MIN_STRUCTURE_ACCEPTANCE_CLOSES`, `TRENDFOLLOW_MIN_BREAKOUT_BODY_ATR`, `TRENDFOLLOW_MIN_BREAKOUT_DISTANCE_PCT`, `TRENDFOLLOW_MIN_BREAKOUT_DISTANCE_PCT_LONG`, `TRENDFOLLOW_MIN_BREAKOUT_DISTANCE_PCT_SHORT`, `TRENDFOLLOW_MAX_BREAKOUT_DISTANCE_PCT` | Требуют подтверждённый пробой структуры и согласие тренда или ориентира в допустимом диапазоне расстояния. |
+| Участие и режим | `TRENDFOLLOW_MIN_VOLUME_REL20`, `TRENDFOLLOW_MIN_TREND_PERSISTENCE`, `TRENDFOLLOW_MIN_TREND_PERSISTENCE_LONG`, `TRENDFOLLOW_MIN_TREND_PERSISTENCE_SHORT`, `TRENDFOLLOW_MAX_RSI`, `TRENDFOLLOW_MAX_RSI_LONG`, `TRENDFOLLOW_MAX_RSI_SHORT`, `TRENDFOLLOW_MAX_BB_WIDTH_PCT`, `TRENDFOLLOW_MAX_BB_WIDTH_PCT_LONG`, `TRENDFOLLOW_MAX_BB_WIDTH_PCT_SHORT` | Задают фильтры объёма, устойчивости тренда, RSI и ширины полос Боллинджера. |
+| Цель и выходы | `TRENDFOLLOW_TARGET_R_MULT`, `TRENDFOLLOW_TARGET_R_MULT_LONG`, `TRENDFOLLOW_TARGET_R_MULT_SHORT`, `TRENDFOLLOW_EXIT_ON_TRAIL_STOP`, `TRENDFOLLOW_EXIT_ON_OPPOSITE_SIGNAL` | Задают цели по направлениям и включают выход по следящему стопу или противоположному сигналу. |
+| Графика и направления | `TRENDFOLLOW_MAX_FIGURE_POINTS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Ограничивают объём графики, задают лимит убытка и настройки направлений. |
 
 Trend model:
 

@@ -32,23 +32,22 @@ Entry codes start with `DRAGON_BULLISH_` or `DRAGON_BEARISH_` and include the
 entry stage. When `DRAGON_EXIT_ON_OPPOSITE_PATTERN=true`, a confirmed opposite
 pattern can close an open position with `DRAGON_OPPOSITE_PATTERN_EXIT`.
 
-## Key configuration
+## Configuration keys
 
-- pivots and shape: `DRAGON_PIVOT_LENGTH`, `DRAGON_MIN_REAR_FOOT_OFFSET_PCT`,
-  `DRAGON_MAX_REAR_FOOT_OFFSET_PCT`, `DRAGON_MIN_HUMP_RETRACEMENT_PCT`,
-  `DRAGON_MAX_HUMP_RETRACEMENT_PCT`
-- size and age: `DRAGON_MIN_PATTERN_HEIGHT_PCT`,
-  `DRAGON_MIN_PATTERN_HEIGHT_ATR`, `DRAGON_MIN_LEG_BARS`,
-  `DRAGON_MAX_PATTERN_AGE_BARS`, `DRAGON_MAX_BREAKOUT_AFTER_REAR_FOOT_BARS`
-- breakout and confirmation: `DRAGON_MIN_TRENDLINE_SLOPE_PCT_PER_BAR`,
-  `DRAGON_MIN_BREAKOUT_DISTANCE_ATR`,
-  `DRAGON_MAX_BREAKOUT_DISTANCE_HEIGHT_RATIO`, `DRAGON_ENTRY_MODE`,
-  `DRAGON_CONFIRMATION_MAX_BARS`, `DRAGON_RETEST_MAX_BARS`,
-  `DRAGON_RETEST_TOLERANCE_ATR`
-- target and stop: `DRAGON_TARGET_FIB_PCT`, `DRAGON_STOP_FIB_PCT`
-- side and risk: `LONG.*`, `SHORT.*`, `FEE_PERCENT`, `MAX_LOSS_VALUE`
-- optional decision filters: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`,
-  `ML_ENABLED`, `ML_THRESHOLD`
+The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
+and position-sizing keys keep the same meaning across the built-in strategies.
+
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the periods used to build the shared market context. |
+| Pivot shape | `DRAGON_PIVOT_LENGTH`, `DRAGON_MIN_REAR_FOOT_OFFSET_PCT`, `DRAGON_MAX_REAR_FOOT_OFFSET_PCT`, `DRAGON_MIN_HUMP_RETRACEMENT_PCT`, `DRAGON_MAX_HUMP_RETRACEMENT_PCT` | Define pivot confirmation and the allowed rear-foot and hump geometry. |
+| Size and age | `DRAGON_MIN_PATTERN_HEIGHT_PCT`, `DRAGON_MIN_PATTERN_HEIGHT_ATR`, `DRAGON_ATR_PERIOD`, `DRAGON_MIN_LEG_BARS`, `DRAGON_MAX_PATTERN_AGE_BARS`, `DRAGON_MAX_BREAKOUT_AFTER_REAR_FOOT_BARS` | Set the minimum pattern size and reject short legs, old patterns, or late breakouts. |
+| Breakout quality | `DRAGON_MIN_TRENDLINE_SLOPE_PCT_PER_BAR`, `DRAGON_MIN_BREAKOUT_DISTANCE_ATR`, `DRAGON_MAX_BREAKOUT_DISTANCE_HEIGHT_RATIO` | Limit the trendline slope and the minimum and maximum valid breakout distance. |
+| Entry timing | `DRAGON_ENTRY_MODE`, `DRAGON_CONFIRMATION_MAX_BARS`, `DRAGON_RETEST_MAX_BARS`, `DRAGON_RETEST_TOLERANCE_ATR` | Choose breakout, close acceptance, or retest entry and bound the confirmation window. |
+| Target, stop, and exit | `DRAGON_TARGET_FIB_PCT`, `DRAGON_STOP_FIB_PCT`, `DRAGON_EXIT_ON_OPPOSITE_PATTERN` | Set target and stop distances from pattern height and allow an opposite pattern to exit. |
+| Risk and side policy | `MAX_LOSS_VALUE`, `LONG.enable`, `LONG.direction`, `LONG.minRiskRatio`, `SHORT.enable`, `SHORT.direction`, `SHORT.minRiskRatio` | Set the loss budget and enable each direction with its minimum reward-to-risk ratio. |
 
 ## Signal payload
 

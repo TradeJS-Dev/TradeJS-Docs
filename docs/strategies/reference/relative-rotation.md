@@ -28,12 +28,21 @@ Entry codes are `RR_LONG_RELATIVE_ROTATION` and
 `RR_SHORT_RELATIVE_ROTATION`. `RR_EXIT_ON_OPPOSITE_ROTATION` enables
 `RR_OPPOSITE_ROTATION_EXIT`.
 
-## Key configuration
+## Configuration keys
 
-- rotation: `RR_MIN_ALPHA_24H`, `RR_MIN_RATIO_RETURN_24H`, `RR_MIN_RELATIVE_STRENGTH_1H*`
-- alignment: `RR_REQUIRE_RATIO_TREND`, `RR_REQUIRE_BTC_ALT_REGIME_ALIGNMENT`
-- quality: `RR_MIN_VOLUME_REL20`, `RR_MIN_ADX_DI_MINUS*`, `RR_MIN_TARGET_BTC_CORRELATION*`, `RR_MAX_ATR_PCT_RANK100*`
-- risk: `RR_STOP_ATR_MULT`, `RR_STOP_BUFFER_PCT`, `RR_TARGET_R_MULT*`
+The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
+and position-sizing keys keep the same meaning across the built-in strategies.
+
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
+| Shared indicators and levels | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the periods used to build shared market context, local levels, and signal filters. |
+| Rotation signal | `RR_MIN_ALPHA_24H`, `RR_MIN_RATIO_RETURN_24H`, `RR_REQUIRE_ALPHA_AND_RATIO_RETURN`, `RR_MIN_RELATIVE_STRENGTH_1H`, `RR_MIN_RELATIVE_STRENGTH_1H_LONG`, `RR_MIN_RELATIVE_STRENGTH_1H_SHORT` | Set the alpha, ratio-return, and directional relative-strength thresholds and whether both daily conditions must pass. |
+| Participation and alignment | `RR_MIN_VOLUME_REL20`, `RR_MAX_VOLUME_REL20`, `RR_MAX_VOLUME_REL20_LONG`, `RR_MAX_VOLUME_REL20_SHORT`, `RR_REQUIRE_RATIO_TREND`, `RR_REQUIRE_BTC_ALT_REGIME_ALIGNMENT` | Limit relative volume and require ratio-trend or BTC and alt-market regime agreement. |
+| Directional quality | `RR_MIN_ADX_DI_MINUS`, `RR_MIN_ADX_DI_MINUS_LONG`, `RR_MIN_ADX_DI_MINUS_SHORT`, `RR_MIN_TARGET_BTC_CORRELATION`, `RR_MIN_TARGET_BTC_CORRELATION_LONG`, `RR_MIN_TARGET_BTC_CORRELATION_SHORT`, `RR_MAX_ATR_PCT_RANK100`, `RR_MAX_ATR_PCT_RANK100_LONG`, `RR_MAX_ATR_PCT_RANK100_SHORT` | Set directional trend-strength, BTC-correlation, and volatility-rank bounds. |
+| Target, stop, and exit | `RR_STOP_ATR_MULT`, `RR_STOP_BUFFER_PCT`, `RR_TARGET_R_MULT`, `RR_TARGET_R_MULT_LONG`, `RR_TARGET_R_MULT_SHORT`, `RR_EXIT_ON_OPPOSITE_ROTATION` | Set stop and directional target distances and allow an opposite rotation to exit. |
+| Risk and side policy | `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Set the loss budget and configure each direction and its minimum reward-to-risk ratio. |
 
 BTC reference values are resolved at or before the evaluated candle. Check BTC
 and symbol data coverage together when diagnosing missing entries.

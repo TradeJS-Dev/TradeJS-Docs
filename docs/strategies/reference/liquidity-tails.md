@@ -47,51 +47,22 @@ When a position exists:
 - otherwise a qualifying improved retest can produce `LIQUIDITY_TAILS_*_SCALE_IN` until the configured addition count or basket risk budget is exhausted.
 - otherwise `POSITION_EXISTS`.
 
-## Config Parameters
+## Configuration keys
 
-Liquidity-tail model:
+The keys are grouped by purpose. A listed `_LONG` or `_SHORT` key overrides
+the unsuffixed value for that direction.
 
-- `LIQUIDITY_TAILS_ATR_LENGTH`
-- `LIQUIDITY_TAILS_ATR_MULT`
-- `LIQUIDITY_TAILS_MIN_WICK_RATIO`
-- `LIQUIDITY_TAILS_WICK_DOMINANCE`
-- `LIQUIDITY_TAILS_MIN_GAP`
-- `LIQUIDITY_TAILS_MAX_AGE`
-- `LIQUIDITY_TAILS_KEEP_BROKEN`
-- `LIQUIDITY_TAILS_REACTION_CLOSE_BEYOND_ZONE`
-- `LIQUIDITY_TAILS_REQUIRE_REACTION_BODY`
-- `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT`
-- `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS`
-- `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES`
-- `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL`
-- `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS`
-- `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO`
-- `LIQUIDITY_TAILS_MIN_ORIGIN_VOLUME_REL20`
-- `LIQUIDITY_TAILS_REQUIRE_ORIGIN_BODY_ALIGNED`
-- `LIQUIDITY_TAILS_CLOSE_HOLD_BARS`
-- `LIQUIDITY_TAILS_STOP_ATR_BUFFER_MULT`
-- `LIQUIDITY_TAILS_STOP_BUFFER_PCT`
-- `LIQUIDITY_TAILS_TARGET_R_MULT`
-- `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST`
-- `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION`
-- `LIQUIDITY_TAILS_SCALE_IN_ENABLED`
-- `LIQUIDITY_TAILS_SCALE_IN_COUNT`
-- `LIQUIDITY_TAILS_INITIAL_RISK_FRACTION`
-- `LIQUIDITY_TAILS_SCALE_IN_MIN_IMPROVEMENT_ATR`
-- `LIQUIDITY_TAILS_MAX_FIGURE_ZONES`
-
-For numeric and boolean fields resolved directionally, `<KEY>_LONG` or
-`<KEY>_SHORT` takes precedence over `<KEY>`. This applies to wick ratio,
-dominance, retest distance/age/touches, retest ordinal, zone age, rejection
-efficiency, close-hold bars, target R, and invalidation exit. An omitted
-directional value falls back to the unsuffixed field.
-
-Shared groups:
-
-- runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
-- AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
-- shared indicators: MA, OBV, ATR, BB, MACD fields
+| Group | Keys | Purpose |
+| --- | --- | --- |
+| Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
+| Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the periods used to build shared market context and signal filters. |
+| Zone origin | `LIQUIDITY_TAILS_ATR_LENGTH`, `LIQUIDITY_TAILS_ATR_MULT`, `LIQUIDITY_TAILS_MIN_WICK_RATIO`, `LIQUIDITY_TAILS_MIN_WICK_RATIO_LONG`, `LIQUIDITY_TAILS_MIN_WICK_RATIO_SHORT`, `LIQUIDITY_TAILS_WICK_DOMINANCE`, `LIQUIDITY_TAILS_WICK_DOMINANCE_LONG`, `LIQUIDITY_TAILS_WICK_DOMINANCE_SHORT`, `LIQUIDITY_TAILS_MIN_GAP`, `LIQUIDITY_TAILS_MIN_ORIGIN_VOLUME_REL20`, `LIQUIDITY_TAILS_REQUIRE_ORIGIN_BODY_ALIGNED` | Define a qualifying wick, its ATR scale, directional dominance, spacing, volume, and body alignment. |
+| Zone lifetime | `LIQUIDITY_TAILS_MAX_AGE`, `LIQUIDITY_TAILS_KEEP_BROKEN`, `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS`, `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS_LONG`, `LIQUIDITY_TAILS_MAX_ENTRY_ZONE_AGE_BARS_SHORT` | Control how long zones remain valid and whether broken zones stay available. |
+| Retest geometry | `LIQUIDITY_TAILS_REACTION_CLOSE_BEYOND_ZONE`, `LIQUIDITY_TAILS_REQUIRE_REACTION_BODY`, `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT`, `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT_LONG`, `LIQUIDITY_TAILS_MAX_RETEST_DISTANCE_PCT_SHORT`, `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS`, `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS_LONG`, `LIQUIDITY_TAILS_MIN_RETEST_AGE_BARS_SHORT` | Define where the reaction closes and how near and how late a valid retest may occur. |
+| Retest quality | `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES`, `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES_LONG`, `LIQUIDITY_TAILS_MIN_ZONE_TOUCHES_SHORT`, `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL`, `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL_LONG`, `LIQUIDITY_TAILS_MAX_ENTRY_RETEST_ORDINAL_SHORT`, `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO`, `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO_LONG`, `LIQUIDITY_TAILS_MIN_REJECTION_EFFICIENCY_RATIO_SHORT`, `LIQUIDITY_TAILS_CLOSE_HOLD_BARS`, `LIQUIDITY_TAILS_CLOSE_HOLD_BARS_LONG`, `LIQUIDITY_TAILS_CLOSE_HOLD_BARS_SHORT` | Require enough touches, limit the accepted retest number, and validate rejection efficiency and close persistence. |
+| Target, stop, and exits | `LIQUIDITY_TAILS_STOP_ATR_BUFFER_MULT`, `LIQUIDITY_TAILS_STOP_BUFFER_PCT`, `LIQUIDITY_TAILS_TARGET_R_MULT`, `LIQUIDITY_TAILS_TARGET_R_MULT_LONG`, `LIQUIDITY_TAILS_TARGET_R_MULT_SHORT`, `LIQUIDITY_TAILS_EXIT_ON_OPPOSITE_RETEST`, `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION`, `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION_LONG`, `LIQUIDITY_TAILS_EXIT_ON_INVALIDATION_SHORT`, `LIQUIDITY_TAILS_EXIT_ON_SCALE_IN_RETEST` | Set stop and directional target distances and choose which retest or invalidation events close a position. |
+| Position building | `LIQUIDITY_TAILS_SCALE_IN_ENABLED`, `LIQUIDITY_TAILS_SCALE_IN_COUNT`, `LIQUIDITY_TAILS_INITIAL_RISK_FRACTION`, `LIQUIDITY_TAILS_SCALE_IN_MIN_IMPROVEMENT_ATR` | Enable staged entries, set their count and initial risk share, and require an improved scale-in price. |
+| Figures and side policy | `LIQUIDITY_TAILS_MAX_FIGURE_ZONES`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Limit chart zones, set the loss budget, and configure each direction. |
 
 With deterministic `AI_MODE: "gate"`, the current local gate requires broad
 participation among the five largest market assets and a low negative

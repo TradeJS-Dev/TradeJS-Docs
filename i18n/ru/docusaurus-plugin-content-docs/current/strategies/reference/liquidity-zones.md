@@ -37,7 +37,20 @@ Entry codes:
 - `LIQUIDITY_ZONES_OPPOSITE_RETEST_EXIT`, когда `LIQUIDITY_ZONES_EXIT_ON_OPPOSITE_RETEST=true` и появляется opposite retest.
 - иначе `POSITION_EXISTS`.
 
-## Параметры
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Общие настройки среды, AI, ML, индикаторов и
+размера позиции работают так же, как в других встроенных стратегиях.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
+| Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста и фильтров сигнала. |
+| Построение зон | `LIQUIDITY_ZONES_PIVOT_LOOKBACK`, `LIQUIDITY_ZONES_SWING_AREA_MODE`, `LIQUIDITY_ZONES_FILTER_MODE`, `LIQUIDITY_ZONES_MIN_FILTER_VALUE`, `LIQUIDITY_ZONES_SHOW_SWING_HIGH_ZONES`, `LIQUIDITY_ZONES_SHOW_SWING_LOW_ZONES` | Задают экстремумы и границы зон, фильтр по числу или объёму и включение верхних и нижних зон. |
+| Возраст и повторный тест | `LIQUIDITY_ZONES_MIN_ZONE_AGE`, `LIQUIDITY_ZONES_MAX_AGE`, `LIQUIDITY_ZONES_REACTION_CLOSE_BEYOND_ZONE`, `LIQUIDITY_ZONES_REQUIRE_REACTION_BODY`, `LIQUIDITY_ZONES_MAX_RETEST_PENETRATION_PCT` | Задают допустимый возраст зоны, реакцию цены и максимальную глубину повторного теста. |
+| Качество реакции | `LIQUIDITY_ZONES_MIN_REACTION_CLOSE_DISTANCE_PCT`, `LIQUIDITY_ZONES_MAX_REACTION_CLOSE_DISTANCE_PCT`, `LIQUIDITY_ZONES_MAX_REACTION_CLOSE_DISTANCE_PCT_LONG`, `LIQUIDITY_ZONES_MAX_REACTION_CLOSE_DISTANCE_PCT_SHORT`, `LIQUIDITY_ZONES_REQUIRE_RANGE_RECLAIM`, `LIQUIDITY_ZONES_REQUIRE_SWEEP_RECLAIM`, `LIQUIDITY_ZONES_MIN_REJECTION_WICK_SCORE`, `LIQUIDITY_ZONES_MIN_VOLUME_REL20` | Ограничивают расстояние реакции и требуют возврат в диапазон или за уровень, качество тени отбоя и относительный объём. |
+| Цель, стоп и выход | `LIQUIDITY_ZONES_STOP_ZONE_BUFFER_MULT`, `LIQUIDITY_ZONES_STOP_BUFFER_PCT`, `LIQUIDITY_ZONES_TARGET_R_MULT`, `LIQUIDITY_ZONES_EXIT_ON_OPPOSITE_RETEST` | Задают стоп за зоной, цель и выход по противоположному тесту. |
+| Графика и направления | `LIQUIDITY_ZONES_MAX_FIGURE_ZONES`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*` | Ограничивают число зон на графике, задают лимит убытка и настройки направлений. |
 
 Zone model:
 

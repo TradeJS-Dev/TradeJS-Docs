@@ -45,7 +45,22 @@ title: 'AdaptiveMomentumRibbon'
 - `CLOSE_BY_AMR_SIGNAL` — противоположный сигнал
 - `CLOSE_BY_AMR_INVALIDATION` — invalidation при `AMR_EXIT_ON_INVALIDATION=true`
 
-## Параметры конфига (что означает каждый)
+## Ключи конфигурации
+
+Ключи сгруппированы по смыслу. Общие настройки среды, AI, ML и размера позиции
+работают так же, как в других встроенных стратегиях.
+
+| Группа | Ключи | Назначение |
+| --- | --- | --- |
+| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
+| Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. `CLOSE_OPPOSITE_POSITIONS` не используется текущей логикой AMR. |
+| Модель моментума | `AMR_LOOKBACK_BARS`, `AMR_MOMENTUM_PERIOD`, `AMR_BUTTERWORTH_SMOOTHING`, `AMR_WAIT_CLOSE`, `AMR_CONFIRM_ON_NEXT_BAR` | Задают объём истории, период и сглаживание осциллятора и подтверждение на закрытых свечах. |
+| Качество сигнала | `AMR_MIN_SIGNAL_OSC_ABS`, `AMR_MIN_SIGNAL_OSC_ABS_LONG`, `AMR_MIN_SIGNAL_OSC_ABS_SHORT`, `AMR_REQUIRE_KC_BIAS`, `AMR_MIN_BARS_BETWEEN_SIGNALS` | Задают минимальную силу осциллятора, согласование с Keltner и паузу между сигналами. |
+| Канал Keltner | `AMR_KC_LENGTH`, `AMR_KC_MA_TYPE`, `AMR_ATR_LENGTH`, `AMR_ATR_MULTIPLIER` | Задают среднюю линию канала, тип средней, период ATR и множитель полос. |
+| Риск отложенного входа | `AMR_MIN_TP_DISTANCE_BPS`, `AMR_MAX_DELAY_RISK_TP_RATIO`, `AMR_DELAY_RISK_MOVE_MULT` | Отсекают входы со слишком близкой целью или слишком большим движением между сигналом и исполнением. |
+| Цель, стоп и выход | `AMR_STOP_BUFFER_PCT`, `AMR_TARGET_R_MULT`, `AMR_EXIT_ON_OPPOSITE_SIGNAL`, `AMR_EXIT_ON_INVALIDATION` | Задают запас структурного стопа, расстояние цели и условия выхода. |
+| Графика | `AMR_SHOW_INVALIDATION_LEVELS`, `AMR_SHOW_KELTNER_CHANNEL`, `AMR_LINE_PLOTS` | Выбирают уровни, канал и линии Pine для отображения на графике. |
+| Риск и направления | `MAX_LOSS_VALUE`, `LONG.enable`, `LONG.direction`, `LONG.minRiskRatio`, `SHORT.enable`, `SHORT.direction`, `SHORT.minRiskRatio` | Задают лимит убытка и включают направления с минимальным отношением доходности к риску. |
 
 ### Общие параметры запуска
 
