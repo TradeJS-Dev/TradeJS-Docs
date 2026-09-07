@@ -23,7 +23,7 @@ confirmation rules, and risk parameters come from the active strategy config.
 4. Uses `LONG` config for a long pattern and `SHORT` config for a short pattern.
 5. Computes `riskDistance` from current price to `pattern.stopLossPrice`.
 6. Computes `riskRatio` from target distance divided by risk distance.
-7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
+7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, using the `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and `RISK_MARKET_IMPACT_BPS` estimates.
 8. Returns `entry` with double-tap figures and `doubleTapContext`.
 
 Entry codes:

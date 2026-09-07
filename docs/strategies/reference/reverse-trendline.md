@@ -23,7 +23,7 @@ confirmation rules, and risk parameters come from the active strategy config.
 4. Selects the side config from the candidate direction.
 5. Places a stop from `REVERSE_TRENDLINE_STOP_BASE_PCT`.
 6. Computes target from `REVERSE_TRENDLINE_TARGET_R_MULT`.
-7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
+7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, using the `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and `RISK_MARKET_IMPACT_BPS` estimates.
 8. Returns `entry` with reverse-trendline figures and signal seed indicators.
 
 Entry code:
@@ -46,7 +46,7 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 | --- | --- | --- |
 | Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
 | AI | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY` | Control optional AI enrichment and its acceptance threshold. |
-| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `REVERSE_TRENDLINE_STOP_BASE_PCT`, `REVERSE_TRENDLINE_TARGET_R_MULT` | Account for fees, size positions, and set the stop distance and target R multiple. |
+| Risk | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `REVERSE_TRENDLINE_STOP_BASE_PCT`, `REVERSE_TRENDLINE_TARGET_R_MULT` | Estimate one-way fees, slippage, and market impact, size positions, and set the stop distance and target R multiple. |
 | Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the lookback periods used by the trendline context and signal filters. |
 | Line geometry | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Define pivot spacing, required touches, and price tolerance for fitted lines. |
 | Rejection quality | `REVERSE_TRENDLINE_MIN_REJECTION_WICK_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_LONG`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_SHORT`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_LONG`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_SHORT` | Require a visible rejection and limit how far price may pass through the line, globally or by direction. |

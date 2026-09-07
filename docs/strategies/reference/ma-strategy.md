@@ -40,7 +40,7 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 | --- | --- | --- |
 | Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
 | AI and ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Control optional AI and ML enrichment and their acceptance thresholds. |
-| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRADE_COOLDOWN_MS` | Account for fees, size positions by maximum loss, and pause between entries. |
+| Risk | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `TRADE_COOLDOWN_MS` | Estimate one-way fees, slippage, and market impact, size positions by maximum loss, and pause between entries. |
 | Moving averages | `MA_FAST`, `MA_SLOW` | Set the fast and slow average periods used to detect a cross. |
 | Cross gap | `MA_MIN_CROSS_GAP_ATR`, `MA_MIN_CROSS_GAP_ATR_LONG`, `MA_MIN_CROSS_GAP_ATR_SHORT`, `MA_MAX_CROSS_GAP_ATR`, `MA_MAX_CROSS_GAP_ATR_LONG`, `MA_MAX_CROSS_GAP_ATR_SHORT` | Limit the post-cross distance between the averages in ATR units, globally or by direction. |
 | Signal quality | `MA_MIN_FAST_SLOPE_ATR`, `MA_REQUIRE_SLOW_SLOPE_ALIGNMENT`, `MA_REQUIRE_DIRECTIONAL_BODY`, `MA_MIN_BODY_ATR`, `MA_MIN_VOLUME_REL20`, `MA_MIN_VOLUME_REL20_LONG`, `MA_MIN_VOLUME_REL20_SHORT`, `MA_MAX_PRICE_DISTANCE_FAST_ATR` | Require sufficient slope, candle direction and size, relative volume, and proximity to the fast average. |

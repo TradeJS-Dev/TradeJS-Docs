@@ -22,7 +22,7 @@ confirmation rules, and risk parameters come from the active strategy config.
 4. Selects `LONG` or `SHORT` side config from signal direction.
 5. Uses `signal.trailStop` as the stop-loss reference.
 6. Computes target from `TRENDFOLLOW_TARGET_R_MULT`.
-7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
+7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, using the `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and `RISK_MARKET_IMPACT_BPS` estimates.
 8. Returns `entry` with trend-follow figures and `trendFollowContext`.
 
 Entry codes:

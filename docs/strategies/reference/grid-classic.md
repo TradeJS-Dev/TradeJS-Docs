@@ -31,7 +31,7 @@ and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
-| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Risk estimates | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` | Estimate one-way fees, slippage, and market impact for position sizing and reward-to-risk checks. Backtest execution costs are configured separately. |
 | Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
 | Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the periods used to build shared market context and signal filters. |
 | Mode and continuation | `GRIDCLASSIC_MODE`, `GRIDCLASSIC_CONTINUATION_ACCEPTANCE_BARS`, `GRIDCLASSIC_CONTINUATION_RETEST_MAX_BARS`, `GRIDCLASSIC_CONTINUATION_RETEST_TOLERANCE_ATR`, `GRIDCLASSIC_CONTINUATION_REQUIRE_DIRECTIONAL_RETEST`, `GRIDCLASSIC_CONTINUATION_MAX_ENTRY_DISTANCE_ATR`, `GRIDCLASSIC_CONTINUATION_TARGET_RANGE_MULT`, `GRIDCLASSIC_CONTINUATION_STOP_INSIDE_RANGE_FRACTION`, `GRIDCLASSIC_FAILED_BREAKOUT_REVERSAL_ENABLED` | Select mean reversion or breakout continuation and define its acceptance, retest, target, stop, and reversal rules. |

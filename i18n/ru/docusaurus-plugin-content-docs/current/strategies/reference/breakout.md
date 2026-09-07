@@ -39,7 +39,6 @@ Long и short используют отдельные карты сигнало�
 
 | Группа | Ключи | Назначение |
 | --- | --- | --- |
-| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
 | Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
 | Общие индикаторы и уровни | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Задают периоды индикаторов и локальных уровней поддержки и сопротивления. |
 | Взвешенная оценка | `SIGNALS_LONG`, `SIGNALS_SHORT`, `REQUIRED_SCORE_LONG`, `REQUIRED_SCORE_SHORT`, `ATR_OPEN` | Задают условия и веса для направлений, требуемую сумму баллов и порог волатильности для `VOLATILE`. |

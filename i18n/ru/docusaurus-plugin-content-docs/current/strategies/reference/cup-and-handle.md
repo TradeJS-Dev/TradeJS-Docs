@@ -43,7 +43,7 @@ title: 'CupAndHandle'
 
 | Группа | Ключи | Назначение |
 | --- | --- | --- |
-| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
+| Оценка издержек | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` | Задаёт оценки комиссии, проскальзывания и влияния на рынок для расчёта позиции и отношения доходности к риску. Издержки исполнения бэктеста настраиваются отдельно. |
 | Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
 | Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста. |
 | Геометрия чашки | `CUPHANDLE_PIVOT_LOOKBACK`, `CUPHANDLE_RIM_TOLERANCE_PCT`, `CUPHANDLE_MIN_CUP_DEPTH_PCT`, `CUPHANDLE_MIN_CUP_DEPTH_ATR`, `CUPHANDLE_ATR_PERIOD` | Задают экстремумы, допуск краёв, минимальную глубину чашки и шкалу ATR. |

@@ -50,6 +50,32 @@ npx @tradejs/cli infra-up
 Use `--cacheOnly` when the required candles are already available and you want
 to prevent a data refresh during a reproducibility check.
 
+## Separate Execution Costs from Strategy Estimates
+
+A reproducible comparison should pass its simulation costs separately from the
+strategy configuration:
+
+```bash
+npx @tradejs/cli backtest \
+  --config <StrategyName:configName> \
+  --executionCosts '{"fees":{"makerRate":0.001,"takerRate":0.001},"slippage":{"baseBps":10,"spreadMultiplier":1,"marketImpactBps":0,"delayRiskMultiplier":0},"funding":{"enabled":false}}'
+```
+
+Fee values are decimal one-way rates, so `0.001` means 0.1%. Slippage is
+adverse on each fill, and fees use the resulting fill value. Setting
+`funding.enabled` to `false` excludes funding costs. Enabling funding requires
+usable historical funding data, including for a cached run.
+
+TradeJS freezes the object for the run and includes it in checkpoint and result
+evidence. A continued run reuses the frozen costs. Start a new run if you need
+different cost assumptions.
+
+Strategy fields `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and
+`RISK_MARKET_IMPACT_BPS` are separate estimates used for entry checks and
+position sizing. Changing `--executionCosts` does not change those strategy
+estimates, and changing the strategy estimates does not change simulated fees,
+slippage, or funding.
+
 ## What TradeJS Does
 
 1. Loads the selected parameter grid.

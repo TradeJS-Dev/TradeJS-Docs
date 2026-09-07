@@ -22,7 +22,7 @@ title: 'ReverseTrendLine'
 4. Выбирает side config по направлению candidate.
 5. Ставит stop от `REVERSE_TRENDLINE_STOP_BASE_PCT`.
 6. Считает target от `REVERSE_TRENDLINE_TARGET_R_MULT`.
-7. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учетом `FEE_PERCENT`.
+7. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учётом оценок `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS` и `RISK_MARKET_IMPACT_BPS`.
 8. Возвращает `entry` с reverse-trendline figures и signal seed indicators.
 
 Entry code:
@@ -45,7 +45,7 @@ Entry code:
 | --- | --- | --- |
 | Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
 | AI | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY` | Управляют необязательным решением AI и порогом допуска. |
-| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `REVERSE_TRENDLINE_STOP_BASE_PCT`, `REVERSE_TRENDLINE_TARGET_R_MULT` | Учитывают комиссию, задают размер позиции, расстояние стопа и множитель цели. |
+| Риск | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `REVERSE_TRENDLINE_STOP_BASE_PCT`, `REVERSE_TRENDLINE_TARGET_R_MULT` | Задают оценки комиссии, проскальзывания и влияния на рынок, размер позиции, расстояние стопа и множитель цели. |
 | Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для контекста линии и фильтров сигнала. |
 | Геометрия линии | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Задают расстояние между экстремумами, число касаний и допуск цены для построенной линии. |
 | Качество отбоя | `REVERSE_TRENDLINE_MIN_REJECTION_WICK_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_LONG`, `REVERSE_TRENDLINE_MIN_REJECTION_STRENGTH_PCT_SHORT`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_LONG`, `REVERSE_TRENDLINE_MAX_BREAK_ATR_RATIO_SHORT` | Требуют заметный отбой и ограничивают проход цены за линию, общее или по направлениям. |
@@ -71,7 +71,7 @@ Shared groups:
 
 - runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
 - AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`
+- risk: `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
 ## Содержимое сигнала

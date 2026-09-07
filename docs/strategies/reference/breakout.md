@@ -38,7 +38,6 @@ the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
-| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
 | Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
 | Shared indicators and levels | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the periods used for shared indicators and local support and resistance levels. |
 | Weighted score | `SIGNALS_LONG`, `SIGNALS_SHORT`, `REQUIRED_SCORE_LONG`, `REQUIRED_SCORE_SHORT`, `ATR_OPEN` | Define the weighted conditions for each direction, the required score, and the volatility threshold used by the `VOLATILE` condition. |

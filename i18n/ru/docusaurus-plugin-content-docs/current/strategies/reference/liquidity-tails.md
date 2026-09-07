@@ -27,7 +27,7 @@ title: 'LiquidityTails'
    - long: ниже `signal.zone.bottom`
    - short: выше `signal.zone.top`
 7. Считает target от `LIQUIDITY_TAILS_TARGET_R_MULT`.
-8. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учетом `FEE_PERCENT`.
+8. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учётом оценок `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS` и `RISK_MARKET_IMPACT_BPS`.
 9. Опционально резервирует часть risk budget для scale-ins на улучшенных retests.
 10. Возвращает `entry` с liquidity-tail figures и `liquidityTailsContext`.
 
@@ -104,7 +104,7 @@ Shared groups:
 
 - runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
 - AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
+- risk: `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
 В режиме `AI_MODE: "gate"` текущий локальный фильтр требует широкого участия

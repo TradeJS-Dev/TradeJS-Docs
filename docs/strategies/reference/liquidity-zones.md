@@ -23,7 +23,7 @@ confirmation rules, and risk parameters come from the active strategy config.
 4. Builds a stop buffer from zone height and `LIQUIDITY_ZONES_STOP_BUFFER_PCT`.
 5. Places stop outside the retested zone.
 6. Computes target from `LIQUIDITY_ZONES_TARGET_R_MULT`.
-7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
+7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, using the `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and `RISK_MARKET_IMPACT_BPS` estimates.
 8. Returns `entry` with zone figures and `liquidityZonesContext`.
 
 Entry codes:

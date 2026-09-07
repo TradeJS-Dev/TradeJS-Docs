@@ -39,7 +39,7 @@ Entry codes: `RR_LONG_RELATIVE_ROTATION`, `RR_SHORT_RELATIVE_ROTATION`.
 
 | Группа | Ключи | Назначение |
 | --- | --- | --- |
-| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
+| Оценка издержек | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` | Задаёт оценки комиссии, проскальзывания и влияния на рынок для расчёта позиции и отношения доходности к риску. Издержки исполнения бэктеста настраиваются отдельно. |
 | Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
 | Общие индикаторы и уровни | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Задают периоды индикаторов, локальных уровней и фильтров сигнала. |
 | Сигнал ротации | `RR_MIN_ALPHA_24H`, `RR_MIN_RATIO_RETURN_24H`, `RR_REQUIRE_ALPHA_AND_RATIO_RETURN`, `RR_MIN_RELATIVE_STRENGTH_1H`, `RR_MIN_RELATIVE_STRENGTH_1H_LONG`, `RR_MIN_RELATIVE_STRENGTH_1H_SHORT` | Задают пороги альфы, доходности отношения цен и относительной силы и определяют, должны ли пройти оба суточных условия. |

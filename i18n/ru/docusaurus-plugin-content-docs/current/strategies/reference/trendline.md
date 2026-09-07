@@ -41,7 +41,7 @@ title: 'TrendLine'
 | --- | --- | --- |
 | Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
 | AI и ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Управляют необязательными решениями AI и ML и их порогами допуска. |
-| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRENDLINE_STOP_BASE_PCT`, `TRENDLINE_TARGET_R_MULT` | Учитывают комиссию, задают размер позиции, расстояние стопа и множитель цели. |
+| Риск | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `TRENDLINE_STOP_BASE_PCT`, `TRENDLINE_TARGET_R_MULT` | Задают оценки комиссии, проскальзывания и влияния на рынок, размер позиции, расстояние стопа и множитель цели. |
 | Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Задают периоды индикаторов для рыночного контекста и фильтров сигнала. |
 | Геометрия линии | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Задают расстояние между экстремумами, число касаний и допуск цены для построенной линии. |
 | Качество пробоя | `TRENDLINE_MIN_BREAK_ATR_RATIO`, `TRENDLINE_MAX_BREAK_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MAX_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MIN_VOLUME_REL20` | Требуют значимый пробой линии и больший объём для слабых пробоев. |
@@ -67,7 +67,7 @@ title: 'TrendLine'
 ### Параметры торговли и риска
 
 - `CLOSE_OPPOSITE_POSITIONS` — закрывать противоположную позицию перед новым входом (hook).
-- `FEE_PERCENT` — комиссия, учитывается при расчете риск/прибыль.
+- `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` — оценки комиссии, проскальзывания и влияния на рынок для допуска входа и расчёта позиции.
 - `MAX_LOSS_VALUE` — максимальный риск в валюте депозита для расчета `qty`.
 - `MAX_CORRELATION` — верхний порог корреляции с BTC (guard вне `BACKTEST`).
 

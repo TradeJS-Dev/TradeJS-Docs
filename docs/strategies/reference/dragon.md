@@ -39,7 +39,7 @@ and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
-| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Risk estimates | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` | Estimate one-way fees, slippage, and market impact for position sizing and reward-to-risk checks. Backtest execution costs are configured separately. |
 | Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. |
 | Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Set the periods used to build the shared market context. |
 | Pivot shape | `DRAGON_PIVOT_LENGTH`, `DRAGON_MIN_REAR_FOOT_OFFSET_PCT`, `DRAGON_MAX_REAR_FOOT_OFFSET_PCT`, `DRAGON_MIN_HUMP_RETRACEMENT_PCT`, `DRAGON_MAX_HUMP_RETRACEMENT_PCT` | Define pivot confirmation and the allowed rear-foot and hump geometry. |

@@ -40,7 +40,7 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 | --- | --- | --- |
 | Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
 | AI and ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Control optional AI and ML enrichment and their acceptance thresholds. |
-| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `VOLUME_DIVERGENCE_STOP_ATR_BUFFER_MULT`, `VOLUME_DIVERGENCE_STOP_BUFFER_PCT`, `VOLUME_DIVERGENCE_TARGET_R_MULT` | Account for fees, size positions, and set the stop buffers and target R multiple. |
+| Risk | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `VOLUME_DIVERGENCE_STOP_ATR_BUFFER_MULT`, `VOLUME_DIVERGENCE_STOP_BUFFER_PCT`, `VOLUME_DIVERGENCE_TARGET_R_MULT` | Estimate one-way fees, slippage, and market impact, size positions, and set the stop buffers and target R multiple. |
 | Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the lookback periods used by market context and signal filters. |
 | Pivot search | `NORMALIZATION_LENGTH`, `PIVOT_LOOKBACK_LEFT`, `PIVOT_LOOKBACK_RIGHT`, `MIN_BARS_BETWEEN_PIVOTS`, `MAX_BARS_BETWEEN_PIVOTS` | Normalize volume and define how pivots are confirmed and spaced. |
 | Entry quality | `ALLOW_STRUCTURE_ADVANCE_ENTRY`, `MIN_DIVERGENCE_AMPLITUDE_ATR_RATIO`, `MIN_RECLAIM_PCT`, `MIN_CONFIRMATION_CANDLE_QUALITY` | Choose whether early structural entries are allowed and set the global divergence, reclaim, and candle-quality thresholds. |

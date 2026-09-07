@@ -22,7 +22,7 @@ title: 'LiquidityZones'
 4. Строит stop buffer из высоты зоны и `LIQUIDITY_ZONES_STOP_BUFFER_PCT`.
 5. Ставит stop за пределами retested zone.
 6. Считает target от `LIQUIDITY_ZONES_TARGET_R_MULT`.
-7. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учетом `FEE_PERCENT`.
+7. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учётом оценок `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS` и `RISK_MARKET_IMPACT_BPS`.
 8. Возвращает `entry` с zone figures и `liquidityZonesContext`.
 
 Entry codes:
@@ -74,7 +74,7 @@ Shared groups:
 
 - runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
 - AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
+- risk: `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
 ## Содержимое сигнала

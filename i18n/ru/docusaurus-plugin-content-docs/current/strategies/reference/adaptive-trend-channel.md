@@ -28,7 +28,7 @@ title: 'AdaptiveTrendChannel'
    - long stop: `signal.floor`
    - short stop: `signal.roof`
 7. Считает target от `ADAPTIVE_TREND_CHANNEL_TARGET_R_MULT`.
-8. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учетом `FEE_PERCENT`.
+8. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учётом оценок `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS` и `RISK_MARKET_IMPACT_BPS`.
 9. Возвращает `entry` с channel figures и `adaptiveTrendChannelContext`.
 
 Entry codes:
@@ -74,7 +74,7 @@ Runtime:
 
 Risk и индикаторы:
 
-- `FEE_PERCENT`, `MAX_LOSS_VALUE`
+- `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`
 - `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`
 - `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`
 - `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`

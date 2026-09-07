@@ -41,7 +41,7 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 | --- | --- | --- |
 | Runtime | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Select the runtime mode, candle interval, order behavior, and backtest fill price. |
 | AI and ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Control optional AI and ML enrichment and their acceptance thresholds. |
-| Risk | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRENDLINE_STOP_BASE_PCT`, `TRENDLINE_TARGET_R_MULT` | Account for fees, size positions, and set the stop distance and target R multiple. |
+| Risk | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `TRENDLINE_STOP_BASE_PCT`, `TRENDLINE_TARGET_R_MULT` | Estimate one-way fees, slippage, and market impact, size positions, and set the stop distance and target R multiple. |
 | Shared indicators | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Set the lookback periods used by market context and signal filters. |
 | Line geometry | `TRENDLINE.minTouches`, `TRENDLINE.offset`, `TRENDLINE.epsilon`, `TRENDLINE.epsilonOffset` | Define pivot spacing, required touches, and price tolerance for fitted lines. |
 | Break quality | `TRENDLINE_MIN_BREAK_ATR_RATIO`, `TRENDLINE_MAX_BREAK_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MAX_ATR_RATIO`, `TRENDLINE_WEAK_BREAK_MIN_VOLUME_REL20` | Require a meaningful line break and apply a stricter volume rule to weak breaks. |

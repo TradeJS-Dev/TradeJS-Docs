@@ -22,7 +22,7 @@ title: 'TrendFollow'
 4. Выбирает side config `LONG` или `SHORT` по направлению сигнала.
 5. Использует `signal.trailStop` как stop-loss reference.
 6. Считает target от `TRENDFOLLOW_TARGET_R_MULT`.
-7. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учетом `FEE_PERCENT`.
+7. Считает qty от `MAX_LOSS_VALUE / riskDistance` с учётом оценок `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS` и `RISK_MARKET_IMPACT_BPS`.
 8. Возвращает `entry` с trend-follow figures и `trendFollowContext`.
 
 Entry codes:
@@ -69,7 +69,7 @@ Shared groups:
 
 - runtime: `ENV`, `INTERVAL`, `MAKE_ORDERS`, `BACKTEST_PRICE_MODE`
 - AI/ML: `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD`
-- risk: `FEE_PERCENT`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
+- risk: `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `LONG.*`, `SHORT.*`
 - shared indicators: MA, OBV, ATR, BB, MACD fields
 
 ## Содержимое сигнала

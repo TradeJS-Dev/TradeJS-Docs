@@ -38,7 +38,7 @@ Entry codes: `GRID_DIRECTIONAL_PULLBACK_ENTRY`, `GRID_BREAKOUT_RETEST_ENTRY`;
 
 | Группа | Ключи | Назначение |
 | --- | --- | --- |
-| Комиссия | `FEE_PERCENT` | Учитывает заданную торговую комиссию при расчёте позиции и отношения доходности к риску. |
+| Оценка издержек | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` | Задаёт оценки комиссии, проскальзывания и влияния на рынок для расчёта позиции и отношения доходности к риску. Издержки исполнения бэктеста настраиваются отдельно. |
 | Среда и сервисы решений | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Задают режим работы, интервал свечей, размещение ордеров и необязательные решения AI или ML. |
 | Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL` | Задают периоды индикаторов для общего рыночного контекста и фильтров сигнала. |
 | Модель тренда | `GRID_FAST_EMA`, `GRID_SLOW_EMA`, `GRID_ATR_PERIOD`, `GRID_TREND_SLOPE_BARS`, `GRID_MIN_TREND_STRENGTH_ATR`, `GRID_MAX_TREND_STRENGTH_ATR`, `GRID_MIN_SLOW_SLOPE_ATR` | Задают EMA тренда, окно наклона и допустимую силу тренда. |

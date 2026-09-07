@@ -22,7 +22,7 @@ confirmation rules, and risk parameters come from the active strategy config.
 4. Selects `LONG` or `SHORT` side config from signal direction.
 5. Places the stop outside the signal zone, using ATR and percent buffers.
 6. Computes target from `STRUCTURE_ZONES_TARGET_R_MULT`.
-7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
+7. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, using the `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and `RISK_MARKET_IMPACT_BPS` estimates.
 8. Returns `entry` with structure-zone figures and `structureZonesContext`.
 
 Entry codes are based on the signal kind and direction:

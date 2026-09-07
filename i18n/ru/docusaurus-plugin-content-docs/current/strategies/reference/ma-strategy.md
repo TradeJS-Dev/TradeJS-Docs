@@ -40,7 +40,7 @@ title: 'MaStrategy'
 | --- | --- | --- |
 | Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
 | AI и ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Управляют необязательными решениями AI и ML и их порогами допуска. |
-| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `TRADE_COOLDOWN_MS` | Учитывают комиссию, задают размер позиции по лимиту убытка и паузу между входами. |
+| Риск | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `TRADE_COOLDOWN_MS` | Задают оценки комиссии, проскальзывания и влияния на рынок, размер позиции по лимиту убытка и паузу между входами. |
 | Скользящие средние | `MA_FAST`, `MA_SLOW` | Задают периоды быстрой и медленной средних для поиска пересечения. |
 | Разрыв средних | `MA_MIN_CROSS_GAP_ATR`, `MA_MIN_CROSS_GAP_ATR_LONG`, `MA_MIN_CROSS_GAP_ATR_SHORT`, `MA_MAX_CROSS_GAP_ATR`, `MA_MAX_CROSS_GAP_ATR_LONG`, `MA_MAX_CROSS_GAP_ATR_SHORT` | Ограничивают расстояние между средними после пересечения в единицах ATR, общее или по направлениям. |
 | Качество сигнала | `MA_MIN_FAST_SLOPE_ATR`, `MA_REQUIRE_SLOW_SLOPE_ALIGNMENT`, `MA_REQUIRE_DIRECTIONAL_BODY`, `MA_MIN_BODY_ATR`, `MA_MIN_VOLUME_REL20`, `MA_MIN_VOLUME_REL20_LONG`, `MA_MIN_VOLUME_REL20_SHORT`, `MA_MAX_PRICE_DISTANCE_FAST_ATR` | Требуют достаточный наклон, направление и размер свечи, относительный объём и близость к быстрой средней. |
@@ -65,7 +65,7 @@ title: 'MaStrategy'
 ### Параметры торговли и риска
 
 - `CLOSE_OPPOSITE_POSITIONS` — закрывать противоположные позиции перед новым входом (через hook).
-- `FEE_PERCENT` — комиссия в расчетах риск/прибыль.
+- `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` — оценки комиссии, проскальзывания и влияния на рынок для допуска входа и расчёта позиции.
 - `MAX_LOSS_VALUE` — максимальный риск для вычисления `qty`.
 - `MAX_CORRELATION` — ограничение по корреляции с BTC.
 - `TRADE_COOLDOWN_MS` — пауза между сделками в миллисекундах.

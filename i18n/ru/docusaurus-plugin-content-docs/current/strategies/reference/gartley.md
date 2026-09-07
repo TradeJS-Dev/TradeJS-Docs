@@ -38,7 +38,7 @@ title: 'Gartley'
 | --- | --- | --- |
 | Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
 | AI и ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Управляют необязательными решениями AI и ML и их порогами допуска. |
-| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `GARTLEY_TARGET_XA_FIB_PCT`, `GARTLEY_STOP_XA_FIB_PCT`, `GARTLEY_EXIT_ON_OPPOSITE_PATTERN` | Учитывают комиссию, задают размер позиции, проекции цели и стопа от XA и выход по противоположной модели. |
+| Риск | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `GARTLEY_TARGET_XA_FIB_PCT`, `GARTLEY_STOP_XA_FIB_PCT`, `GARTLEY_EXIT_ON_OPPOSITE_PATTERN` | Задают оценки комиссии, проскальзывания и влияния на рынок, размер позиции, проекции цели и стопа от XA и выход по противоположной модели. |
 | Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `GARTLEY_ATR_PERIOD` | Задают периоды рыночного контекста, фильтров направления и нормализации модели. |
 | Поиск экстремумов | `GARTLEY_PIVOT_LENGTH`, `GARTLEY_MIN_LEG_BARS`, `GARTLEY_MAX_PATTERN_AGE_BARS`, `GARTLEY_MAX_BREAKOUT_AFTER_D_BARS` | Задают подтверждение экстремумов, минимальную длину ноги, возраст модели и срок пробоя B после D. |
 | Отношения AB и BC | `GARTLEY_MIN_AB_RETRACEMENT_RATIO`, `GARTLEY_MAX_AB_RETRACEMENT_RATIO`, `GARTLEY_MIN_BC_RETRACEMENT_RATIO`, `GARTLEY_MAX_BC_RETRACEMENT_RATIO` | Задают допустимые диапазоны откатов AB/XA и BC/AB. |

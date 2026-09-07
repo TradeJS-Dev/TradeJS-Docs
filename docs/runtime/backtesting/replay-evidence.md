@@ -31,6 +31,33 @@ Useful options:
 Without a temporary symbol override, replay applies the deployment's symbol
 selection and any strategy-level `selection.tickers` limits.
 
+## Build a Cached Portfolio Report
+
+Use `portfolio-backtest` to evaluate the complete configured deployment as one
+historical portfolio. The command uses the `production` declaration, cached
+history, the complete available candle range, and `MAX_LOSS_VALUE=10` by
+default:
+
+```bash
+npx @tradejs/cli portfolio-backtest --user root
+```
+
+The command processes symbols in bounded batches and then merges completed
+trades in timestamp order. Use `--portfolioBatchSize` to change the default
+batch size of four symbols. You can also pass `--tickers` to use an explicit
+symbol set or `--portfolioOutputSuffix` to keep parallel report files separate.
+
+Reports are written under `data/replay/output` as HTML, Markdown, JSON, and SVG
+files. They include full-period and trailing 365, 180, 90, 30, and 7 day
+metrics. Portfolio rows are split into `ALL`, `LONG`, and `SHORT`, and the
+report also shows each strategy separately. The command records the source and
+research composition identifiers, effective strategy configurations, selected
+symbols, cached candle coverage, and the risk override in its lineage.
+
+Portfolio mode skips live runtime and exchange comparison, and it does not keep
+detailed signal or skip records. Use normal replay with runtime evidence when
+you need parity diagnosis.
+
 ## Capture a Live Runtime Record
 
 For exact comparison, collect a timestamped record on the host where live

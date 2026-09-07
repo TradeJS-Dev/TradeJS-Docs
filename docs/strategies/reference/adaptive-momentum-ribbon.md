@@ -52,7 +52,7 @@ keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
-| Fees | `FEE_PERCENT` | Include the configured trading fee in position and reward-to-risk calculations. |
+| Risk estimates | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` | Estimate one-way fees, slippage, and market impact for position sizing and reward-to-risk checks. Backtest execution costs are configured separately. |
 | Runtime and decision services | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE`, `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Select the runtime mode and candle interval, control order placement, and enable optional AI or ML decisions. `CLOSE_OPPOSITE_POSITIONS` is not used by the current AMR hook logic. |
 | Momentum model | `AMR_LOOKBACK_BARS`, `AMR_MOMENTUM_PERIOD`, `AMR_BUTTERWORTH_SMOOTHING`, `AMR_WAIT_CLOSE`, `AMR_CONFIRM_ON_NEXT_BAR` | Set the input history, oscillator period and smoothing, and closed-bar confirmation behavior. |
 | Signal quality | `AMR_MIN_SIGNAL_OSC_ABS`, `AMR_MIN_SIGNAL_OSC_ABS_LONG`, `AMR_MIN_SIGNAL_OSC_ABS_SHORT`, `AMR_REQUIRE_KC_BIAS`, `AMR_MIN_BARS_BETWEEN_SIGNALS` | Set the oscillator-strength floor, optional Keltner bias, and signal cooldown, with directional oscillator overrides. |

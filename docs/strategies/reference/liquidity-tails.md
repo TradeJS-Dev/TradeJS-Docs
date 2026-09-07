@@ -28,7 +28,7 @@ confirmation rules, and risk parameters come from the active strategy config.
    - long: below `signal.zone.bottom`
    - short: above `signal.zone.top`
 7. Computes target from `LIQUIDITY_TAILS_TARGET_R_MULT`.
-8. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, with `FEE_PERCENT` buffer.
+8. Sizes quantity from `MAX_LOSS_VALUE / riskDistance`, using the `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, and `RISK_MARKET_IMPACT_BPS` estimates.
 9. Optionally reserves part of the risk budget for later scale-ins at improved retests.
 10. Returns `entry` with liquidity-tail figures and `liquidityTailsContext`.
 

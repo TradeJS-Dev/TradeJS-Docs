@@ -41,7 +41,7 @@ title: 'VolumeDivergence'
 | --- | --- | --- |
 | Среда | `ENV`, `INTERVAL`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS`, `BACKTEST_PRICE_MODE` | Задают режим работы, интервал свечей, поведение ордеров и цену исполнения в бэктесте. |
 | AI и ML | `AI_ENABLED`, `AI_MODE`, `MIN_AI_QUALITY`, `ML_ENABLED`, `ML_THRESHOLD` | Управляют необязательными решениями AI и ML и их порогами допуска. |
-| Риск | `FEE_PERCENT`, `MAX_LOSS_VALUE`, `VOLUME_DIVERGENCE_STOP_ATR_BUFFER_MULT`, `VOLUME_DIVERGENCE_STOP_BUFFER_PCT`, `VOLUME_DIVERGENCE_TARGET_R_MULT` | Учитывают комиссию, задают размер позиции, запасы стопа и множитель цели. |
+| Риск | `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS`, `MAX_LOSS_VALUE`, `VOLUME_DIVERGENCE_STOP_ATR_BUFFER_MULT`, `VOLUME_DIVERGENCE_STOP_BUFFER_PCT`, `VOLUME_DIVERGENCE_TARGET_R_MULT` | Задают оценки комиссии, проскальзывания и влияния на рынок, размер позиции, запасы стопа и множитель цели. |
 | Общие индикаторы | `MA_FAST`, `MA_MEDIUM`, `MA_SLOW`, `OBV_SMA`, `ATR`, `ATR_PCT_SHORT`, `ATR_PCT_LONG`, `BB`, `BB_STD`, `MACD_FAST`, `MACD_SLOW`, `MACD_SIGNAL`, `LEVEL_LOOKBACK`, `LEVEL_DELAY` | Задают периоды индикаторов для рыночного контекста и фильтров сигнала. |
 | Поиск экстремумов | `NORMALIZATION_LENGTH`, `PIVOT_LOOKBACK_LEFT`, `PIVOT_LOOKBACK_RIGHT`, `MIN_BARS_BETWEEN_PIVOTS`, `MAX_BARS_BETWEEN_PIVOTS` | Нормализуют объём и задают подтверждение и расстояние между экстремумами. |
 | Качество входа | `ALLOW_STRUCTURE_ADVANCE_ENTRY`, `MIN_DIVERGENCE_AMPLITUDE_ATR_RATIO`, `MIN_RECLAIM_PCT`, `MIN_CONFIRMATION_CANDLE_QUALITY` | Разрешают ранний структурный вход и задают общие пороги дивергенции, возврата и качества свечи. |
@@ -65,7 +65,7 @@ title: 'VolumeDivergence'
 ### Параметры торговли и риска
 
 - `CLOSE_OPPOSITE_POSITIONS` — закрытие противоположной позиции перед новым входом (hook).
-- `FEE_PERCENT` — комиссия в расчете риск/прибыль.
+- `RISK_FEE_RATE`, `RISK_SLIPPAGE_BPS`, `RISK_MARKET_IMPACT_BPS` — оценки комиссии, проскальзывания и влияния на рынок для допуска входа и расчёта позиции.
 - `MAX_LOSS_VALUE` — максимальный риск для расчета `qty`.
 - `MAX_CORRELATION` — максимум допустимой корреляции с BTC.
 
