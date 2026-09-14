@@ -36,10 +36,14 @@ runtime dependencies, `@tradejs/node`, and the parsed complete config.
 and asset-class selections, and all strategy revisions. Both are recomputed from
 the strict runtime package manifest; neither is an operator-maintained counter.
 
-The app displays the version-controlled strategy configuration read-only,
-strategy analytics, drawdown, orders, and pause/resume. Runtime charts mark
-recorded strategy-revision changes, and the **Revisions** action lists the
-current revision together with changes observed in the selected trade window.
+The app displays the committed strategy configuration separately from current
+execution state. The configuration drawer also shows whether the deployment is
+running, whether order placement is enabled, its connection state, and its
+pause control. Runtime charts use deployment activation events rather than the
+first trade after a change. A red marker means the strategy package or package
+version changed. An orange marker means another part of the computed revision
+changed. The **Revisions** action lists these activations even when the strategy
+did not trade at the activation time.
 Strategy-card returns, win rate, drawdown, exposure, and related statistics use
 closed trades only. Active trades remain visible in the summary and order list,
 but their unrealized PnL does not enter those statistics until the trade closes.

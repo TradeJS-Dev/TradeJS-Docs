@@ -27,6 +27,12 @@ A position can close through:
 
 Backtest fills are approximations. Live fills depend on exchange liquidity, latency, order type, and connector behavior.
 
+When a connector supports combined position protection, TradeJS can apply a
+full take-profit and stop-loss in one exchange request. On Bybit, a plan with
+one 100% target and a stop uses Full protection with `LastPrice` triggers.
+Plans with partial or multiple targets continue to use separate protective
+updates.
+
 ## Automation Safety
 
 Before enabling order placement:

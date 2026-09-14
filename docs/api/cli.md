@@ -281,6 +281,7 @@ Gate and search shape:
 - `-M, --minQuality`
 - `-q, --qualityThresholds`
 - `-g, --scope` - `all`, `approved`, `rejected`, or `candidates`.
+- `-I, --direction` - restrict the search to `LONG` or `SHORT`.
 - `-d, --maxDepth`
 - `-m, --minSupport`
 - `-F, --minProfitFactor`
@@ -288,8 +289,13 @@ Gate and search shape:
 - `-R, --minTotalProfit`
 - `-a, --maxAtomicPredicates`
 - `-C, --maxCombinations`
-- `-V, --validationSplit`
+- `-V, --validationSplit`, `-T, --testSplit`
+- `-w, --sealTest` - hide the reserved test rows and economics from discovery.
 - `-N, --minValidationSupport`
+- `-H, --minEvents`, `-J, --minValidationEvents`
+- `-X, --maxBatch`, `-U, --maxEventCountShare`, `-Z, --maxSymbolCountShare`
+- `-A, --objective` - `auto`, `standalone`, `add-to-gate`, or `filter-gate`.
+- `-G, --allowRiskRegression`, `-L, --allowValidationRegression`
 - `-D, --dedupeEquivalentSelections`
 
 Output and feature scope:
@@ -298,6 +304,10 @@ Output and feature scope:
 - `-Y, --includeSymbol`
 - `-E, --includeGateContext`
 - `-p, --featureProfile` - `compact` or `all`.
+- `-K, --featurePolicy` - `causal-stationary` or `all`.
+- `-x, --excludeFeaturePattern` - case-sensitive regular expression for feature paths to exclude.
+- `-Q, --coverageMode` - `auto` or `full`.
+- `-c, --cadenceMode` - `auto` or `fixed`.
 - `-r, --reportDir`
 - `-B, --reportFile`
 - `-j, --json`

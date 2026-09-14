@@ -30,6 +30,13 @@ The position closes at its computed stop or target. When
 `FLAG_EXIT_ON_OPPOSITE_PATTERN` is enabled, a confirmed opposite flag can also
 close it.
 
+## Deterministic Gate
+
+The packaged local gate admits `SHORT` signals only. Its frozen H2 rule rejects
+the weak `near_support` plus `btc_lead` combination and requires both
+`swingAmplitudeAtr >= 4.5` and `breakoutDistanceAtr >= 0.22`. The existing
+relative-strength and channel-geometry checks must also pass.
+
 ## Configuration keys
 
 Keys are grouped by the part of the strategy they control. A value of `0` or

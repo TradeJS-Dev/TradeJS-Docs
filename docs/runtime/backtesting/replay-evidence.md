@@ -97,6 +97,12 @@ snapshot and creates a separate immutable bundle for each
 `deploymentCompositionId`. A missing or conflicting snapshot stops publication
 instead of assigning historical rows to the current composition.
 
+A historical composition can reappear only because a position closed during
+the selected window. If that window has no fresh lineage scope with its symbol
+set, the publisher can reuse the ticker list from a checksum-verified bundle
+for the same composition. Fresh lineage scopes take priority over this
+fallback.
+
 These records can contain sensitive operational information. Restrict access,
 exclude credentials, and do not commit them to the application repository.
 

@@ -286,16 +286,27 @@ AI-фильтра.
 
 - `-M, --minQuality`, `-q, --qualityThresholds`;
 - `-g, --scope` — `all`, `approved`, `rejected` или `candidates`;
+- `-I, --direction` — ограничить поиск направлением `LONG` или `SHORT`;
 - `-d, --maxDepth`, `-m, --minSupport`;
 - `-F, --minProfitFactor`, `-W, --minWinRate`, `-R, --minTotalProfit`;
 - `-a, --maxAtomicPredicates`, `-C, --maxCombinations`;
-- `-V, --validationSplit`, `-N, --minValidationSupport`;
+- `-V, --validationSplit`, `-T, --testSplit`;
+- `-w, --sealTest` — скрыть от поиска отложенные тестовые строки и их результаты;
+- `-N, --minValidationSupport`;
+- `-H, --minEvents`, `-J, --minValidationEvents`;
+- `-X, --maxBatch`, `-U, --maxEventCountShare`, `-Z, --maxSymbolCountShare`;
+- `-A, --objective` — `auto`, `standalone`, `add-to-gate` или `filter-gate`;
+- `-G, --allowRiskRegression`, `-L, --allowValidationRegression`;
 - `-D, --dedupeEquivalentSelections`.
 
 Вывод:
 
 - `-t, --top`, `-Y, --includeSymbol`, `-E, --includeGateContext`;
 - `-p, --featureProfile` — `compact` или `all`;
+- `-K, --featurePolicy` — `causal-stationary` или `all`;
+- `-x, --excludeFeaturePattern` — регистрозависимое регулярное выражение для исключаемых путей признаков;
+- `-Q, --coverageMode` — `auto` или `full`;
+- `-c, --cadenceMode` — `auto` или `fixed`;
 - `-r, --reportDir`, `-B, --reportFile`;
 - `-j, --json`, `-O, --output`.
 

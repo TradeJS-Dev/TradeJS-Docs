@@ -53,6 +53,8 @@ is present, the connector and `UNIVERSE` determine the available set.
 `--tickers` is a temporary override for one command and does not edit
 `tradejs.config.ts`. When a symbol with an open position is removed from the
 selection, TradeJS retains it for exit and position-management decisions.
+For crypto deployments, a base symbol such as `BTC` in `selection.tickers`
+also matches the normalized runtime symbol `BTCUSDT`.
 
 The web app displays deployed settings but does not rewrite them. Account
 credentials remain server-side.
@@ -72,6 +74,25 @@ the current command:
 Two enabled declarations of the same strategy may share a process only when
 they use different accounts. The same strategy and account combination is
 rejected as ambiguous.
+
+## Pin Two Versions of One Strategy
+
+Install each exact version under its own npm alias when two deployments need
+different versions of the same strategy:
+
+```json
+{
+  "dependencies": {
+    "@tradejs/strategy-trend-follow-forward": "npm:@tradejs/strategy-trend-follow@3.0.4",
+    "@tradejs/strategy-trend-follow-scaled": "npm:@tradejs/strategy-trend-follow@3.0.3"
+  }
+}
+```
+
+Set `module` to the matching alias in each declaration. The strategy key stays
+`TrendFollow`, while each deployment uses its own account, package version, and
+complete config. TradeJS verifies the alias target and exact installed version.
+Routine stable package updates leave aliased versions unchanged.
 
 ## What Happens on Each Closed Candle
 
