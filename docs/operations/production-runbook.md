@@ -47,8 +47,10 @@ to Deploy; Deploy does not rebuild application source. See
 - The UI is read-only for config and may only pause/resume new entries.
 - In the official repository split, the server produces daily runtime evidence
   and then replays the closed window with the exact recorded image digest in an
-  isolated, read-only environment. Do not recreate that feedback run from the
-  current local checkout.
+  isolated, read-only environment. The usual schedule is evidence publication
+  at 21:05 Moscow time and replay at 21:20. The parity notification is sent from
+  the verified, sealed replay bundle, not from a separate `runtime-parity` run.
+  Do not recreate that feedback run from the current local checkout.
 
 ## Daily Health Checks
 

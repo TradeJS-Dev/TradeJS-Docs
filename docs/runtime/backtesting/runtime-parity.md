@@ -75,3 +75,6 @@ occurred in that sample.
 
 Useful options include `--startTime`, `--endTime`, `--strategy`, `--tickers`,
 `--cacheOnly`, `--toleranceBars`, `--runtimeGates`, `--details`, and `--notify`.
+The last option sends this manual diagnostic result. Production daily parity
+notifications use a verified sealed bundle as described in
+[Validate live decisions with replay](./replay-evidence).

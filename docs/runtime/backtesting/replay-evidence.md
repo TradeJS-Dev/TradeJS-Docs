@@ -166,6 +166,18 @@ calibration into JSON and Markdown diagnostics. Use the report to investigate
 data gaps, configuration or version differences, gate decisions, timing drift,
 rejections, and fill quality.
 
+Production sends the daily parity summary only after the replay output has been
+sealed and verified:
+
+```bash
+npx @tradejs/cli runtime-feedback-notify \
+  --bundle <verified-replay-bundle>
+```
+
+Use `--dryRun` to verify the manifest, files, checksums, and comparison data and
+print the message without sending it. The manual `runtime-parity` command is a
+separate diagnostic path.
+
 For a quicker entry-only comparison, see
 [Compare live and replayed entries](./runtime-parity).
 For the live evaluation lifecycle, see [How signals work](../execution/signals).

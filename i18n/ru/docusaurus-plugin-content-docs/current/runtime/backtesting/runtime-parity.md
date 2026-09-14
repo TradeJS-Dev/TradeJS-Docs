@@ -75,3 +75,6 @@ npx @tradejs/cli runtime-parity \
 
 Полезные параметры: `--startTime`, `--endTime`, `--strategy`, `--tickers`,
 `--cacheOnly`, `--toleranceBars`, `--runtimeGates`, `--details`, `--notify`.
+Последний параметр отправляет результат ручной диагностики. Ежедневное рабочее
+уведомление формируется из проверенного неизменяемого набора, как описано в
+[проверке реальных решений через воспроизведение](./replay-evidence).

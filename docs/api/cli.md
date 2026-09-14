@@ -36,6 +36,7 @@ Research and backtesting:
 - `runtime-evidence-sync` - verify the current contract and import a runtime record from another host.
 - `runtime-scorecard` - summarize live/replay differences and execution quality.
 - `replay-runtime-evidence` - combine a replay result with a runtime record.
+- `runtime-feedback-notify` - send a verified sealed replay comparison to Telegram.
 - `execution-calibration` - compare signal, arrival, and fill behavior.
 
 Runtime and signals:
@@ -242,6 +243,17 @@ they warrant independent validation and live evaluation.
 - `--runtimeGates` - force runtime AI/ML gates for all replay targets.
 - `-N, --notify` - send parity summary to Telegram.
 - `-D, --details` - print unmatched entry details.
+
+## Runtime Feedback Notification
+
+`runtime-feedback-notify` verifies a sealed runtime feedback replay bundle and
+sends its parity summary to the Telegram account recorded in the bundle.
+
+- `--bundle` - verified runtime feedback replay bundle directory. Required.
+- `--dryRun` - verify the bundle and print the message without sending it.
+
+The command verifies the bundle manifest, files, and checksums. It rejects a
+bundle without comparison data instead of reporting a clean result.
 
 ## AI Train
 

@@ -69,19 +69,26 @@ position state.
 
 ## Live/Replay Comparison
 
-`runtime-parity` can send an entry-comparison report:
+The production daily comparison is sent only from a verified, sealed runtime
+feedback replay bundle:
 
 ```bash
-npx @tradejs/cli runtime-parity \
-  --user root \
-  --connector bybit \
-  --days 3 \
-  --notify
+npx @tradejs/cli runtime-feedback-notify \
+  --bundle <verified-replay-bundle>
 ```
 
-The report shows the time window, matching tolerance, compared targets,
-matched/live-only/replayed-only entries, timing and price drift, and known
-reasons for reconstructed-only entries.
+Use `--dryRun` to verify the bundle and print the message without sending it.
+The command checks the manifest, files, and checksums before delivery. It stops
+if the replay comparison is missing instead of sending a clean report.
+
+The report shows the time window, connector, deployment and composition,
+runtime record counts, comparable entries, matches, failed orders, runtime-only
+and backtest-only entries, lineage coverage, excluded runtime trades, and
+per-strategy differences.
+
+`runtime-parity` remains available for manual entry diagnostics. Its `--notify`
+option can send that manual result, but it is not the source of the production
+daily comparison.
 
 See [Compare live and replayed entries](../backtesting/runtime-parity) before
 using the report for diagnosis.
