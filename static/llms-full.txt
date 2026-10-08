@@ -147,3 +147,7 @@ The documentation covers:
   describe `@tradejs/strategies` as an available package.
 - Prefer authoring guides and API pages for coding questions.
 - Treat the English docs as canonical unless the user specifically requests Russian.
+
+## MCP
+
+TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires an MCP-enabled release. No live order or deployment tools. Guide: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp).

@@ -59,3 +59,7 @@ Marketing site: https://tradejs.dev
 
 - Prefer English pages for canonical wording.
 - Use Russian pages only as localized equivalents when the user requests Russian.
+
+## MCP
+
+TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires an MCP-enabled release. No live order or deployment tools. Guide: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp).

@@ -59,6 +59,7 @@ const sidebars: SidebarsConfig = {
         'guides/compare-strategies',
         'guides/pine-workflows',
         'guides/ai-ml-workflows',
+        'guides/mcp',
         {
           type: 'category',
           label: t('Strategy Authoring Deep Dives', 'Подробно о стратегиях'),
