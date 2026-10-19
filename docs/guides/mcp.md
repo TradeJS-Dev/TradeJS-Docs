@@ -1,155 +1,148 @@
 ---
 title: MCP for Codex and Claude Code
-description: Connect an AI assistant to your self-hosted TradeJS app through OAuth.
+description: Connect Codex or Claude Code to TradeJS to read data and run backtests.
 ---
 
-TradeJS exposes a Streamable HTTP MCP endpoint at `/mcp`. Codex and Claude Code
-can inspect markets, charts, runtime strategies, signals, recorded orders and
-backtest results, and request bounded background backtests or diagnostics.
-The assistant runs in your chosen client. The former dashboard AI chat drawer
-is replaced by MCP; runtime AI/ML gates and Telegram workflows remain separate.
+Connect Codex or Claude Code to your TradeJS app to discuss markets, strategy
+signals and backtest results with an assistant. Through MCP, the assistant can
+read app data and run backtests or diagnostics if you grant permission.
 
-## Requirements
-
-Install a coordinated TradeJS release containing the MCP app routes and the
-`tradejs mcp-worker` command. Earlier published releases do not expose these
-features. Set `MCP_PUBLIC_URL=https://YOUR_APP_HOST/mcp` (or the same public
-`APP_URL` origin). HTTPS is required except for localhost development.
-`MCP_ENABLED=false` disables new MCP/OAuth requests. Redis persists OAuth grants,
-revocations, job state and audit records; use durable Redis storage.
-
-Open **MCP** in the app sidebar to see your endpoint and active connections.
-The browser session authorizes your own TradeJS user. You review the client,
-redirect address and requested scopes before approving. Clients use OAuth
-Authorization Code with S256 PKCE and public dynamic client registration.
-Access tokens last 15 minutes; refresh tokens rotate and grants expire after
-30 days. Revoking a connection invalidates its tokens on subsequent requests.
-The human performs login and consent; an agent must not authorize itself.
+The MCP address is `https://YOUR_APP_HOST/mcp`. Replace `YOUR_APP_HOST` with
+your app's host. Open **MCP** in the TradeJS sidebar to find the address
+and view your connections.
 
 ## Connect Codex
 
-Run these commands yourself, replacing the host:
+Run these commands in your terminal, using your app's address:
 
 ```bash
 codex mcp add tradejs --url https://YOUR_APP_HOST/mcp
 codex mcp login tradejs --scopes market:read,runtime:read,backtests:read,backtests:run,diagnostics:read,diagnostics:run
 ```
 
-Codex CLI and the desktop app can use the same configured remote server. Restart
-or refresh the client if it does not show the new tools. No API key is needed.
+Sign in to TradeJS in the browser and choose the assistant's permissions.
+Permissions ending in `:read` are enough to inspect data. Permissions ending
+in `:run` allow background jobs and start unchecked on the consent page.
+
+Codex CLI and the Codex desktop app can use the same connection. Refresh the
+connection or restart the client if the TradeJS tools do not appear.
+No separate API key is needed.
 
 ## Connect Claude Code
+
+Run this command in your terminal:
 
 ```bash
 claude mcp add --transport http tradejs https://YOUR_APP_HOST/mcp
 ```
 
-In Claude Code open `/mcp`, select TradeJS and complete browser authorization.
-Use a current client supporting Streamable HTTP, OAuth discovery, public
-registration and S256 PKCE. Actual browser consent is always user-managed.
+In Claude Code, open `/mcp`, select TradeJS and complete authorization in the
+browser. Check the client name, redirect address and requested permissions
+before approving. Complete sign-in and consent yourself.
 
-## Permissions and tools
+## Make your first request
 
-| Scope | Available operations |
+Ask a specific question and include the period you want to examine. For example:
+
+> Show the saved TrendShift signals for BTCUSDT over the last 24 hours
+> in the production deployment.
+
+The assistant should first call `tradejs_info` to check the connection and user. Questions about the running app also require
+`runtime_get_status`.
+
+The dashboard's **Copy context for AI** button copies the market data provider,
+symbol universe, selected symbol, interval, backtest and page link. Paste the
+text into your chat and add your question. The visible chart range is not
+copied. The assistant can retrieve saved strategy figures with
+`runtime_get_signal`, using the details returned by the signal list.
+
+When reading runtime data, specify the deployment and period. Tools accept
+`[startTime,endTime)`: the start is included and the end is excluded. Runtime
+list requests can cover at most seven days. An empty page does not end the
+results; continue until cursor `0`. Cursors last ten minutes and require the
+same filters.
+
+Missing saved records alone do not show that a strategy did not run. Skip
+counters help with debugging, but checking execution requires reports that
+record the exact package versions and configuration.
+
+## Permissions
+
+| Scope | What the assistant can access |
 | --- | --- |
-| `market:read` | Symbols, current tickers, closed candles and indicators |
-| `runtime:read` | Accessible deployments, effective strategies, stored signals/evaluations/orders and skip counters |
-| `backtests:read` | Saved configs and results, job status |
-| `backtests:run` | Start/cancel your client's cached backtests and read their status |
-| `diagnostics:read` | Verified evidence/feedback reports, chunked artifacts and job status |
-| `diagnostics:run` | Capture evidence, run isolated feedback replay/parity, cancel your client's jobs |
+| `market:read` | Symbols, current prices, closed candles and indicators |
+| `runtime:read` | Deployments, strategy settings, saved signals, evaluations, orders and skip counters |
+| `backtests:read` | Backtest configurations, results and job status |
+| `backtests:run` | Start and cancel backtests created by this client |
+| `diagnostics:read` | Verified reports, their files and job status |
+| `diagnostics:run` | Capture runtime evidence, replay it, check parity and cancel this client's jobs |
 
-On the consent page, select only the permissions you need. Run permissions
-start unchecked, including when the client requests all scopes. If the client
-omits scope, the page offers the supported scopes for your explicit selection.
+The assistant sees only tools allowed by the connection's permissions. Reading
+a deployment requires a trading account owned by the authenticated user.
+MCP cannot place, cancel or close live orders, change strategy configuration,
+deploy releases or send notifications.
 
-Tools only appear for granted scopes. Reading a deployment requires a trading
-account bound to the authenticated user. Scopes cannot grant live order
-placement/cancellation, runtime config writes, deployment or notifications.
+Revoke access in **MCP**. Revoked tokens stop working on subsequent requests.
+Access tokens last 15 minutes, and connection grants last up to 30 days.
+The client receives a new refresh token on each refresh.
 
-First call `tradejs_info` to check the host/user and worker, then
-`runtime_get_status` for production questions. Use explicit deployments and
-half-open timestamp windows `[startTime,endTime)`. Missing retained records are
-not proof of no activity. Runtime list windows are at most seven days. Continue
-through empty pages until cursor `0`; runtime cursors expire after ten minutes
-and must be reused with identical filters. Aggregate skip counters are debug
-telemetry, not immutable composition-bound evidence.
+## Backtests and diagnostics
 
-The dashboard's **Copy context for AI** button copies the provider, universe,
-symbol, interval, optional backtest selection and page link. Paste it into your
-client and state the period you want analyzed. The viewport itself is not
-captured. Saved strategy figures are available in `runtime_get_signal`, using
-the signal id, timestamp, strategy and deployment returned by the list.
+`backtest_start` runs a backtest using a snapshot of a named configuration
+saved in Redis. It uses cached historical data in one process and makes no paid
+AI calls.
+Each run is limited to 90 past days, 20 symbols and eight parameter
+combinations. Result summaries are saved even in `fast` mode.
 
-## Background worker
+Before starting diagnostics, check existing reports with
+`diagnostics_list_reports`. If no suitable report exists, `diagnostics_start`
+can capture up to seven days of runtime evidence or replay a verified evidence
+bundle from the same deployment.
 
-Run `yarn mcp:worker` from the Project after generating its
-`runtime-package-manifest.json`. The worker must use the same exact package
-composition as the app. Production Compose provides the optional `mcp` profile
-with a separate bounded worker and ephemeral `mcp-replay-redis`; enable it as
-part of the normal release workflow after publishing a compatible app image.
-Set `MCP_WORKER_ENABLED=true` in the Git-owned Project `deploy/runtime.env`
-for that release. The rollout stops the old worker, reconciles the new worker
-and checks its package manifest; rollback restores the worker with the app.
-Interrupted jobs fail instead of automatically restarting. The default is
-`false`. Do not start the trading entrypoint as a worker or mount a Docker socket.
+Starting a job returns its `jobId`. Use it to check status with `job_get`, read
+logs with `job_get_logs` or cancel with `job_cancel`. Disconnecting the client
+does not cancel a job. When repeating an identical request, reuse its
+`idempotencyKey` to avoid creating a duplicate.
 
-`backtest_start` snapshots a named Redis grid and accepts up to 90 past days,
-20 symbols and eight config combinations. It uses cached history, one process
-and no paid AI calls. Lightweight result summaries are persisted even in fast
-mode and are available through the paginated backtest result tools. `diagnostics_start` captures up to seven days of runtime
-evidence or replays a verified evidence artifact for its exact deployment.
-Replay requires `MCP_REPLAY_REDIS_HOST` pointing at an isolated Redis, read-only
-Timescale, stripped credentials, disabled orders and matching recorded
-package/image lineage. Existing safety checks reject incompatible evidence.
+Each user can have one active job and submit ten jobs per hour. Jobs have a
+one-hour time limit, and their state is retained for seven days. Restarting
+the worker marks interrupted jobs as `failed`; they do not restart automatically.
 
-Jobs return immediately. Keep the job id, poll `job_get` and reuse an
-`idempotencyKey` only for an identical request. A client disconnect does not
-cancel work. Use `job_cancel` explicitly.
+### Job logs
 
-Use `job_get_logs` with the same `jobId` to read redacted stdout/stderr, including
-failed jobs. Start at `offset: 0`, choose `limit` from 1 to 100 (default 50),
-and continue with `nextOffset` until it is `null`. The response contains `lines`
-and `retainedLines`. Only the worker tail is retained, up to 150 entries of
-1,000 characters each; offsets may shift while a job is running. Reading logs
-does not retry the job.
+Call `job_get_logs` with the `jobId` and `offset: 0`. Set `limit` to between
+1 and 100 entries; the default is 50. Pass `nextOffset` to read the next page.
+A value of `null` means the end of the log.
 
-Worker restarts mark interrupted
-jobs failed and never automatically replay them. Limits: one active computation,
-one hour per job and ten submissions per user per hour. Job state expires after
-seven days; generated artifacts follow the Project's retention policy.
+Logs contain stdout and stderr with secrets redacted, including after a job
+fails. Only the last 150 entries are kept, with up to 1,000 characters per
+entry. Offsets may change while the job runs. The `retainedLines` field shows
+the number of retained entries.
 
-## Verified reports without SSH
+### Report files
 
-Use `diagnostics_list_reports` before requesting new work. The catalog discovers
-sealed runtime-evidence and runtime-feedback bundles under `data/runtime-evidence`,
-`data/runtime-feedback` and the user's `data/mcp` directory. It checks ownership,
-current deployment access, completion markers, sizes and SHA-256 hashes.
-Invalid, incomplete or inaccessible bundles are excluded. Catalog payloads and
-logs are limited to 64 MiB each; use the dedicated offline CLI workflow for
-larger bundles. The bounded catalog
-reports when its scan is truncated; absence is not proof of no production run.
+`diagnostics_get_report` returns a report or summary. Use `artifact_get` to
+download files. It returns base64 chunks of up to 48,000 bytes. Continue with
+`nextOffset` until it is `null`, decode the chunks and concatenate the bytes.
+Before analysis, verify the total size and SHA-256 from the response, as well
+as the report's period and package versions.
 
-Use `diagnostics_get_report` for a report or summary. `artifact_get` returns
-base64 chunks of at most 48,000 bytes with offsets, total bytes and SHA-256.
-Continue at `nextOffset` until it is `null`. Concatenate decoded bytes,
-check both size and checksum, then analyze locally with the relevant skill.
-Original payload downloads are not a substitute for checking lineage and
-coverage. Calibration, scorecards, formal strategy research and deployment
-still use their dedicated CLI workflows; no arbitrary command or path tool is
-exposed. Do not silently fall back to SSH when a scope or artifact is missing.
+The catalog includes completed `runtime-evidence` and `runtime-feedback`
+reports that pass ownership, access, size and checksum checks. Each data or
+log file is limited to 64 MiB. Use local TradeJS commands for larger files.
+The catalog reports when its search was truncated.
 
-## Skills and troubleshooting
+## Troubleshooting
 
-The canonical skills live in `investing/.codex/skills`; `$tradejs-mcp` describes
-the client workflow. Existing Projects update through `create-tradejs
---update-skills` and Project checks. The updater preserves modified managed
-files by refusing to overwrite them; reconcile those changes before retrying.
-Follow the Project `AGENTS.md` for both clients. `CLAUDE.md` imports that file
-and points Claude Code at the same `.codex/skills` source without duplicating it.
+| Problem | What to check |
+| --- | --- |
+| `401` response | Access may have expired or been revoked. Complete authorization again yourself. |
+| `403` for a browser origin | Compare the request address with the server's configured public address. |
+| A tool is missing | Check the granted permissions in **MCP**. |
+| A job will not start | Check background job availability with `tradejs_info`. If unavailable, contact the app owner. |
 
-A `401` response includes OAuth resource discovery. Reauthorize yourself after
-revocation or expiry. `403` for browser origins means the configured public URL
-differs from the request origin. An unavailable worker means no job is queued.
-Start with a local test user and cached history, then verify consent, refresh,
-revocation and cross-user isolation in both installed clients before rollout.
+Use the Project's `AGENTS.md` and the `$tradejs-mcp` skill in `.codex/skills`
+to give the assistant Project instructions. In Claude Code, `CLAUDE.md` imports
+the same instructions. Update installed skills with
+`create-tradejs --update-skills`. If managed files have local changes,
+reconcile those changes before retrying the update and running Project checks.
