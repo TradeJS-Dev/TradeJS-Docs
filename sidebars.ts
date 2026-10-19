@@ -144,6 +144,8 @@ const sidebars: SidebarsConfig = {
             'strategies/reference/grid',
             'strategies/reference/grid-classic',
             'strategies/reference/hyperliquid-consensus',
+            'strategies/reference/trading-patterns',
+            'strategies/reference/vwap-reversion',
           ],
         },
         {

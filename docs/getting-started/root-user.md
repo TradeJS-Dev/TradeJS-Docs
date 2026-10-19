@@ -26,8 +26,9 @@ shared shell history.
 1. Open the TradeJS sign-in page.
 2. Sign in as `root` with the selected password.
 3. Open account settings from the gear icon in the left sidebar.
-4. Add only the settings you need, such as exchange credentials, an AI provider
-   key, or Telegram settings.
+4. Use **Integrations** for exchange accounts, provider keys and Telegram
+   credentials. Use **Notifications** to choose Telegram message types, and
+   **Security** to change your password.
 
 Secrets are stored per user and displayed masked in the web app. Exchange keys
 should have only the permissions required for the intended workflow; withdrawal

@@ -51,10 +51,16 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 | Pole size | `FLAG_POLE_LOOKBACK_BARS`, `FLAG_MIN_POLE_MOVE_PCT`, `FLAG_MIN_POLE_MOVE_ATR`, `FLAG_MIN_POLE_EFFICIENCY_RATIO` | Define the search window and the minimum size and directional efficiency of the pole. |
 | Pole quality | `FLAG_MIN_POLE_DIRECTIONAL_CONSISTENCY_RATIO`, `FLAG_MIN_POLE_DIRECTIONAL_CONSISTENCY_RATIO_LONG`, `FLAG_MIN_POLE_DIRECTIONAL_CONSISTENCY_RATIO_SHORT`, `FLAG_MAX_POLE_TERMINAL_EXPANSION_RATIO`, `FLAG_MAX_POLE_TERMINAL_EXPANSION_RATIO_LONG`, `FLAG_MAX_POLE_TERMINAL_EXPANSION_RATIO_SHORT`, `FLAG_POLE_TERMINAL_BARS` | Limit noisy poles and excessive expansion near the pole end, globally or by direction. |
 | Channel duration | `FLAG_MIN_BARS`, `FLAG_MAX_BARS`, `FLAG_MAX_FLAG_TO_POLE_BARS_RATIO`, `FLAG_MAX_FLAG_TO_POLE_BARS_RATIO_LONG`, `FLAG_MAX_FLAG_TO_POLE_BARS_RATIO_SHORT` | Set absolute and pole-relative consolidation duration limits. |
-| Channel geometry | `FLAG_PIVOT_RADIUS`, `FLAG_MIN_TOUCHES_PER_BOUNDARY`, `FLAG_MIN_COUNTER_TREND_SLOPE_PCT_PER_BAR`, `FLAG_MAX_SLOPE_DIVERGENCE_RATIO` | Define swing detection, required boundary touches, counter-trend slope, and line parallelism. |
+| Channel geometry | `FLAG_PIVOT_RADIUS`, `FLAG_REQUIRE_FULL_PIVOT_NEIGHBORHOOD`, `FLAG_BOUNDARY_FIT_MODE`, `FLAG_MIN_TOUCHES_PER_BOUNDARY`, `FLAG_MIN_COUNTER_TREND_SLOPE_PCT_PER_BAR`, `FLAG_MAX_SLOPE_DIVERGENCE_RATIO` | Define swing detection, required boundary touches, counter-trend slope, and line parallelism. |
 | Channel size and volume | `FLAG_MAX_CHANNEL_WIDTH_PCT`, `FLAG_MAX_CHANNEL_WIDTH_ATR`, `FLAG_MAX_CHANNEL_WIDTH_ATR_LONG`, `FLAG_MAX_CHANNEL_WIDTH_ATR_SHORT`, `FLAG_MAX_CHANNEL_TO_POLE_RATIO`, `FLAG_MAX_FLAG_TO_POLE_VOLUME_RATIO`, `FLAG_MAX_RETRACEMENT_RATIO`, `FLAG_MAX_BOUNDARY_VIOLATION_ATR` | Limit channel width, volume, retracement, and temporary boundary violations. |
-| Entry timing | `FLAG_BREAKOUT_BUFFER_ATR`, `FLAG_MAX_BREAKOUT_DISTANCE_ATR`, `FLAG_ENTRY_MODE`, `FLAG_CONFIRMATION_MAX_BARS`, `FLAG_RETEST_MAX_BARS`, `FLAG_RETEST_TOLERANCE_ATR` | Define a valid break and the confirmation or retest window. |
+| Entry timing | `FLAG_BREAKOUT_BUFFER_ATR`, `FLAG_MAX_BREAKOUT_DISTANCE_ATR`, `FLAG_MAX_BREAKOUT_DISTANCE_ATR_SHORT`, `FLAG_ENTRY_MODE`, `FLAG_CONFIRMATION_MAX_BARS`, `FLAG_RETEST_MAX_BARS`, `FLAG_RETEST_TOLERANCE_ATR` | Define a valid break and the confirmation or retest window. |
 | Direction policy | `LONG.*`, `SHORT.*` | Enable each direction and set its order direction and minimum risk/reward ratio. |
+
+`FLAG_REQUIRE_FULL_PIVOT_NEIGHBORHOOD=true` requires both sides of each pivot
+inside the flag. `FLAG_BOUNDARY_FIT_MODE` accepts only `least_squares`. The
+SHORT breakout-distance cap inherits `FLAG_MAX_BREAKOUT_DISTANCE_ATR` when
+`FLAG_MAX_BREAKOUT_DISTANCE_ATR_SHORT` is negative (default `-1`); `0` disables
+only the SHORT cap, and a positive value sets its own ATR limit.
 
 ## Signal payload
 

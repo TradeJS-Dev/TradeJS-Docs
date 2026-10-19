@@ -9,7 +9,20 @@ operational summaries, and live/replay comparison reports to Telegram.
 
 1. Sign in to TradeJS.
 2. Open account settings from the gear icon in the left sidebar.
-3. Save `TG_BOT_TOKEN` and `TG_CHAT_ID`.
+3. In **Integrations**, save `TG_BOT_TOKEN` and `TG_CHAT_ID`.
+4. In **Notifications**, choose message types and save the selection.
+
+The three switches are independent and default to enabled:
+
+| Setting | Controls |
+| --- | --- |
+| **Signals** (`NOTIFY_SIGNALS`) | Trading signals and order-status messages. |
+| **AI signals analyze** (`NOTIFY_AI_ANALYSIS`) | Separate AI analysis messages for signals. |
+| **Runtime debug** (`NOTIFY_RUNTIME_DEBUG`) | TXT and JSON report attachments, including debug and parity files. |
+
+These preferences belong to the user and affect Telegram delivery. They do not
+change strategy evaluation, AI approval or order placement. Disabling report
+attachments does not disable every text summary.
 
 The values belong to the current TradeJS user. The bot token is masked in the
 web app; the chat id is visible. Set `APP_URL` in the server environment if

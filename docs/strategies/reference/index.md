@@ -63,6 +63,13 @@ strategy has its own package.
 - [HyperliquidConsensus](./reference/hyperliquid-consensus) — direction derived from the
   position-aware flow of configured Hyperliquid accounts.
 
+## Separately installed packages
+
+These packages are outside the 23-package Base preset:
+
+- [TradingPatterns](./reference/trading-patterns) combines four pattern detectors.
+- [VwapReversion](./reference/vwap-reversion) trades confirmed UTC-session VWAP returns.
+
 ## How to Evaluate a Strategy
 
 Each reference page explains the decision sequence, exits, required data,

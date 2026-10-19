@@ -151,3 +151,5 @@ The documentation covers:
 ## MCP
 
 TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires an MCP-enabled release. No live order or deployment tools. Guide: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp).
+
+Separately installed strategies outside Base: TradingPatterns (https://docs.tradejs.dev/strategies/reference/trading-patterns) and VwapReversion (https://docs.tradejs.dev/strategies/reference/vwap-reversion). TradingPatterns 0.1.1 uses hourly candles; its 15-minute source support requires a later release.

@@ -304,6 +304,7 @@ AI-фильтра.
 - `-F, --minProfitFactor`, `-W, --minWinRate`, `-R, --minTotalProfit`;
 - `-a, --maxAtomicPredicates`, `-C, --maxCombinations`;
 - `-V, --validationSplit`, `-T, --testSplit`;
+- `-z, --testSince` — фиксированная граница теста (ISO-время с часовым поясом или epoch ms); заменяет `testSplit` и требует `validationSplit=0`.
 - `-w, --sealTest` — скрыть от поиска отложенные тестовые строки и их результаты;
 - `-N, --minValidationSupport`;
 - `-H, --minEvents`, `-J, --minValidationEvents`;

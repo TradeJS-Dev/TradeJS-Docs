@@ -105,7 +105,16 @@ package/image lineage. Existing safety checks reject incompatible evidence.
 
 Jobs return immediately. Keep the job id, poll `job_get` and reuse an
 `idempotencyKey` only for an identical request. A client disconnect does not
-cancel work. Use `job_cancel` explicitly. Worker restarts mark interrupted
+cancel work. Use `job_cancel` explicitly.
+
+Use `job_get_logs` with the same `jobId` to read redacted stdout/stderr, including
+failed jobs. Start at `offset: 0`, choose `limit` from 1 to 100 (default 50),
+and continue with `nextOffset` until it is `null`. The response contains `lines`
+and `retainedLines`. Only the worker tail is retained, up to 150 entries of
+1,000 characters each; offsets may shift while a job is running. Reading logs
+does not retry the job.
+
+Worker restarts mark interrupted
 jobs failed and never automatically replay them. Limits: one active computation,
 one hour per job and ten submissions per user per hour. Job state expires after
 seven days; generated artifacts follow the Project's retention policy.
@@ -122,7 +131,8 @@ larger bundles. The bounded catalog
 reports when its scan is truncated; absence is not proof of no production run.
 
 Use `diagnostics_get_report` for a report or summary. `artifact_get` returns
-base64 chunks with offsets, total bytes and SHA-256. Concatenate decoded bytes,
+base64 chunks of at most 48,000 bytes with offsets, total bytes and SHA-256.
+Continue at `nextOffset` until it is `null`. Concatenate decoded bytes,
 check both size and checksum, then analyze locally with the relevant skill.
 Original payload downloads are not a substitute for checking lineage and
 coverage. Calibration, scorecards, formal strategy research and deployment

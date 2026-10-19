@@ -62,6 +62,13 @@ TrendLine и ReverseTrendLine входят в общий пакет
 - [HyperliquidConsensus](./reference/hyperliquid-consensus) — направление по потоку позиций
   выбранных счетов Hyperliquid.
 
+## Пакеты для отдельной установки
+
+Следующие пакеты не входят в стандартный набор Base из 23 пакетов:
+
+- [TradingPatterns](./reference/trading-patterns) объединяет четыре детектора фигур.
+- [VwapReversion](./reference/vwap-reversion) торгует подтверждённый возврат к VWAP дневной сессии UTC.
+
 ## Как оценивать стратегию
 
 На странице каждой стратегии описаны последовательность решений, выходы,

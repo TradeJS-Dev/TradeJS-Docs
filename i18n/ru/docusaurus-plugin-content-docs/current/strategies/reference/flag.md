@@ -50,10 +50,17 @@ title: 'Flag'
 | Размер импульса | `FLAG_POLE_LOOKBACK_BARS`, `FLAG_MIN_POLE_MOVE_PCT`, `FLAG_MIN_POLE_MOVE_ATR`, `FLAG_MIN_POLE_EFFICIENCY_RATIO` | Задают окно поиска и минимальные размер и направленность импульса. |
 | Качество импульса | `FLAG_MIN_POLE_DIRECTIONAL_CONSISTENCY_RATIO`, `FLAG_MIN_POLE_DIRECTIONAL_CONSISTENCY_RATIO_LONG`, `FLAG_MIN_POLE_DIRECTIONAL_CONSISTENCY_RATIO_SHORT`, `FLAG_MAX_POLE_TERMINAL_EXPANSION_RATIO`, `FLAG_MAX_POLE_TERMINAL_EXPANSION_RATIO_LONG`, `FLAG_MAX_POLE_TERMINAL_EXPANSION_RATIO_SHORT`, `FLAG_POLE_TERMINAL_BARS` | Ограничивают шум и чрезмерное расширение в конце импульса, общее или по направлениям. |
 | Длительность канала | `FLAG_MIN_BARS`, `FLAG_MAX_BARS`, `FLAG_MAX_FLAG_TO_POLE_BARS_RATIO`, `FLAG_MAX_FLAG_TO_POLE_BARS_RATIO_LONG`, `FLAG_MAX_FLAG_TO_POLE_BARS_RATIO_SHORT` | Задают абсолютную и относительную длительность консолидации. |
-| Геометрия канала | `FLAG_PIVOT_RADIUS`, `FLAG_MIN_TOUCHES_PER_BOUNDARY`, `FLAG_MIN_COUNTER_TREND_SLOPE_PCT_PER_BAR`, `FLAG_MAX_SLOPE_DIVERGENCE_RATIO` | Задают поиск экстремумов, число касаний, наклон против тренда и параллельность границ. |
+| Геометрия канала | `FLAG_PIVOT_RADIUS`, `FLAG_REQUIRE_FULL_PIVOT_NEIGHBORHOOD`, `FLAG_BOUNDARY_FIT_MODE`, `FLAG_MIN_TOUCHES_PER_BOUNDARY`, `FLAG_MIN_COUNTER_TREND_SLOPE_PCT_PER_BAR`, `FLAG_MAX_SLOPE_DIVERGENCE_RATIO` | Задают поиск экстремумов, число касаний, наклон против тренда и параллельность границ. |
 | Размер и объём канала | `FLAG_MAX_CHANNEL_WIDTH_PCT`, `FLAG_MAX_CHANNEL_WIDTH_ATR`, `FLAG_MAX_CHANNEL_WIDTH_ATR_LONG`, `FLAG_MAX_CHANNEL_WIDTH_ATR_SHORT`, `FLAG_MAX_CHANNEL_TO_POLE_RATIO`, `FLAG_MAX_FLAG_TO_POLE_VOLUME_RATIO`, `FLAG_MAX_RETRACEMENT_RATIO`, `FLAG_MAX_BOUNDARY_VIOLATION_ATR` | Ограничивают ширину, объём, глубину отката и временные нарушения границ. |
-| Момент входа | `FLAG_BREAKOUT_BUFFER_ATR`, `FLAG_MAX_BREAKOUT_DISTANCE_ATR`, `FLAG_ENTRY_MODE`, `FLAG_CONFIRMATION_MAX_BARS`, `FLAG_RETEST_MAX_BARS`, `FLAG_RETEST_TOLERANCE_ATR` | Задают допустимый пробой и окно закрепления или повторного теста. |
+| Момент входа | `FLAG_BREAKOUT_BUFFER_ATR`, `FLAG_MAX_BREAKOUT_DISTANCE_ATR`, `FLAG_MAX_BREAKOUT_DISTANCE_ATR_SHORT`, `FLAG_ENTRY_MODE`, `FLAG_CONFIRMATION_MAX_BARS`, `FLAG_RETEST_MAX_BARS`, `FLAG_RETEST_TOLERANCE_ATR` | Задают допустимый пробой и окно закрепления или повторного теста. |
 | Направления | `LONG.*`, `SHORT.*` | Включают направления и задают тип ордера и минимальное отношение доходности к риску. |
+
+`FLAG_REQUIRE_FULL_PIVOT_NEIGHBORHOOD=true` требует обе стороны каждого
+экстремума внутри флага. `FLAG_BOUNDARY_FIT_MODE` принимает только
+`least_squares`. Отрицательный `FLAG_MAX_BREAKOUT_DISTANCE_ATR_SHORT`
+(по умолчанию `-1`) наследует общий предел `FLAG_MAX_BREAKOUT_DISTANCE_ATR`.
+Значение `0` отключает предел только для SHORT, а положительное задаёт
+отдельный предел в ATR.
 
 ## Содержимое сигнала
 

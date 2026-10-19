@@ -302,6 +302,7 @@ Gate and search shape:
 - `-a, --maxAtomicPredicates`
 - `-C, --maxCombinations`
 - `-V, --validationSplit`, `-T, --testSplit`
+- `-z, --testSince` - fixed calendar test boundary (ISO timestamp with timezone or epoch ms); overrides `testSplit` and requires `validationSplit=0`.
 - `-w, --sealTest` - hide the reserved test rows and economics from discovery.
 - `-N, --minValidationSupport`
 - `-H, --minEvents`, `-J, --minValidationEvents`
