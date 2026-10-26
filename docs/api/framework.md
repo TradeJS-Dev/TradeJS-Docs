@@ -288,3 +288,33 @@ export default defineConnectorPlugin({ connectorEntries });
 - `Direction`, `Interval`, `Candle`
 
 See shared contracts in `@tradejs/types` and public helper/runtime entrypoints in `@tradejs/core/*` and `@tradejs/node/*`.
+
+## Bounded closed-candle history
+
+`StrategyAPI.getClosedCandles` is available in the verified framework cohort
+`3.1.29-beta.281`; stable `3.1.28` does not include it. Use a complete exact
+framework cohort when installing that beta.
+
+```ts
+const source = await strategyApi.getClosedCandles({
+  interval: '15',
+  start: sourceStart,
+  end: sourceEnd,
+  limit: 96,
+});
+if (!source.complete) {
+  return strategyApi.skip('SOURCE_HISTORY_INCOMPLETE');
+}
+```
+
+`sourceStart` and `sourceEnd` are UTC millisecond timestamps aligned to 15-minute
+boundaries. The window is half-open `[start, end)` and cannot end after the
+current decision candle closes. Only the `15`-minute source interval is accepted;
+`limit` must cover all expected slots and cannot exceed 1536. The current
+strategy symbol and connector are fixed by the runtime.
+
+The result contains sorted `candles`, `complete`, `missingRanges`, `start`,
+`end`, `interval` and the frozen decision boundary `asOf`. Missing candles are
+reported rather than filled. Invalid or duplicate rows cause an error. In
+`BACKTEST` and `PARITY`, reads use cached history only. Check completeness before
+using the data; do not replace missing source candles with another interval.

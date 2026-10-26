@@ -45,8 +45,10 @@ the engine under `dependencies`.
 
 ## Public and private strategies
 
-The default preset depends on the complete public catalog. A project can use
-the preset, list only selected public packages, or add a private package:
+The default preset includes a selected set of public strategies. Separately
+published packages such as TradingPatterns, VwapReversion and RangeReclaim must
+be added explicitly. A project can use the preset, list only selected public
+packages, or add a private package:
 
 ```ts
 import { basePreset } from '@tradejs/base';

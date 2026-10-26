@@ -59,12 +59,26 @@ copied. The assistant can retrieve saved strategy figures with
 When reading runtime data, specify the deployment and period. Tools accept
 `[startTime,endTime)`: the start is included and the end is excluded. Runtime
 list requests can cover at most seven days. An empty page does not end the
-results; continue until cursor `0`. Cursors last ten minutes and require the
-same filters.
+results; continue until cursor `0`. Runtime cursors last 24 hours and work
+across server processes with the same window and filters. After a transport
+failure, retry the identical request. On `CURSOR_EXPIRED`, restart the same
+window at cursor `0` and deduplicate record identities. Storage order is not
+chronological, so moving the start to the last returned timestamp can miss data.
 
 Missing saved records alone do not show that a strategy did not run. Skip
 counters help with debugging, but checking execution requires reports that
 record the exact package versions and configuration.
+
+### Verify a deployed version
+
+With `runtime:read`, `runtime_get_verification` accepts a `deploymentId` and
+reads a checksum-verified report published by the app owner. It binds the
+Project revision, actual image digest, package manifest, account and deployment
+composition to the health observation and `runtime-control verify` result.
+Check `fresh`, `report.ok` and `collection` when present. `deploymentVerifiedAt`
+is the original deployment verification time; a later observation does not
+replace it. Missing or stale reports leave verification incomplete. A heartbeat
+alone does not confirm the deployed version or successful verification.
 
 ## Permissions
 
@@ -127,10 +141,19 @@ download files. It returns base64 chunks of up to 48,000 bytes. Continue with
 Before analysis, verify the total size and SHA-256 from the response, as well
 as the report's period and package versions.
 
-The catalog includes completed `runtime-evidence` and `runtime-feedback`
+The catalog includes completed `runtime-evidence` and `runtime-feedback-replay`
 reports that pass ownership, access, size and checksum checks. Each data or
 log file is limited to 64 MiB. Use local TradeJS commands for larger files.
-The catalog reports when its search was truncated.
+The catalog accepts `deploymentId`, `kind`, `startTime` and `endTime` filters,
+plus `offset` and `limit` (1–100, default 20). Follow `nextOffset` until `null`.
+`scanTruncated` means the host search itself was incomplete; excluded bundles
+and host retention also limit coverage.
+
+`diagnostics_get_report.files` lists each available file with its own size
+and SHA-256. Set `artifact_get.file` to `payload` (default), `manifest.json`,
+`.complete` or an available `replay.log`. A log requiring redaction is not
+available through this path; use `job_get_logs`. Large reports return a summary,
+so download `payload` for the complete content.
 
 ## Troubleshooting
 

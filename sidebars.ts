@@ -146,6 +146,7 @@ const sidebars: SidebarsConfig = {
             'strategies/reference/hyperliquid-consensus',
             'strategies/reference/trading-patterns',
             'strategies/reference/vwap-reversion',
+            'strategies/reference/range-reclaim',
           ],
         },
         {

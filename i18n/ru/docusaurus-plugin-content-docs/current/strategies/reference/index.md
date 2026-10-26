@@ -68,6 +68,7 @@ TrendLine и ReverseTrendLine входят в общий пакет
 
 - [TradingPatterns](./reference/trading-patterns) объединяет четыре детектора фигур.
 - [VwapReversion](./reference/vwap-reversion) торгует подтверждённый возврат к VWAP дневной сессии UTC.
+- [RangeReclaim](./reference/range-reclaim) торгует возврат внутрь закрытого старшего диапазона.
 
 ## Как оценивать стратегию
 

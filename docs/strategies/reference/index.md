@@ -69,6 +69,7 @@ These packages are outside the 23-package Base preset:
 
 - [TradingPatterns](./reference/trading-patterns) combines four pattern detectors.
 - [VwapReversion](./reference/vwap-reversion) trades confirmed UTC-session VWAP returns.
+- [RangeReclaim](./reference/range-reclaim) trades a return inside a closed higher-timeframe range.
 
 ## How to Evaluate a Strategy
 

@@ -11,14 +11,14 @@ HeadAndShoulders в одну стратегию. Пакет устанавлив
 Установите композицию и дочерние пакеты в Project:
 
 ```bash
-npm install @tradejs/strategy-trading-patterns@0.1.1 @tradejs/strategy-diamond @tradejs/strategy-flag @tradejs/strategy-gartley @tradejs/strategy-head-and-shoulders
+npm install @tradejs/strategy-trading-patterns@0.1.2 @tradejs/strategy-diamond @tradejs/strategy-flag @tradejs/strategy-gartley @tradejs/strategy-head-and-shoulders
 ```
 
 Добавьте `"@tradejs/strategy-trading-patterns"` в список `strategies`, сохранив
-существующие preset, connectors и indicators. Опубликованная версия `0.1.1`
-поддерживает только `INTERVAL: "60"`. Исходный код также принимает `"15"`, но
-для этого изменения нужна следующая опубликованная версия. Длительность
-фигур измеряется свечами, поэтому смена интервала меняет её календарный срок.
+существующие preset, connectors и indicators. Версия `0.1.2` поддерживает
+`INTERVAL: "15"` и `"60"`; по умолчанию используется `"60"`. Версия `0.1.1`
+поддерживает только часовые свечи. Длительность фигур измеряется свечами,
+поэтому смена интервала меняет её календарный срок.
 
 ## Решения и выходы
 
