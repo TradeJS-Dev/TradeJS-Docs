@@ -45,6 +45,8 @@ the next candle's open, so a price gap can change the signal's risk ratio.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
+| Runtime | `ENV`, `MAKE_ORDERS`, `CLOSE_OPPOSITE_POSITIONS` | Runtime mode and order handling; defaults `BACKTEST`, `true`, `false`. |
+| AI and ML | `AI_ENABLED`, `ML_ENABLED` | Both default to `false`; entry policies below do not require AI or ML. |
 | Intervals | `INTERVAL`, `RANGE_RECLAIM_RANGE_INTERVAL` | Execution/source minutes; defaults `15`/`240`. |
 | Confirmation | `RANGE_RECLAIM_WAIT_BARS`, `RANGE_RECLAIM_MAX_DEPTH_RATIO` | Additional waiting candles and maximum excursion as a fraction of source width; defaults `1` and `0.25`. |
 | Source age | `RANGE_RECLAIM_MAX_SOURCE_AGE_BARS` | Confirmation deadline after source close, in execution intervals. Default `0` disables it; equality with a positive deadline is expired. |

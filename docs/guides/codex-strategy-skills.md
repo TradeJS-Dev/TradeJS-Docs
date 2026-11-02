@@ -9,6 +9,9 @@ improvement research, gate analysis, reporting, and production mutations.
 
 ## Choose one workflow owner
 
+- Use `$strategy-research` to run a complete study of fixed configurations,
+  resume it, or test the frozen rule on a new period. It searches entry filters
+  without editing the strategy detector. See the beta requirements below.
 - Use `$strategy-improvement-research` to choose hypothesis families, manage
   the bounded trial ledger, select the best candidate, and freeze the complete
   core + gate handoff.
@@ -87,6 +90,40 @@ Advanced source-aware research keeps three responsibilities separate:
 The ablation tool imports `strategyEntries` from the standalone strategy build,
 so accepting a strategy path never silently falls back to the Project's
 published package.
+
+## Automatic research of fixed configurations
+
+`$strategy-research <Strategy>` and `research:strategy` are available in the
+published `3.1.29-beta.285` framework cohort and generator bundle. The `3.1.28`
+`latest` release does not include them. Use Node.js 24 and one explicitly
+selected compatible CLI/runtime; update managed skills through the generator.
+Check the installed command with `yarn exec tradejs research:strategy --help`.
+
+The workflow freezes the period, USDT symbols, costs, risk and search budget
+before execution. It uses cached history, searches the first 60% of timestamp
+groups (DEV), then freezes the filter and direction policy before opening the
+last 40% (TEST). Previously examined history stays retrospective. It confirms
+actual gated entries with native backtests, including non-fast and delayed-entry
+checks, rather than treating a filtered trade list as execution evidence.
+
+When `JEV` is configured, it compares one frozen pair with and without Jev on
+the same core, period, costs and direction policy. It uses saved assessments or
+a local model, makes no paid requests and does not train a new model. Model
+training and validation must end before TEST. Missing assessments or limited
+support cannot establish benefit; trade PnL excludes the historical cost of
+obtaining assessments.
+
+Run from the Project with the research roots above. Repeating `run` resumes the
+same study only while its inputs and executable lineage remain unchanged.
+`revalidate` preserves the frozen rules and directions for a new period starting
+at or after the parent's end. A changed hypothesis needs a new research ID.
+
+The result includes `report.html`, `result.json`, direction decisions and
+checksummed permanent records under `data/research/strategy/<researchId>/`.
+Use `verify` and `status` to check completion and retention. If cleanup remains
+pending, read its reason and resume after consumers finish; do not remove the
+inputs manually. Publication, deployment and live trading require separate
+workflows. See [CLI API](../api/cli#automatic-strategy-research) for commands.
 
 ## How candidates are ranked
 

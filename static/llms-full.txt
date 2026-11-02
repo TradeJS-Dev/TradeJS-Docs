@@ -153,3 +153,7 @@ The documentation covers:
 TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires an MCP-enabled release. No live order or deployment tools. Guide: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp).
 
 Separately installed strategies outside Base: TradingPatterns (https://docs.tradejs.dev/strategies/reference/trading-patterns) VwapReversion (https://docs.tradejs.dev/strategies/reference/vwap-reversion), and RangeReclaim (https://docs.tradejs.dev/strategies/reference/range-reclaim). TradingPatterns 0.1.2 supports 15-minute and hourly candles (hourly by default).
+
+## Automatic fixed-configuration research
+
+The published 3.1.29-beta.285 framework/generator cohort includes research:strategy and the strategy-research skill; latest 3.1.28 does not. Requires Node.js 24. Cached USDT studies freeze filters and directions on DEV before TEST, support resume and frozen-period revalidation, and produce verified HTML/JSON records. Configured Jev uses saved assessments or local models for a frozen with/without comparison. No live orders, publication or deployment. See https://docs.tradejs.dev/guides/codex-strategy-skills and https://docs.tradejs.dev/api/cli#automatic-strategy-research.

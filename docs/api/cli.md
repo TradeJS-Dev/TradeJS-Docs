@@ -29,6 +29,7 @@ Setup and diagnostics:
 Research and backtesting:
 
 - `backtest` - run strategy backtests or refresh market cache.
+- `research:strategy` - automate fixed-config research, resume and frozen-period revalidation (beta requirements below).
 - `results` - inspect, merge, update, or clear selected strategy results in Redis.
 - `runtime-parity` - compare recorded live entries with reconstructed entries.
 - `replay` - evaluate a deployed configuration over historical closed candles.
@@ -134,6 +135,56 @@ Dataset output:
 
 Backtest config keys are stored in Redis under `users:<user>:backtests:configs:<StrategyName:configName>`.
 See [Create a backtest config](../getting-started/backtest-config).
+
+## Automatic strategy research {#automatic-strategy-research}
+
+Use Node.js 24 and the published `3.1.29-beta.285` framework cohort; `latest`
+`3.1.28` does not include this command. Run the installed CLI from your Project
+with `PROJECT_CWD`, `TRADEJS_SOURCE_REPOSITORY_ROOT` and
+`TRADEJS_FRAMEWORK_REPOSITORY_ROOT` bound to the research checkouts described in
+[Codex strategy skills](../guides/codex-strategy-skills#research-roots).
+
+Start from an existing frozen core specification:
+
+```bash
+yarn exec tradejs research:strategy init \
+  --coreSpec data/research/specs/core.json \
+  --out data/research/specs/workflow.json
+```
+
+Alternatively, `init` accepts `--strategy`, `--config <Strategy:config>`,
+`--researchId`, `--claim`, `--mechanism`, `--symbolsFile`, `--start`, `--end`
+and `--out`. The symbols file is a JSON string array of USDT contracts;
+timestamps are UTC strings with a timezone or epoch milliseconds. Add
+`--candidates <Strategy:a,Strategy:b>` for bounded alternatives. Each named
+Redis config must contain exactly one value per key, belong to the selected
+strategy and set `MAX_LOSS_VALUE=10`.
+
+Review the generated hypothesis, costs, history exposure, DEV/TEST boundary,
+selection criteria and resource budget before the first run. For comparisons
+across exports, freeze one common calendar boundary. `init` defaults to
+retrospective history; do not relabel previously inspected data as untouched.
+Check active workers and host memory before running:
+
+```bash
+yarn exec tradejs research:strategy run --spec data/research/specs/workflow.json
+yarn exec tradejs research:strategy verify --spec data/research/specs/workflow.json
+yarn exec tradejs research:strategy status --spec data/research/specs/workflow.json
+```
+
+Repeat the same `run` to resume unchanged inputs and executable versions.
+`status` reports stages, errors, report location and retention state. For a
+completed parent, create a new-period specification with:
+
+```text
+research:strategy revalidate --spec <parent-workflow.json> --researchId <new-id> --start <UTC> --end <UTC> --out <new-workflow.json>
+```
+
+The new period must start at or after the parent's end; frozen rules and
+directions are preserved. Results live under
+`data/research/strategy/<researchId>/`, with a permanent research note under
+`notes/<Strategy>/`. The command uses cached history and does not publish,
+deploy, send notifications or place live orders.
 
 ## Signals
 

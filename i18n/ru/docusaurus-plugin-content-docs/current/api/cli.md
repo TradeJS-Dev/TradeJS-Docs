@@ -28,6 +28,7 @@ npx @tradejs/cli backtest --help
 Исследование и бэктестинг:
 
 - `backtest` — запуск бэктеста или обновление истории рынка;
+- `research:strategy` — автоматическое исследование фиксированных конфигураций, продолжение и проверка на новом периоде (требования к beta ниже).
 - `results` — просмотр и ведение локального списка выбранных результатов;
 - `runtime-parity` — сравнение записанных реальных входов с восстановленными;
 - `replay` — воспроизведение рабочей конфигурации на исторических свечах;
@@ -140,6 +141,56 @@ npx @tradejs/cli results --strategy TrendLine --coverage
 Сетка параметров сохраняется под именем
 `users:<user>:backtests:configs:<StrategyName:configName>`. Подробнее:
 [Создание конфигурации бэктеста](../getting-started/backtest-config).
+
+## Автоматическое исследование стратегии {#automatic-strategy-research}
+
+Используйте Node.js 24 и опубликованный набор фреймворка `3.1.29-beta.285`;
+в `latest` `3.1.28` этой команды нет. Выполняйте установленный CLI из Project
+с `PROJECT_CWD`, `TRADEJS_SOURCE_REPOSITORY_ROOT` и
+`TRADEJS_FRAMEWORK_REPOSITORY_ROOT`, указывающими на выбранные рабочие копии.
+Назначение каталогов описано в [навыках Codex](../guides/codex-strategy-skills).
+
+Начните с существующей зафиксированной спецификации ядра:
+
+```bash
+yarn exec tradejs research:strategy init \
+  --coreSpec data/research/specs/core.json \
+  --out data/research/specs/workflow.json
+```
+
+Другой вариант `init` принимает `--strategy`, `--config <Strategy:config>`,
+`--researchId`, `--claim`, `--mechanism`, `--symbolsFile`, `--start`, `--end`
+и `--out`. Файл инструментов содержит JSON-массив строк с USDT-контрактами;
+время задаётся строкой UTC с часовым поясом или миллисекундами эпохи.
+Для ограниченного набора альтернатив добавьте `--candidates <Strategy:a,Strategy:b>`.
+Каждая именованная конфигурация Redis должна содержать одно значение на ключ,
+относиться к выбранной стратегии и задавать `MAX_LOSS_VALUE=10`.
+
+До первого запуска проверьте созданные гипотезу, расходы, отметку об изученной
+истории, границу DEV/TEST, критерии отбора и бюджет ресурсов. Для сравнения
+выгрузок зафиксируйте общую календарную границу. `init` по умолчанию помечает
+историю ретроспективной; не называйте ранее изученные данные нетронутыми.
+Проверьте активные процессы тестера и память компьютера, затем выполните:
+
+```bash
+yarn exec tradejs research:strategy run --spec data/research/specs/workflow.json
+yarn exec tradejs research:strategy verify --spec data/research/specs/workflow.json
+yarn exec tradejs research:strategy status --spec data/research/specs/workflow.json
+```
+
+Повторный `run` продолжает запуск с теми же входами и исполняемыми версиями.
+`status` показывает этапы, ошибки, путь отчёта и состояние очистки.
+Для завершённого родительского исследования создайте спецификацию нового периода:
+
+```text
+research:strategy revalidate --spec <parent-workflow.json> --researchId <new-id> --start <UTC> --end <UTC> --out <new-workflow.json>
+```
+
+Новый период начинается не раньше конца родительского; правила и направления
+сохраняются. Результаты находятся в `data/research/strategy/<researchId>/`,
+постоянная заметка — в `notes/<Strategy>/`. Команда использует сохранённую
+историю, не публикует и не развёртывает пакеты, не отправляет уведомления и
+не размещает реальные ордера.
 
 ## `signals`
 

@@ -122,6 +122,18 @@ Each user can have one active job and submit ten jobs per hour. Jobs have a
 one-hour time limit, and their state is retained for seven days. Restarting
 the worker marks interrupted jobs as `failed`; they do not restart automatically.
 
+### Replay readiness
+
+With a compatible app/worker release such as `3.1.29-beta.285`, inspect
+`tradejs_info.worker` before requesting replay. `replayAvailable` indicates a
+compatible host executor; `replayReadiness` separately reports `ready`,
+`waiting_resources` or `unknown`. When present, `replayResources` records the
+observation time, available memory, required minimum and deficit in KiB.
+Readiness is an observation, not a memory reservation. The host rechecks under
+the shared queue lock. A job waiting for resources is not a completed replay;
+keep its existing identity rather than submitting duplicates. Missing resource
+fields leave capacity unknown.
+
 ### Job logs
 
 Call `job_get_logs` with the `jobId` and `offset: 0`. Set `limit` to between
