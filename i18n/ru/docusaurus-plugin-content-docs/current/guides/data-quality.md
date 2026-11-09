@@ -121,5 +121,5 @@ TradeJS может добавлять эталонные свечи BTC, спр�
 Связанные страницы:
 
 - [Ограничения бэктестинга](../limitations/backtesting-caveats)
-- [Бэктест стратегии](./backtest-strategy)
+- [Бэктест стратегии](../runtime/backtesting/overview)
 - [Сравнение реальных и воспроизведённых входов](../runtime/backtesting/runtime-parity)

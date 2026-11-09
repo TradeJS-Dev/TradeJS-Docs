@@ -2,9 +2,10 @@
 title: beforeEntryGate
 ---
 
-Вызывается на entry path после вычисления standard runtime policy checks и до постановки ордера. Этот хук вызывается для всех entry решений, включая no-signal entries.
+TradeJS вызывает `beforeEntryGate` после встроенных проверок и перед
+отправкой ордера на вход. Проверка выполняется и для входа без сигнала.
 
-## Params
+## Параметры
 
 ```ts
 {
@@ -21,16 +22,19 @@ title: beforeEntryGate
 }
 ```
 
-`policy.aiQuality` равен `undefined`, когда сигнала нет или AI не вернул quality score.
+`policy.aiQuality` равен `undefined`, когда сигнала нет или AI не вернул оценку качества.
 
-## Output
+## Результат
 
 | Возврат             | Тип                                                                                        | Эффект                                    |
 | ------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------- |
 | Разрешить/запретить | `{ allow?: boolean; reason?: string }` или `Promise<{ allow?: boolean; reason?: string }>` | Если `allow === false`, вход блокируется. |
-| Без return value    | `void` или `Promise<void>`                                                                 | Вход продолжается.                        |
+| Без результата    | `void` или `Promise<void>`                                                                 | Вход продолжается.                        |
 
-Когда gate блокирует исполнение (`allow === false`):
+Если проверка запрещает вход (`allow === false`):
 
-- Если существует `entry.signal`, runtime ставит `signal.orderStatus = 'skipped'` и `signal.orderSkipReason = 'HOOK_BEFORE_ENTRY_GATE:${reason}'` или `HOOK_BEFORE_ENTRY_GATE`.
-- Если сигнала нет, runtime возвращает строку `HOOK_BEFORE_ENTRY_GATE:${reason}` или `HOOK_BEFORE_ENTRY_GATE`.
+- Если существует `entry.signal`, TradeJS записывает `signal.orderStatus = 'skipped'` и `signal.orderSkipReason = 'HOOK_BEFORE_ENTRY_GATE:${reason}'` или `HOOK_BEFORE_ENTRY_GATE`.
+- Если сигнала нет, TradeJS возвращает строку `HOOK_BEFORE_ENTRY_GATE:${reason}` или `HOOK_BEFORE_ENTRY_GATE`.
+
+В версии `3.1.29-beta.290`, если проверка завершается исключением, TradeJS
+записывает ошибку в журнал и блокирует вход с кодом `HOOK_BEFORE_ENTRY_GATE:ERROR`.

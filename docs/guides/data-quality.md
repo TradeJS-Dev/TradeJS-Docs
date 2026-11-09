@@ -113,5 +113,5 @@ If you compare two strategies, keep provider, timeframe, date window, cache mode
 Related:
 
 - [Backtesting caveats](../limitations/backtesting-caveats)
-- [Backtest a strategy](./backtest-strategy)
+- [Backtest a strategy](../runtime/backtesting/overview)
 - [Compare live and replayed entries](../runtime/backtesting/runtime-parity)

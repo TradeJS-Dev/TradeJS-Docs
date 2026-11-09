@@ -50,6 +50,14 @@ npx @tradejs/cli infra-up
 Use `--cacheOnly` when the required candles are already available and you want
 to prevent a data refresh during a reproducibility check.
 
+The config named by `--config` must already exist in Redis. The first backtest
+example creates one for you. For your own strategy, see
+[Create a backtest config](../../getting-started/backtest-config).
+
+Use `--updateOnly` to download history without running a test. To continue an
+interrupted run that saved its progress, pass its ID with `--runId`. See the
+[CLI reference](../../api/cli#backtest) for all options.
+
 ## Separate Execution Costs from Strategy Estimates
 
 A reproducible comparison should pass its simulation costs separately from the

@@ -26,7 +26,6 @@ const flagshipPaths = new Set([
   '/getting-started/installation',
   '/getting-started/quickstart',
   '/getting-started/first-backtest',
-  '/guides/backtest-strategy',
   '/strategies/authoring/typescript-strategy-step-by-step',
   '/strategies/authoring/pine-strategy-step-by-step',
   '/indicators/authoring',

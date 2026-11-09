@@ -59,6 +59,6 @@ list, data requirements, and per-strategy references.
 
 ## Next
 
-- [Create a simple strategy](../guides/create-simple-strategy)
+- [Create a simple strategy](../strategies/authoring/typescript-strategy-step-by-step)
 - [Examples](../examples)
 - [Strategy authoring deep dive](../strategies/authoring/write-strategies)

@@ -39,7 +39,7 @@ return strategyApi.skip('NO_MA_CROSS');
 
 Related pages:
 
-- [Create a simple strategy](./guides/create-simple-strategy)
+- [Create a simple strategy](./strategies/authoring/typescript-strategy-step-by-step)
 - [MaStrategy reference](./strategies/reference/ma-strategy)
 
 ## 2. Breakout Strategy
@@ -63,7 +63,7 @@ export default {
 Related pages:
 
 - [Breakout reference](./strategies/reference/breakout)
-- [Backtest a strategy](./guides/backtest-strategy)
+- [Backtest a strategy](./runtime/backtesting/overview)
 
 ## 3. Trendline / Channel-Based Strategy
 

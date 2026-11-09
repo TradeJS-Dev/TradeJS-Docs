@@ -29,7 +29,6 @@ Marketing site: https://tradejs.dev
 ## Primary Workflow
 
 - TypeScript strategies: https://docs.tradejs.dev/strategies/authoring/write-strategies
-- Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
 - Codex strategy workflow skills: https://docs.tradejs.dev/guides/codex-strategy-skills
 - Backtesting: https://docs.tradejs.dev/runtime/backtesting/overview
 - Validate live decisions with replay: https://docs.tradejs.dev/runtime/backtesting/replay-evidence
@@ -43,9 +42,8 @@ Marketing site: https://tradejs.dev
 ## Extensions and Reference
 
 - Core concepts: https://docs.tradejs.dev/core-concepts/strategy
-- Create a simple strategy: https://docs.tradejs.dev/guides/create-simple-strategy
 - Data quality guide: https://docs.tradejs.dev/guides/data-quality
-- Indicators: https://docs.tradejs.dev/guides/add-indicators
+- Indicators: https://docs.tradejs.dev/indicators/authoring
 - Diagrams: https://docs.tradejs.dev/advanced/diagrams
 - Compare live and replayed entries: https://docs.tradejs.dev/runtime/backtesting/runtime-parity
 - Hyperliquid whale ingest: https://docs.tradejs.dev/operations/derivatives-ingest

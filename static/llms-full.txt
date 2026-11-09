@@ -61,12 +61,8 @@ The documentation covers:
 ### Practical Guides
 
 - Examples: https://docs.tradejs.dev/examples
-- Create a simple strategy: https://docs.tradejs.dev/guides/create-simple-strategy
-- Backtest a strategy: https://docs.tradejs.dev/guides/backtest-strategy
 - Data quality guide: https://docs.tradejs.dev/guides/data-quality
-- Add indicators: https://docs.tradejs.dev/guides/add-indicators
 - Compare strategies: https://docs.tradejs.dev/guides/compare-strategies
-- Pine-backed strategy workflows: https://docs.tradejs.dev/guides/pine-workflows
 - AI/ML workflows: https://docs.tradejs.dev/guides/ai-ml-workflows
 - Codex strategy workflow skills: https://docs.tradejs.dev/guides/codex-strategy-skills
 

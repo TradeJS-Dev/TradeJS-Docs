@@ -2,7 +2,8 @@
 title: beforeEntryGate
 ---
 
-Called on the entry path after standard runtime policy checks are resolved and before order placement. This hook is called for all entry decisions, including no-signal entries.
+TradeJS calls `beforeEntryGate` after the built-in checks and before placing
+an entry order. It also calls the hook when the entry has no signal.
 
 ## Params
 
@@ -34,3 +35,6 @@ When the gate blocks (`allow === false`):
 
 - If `entry.signal` exists, runtime sets `signal.orderStatus = 'skipped'` and `signal.orderSkipReason = 'HOOK_BEFORE_ENTRY_GATE:${reason}'` or `HOOK_BEFORE_ENTRY_GATE`.
 - If there is no signal, runtime returns the string `HOOK_BEFORE_ENTRY_GATE:${reason}` or `HOOK_BEFORE_ENTRY_GATE`.
+
+In `3.1.29-beta.290`, if the hook throws, TradeJS logs the error and blocks
+the entry with `HOOK_BEFORE_ENTRY_GATE:ERROR`.

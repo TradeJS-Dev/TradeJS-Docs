@@ -52,12 +52,8 @@ const sidebars: SidebarsConfig = {
       label: t('Guides', 'Руководства'),
       items: [
         'examples',
-        'guides/create-simple-strategy',
-        'guides/backtest-strategy',
         'guides/data-quality',
-        'guides/add-indicators',
         'guides/compare-strategies',
-        'guides/pine-workflows',
         'guides/ai-ml-workflows',
         'guides/mcp',
         {

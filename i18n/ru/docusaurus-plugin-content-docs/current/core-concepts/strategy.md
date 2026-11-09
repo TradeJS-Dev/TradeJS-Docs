@@ -51,6 +51,6 @@ TrendLine и ReverseTrendLine входят в общий пакет
 
 ## Дальше
 
-- [Создание простой стратегии](../guides/create-simple-strategy)
+- [Создание простой стратегии](../strategies/authoring/typescript-strategy-step-by-step)
 - [Примеры](../examples)
 - [Подробная разработка стратегий](../strategies/authoring/write-strategies)

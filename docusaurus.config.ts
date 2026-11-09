@@ -134,7 +134,7 @@ const config: Config = {
         },
         {
           type: 'doc',
-          docId: 'guides/backtest-strategy',
+          docId: 'runtime/backtesting/overview',
           position: 'left',
           label: t('Backtesting', 'Бэктестинг'),
         },
@@ -201,7 +201,7 @@ const config: Config = {
               label: t('TypeScript Strategy', 'TypeScript-стратегия'),
               to: '/strategies/authoring/typescript-strategy-step-by-step',
             },
-            { label: t('Backtest a Strategy', 'Бэктест стратегии'), to: '/guides/backtest-strategy' },
+            { label: t('Backtest a Strategy', 'Бэктест стратегии'), to: '/runtime/backtesting/overview' },
           ],
         },
         {
