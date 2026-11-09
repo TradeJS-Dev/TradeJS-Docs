@@ -291,9 +291,8 @@ See shared contracts in `@tradejs/types` and public helper/runtime entrypoints i
 
 ## Bounded closed-candle history
 
-`StrategyAPI.getClosedCandles` is available in the verified framework cohort
-`3.1.29-beta.281`; stable `3.1.28` does not include it. Use a complete exact
-framework cohort when installing that beta.
+Use `StrategyAPI.getClosedCandles` when your strategy needs closed
+15-minute candles from a specific time window.
 
 ```ts
 const source = await strategyApi.getClosedCandles({

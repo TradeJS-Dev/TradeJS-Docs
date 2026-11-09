@@ -62,4 +62,4 @@ TradeJS содержит `TrendLine`, `ReverseTrendLine` и `AdaptiveTrendChanne
 
 См. [TrendLine](./strategies/reference/trendline) и [AdaptiveTrendChannel](./strategies/reference/adaptive-trend-channel).
 
-Полный package-only сценарий через `npx create-tradejs`: [Первый бэктест](./getting-started/first-backtest). Команда создаёт npm-проект, запускает локальную инфраструктуру, сохраняет `MaStrategy:base` и открывает Backtest UI.
+Полный package-only сценарий через `create-tradejs`: [Первый бэктест](./getting-started/first-backtest). Команда создаёт npm-проект, запускает локальную инфраструктуру, сохраняет `MaStrategy:base` и открывает Backtest UI.

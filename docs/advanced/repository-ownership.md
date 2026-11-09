@@ -7,7 +7,7 @@ also where that behavior is tested, versioned, and released.
 
 ## From generator to production
 
-1. `npx create-tradejs` creates a standalone npm project.
+1. `create-tradejs` creates a standalone npm project.
 2. `@tradejs/base` supplies a non-empty default preset.
 3. The preset installs public strategy packages, indicators, and connectors.
 4. The project owns `tradejs.config.ts`, its lockfile, local data and backtest

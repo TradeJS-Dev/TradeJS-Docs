@@ -3,14 +3,14 @@ title: RangeReclaim
 ---
 
 `@tradejs/strategy-range-reclaim` trades a return inside the range of a closed
-higher-timeframe candle after a failed breakout. Version `0.1.1` is published
-separately from `@tradejs/base`. Its defaults and optional entry policies are
+higher-timeframe candle after a failed breakout. Install it separately from
+`@tradejs/base`. Its defaults and optional entry policies are
 research parameters, not validated trading recommendations.
 
 ## Installation
 
 ```bash
-npm install @tradejs/strategy-range-reclaim@0.1.1
+npm install --save-exact @tradejs/strategy-range-reclaim
 ```
 
 Append `"@tradejs/strategy-range-reclaim"` to your Project's `strategies`

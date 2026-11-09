@@ -93,8 +93,8 @@ npx @tradejs/cli runtime-feedback-notify \
 Use `--dryRun` to verify the bundle and print the message without sending it.
 The command checks the manifest, files, and checksums before delivery. It stops
 if the replay comparison is missing instead of sending a clean report.
-Starting with `3.1.29-beta.290`, turning off **Runtime debug** also suppresses
-this comparison message. It does not stop replay or remove the verified report.
+Turn off **Runtime debug** to stop receiving this comparison in Telegram.
+The replay still runs and saves the verified report.
 
 The report shows the time window, connector, deployment and composition,
 runtime record counts, comparable entries, matches, failed orders, runtime-only

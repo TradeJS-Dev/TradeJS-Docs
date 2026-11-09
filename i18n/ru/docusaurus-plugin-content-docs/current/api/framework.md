@@ -294,9 +294,8 @@ export default defineConnectorPlugin({ connectorEntries });
 
 ## Ограниченное окно закрытых свечей
 
-`StrategyAPI.getClosedCandles` доступен в проверенном наборе пакетов фреймворка
-`3.1.29-beta.281`; стабильная версия `3.1.28` его не содержит. Для этой beta
-установите полный набор пакетов фреймворка с одной точной версией.
+Вызовите `StrategyAPI.getClosedCandles`, если стратегии нужны закрытые
+15-минутные свечи за определённый период.
 
 ```ts
 const source = await strategyApi.getClosedCandles({

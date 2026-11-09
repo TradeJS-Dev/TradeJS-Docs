@@ -124,8 +124,7 @@ the worker marks interrupted jobs as `failed`; they do not restart automatically
 
 ### Replay readiness
 
-With a compatible app/worker release such as `3.1.29-beta.285`, inspect
-`tradejs_info.worker` before requesting replay. `replayAvailable` indicates a
+Check `tradejs_info.worker` before requesting replay. `replayAvailable` indicates a
 compatible host executor; `replayReadiness` separately reports `ready`,
 `waiting_resources` or `unknown`. When present, `replayResources` records the
 observation time, available memory, required minimum and deficit in KiB.
@@ -145,9 +144,8 @@ fails. Only the last 150 entries are kept, with up to 1,000 characters per
 entry. Offsets may change while the job runs. The `retainedLines` field shows
 the number of retained entries.
 
-With the `3.1.29-beta.290` app and a compatible host runner, a replay that
-reuses a previous result reads the original request's log if it is still
-retained. A reused result does not mean a new replay ran.
+If a replay request returns a saved result, its log comes from the original
+request, if that log is still available.
 
 ### Report files
 

@@ -5,17 +5,8 @@ title: TypeScript Trading Quickstart
 description: 'Create a self-hosted TypeScript trading project, start its Docker infrastructure, open the TradeJS UI, and prepare your first strategy backtest.'
 ---
 
-Create and start a self-hosted TradeJS project from the public npm packages:
-
-```bash
-npx create-tradejs
-```
-
-This is the recommended starting point for external users. It creates
-`tradejs-project`, installs aligned TradeJS packages, starts the local Docker
-infrastructure, and opens the Web UI. On the install page, choose and confirm
-the password for the local `root` account. TradeJS signs you in and opens the
-dashboard.
+[Install and start TradeJS](./installation). On the install page, set the
+password for the local `root` user. TradeJS signs you in and opens the dashboard.
 
 The dashboard loads the default Coinbase BTCUSDT chart. Select **Create backtest** in
 the top-right corner to open the backtest launcher. See
@@ -67,32 +58,12 @@ Stop local services with:
 npm run infra-down
 ```
 
-## Manual Package Installation
-
-Use manual installation only when integrating TradeJS into an existing project.
-Keep engine packages on a compatible major version and let the lockfile resolve
-independently versioned Base and strategy packages:
-
-```bash
-npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
-```
-
-Then follow [Installation](./installation) for config, infra, and login setup.
-
 ## Common Errors
 
 ### Docker is unavailable
 
-Start Docker Desktop or the Docker daemon and verify `docker compose version`,
-then run `npx create-tradejs` again in a new empty directory.
-
-### The default directory already exists
-
-Pass another directory name:
-
-```bash
-npx create-tradejs my-trading-project
-```
+Start Docker and check `docker compose version`. Then run `npm run infra-up`
+again from your project folder.
 
 ### Package or module versions do not match
 

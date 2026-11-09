@@ -2,7 +2,7 @@
 title: Licensing
 ---
 
-TradeJS version 2.0.0 and later uses a mixed-license model. The license closest to a file or package governs that component.
+TradeJS uses different licenses for different components. Check the license closest to the file or package you use.
 
 ## Business Source License components
 
@@ -30,8 +30,6 @@ These packages remain MIT-licensed:
 
 An MIT-licensed package can depend on a BSL package. Using the MIT package does not change the dependency's license, so check the licenses of every TradeJS package in your application.
 
-## Earlier releases and commercial licensing
-
-Releases through `v1.0.12` remain available under the MIT License. The licensing change starts with version 2.0.0.
+## Full licensing terms
 
 For the complete component matrix, exact Additional Use Grant, and commercial licensing contact, see the [canonical licensing policy](https://github.com/TradeJS-Dev/TradeJS/blob/stable/LICENSING.md).

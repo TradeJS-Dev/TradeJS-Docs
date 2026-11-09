@@ -4,43 +4,59 @@ title: Установка TradeJS в TypeScript-проект
 description: 'Установите TradeJS через create-tradejs или добавьте публичные npm-пакеты в существующий TypeScript-проект с необходимыми настройками Node.js и Docker.'
 ---
 
-Для нового проекта используйте `create-tradejs`. Ручная установка нужна только
-при добавлении TradeJS в существующий TypeScript-проект.
+Эта база знаний описывает TradeJS `3.1.29-beta.290`. Выполните команды
+ниже, чтобы установить ту же версию.
 
 ## Требования
 
-- Node.js 20.19 или новее;
+- Node.js 24;
 - npm 10 или новее;
-- Docker Desktop либо Docker Engine;
-- плагин Docker Compose (`docker compose`).
+- Docker с командой `docker compose`.
 
-## Рекомендуемый вариант
+## Создайте проект {#create-project}
 
-```bash
-npx create-tradejs
-```
-
-Команда устанавливает пакеты, запускает локальные сервисы, создаёт начального
-пользователя и конфигурацию бэктеста, затем открывает веб-приложение.
-Продолжение: [Первый бэктест](./first-backtest). Созданный проект также содержит
-[узкие Codex skills для стратегий](../guides/codex-strategy-skills) в
-`.codex/skills`.
-
-## Ручная установка
+Выполните команды в терминале. Вместо `tradejs-project` можно указать другое
+имя папки.
 
 ```bash
-mkdir tradejs-project
+tradejs_version=3.1.29-beta.290
+npx "create-tradejs@$tradejs_version" tradejs-project --no-install
 cd tradejs-project
-npm init -y
-npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Основные пакеты `@tradejs/core`, `@tradejs/node`, `@tradejs/cli` и
-`@tradejs/app` должны иметь совместимую старшую версию. `@tradejs/base`,
-`@tradejs/strategy-kit` и `@tradejs/strategy-*` выпускаются независимо. Вместо
-принудительного выравнивания исправляющих версий сохраняйте lock-файл.
+## Установите пакеты {#install-packages}
 
-## Создайте `tradejs.config.ts`
+Если у вас уже есть проект, откройте его папку и задайте ту же переменную
+`tradejs_version` из предыдущего шага.
+
+```bash
+for package in app cli connectors core indicators infra node types; do
+  npm pkg set "dependencies.@tradejs/$package=$tradejs_version" \
+    "overrides.@tradejs/$package=\$@tradejs/$package"
+done
+npm install --save-exact @tradejs/base
+```
+
+Команды устанавливают основные пакеты TradeJS одной версии. Пакет
+`@tradejs/base` и пакеты стратегий выпускаются отдельно. Сохраните
+`package-lock.json`, чтобы повторная установка использовала те же версии.
+
+## Запустите приложение {#start-app}
+
+В проекте, созданном через `create-tradejs`, выполните:
+
+```bash
+npm run infra-up
+npm run dev
+```
+
+Откройте адрес из терминала, обычно `http://localhost:3000`. На странице
+установки задайте пароль локального пользователя `root`. Дальше можно
+[запустить первый бэктест](./first-backtest).
+
+## Добавьте TradeJS в существующий проект
+
+После установки пакетов добавьте `tradejs.config.ts`, если его ещё нет:
 
 ```ts
 import { defineConfig } from '@tradejs/core/config';
@@ -49,36 +65,17 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-`basePreset` подключает стандартный набор стратегий, индикаторов и коннекторов,
-но сам по себе не запускает стратегии. Чтобы выбрать стратегии, счета и
-инструменты для постоянного расчёта, добавьте именованную запись
-`runtime.deployments` и следуйте инструкции
-[Запуск стратегии в рабочем окружении](./run-strategy-in-production).
-Подробности о составе пакетов: [Владение репозиториями и пакетами](../advanced/repository-ownership).
-
-## Запустите локальные сервисы
+Затем запустите сервисы и приложение:
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-npx @tradejs/cli doctor
+npm exec -- tradejs infra-init
+npm exec -- tradejs infra-up
+npm exec -- tradejs-app dev
 ```
 
-## Создайте пользователя `root`
-
-```bash
-npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
-```
-
-Подробнее: [Настройка пользователя root](./root-user).
-
-## Запустите веб-приложение
-
-```bash
-npx tradejs-app dev
-```
-
-Откройте адрес из консоли, обычно `http://localhost:3000`.
+`basePreset` подключает стандартные стратегии, индикаторы и коннекторы.
+Если хотите запустить стратегию на рынке, сначала
+[настройте её запуск](./run-strategy-in-production).
 
 ## Анонимная телеметрия первого запуска
 

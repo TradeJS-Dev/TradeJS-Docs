@@ -36,5 +36,5 @@ TradeJS вызывает `beforeEntryGate` после встроенных пр�
 - Если существует `entry.signal`, TradeJS записывает `signal.orderStatus = 'skipped'` и `signal.orderSkipReason = 'HOOK_BEFORE_ENTRY_GATE:${reason}'` или `HOOK_BEFORE_ENTRY_GATE`.
 - Если сигнала нет, TradeJS возвращает строку `HOOK_BEFORE_ENTRY_GATE:${reason}` или `HOOK_BEFORE_ENTRY_GATE`.
 
-В версии `3.1.29-beta.290`, если проверка завершается исключением, TradeJS
+Если проверка завершается исключением, TradeJS
 записывает ошибку в журнал и блокирует вход с кодом `HOOK_BEFORE_ENTRY_GATE:ERROR`.

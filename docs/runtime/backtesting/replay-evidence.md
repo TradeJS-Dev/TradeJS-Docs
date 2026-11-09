@@ -149,8 +149,8 @@ backtest entries excluded by lineage or window scope. This distinguishes a
 strategy that evaluated and skipped from an entry that was not comparable to
 the recorded runtime composition.
 
-With the published `3.1.29-beta.290` CLI, deployments that mix timeframes
-evaluate each strategy on its own closed candles. For unmatched recorded
+If strategies use different timeframes, replay evaluates each strategy
+on its own closed candles. For unmatched recorded
 entries, the comparison can also show `replayDecisionTrace`: the candle and
 the recorded replay outcome, or a reason why that candle was not evaluated.
 Use that detail before treating a missing replay entry as a strategy rejection.

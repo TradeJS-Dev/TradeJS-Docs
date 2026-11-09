@@ -165,6 +165,6 @@ type GateOutput = {
 - `afterEnrichAi` uses the same pattern for AI with the `ai` object.
 - `afterCoreDecision` is strict post-`core.ts`. If the candle was short-circuited in `onBar`, use `afterBarDecision` for logic that still must observe the final result of that candle.
 - Non-blocking hooks swallow errors: the runtime logs the failure, calls `onRuntimeError`, and continues.
-- In `3.1.29-beta.290`, an exception in `beforeEntryGate` blocks the entry.
+- An exception in `beforeEntryGate` blocks the entry.
   If `beforeClosePosition` throws, TradeJS logs the error and continues
   processing the close request.

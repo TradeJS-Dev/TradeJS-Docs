@@ -3,14 +3,14 @@ title: RangeReclaim
 ---
 
 `@tradejs/strategy-range-reclaim` торгует возврат внутрь диапазона закрытой
-старшей свечи после неудачного пробоя. Версия `0.1.1` опубликована отдельно
+старшей свечи после неудачного пробоя. Стратегия устанавливается отдельно
 от `@tradejs/base`. Значения по умолчанию и дополнительные правила входа
 предназначены для исследования и не являются проверенной торговой рекомендацией.
 
 ## Установка
 
 ```bash
-npm install @tradejs/strategy-range-reclaim@0.1.1
+npm install --save-exact @tradejs/strategy-range-reclaim
 ```
 
 Добавьте `"@tradejs/strategy-range-reclaim"` в список `strategies` вашего

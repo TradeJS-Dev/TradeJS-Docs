@@ -11,14 +11,13 @@ HeadAndShoulders into one strategy. It is installed separately from
 Install the composition and its child packages in your Project:
 
 ```bash
-npm install @tradejs/strategy-trading-patterns@0.1.2 @tradejs/strategy-diamond @tradejs/strategy-flag @tradejs/strategy-gartley @tradejs/strategy-head-and-shoulders
+npm install --save-exact @tradejs/strategy-trading-patterns @tradejs/strategy-diamond @tradejs/strategy-flag @tradejs/strategy-gartley @tradejs/strategy-head-and-shoulders
 ```
 
 Append `"@tradejs/strategy-trading-patterns"` to the Project's `strategies`
-list, preserving its existing preset, connectors and indicators. Version
-`0.1.2` supports `INTERVAL: "15"` and `"60"`; the default is `"60"`.
-Version `0.1.1` supports hourly candles only. Pattern durations are measured
-in candles, so changing interval changes their duration in time.
+list. Set `INTERVAL` to `"15"` for 15-minute candles or `"60"` for hourly
+candles. The default is hourly. Pattern durations are measured in candles,
+so changing the interval changes how long they last.
 
 ## Decisions and exits
 

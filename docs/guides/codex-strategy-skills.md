@@ -2,7 +2,7 @@
 title: Codex strategy workflow skills
 ---
 
-`npx create-tradejs` installs the complete checksum-managed TradeJS skill set in
+`create-tradejs` installs the complete checksum-managed TradeJS skill set in
 the generated project's `.codex/skills` directory. Each invocation has one
 workflow owner. This keeps one core experiment separate from end-to-end
 improvement research, gate analysis, reporting, and production mutations.
@@ -11,7 +11,7 @@ improvement research, gate analysis, reporting, and production mutations.
 
 - Use `$strategy-research` to run a complete study of fixed configurations,
   resume it, or test the frozen rule on a new period. It searches entry filters
-  without editing the strategy detector. See the beta requirements below.
+  without editing the strategy detector.
 - Use `$strategy-improvement-research` to choose hypothesis families, manage
   the bounded trial ledger, select the best candidate, and freeze the complete
   core + gate handoff.
@@ -93,11 +93,9 @@ published package.
 
 ## Automatic research of fixed configurations
 
-`$strategy-research <Strategy>` and `research:strategy` are available in the
-published `3.1.29-beta.285` framework cohort and generator bundle. The `3.1.28`
-`latest` release does not include them. Use Node.js 24 and one explicitly
-selected compatible CLI/runtime; update managed skills through the generator.
-Check the installed command with `yarn exec tradejs research:strategy --help`.
+Use `$strategy-research <Strategy>` in Codex or run `research:strategy` from
+your project with Node.js 24. See the command options with
+`yarn exec tradejs research:strategy --help`.
 
 The workflow freezes the period, USDT symbols, costs, risk and search budget
 before execution. It uses cached history, searches the first 60% of timestamp

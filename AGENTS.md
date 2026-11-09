@@ -49,6 +49,10 @@ container image without owning production server access.
 ## Editing Policy
 
 - Keep changes focused.
+- Document the newest verified TradeJS release, including a verified beta
+  when it is the newest release. Name it in Installation and verify that the
+  setup instructions install that release. Guides and reference pages describe
+  current behavior without retelling release history.
 - Preserve stable public URLs whenever possible.
 - Keep `static/llms.txt` and `static/llms-full.txt` aligned with current package
   and repository ownership.

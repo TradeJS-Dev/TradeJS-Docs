@@ -7,31 +7,10 @@ description: 'Create a local TradeJS project and run a reproducible TypeScript t
 Create a complete local TradeJS project and run the first backtest from the Web
 UI. You do not need to clone the TradeJS monorepo or seed Redis manually.
 
-## Requirements
-
-- Node.js 20.19 or newer
-- npm 10 or newer
-- Docker Desktop or Docker Engine
-- Docker Compose plugin (`docker compose`)
-
 ## 1. Create and Start TradeJS
 
-```bash
-npx create-tradejs
-```
-
-The command creates `tradejs-project` and then:
-
-1. installs the public TradeJS packages;
-2. creates `tradejs.config.ts` and local environment files;
-3. starts Redis and PostgreSQL/Timescale and waits for their healthchecks;
-4. starts the Web UI and opens the install page in your browser.
-
-To choose another project directory:
-
-```bash
-npx create-tradejs my-trading-project
-```
+Follow [Installation](./installation) to create the project, start its local
+services, and open the web app.
 
 ## 2. Finish the Local Installation
 

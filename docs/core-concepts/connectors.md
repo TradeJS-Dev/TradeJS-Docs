@@ -43,9 +43,8 @@ See [Plugins](./plugins) and [Add Exchange Connector](../operations/add-exchange
 
 ## Bybit entry size and leverage
 
-In the published `3.1.29-beta.285` connector cohort, entry quantity is capped
-at the instrument's market or limit order maximum, then rounded down to the
-quantity step. It is never increased to meet the minimum. Invalid limits or a
+Bybit limits the entry quantity to the maximum allowed for that order type
+and rounds it down to the nearest allowed step. It is never increased to meet the minimum. Invalid limits or a
 quantity below the minimum block entry. Protective exits continue to cover the
 full position.
 
@@ -55,5 +54,4 @@ existing positions and pending orders, and rounded to the leverage step.
 Unknown exchange state, an unconfirmed value or unsupported hedge mode blocks
 entry. Reducing leverage does not increase quantity or change margin mode.
 Inspect `orderLeverage` for requested/effective values and the reduction reason,
-and `orderFailureReason` for a blocked entry. These changes are not included in
-`latest` `3.1.28`.
+and `orderFailureReason` for a blocked entry.

@@ -4,7 +4,7 @@ title: VwapReversion
 
 `@tradejs/strategy-vwap-reversion` trades a confirmed return inside UTC-session
 VWAP bands on closed candles. It is a separate package outside `@tradejs/base`.
-Version `0.1.1` is published; historical research does not establish profitability.
+Historical tests do not predict future results.
 
 ## Entry and exit
 
@@ -26,7 +26,7 @@ limit, UTC-day boundary or an intraday data gap. It does not add to a position.
 ## Installation
 
 ```bash
-npm install @tradejs/strategy-vwap-reversion@0.1.1
+npm install --save-exact @tradejs/strategy-vwap-reversion
 ```
 
 Append `"@tradejs/strategy-vwap-reversion"` to your Project's `strategies`

@@ -3,7 +3,7 @@ title: Local Root User
 ---
 
 TradeJS CLI commands default to `--user root`. In a project created with
-`npx create-tradejs`, the installation page creates this local user and asks you
+`create-tradejs`, the installation page creates this local user and asks you
 to choose its password.
 
 Use the steps below only when setting up an existing project manually or

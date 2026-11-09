@@ -29,7 +29,7 @@ Setup and diagnostics:
 Research and backtesting:
 
 - `backtest` - run strategy backtests or refresh market cache.
-- `research:strategy` - automate fixed-config research, resume and frozen-period revalidation (beta requirements below).
+- `research:strategy` - automate fixed-config research, resume and frozen-period revalidation.
 - `results` - inspect, merge, update, or clear selected strategy results in Redis.
 - `runtime-parity` - compare recorded live entries with reconstructed entries.
 - `replay` - evaluate a deployed configuration over historical closed candles.
@@ -138,8 +138,7 @@ See [Create a backtest config](../getting-started/backtest-config).
 
 ## Automatic strategy research {#automatic-strategy-research}
 
-Use Node.js 24 and the published `3.1.29-beta.285` framework cohort; `latest`
-`3.1.28` does not include this command. Run the installed CLI from your Project
+Use Node.js 24. Run the installed CLI from your project
 with `PROJECT_CWD`, `TRADEJS_SOURCE_REPOSITORY_ROOT` and
 `TRADEJS_FRAMEWORK_REPOSITORY_ROOT` bound to the research checkouts described in
 [Codex strategy skills](../guides/codex-strategy-skills#research-roots).

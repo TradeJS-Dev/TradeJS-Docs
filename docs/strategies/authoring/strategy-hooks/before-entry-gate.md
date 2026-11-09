@@ -36,5 +36,5 @@ When the gate blocks (`allow === false`):
 - If `entry.signal` exists, runtime sets `signal.orderStatus = 'skipped'` and `signal.orderSkipReason = 'HOOK_BEFORE_ENTRY_GATE:${reason}'` or `HOOK_BEFORE_ENTRY_GATE`.
 - If there is no signal, runtime returns the string `HOOK_BEFORE_ENTRY_GATE:${reason}` or `HOOK_BEFORE_ENTRY_GATE`.
 
-In `3.1.29-beta.290`, if the hook throws, TradeJS logs the error and blocks
+If the hook throws, TradeJS logs the error and blocks
 the entry with `HOOK_BEFORE_ENTRY_GATE:ERROR`.

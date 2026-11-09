@@ -4,7 +4,7 @@ title: VwapReversion
 
 `@tradejs/strategy-vwap-reversion` торгует подтверждённый возврат внутрь полос
 дневного VWAP по закрытым свечам. Пакет не входит в `@tradejs/base`.
-Версия `0.1.1` опубликована; историческое исследование не доказывает доходность.
+Исторические тесты не предсказывают будущий результат.
 
 ## Вход и выход
 
@@ -28,7 +28,7 @@ title: VwapReversion
 ## Установка
 
 ```bash
-npm install @tradejs/strategy-vwap-reversion@0.1.1
+npm install --save-exact @tradejs/strategy-vwap-reversion
 ```
 
 Добавьте `"@tradejs/strategy-vwap-reversion"` в список `strategies` вашего

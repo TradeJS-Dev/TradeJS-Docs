@@ -4,45 +4,60 @@ title: Install TradeJS for TypeScript Algorithmic Trading
 description: 'Install TradeJS with create-tradejs or add its public npm packages to an existing TypeScript project, including the required Node.js and Docker setup.'
 ---
 
-Use `create-tradejs` for a new project. Install packages manually only when
-adding TradeJS to an existing TypeScript project. Neither path depends on the
-TradeJS monorepo workspace.
+This documentation covers TradeJS `3.1.29-beta.290`. Follow these steps
+to install the same release.
 
 ## Requirements
 
-- Node.js 20.19 or newer
-- npm `10+`
-- Docker Desktop or Docker Engine
-- Docker Compose plugin (`docker compose`)
+- Node.js 24
+- npm 10 or newer
+- Docker with the `docker compose` command
 
-## Recommended: Create a Complete Project
+## Create a project {#create-project}
 
-```bash
-npx create-tradejs
-```
-
-This installs the packages, starts local infrastructure, creates the initial
-user and backtest config, and opens the Web UI. Continue with
-[Run your first backtest](./first-backtest). The generated project also includes
-[focused Codex strategy skills](../guides/codex-strategy-skills) under
-`.codex/skills`.
-
-## Manual Installation
+Run these commands in your terminal. You can replace `tradejs-project` with
+another folder name.
 
 ```bash
-mkdir tradejs-project
+tradejs_version=3.1.29-beta.290
+npx "create-tradejs@$tradejs_version" tradejs-project --no-install
 cd tradejs-project
-npm init -y
-npm install @tradejs/app @tradejs/core @tradejs/node @tradejs/types @tradejs/base @tradejs/cli
 ```
 
-Keep engine packages such as `@tradejs/core`, `@tradejs/node`, `@tradejs/cli`,
-and `@tradejs/app` on a compatible major release. `@tradejs/base`,
-`@tradejs/strategy-kit`, and `@tradejs/strategy-*` are independently versioned;
-commit the generated lockfile instead of forcing them to the engine's exact
-patch version.
+## Install packages {#install-packages}
 
-## Add `tradejs.config.ts`
+If you already have a project, open its folder and set the same
+`tradejs_version` variable from the previous step.
+
+```bash
+for package in app cli connectors core indicators infra node types; do
+  npm pkg set "dependencies.@tradejs/$package=$tradejs_version" \
+    "overrides.@tradejs/$package=\$@tradejs/$package"
+done
+npm install --save-exact @tradejs/base
+```
+
+These commands install the same version of the main TradeJS packages.
+`@tradejs/base` and strategy packages have their own versions. Keep
+`package-lock.json` so later installs use the same versions.
+
+## Start the app {#start-app}
+
+In the project created by `create-tradejs`, run:
+
+```bash
+npm run infra-up
+npm run dev
+```
+
+Open the address printed in your terminal, usually `http://localhost:3000`.
+Set the password for the local `root` user on the install page. Then
+[run your first backtest](./first-backtest).
+
+## Add TradeJS to an existing project
+
+After installing the packages, add `tradejs.config.ts` if you do not already
+have one:
 
 ```ts
 import { defineConfig } from '@tradejs/core/config';
@@ -51,42 +66,17 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-This loads independently published public strategy packages, indicators,
-connectors, and base runtime hooks. It makes the strategy catalog available but
-does not start a strategy. To select strategies, accounts, and symbols for
-continuous evaluation, add a named `runtime.deployments` entry and follow
-[Run a Strategy in Production](./run-strategy-in-production).
-
-For ownership and private-package composition, see
-[Repository and package ownership](../advanced/repository-ownership).
-
-## Initialize Local Infrastructure
+Then start the services and app:
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-npx @tradejs/cli doctor
+npm exec -- tradejs infra-init
+npm exec -- tradejs infra-up
+npm exec -- tradejs-app dev
 ```
 
-`infra-init` creates `docker-compose.dev.yml` in your project root. `infra-up` starts local Redis and PostgreSQL/Timescale.
-
-## Create the Default User
-
-The app and many CLI flows use `root` by default:
-
-```bash
-npx @tradejs/cli user-add -u root -p 'StrongPassword123!'
-```
-
-See [Root User Setup](./root-user) for details.
-
-## Start the UI
-
-```bash
-npx tradejs-app dev
-```
-
-Open the URL printed by the command. The default is usually `http://localhost:3000`.
+`basePreset` registers the default strategies, indicators, and connectors.
+To use a strategy on live markets, first
+[configure its deployment](./run-strategy-in-production).
 
 ## Anonymous Onboarding Telemetry
 
