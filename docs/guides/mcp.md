@@ -145,6 +145,10 @@ fails. Only the last 150 entries are kept, with up to 1,000 characters per
 entry. Offsets may change while the job runs. The `retainedLines` field shows
 the number of retained entries.
 
+With the `3.1.29-beta.290` app and a compatible host runner, a replay that
+reuses a previous result reads the original request's log if it is still
+retained. A reused result does not mean a new replay ran.
+
 ### Report files
 
 `diagnostics_get_report` returns a report or summary. Use `artifact_get` to

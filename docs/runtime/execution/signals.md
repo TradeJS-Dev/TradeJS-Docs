@@ -151,6 +151,14 @@ entries.
 - `--notify` sends accepted-signal notifications and optional AI commentary.
 - `signals-summary` creates a recent operational summary.
 
+Starting with the published `3.1.29-beta.290` cohort, Bybit checks a fresh
+bid and ask and the final order quantity just before submitting an entry.
+A missing or stale quote, crossed protection levels, or a net reward-to-risk
+ratio below the configured minimum can block the entry. If the final estimated
+loss exceeds `MAX_LOSS_VALUE`, TradeJS records a warning with code
+`ENTRY_RISK_EXCEEDS_MAX_LOSS_AT_SUBMISSION`. That warning alone does not block
+the order, and the estimate is not a guarantee of the loss at fill.
+
 Run the daemon under a process supervisor, set a memory limit with
 `SIGNALS_DAEMON_HEAP_MB`, and alert on failed cycles and stale candles. See
 [Running multiple strategies](./multi-strategy-signals),
