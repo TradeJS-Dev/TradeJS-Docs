@@ -84,7 +84,9 @@ alone does not confirm the deployed version or successful verification.
 
 | Scope | What the assistant can access |
 | --- | --- |
-| `market:read` | Symbols, current prices, closed candles and indicators |
+| `market:read` | Symbols, current prices, closed candles, indicators and data coverage |
+| `market:backfill` | Queue missing data downloads and read coverage for the project owner |
+| `research:read` | Read saved research studies for the project owner |
 | `runtime:read` | Deployments, strategy settings, saved signals, evaluations, orders and skip counters |
 | `backtests:read` | Backtest configurations, results and job status |
 | `backtests:run` | Start and cancel backtests created by this client |
@@ -99,6 +101,25 @@ deploy releases or send notifications.
 Revoke access in **MCP**. Revoked tokens stop working on subsequent requests.
 Access tokens last 15 minutes, and connection grants last up to 30 days.
 The client receives a new refresh token on each refresh.
+
+## Data coverage {#data-coverage}
+
+The project owner can use `coverage_list_datasets` to find the dataset and
+series, then `coverage_inspect` to check up to seven UTC days. The result
+describes data on the connected TradeJS server.
+
+With `market:backfill`, `coverage_backfill_start` queues one dataset, series
+and UTC day when you explicitly ask for a download. This is the same
+[queue shown in the app](../getting-started/data-sync). Use
+`coverage_backfill_get` to check the job and inspect remaining gaps. Backfill
+permission is unchecked on the consent page.
+
+## Saved research {#saved-research}
+
+With `research:read`, the project owner can list saved studies with
+`research_list_studies` and open one with `research_get_study`. A study can
+include a decision, reported metrics and limitations. Use the exact section
+title and returned offset to continue reading a truncated section.
 
 ## Backtests and diagnostics
 

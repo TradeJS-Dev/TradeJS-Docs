@@ -58,6 +58,11 @@ Use `--updateOnly` to download history without running a test. To continue an
 interrupted run that saved its progress, pass its ID with `--runId`. See the
 [CLI reference](../../api/cli#backtest) for all options.
 
+Open **Backtest** in the app to find Web and CLI runs saved for your account.
+For the project owner, **Research** shows saved studies. A study can link to
+its backtest runs, and a linked backtest can open the study that explains
+its assumptions and results.
+
 ## Separate Execution Costs from Strategy Estimates
 
 A reproducible comparison should pass its simulation costs separately from the

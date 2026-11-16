@@ -4,7 +4,7 @@ title: Установка TradeJS в TypeScript-проект
 description: 'Установите TradeJS через create-tradejs или добавьте публичные npm-пакеты в существующий TypeScript-проект с необходимыми настройками Node.js и Docker.'
 ---
 
-Эта база знаний описывает TradeJS `3.1.29-beta.290`. Выполните команды
+Эта база знаний описывает TradeJS `3.1.29-beta.301`. Выполните команды
 ниже, чтобы установить ту же версию.
 
 ## Требования
@@ -19,7 +19,7 @@ description: 'Установите TradeJS через create-tradejs или до
 имя папки.
 
 ```bash
-tradejs_version=3.1.29-beta.290
+tradejs_version=3.1.29-beta.301
 npx "create-tradejs@$tradejs_version" tradejs-project --no-install
 cd tradejs-project
 ```
@@ -76,18 +76,6 @@ npm exec -- tradejs-app dev
 `basePreset` подключает стандартные стратегии, индикаторы и коннекторы.
 Если хотите запустить стратегию на рынке, сначала
 [настройте её запуск](./run-strategy-in-production).
-
-## Анонимная телеметрия первого запуска
-
-Веб-приложение отправляет в Яндекс Метрику только названия анонимных событий
-`scaffold_success` и `first_backtest`. Конфигурация стратегии, инструменты,
-учётные данные и результаты не передаются.
-
-Чтобы отключить события, добавьте в `.env` до запуска или сборки:
-
-```bash
-NEXT_PUBLIC_TRADEJS_TELEMETRY_DISABLED=1
-```
 
 ## Правила импортов
 

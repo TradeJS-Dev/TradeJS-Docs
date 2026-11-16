@@ -40,6 +40,18 @@ Two strategies with independent entry logic can still produce the same
 underlying market exposure. Apply portfolio rules after strategy decisions and
 before order placement.
 
+TradeJS can apply an optional `PORTFOLIO_POLICY` to a strategy, a group of
+strategies, or the managed positions in a deployment account. `maxPositions`
+counts pending entries as well as open positions. Optional profit exits use
+gross unrealized PnL before costs. An opposite position can be closed after
+a confirmed fill if `closeOppositeOnFill` is enabled.
+
+Keep the policy identical across every strategy in the group. Unknown position
+ownership blocks new entries, and the policy never closes positions it cannot
+attribute. Test the policy with [shared portfolio replay](../../runtime/backtesting/replay-evidence),
+because an isolated symbol backtest cannot model positions competing for the
+same slots.
+
 ## Loss and Frequency Limits
 
 Useful controls include:

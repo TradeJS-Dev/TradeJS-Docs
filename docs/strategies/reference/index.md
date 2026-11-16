@@ -70,6 +70,10 @@ These packages are outside the 23-package Base preset:
 - [TradingPatterns](./reference/trading-patterns) combines four pattern detectors.
 - [VwapReversion](./reference/vwap-reversion) trades confirmed UTC-session VWAP returns.
 - [RangeReclaim](./reference/range-reclaim) trades a return inside a closed higher-timeframe range.
+- [LondonBreakout](https://www.npmjs.com/package/@tradejs/strategy-london-breakout)
+  trades a closed hourly candle breaking a UTC session range.
+- [TrendPullback](https://www.npmjs.com/package/@tradejs/strategy-trend-pullback)
+  waits for an RSI pullback and a candle close confirming the hourly EMA trend.
 
 ## How to Evaluate a Strategy
 

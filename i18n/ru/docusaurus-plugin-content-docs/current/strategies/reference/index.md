@@ -69,6 +69,10 @@ TrendLine и ReverseTrendLine входят в общий пакет
 - [TradingPatterns](./reference/trading-patterns) объединяет четыре детектора фигур.
 - [VwapReversion](./reference/vwap-reversion) торгует подтверждённый возврат к VWAP дневной сессии UTC.
 - [RangeReclaim](./reference/range-reclaim) торгует возврат внутрь закрытого старшего диапазона.
+- [LondonBreakout](https://www.npmjs.com/package/@tradejs/strategy-london-breakout)
+  ищет пробой диапазона сессии по UTC на закрытии часовой свечи.
+- [TrendPullback](https://www.npmjs.com/package/@tradejs/strategy-trend-pullback)
+  ждёт откат RSI и подтверждение часового тренда EMA закрытием свечи.
 
 ## Как оценивать стратегию
 

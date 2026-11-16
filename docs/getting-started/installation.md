@@ -4,7 +4,7 @@ title: Install TradeJS for TypeScript Algorithmic Trading
 description: 'Install TradeJS with create-tradejs or add its public npm packages to an existing TypeScript project, including the required Node.js and Docker setup.'
 ---
 
-This documentation covers TradeJS `3.1.29-beta.290`. Follow these steps
+This documentation covers TradeJS `3.1.29-beta.301`. Follow these steps
 to install the same release.
 
 ## Requirements
@@ -19,7 +19,7 @@ Run these commands in your terminal. You can replace `tradejs-project` with
 another folder name.
 
 ```bash
-tradejs_version=3.1.29-beta.290
+tradejs_version=3.1.29-beta.301
 npx "create-tradejs@$tradejs_version" tradejs-project --no-install
 cd tradejs-project
 ```
@@ -77,18 +77,6 @@ npm exec -- tradejs-app dev
 `basePreset` registers the default strategies, indicators, and connectors.
 To use a strategy on live markets, first
 [configure its deployment](./run-strategy-in-production).
-
-## Anonymous Onboarding Telemetry
-
-The Web UI reports only the anonymous Yandex Metrica goal names
-`scaffold_success` and `first_backtest`. Strategy configuration, symbols,
-credentials, and backtest results are not included. To disable these events,
-add the following value to your project `.env` before starting or building the
-app:
-
-```bash
-NEXT_PUBLIC_TRADEJS_TELEMETRY_DISABLED=1
-```
 
 Useful routes:
 

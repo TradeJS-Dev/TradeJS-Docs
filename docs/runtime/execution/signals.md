@@ -153,11 +153,12 @@ entries.
 
 Before submitting a Bybit entry order, TradeJS checks the current bid, ask,
 and final order quantity.
-A missing or stale quote, crossed protection levels, or a net reward-to-risk
-ratio below the configured minimum can block the entry. If the final estimated
-loss exceeds `MAX_LOSS_VALUE`, TradeJS records a warning with code
-`ENTRY_RISK_EXCEEDS_MAX_LOSS_AT_SUBMISSION`. That warning alone does not block
-the order, and the estimate is not a guarantee of the loss at fill.
+A missing or stale quote or an already crossed stop or target can block
+submission. At this stage, a net reward-to-risk ratio at or below the
+configured minimum produces `ENTRY_RR_BELOW_MIN_AT_SUBMISSION`. An estimated
+loss above `MAX_LOSS_VALUE` produces
+`ENTRY_RISK_EXCEEDS_MAX_LOSS_AT_SUBMISSION`. Both are warnings. Actual loss
+depends on how the order fills and the position exits.
 
 Run the daemon under a process supervisor, set a memory limit with
 `SIGNALS_DAEMON_HEAP_MB`, and alert on failed cycles and stale candles. See

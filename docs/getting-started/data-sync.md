@@ -15,6 +15,17 @@ npx @tradejs/cli infra-up
 
 Use `npx @tradejs/cli infra-down` to stop local infra when done.
 
+## Check and fill gaps in the app
+
+Sign in as the project owner and open **Data coverage**. Select a year, then
+open a month and a UTC day to inspect coverage by series. Use **Refresh** to
+recheck the selected year.
+
+You can queue a gap for a single series and UTC day. Open **Backfill queue** to
+follow progress and check how many samples were added and which gaps remain.
+Use [MCP](../guides/mcp#data-coverage) if you want an assistant to check the same
+data. A gap on this server does not establish that the provider has no data.
+
 ## 1. `npx @tradejs/cli backtest --updateOnly`
 
 Use `backtest` in update-only mode:

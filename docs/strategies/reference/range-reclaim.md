@@ -58,11 +58,21 @@ the next candle's open, so a price gap can change the signal's risk ratio.
 | Entry policy | `RANGE_RECLAIM_ENTRY_POLICY` | Default `off`; optional research policies below require `15/240`. |
 
 The optional policies are `purple`, `orange`, `purple-short`, `intersection`
-and `union`. `purple` requires reclaim depth of at least 10% of range width.
+`union` and `intersection-low-low-short`. `purple` requires reclaim depth of at least 10% of range width.
 `orange` requires SHORT and width strictly above 6 ATR or 3475 basis points of
 confirmation price. `purple-short` adds the SHORT requirement to `purple`;
 `intersection` requires both rules and `union` either rule. They act before
 entry independently of AI. No separately trained AI gate ships with this package.
+
+`intersection-low-low-short` keeps entries allowed by `intersection` and
+can also admit a SHORT when its monthly ticker profile places both turnover
+and volatility in the low group. The profile must match the symbol and be
+valid at the signal timestamp. A missing or invalid profile does not grant
+this additional admission. The package declares Bybit profiles for
+`range-reclaim-frozen577-20261111` as required context. On a host that loads
+this context, make the matching monthly snapshots available before running
+the strategy. If the required lookup finds no profile, the runtime can stop
+evaluation before applying the entry policy.
 
 ## Data and restart behavior
 
