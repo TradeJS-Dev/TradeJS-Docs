@@ -7,20 +7,10 @@ orders placed without a signal.
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  policy: StrategyHookPolicyContext;
-  ml?: StrategyHookMlContext;
-  ai?: StrategyHookAiContext;
-  order: StrategyHookOrderContext;
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterPlaceOrder']>>[0];
 ```
 
 `order.result` depends on the entry path:

@@ -7,10 +7,10 @@ use it in tests and live calculations.
 
 Main scripts:
 
-- `npx @tradejs/cli derivatives:ingest`
-- `npx @tradejs/cli derivatives:ingest:coinalyze:all`
-- `npx @tradejs/cli hyperliquid:whale-ingest`
-- `npx @tradejs/cli hyperliquid:whale-backfill`
+- `npm exec -- tradejs derivatives:ingest`
+- `npm exec -- tradejs derivatives:ingest:coinalyze:all`
+- `npm exec -- tradejs hyperliquid:whale-ingest`
+- `npm exec -- tradejs hyperliquid:whale-backfill`
 
 Sources:
 
@@ -23,7 +23,7 @@ Sources:
 Command:
 
 ```bash
-npx @tradejs/cli derivatives:ingest --provider coinalyze --symbols BTCUSDT,ETHUSDT --intervals 15m,1h --days 120
+npm exec -- tradejs derivatives:ingest --provider coinalyze --symbols BTCUSDT,ETHUSDT --intervals 15m,1h --days 120
 ```
 
 Supported providers:
@@ -43,7 +43,7 @@ Useful flags:
 Command:
 
 ```bash
-npx @tradejs/cli derivatives:ingest:coinalyze:all --user root --days 120 --intervals 15m,1h
+npm exec -- tradejs derivatives:ingest:coinalyze:all --user root --days 120 --intervals 15m,1h
 ```
 
 Behavior:
@@ -65,7 +65,7 @@ Useful flags:
 Start the long-running public stream:
 
 ```bash
-npx @tradejs/cli hyperliquid:whale-ingest
+npm exec -- tradejs hyperliquid:whale-ingest
 ```
 
 It classifies tracked-wallet executions against position snapshots, builds
@@ -75,8 +75,8 @@ with `SIGINT`/`SIGTERM`; supervise it in production.
 Backfill an explicit historical window:
 
 ```bash
-npx @tradejs/cli hyperliquid:whale-backfill --days 1
-npx @tradejs/cli hyperliquid:whale-backfill --from 2026-08-01T00:00:00Z --to 2026-08-02T00:00:00Z
+npm exec -- tradejs hyperliquid:whale-backfill --days 1
+npm exec -- tradejs hyperliquid:whale-backfill --from 2026-08-01T00:00:00Z --to 2026-08-02T00:00:00Z
 ```
 
 `--cacheOnly` refuses network recovery when coverage is missing. Automatic
@@ -114,7 +114,7 @@ For Coinalyze provider:
 
 ## 6. Operational Notes
 
-- For local setup, run `npx @tradejs/cli infra-init` once, then `npx @tradejs/cli infra-up`.
+- For local setup, run `npm exec -- tradejs infra-init` once, then `npm exec -- tradejs infra-up`.
 - Ensure PostgreSQL/Timescale is running before ingest.
 - Begin with short lookback and small symbol set.
 - Keep `batchDays` moderate to reduce API/rate-limit pressure.

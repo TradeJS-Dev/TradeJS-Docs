@@ -17,7 +17,6 @@ src/strategies/AdaptiveMomentumRibbon/
   config.ts
   core.ts
   figures.ts
-  strategy.ts
   manifest.ts
   index.ts
   adapters/
@@ -138,7 +137,6 @@ plot(sell_sig ? 1 : 0, "entryShort")
 
 ```ts
 import {
-  BacktestPriceMode,
   Direction,
   Interval,
   StrategyConfig,
@@ -159,15 +157,13 @@ export interface AdaptiveMomentumRibbonSideConfig {
 }
 
 export const config = {
-  ENV: 'BACKTEST',
   INTERVAL: '15' as Interval,
-  MAKE_ORDERS: true,
   CLOSE_OPPOSITE_POSITIONS: false,
-  BACKTEST_PRICE_MODE: 'mid' as const,
   AI_ENABLED: false,
   ML_ENABLED: false,
   ML_THRESHOLD: 0.1,
   MIN_AI_QUALITY: 3,
+  MAX_LOSS_VALUE: 10,
   AMR_LOOKBACK_BARS: 400,
   AMR_MOMENTUM_PERIOD: 20,
   AMR_BUTTERWORTH_SMOOTHING: 3,
@@ -197,9 +193,8 @@ export const config = {
 export type AdaptiveMomentumRibbonConfig = StrategyConfig &
   Omit<
     typeof config,
-    'BACKTEST_PRICE_MODE' | 'LONG' | 'SHORT' | 'AMR_LINE_PLOTS'
+    'LONG' | 'SHORT' | 'AMR_LINE_PLOTS'
   > & {
-    BACKTEST_PRICE_MODE: BacktestPriceMode;
     AMR_LINE_PLOTS: readonly string[];
     LONG: AdaptiveMomentumRibbonSideConfig;
     SHORT: AdaptiveMomentumRibbonSideConfig;

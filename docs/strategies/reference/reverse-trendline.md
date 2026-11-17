@@ -2,6 +2,8 @@
 title: 'ReverseTrendLine'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 ReverseTrendLine draws support and resistance lines through recent highs and
 lows. It looks for a bounce when price reaches one of those lines.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![TrendLine and ReverseTrendLine strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
-
-![TrendLine and ReverseTrendLine signals on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="reverse-trendline" />
 
 ## Entry Logic
 

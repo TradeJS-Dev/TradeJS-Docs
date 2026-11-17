@@ -66,7 +66,7 @@ For project work, read the project instructions and check installed package vers
 
 ## MCP
 
-TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires an MCP-enabled release. No live order or deployment tools. Guide: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp). The project owner can inspect data coverage, request gap downloads with market:backfill, and read saved studies with research:read.
+TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires a running MCP-enabled server and a server account. The local stable release 3.1.28 does not include MCP. No live order or deployment tools. Connection steps and example prompts: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp). The project owner can inspect data coverage, request gap downloads with market:backfill, and read saved studies with research:read.
 
 Separately installed strategies outside Base: TradingPatterns (https://docs.tradejs.dev/strategies/reference/trading-patterns) VwapReversion (https://docs.tradejs.dev/strategies/reference/vwap-reversion), and RangeReclaim (https://docs.tradejs.dev/strategies/reference/range-reclaim). TradingPatterns supports 15-minute and hourly candles (hourly by default). LondonBreakout (https://docs.tradejs.dev/strategies/reference/london-breakout) and TrendPullback (https://docs.tradejs.dev/strategies/reference/trend-pullback) are also published separately.
 
@@ -79,7 +79,7 @@ Other standalone strategies:
 
 ## Automatic fixed-configuration research
 
-Use research:strategy or the strategy-research skill with Node.js 24. Cached USDT studies freeze filters and directions on DEV before TEST, support resume and frozen-period revalidation, and produce verified HTML/JSON records. Configured Jev uses saved assessments or local models for a frozen with/without comparison. No live orders, publication or deployment. See https://docs.tradejs.dev/guides/codex-strategy-skills and https://docs.tradejs.dev/api/cli#automatic-strategy-research.
+Stable TradeJS includes research:core. Record the input data, costs, time boundaries and settings. Choose candidate rules on earlier data and evaluate on a later period. See https://docs.tradejs.dev/guides/develop-with-an-agent and https://docs.tradejs.dev/api/cli#automatic-strategy-research.
 
 ## Entry submission and replay diagnostics
 

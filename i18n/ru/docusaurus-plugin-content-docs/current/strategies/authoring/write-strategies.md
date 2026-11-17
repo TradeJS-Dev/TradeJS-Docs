@@ -54,38 +54,7 @@ TradeJS поддерживает два пути создания стратег
 
 ## Пример минимального `core.ts`
 
-```ts
-export const createMyStrategyCore: CreateStrategyCore<
-  MyStrategyConfig
-> = async ({ strategyApi }) => {
-  return async () => {
-    const position = await strategyApi.getCurrentPosition();
-    if (position && position.qty > 0) {
-      return strategyApi.skip('POSITION_EXISTS');
-    }
-
-    const { currentPrice } = await strategyApi.getDecisionPriceContext();
-
-    const { stopLossPrice, takeProfitPrice } =
-      strategyApi.getDirectionalTpSlPrices({
-        price: currentPrice,
-        direction: 'LONG',
-        takeProfitDelta: 2,
-        stopLossDelta: 1,
-        unit: 'percent',
-      });
-
-    return strategyApi.entry({
-      direction: 'LONG',
-      orderPlan: {
-        qty: 1,
-        stopLossPrice,
-        takeProfits: [{ rate: 1, price: takeProfitPrice }],
-      },
-    });
-  };
-};
-```
+`core.ts` может пропустить свечу через `strategyApi.skip(code)`. Полный пример расчёта сигнала и ордера есть в [пошаговом руководстве](./typescript-strategy-step-by-step).
 
 ## Правила доступа к данным через StrategyAPI
 

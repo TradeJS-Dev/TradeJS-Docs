@@ -13,14 +13,9 @@ TradeJS вызывает этот обработчик сразу после т�
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  }
-  decision: SkipDecision | EntryDecision | ExitDecision;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterCoreDecision']>>[0];
 ```
 
 ## Output

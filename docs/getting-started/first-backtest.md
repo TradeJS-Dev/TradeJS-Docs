@@ -28,8 +28,7 @@ If TradeJS is already open, go straight to the next step.
 ## 2. Finish the Local Installation
 
 On the setup page, create a password for the local `root` account. TradeJS signs
-you in and opens the dashboard. Select **Create backtest**. In the preview
-release, look for **Run backtest**.
+you in and opens the dashboard. Select **Create backtest**.
 
 ## 3. Start the Backtest
 

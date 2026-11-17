@@ -2,10 +2,16 @@
 title: RangeReclaim
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 RangeReclaim ждёт, когда цена выйдет из диапазона закрытой свечи старшего
 интервала, а затем закроется внутри него.
 
 Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
+
+## Визуальная схема
+
+<StrategySignalChart strategy="range-reclaim" />
 
 ## Установка
 

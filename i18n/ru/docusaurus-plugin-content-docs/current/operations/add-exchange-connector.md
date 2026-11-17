@@ -14,77 +14,9 @@ title: Как добавить коннектор новой биржи
 
 ## 1. Реализуйте фабрику коннектора
 
-Реализуйте коннектор в своём модуле или пакете, например
-`@your-scope/tradejs-connectors`, и верните полный типизированный контракт `Connector`.
+Создайте `myExchangeConnector.ts` и экспортируйте из него `MyExchangeConnectorCreator` с типом `ConnectorCreator` из `@tradejs/types`.
 
-Минимальный типизированный шаблон:
-
-```ts
-import type {
-  Connector,
-  ConnectorCreator,
-  KlineRequest,
-  KlineChartData,
-  Ticker,
-  Position,
-  Order,
-  Tp,
-  Sl,
-} from '@tradejs/types';
-
-const kline = async (options: KlineRequest): Promise<KlineChartData> => {
-  return [];
-};
-
-const getTickers = async (): Promise<Ticker[]> => {
-  return [];
-};
-
-const getPosition = async (symbol: string): Promise<Position | null> => {
-  return null;
-};
-
-const getPositions = async (): Promise<Position[]> => {
-  return [];
-};
-
-const placeOrder = async (
-  order: Order,
-  tp?: Tp[],
-  slPrice?: Sl,
-): Promise<boolean> => {
-  return true;
-};
-
-const closePosition = async (order: Omit<Order, 'qty'>): Promise<boolean> => {
-  return true;
-};
-
-export const MyExchangeConnectorCreator: ConnectorCreator = async ({
-  userName,
-}) => {
-  const connector: Connector = {
-    kline,
-    getTickers,
-    getPosition,
-    getPositions,
-    placeOrder,
-    closePosition,
-    getState: async () => ({}),
-    setState: async (_state: object) => {},
-  };
-
-  return connector;
-};
-```
-
-Обязательные методы `Connector`:
-
-- `kline`
-- `getTickers`
-- `getPosition`, `getPositions`
-- `placeOrder`, `closePosition`
-- `getState`, `setState`
+Возвращаемый `Connector` описывает рынок и возможности подключения, выдаёт инструменты и свечи, хранит состояние и предоставляет методы для позиций и ордеров. Если биржа отклонила операцию, метод должен сообщить об этом. Для чтения истории начните с проверки списка инструментов и свечей.
 
 ## 2. Экспортируйте connector plugin entries
 
@@ -118,13 +50,7 @@ export default defineConfig(basePreset, {
 });
 ```
 
-## 3. Обновления типов
-
-Если провайдер должен быть user-facing в фильтрах/конфигах, обновите union в:
-
-- `@tradejs/types` (`Provider`)
-
-## 4. Точки интеграции в CLI
+## 3. Точки интеграции в CLI
 
 Уже работают через map провайдеров и plugin-реестр:
 
@@ -138,14 +64,13 @@ export default defineConfig(basePreset, {
 
 Поэтому добавить connector для обычной market-history интеграции просто, но часть потоков по дизайну пока привязана к Binance/Coinbase/ByBit.
 
-## 5. Рекомендуемый checklist проверки
+## 4. Рекомендуемый checklist проверки
 
 1. Прогоните TypeScript-проверки в вашем проекте connector.
 2. Прогоните unit-тесты в вашем проекте connector.
-3. `npx @tradejs/cli backtest --updateOnly --connector <provider> --config <Strategy:Config> --timeframe 15`
-4. `npx @tradejs/cli continuity --provider <provider> --timeframe 15 --tickers BTCUSDT`
-5. `npx @tradejs/cli backtest --connector <provider> --config <Strategy:Config> --tests 20`
+3. `npm exec -- tradejs backtest --updateOnly --connector '<provider>' --config '<Strategy:Config>' --timeframe 15`
+4. `npm exec -- tradejs backtest --connector '<provider>' --config '<Strategy:Config>' --tests 20`
 
-## 6. Опциональный следующий шаг
+## 5. Опциональный следующий шаг
 
 Если хотите еще меньше точек входа при добавлении connector, вынесите BTC reference providers и coverage universe в настраиваемые provider settings вместо фиксированных Binance/Coinbase/ByBit.

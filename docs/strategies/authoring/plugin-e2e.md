@@ -12,7 +12,7 @@ same TradeJS interfaces that users call.
 
 ## 2. Implement Strategy or Indicator
 
-- Strategy plugin should provide `manifest` + `creator`.
+- A strategy entry provides `manifest`, `defaults`, `parseConfig`, and `createCore`. See the [TypeScript example](./typescript-strategy-step-by-step).
 - Indicator plugin may also provide chart renderer metadata.
 
 ## 3. Connect in Project Config

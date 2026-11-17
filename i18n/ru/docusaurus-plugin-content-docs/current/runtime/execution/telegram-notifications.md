@@ -82,8 +82,8 @@ npm exec -- tradejs signals-summary \
 набора с результатом воспроизведения:
 
 ```bash
-npx @tradejs/cli runtime-feedback-notify \
-  --bundle <verified-replay-bundle>
+npm exec -- tradejs runtime-feedback-notify \
+  --bundle '<verified-replay-bundle>'
 ```
 
 Параметр `--dryRun` проверяет набор и печатает сообщение без отправки. До

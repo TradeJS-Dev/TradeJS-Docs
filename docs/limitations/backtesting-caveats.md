@@ -5,8 +5,6 @@ title: Backtesting caveats
 A backtest shows how a strategy performed on a particular dataset and execution
 model. Check the assumptions before using the result to make a decision.
 
-Use them to research, test, compare, and analyze strategy behavior under explicit assumptions.
-
 ## Fees
 
 Every trade can pay exchange fees. A strategy with many small trades may look acceptable before fees and weak after fees.

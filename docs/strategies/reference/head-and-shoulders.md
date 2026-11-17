@@ -2,7 +2,7 @@
 title: 'HeadAndShoulders'
 ---
 
-import HeadAndShouldersChart from "@site/src/components/HeadAndShouldersChart";
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
 
 HeadAndShoulders looks for a head and shoulders pattern or its inverse. A break
 of the neckline can trigger an entry, and the pattern sets the stop and target.
@@ -18,9 +18,7 @@ the strategy checks for a break below the neckline. The default
 `close_acceptance` mode waits for a confirming close. The short stop goes
 above the head with a buffer, and the target uses the pattern height.
 
-<HeadAndShouldersChart />
-
-The chart uses illustrative prices.
+<StrategySignalChart strategy="head-and-shoulders" />
 
 ## Backtest {#backtest}
 

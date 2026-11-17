@@ -8,19 +8,9 @@ TradeJS вызывает этот обработчик после успешно
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  policy: StrategyHookPolicyContext;
-  ml?: StrategyHookMlContext;
-  ai?: StrategyHookAiContext;
-  order: StrategyHookOrderContext;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterPlaceOrder']>>[0];
 ```
 
 `order.result` зависит от entry path:

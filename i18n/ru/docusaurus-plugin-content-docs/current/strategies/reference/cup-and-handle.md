@@ -2,6 +2,8 @@
 title: 'CupAndHandle'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 CupAndHandle ищет обычную и перевёрнутую «чашку с ручкой» по максимумам и
 минимумам закрытых свечей. По форме фигуры стратегия рассчитывает вход, стоп и
 цель.
@@ -11,11 +13,8 @@ CupAndHandle ищет обычную и перевёрнутую «чашку с
 
 ## Визуальная схема
 
-![Логика CupAndHandle](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-CupAndHandle/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="cup-and-handle" />
 
-![Пример сигнала CupAndHandle](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-CupAndHandle/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

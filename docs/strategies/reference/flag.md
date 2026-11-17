@@ -2,6 +2,8 @@
 title: 'Flag'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Flag looks for a strong move, a short pullback inside a narrow channel, and a
 break in the original direction.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![Flag strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Flag/main/docs/strategy-logic.svg)
-
-![Bull and bear flag examples](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Flag/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="flag" />
 
 ## Entry logic
 
@@ -74,5 +72,6 @@ First [save backtest settings](../../getting-started/backtest-config) with the
 name in `--config`. Then run this command from the project folder.
 
 ```bash
-npm run backtest -- --user root --config Flag:base --connector bybit --timeframe 15
+npm run backtest -- --config Flag:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

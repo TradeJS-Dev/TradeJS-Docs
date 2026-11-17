@@ -8,18 +8,21 @@ strategy.
 
 ## Evaluate an AI Gate
 
+First [save a backtest configuration](../getting-started/backtest-config) as `TrendLine:base`.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ai
-npx @tradejs/cli ai-export
-npx @tradejs/cli ai-train -n 50 --minQuality 4
+npm exec -- tradejs backtest --config TrendLine:base --ai \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ai-export --strategy TrendLine
+npm exec -- tradejs ai-train --strategy TrendLine -n 50 --minQuality 4
 ```
 
 You can also evaluate a deterministic local gate without provider calls and
 search feature subsets:
 
 ```bash
-npx @tradejs/cli ai-train --localOnly
-npx @tradejs/cli ai-pocket-search --strategy TrendLine
+npm exec -- tradejs ai-train --strategy TrendLine --localOnly
+npm exec -- tradejs ai-pocket-search --strategy TrendLine
 ```
 
 Pocket search reserves the last 40% of timestamp groups by default and seals
@@ -37,11 +40,14 @@ costs, drawdown, period stability, and overfitting risk.
 
 ## Prepare an ML Model
 
+Use the same saved `TrendLine:base` configuration. Training needs a `docker-compose.ml.yml` file with an `ml` service. The standard installer sets up the regular backtest environment.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ml
-npx @tradejs/cli ml-export
-npx @tradejs/cli ml-inspect
-npx @tradejs/cli ml-train:latest
+npm exec -- tradejs backtest --config TrendLine:base --ml \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ml-export --strategy TrendLine
+npm exec -- tradejs ml-inspect --strategy TrendLine
+npm exec -- tradejs ml-train:latest --strategy TrendLine
 ```
 
 Split training and validation chronologically, exclude future information,

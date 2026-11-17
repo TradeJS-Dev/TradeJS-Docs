@@ -83,28 +83,7 @@ Define `renderer` inside `indicatorEntries`; the UI pipeline then wires it autom
 2. Frontend stores renderer metadata in indicator state.
 3. Chart layer creates pane/figures from renderer description.
 
-Minimal working setup:
-
-```ts
-{
-  historyKey: 'sandboxMomentum',
-  compute: ({ data }) => {
-    const last = data[data.length - 1];
-    const prev = data[data.length - 2];
-    if (!last || !prev || prev.close === 0) return null;
-    return ((last.close - prev.close) / prev.close) * 100;
-  },
-  renderer: {
-    shortName: 'SBX MOM',
-    paneId: 'sandbox_momentum_pane',
-    minHeight: 120,
-    figures: [
-      { key: 'sandboxMomentum', type: 'line', color: '#f59e0b' },
-      { key: 'sandboxMomentumZero', type: 'line', constant: 0, dashed: true },
-    ],
-  },
-}
-```
+In the first example, `renderer` draws the indicator and a dashed zero line.
 
 - `renderer.figures[].key` must match keys present in candles (usually your `historyKey`).
 - Use `constant` for horizontal levels so no extra compute output is needed.

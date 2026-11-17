@@ -2,10 +2,16 @@
 title: TradingPatterns
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TradingPatterns combines four pattern detectors in one strategy. It checks for
 Diamond, Flag, Gartley, and HeadAndShoulders on each candle.
 
 Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
+
+## Visual overview
+
+<StrategySignalChart strategy="trading-patterns" />
 
 ## Installation and interval
 

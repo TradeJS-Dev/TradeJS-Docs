@@ -7,46 +7,13 @@ title: Примеры
 
 ## 1. Simple Moving Average
 
-Идея: сравнить fast/slow MA и входить на crossover.
-
-```ts
-const crossedUp = fastPrev <= slowPrev && fastCurrent > slowCurrent;
-const crossedDown = fastPrev >= slowPrev && fastCurrent < slowCurrent;
-
-if (crossedUp) {
-  return strategyApi.entry({
-    direction: 'LONG',
-    orderPlan: { qty, stopLossPrice, takeProfits: [{ rate: 1, price: takeProfitPrice }] },
-  });
-}
-
-if (crossedDown) {
-  return strategyApi.entry({
-    direction: 'SHORT',
-    orderPlan: { qty, stopLossPrice, takeProfits: [{ rate: 1, price: takeProfitPrice }] },
-  });
-}
-
-return strategyApi.skip('NO_MA_CROSS');
-```
+Стратегия сравнивает быструю и медленную скользящие средние и ищет вход при их пересечении.
 
 См. [MaStrategy](./strategies/reference/ma-strategy).
 
 ## 2. Breakout
 
-`Breakout` использует weighted signal model:
-
-```ts
-export default {
-  INTERVAL: '15',
-  SIGNALS_LONG: {
-    SMA_UPTREND: { weight: 1, required: true },
-    OBV_ABOVE_SMA: { weight: 1 },
-    CLOSE_ABOVE_HIGH_LEVEL: { weight: 2, required: true },
-  },
-  REQUIRED_SCORE_LONG: 3,
-};
-```
+`Breakout` начисляет баллы за выполненные условия. Для входа нужны обязательные сигналы и достаточная сумма баллов.
 
 См. [Breakout](./strategies/reference/breakout).
 

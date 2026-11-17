@@ -2,6 +2,8 @@
 title: 'HyperliquidConsensus'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 HyperliquidConsensus ищет совпадение направлений в изменениях позиций выбранных
 счетов Hyperliquid. Если данных не хватает или они устарели, входа не будет.
 
@@ -10,11 +12,8 @@ HyperliquidConsensus ищет совпадение направлений в и�
 
 ## Визуальная схема
 
-![Логика HyperliquidConsensus](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="hyperliquid-consensus" />
 
-![Пример сигнала HyperliquidConsensus](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

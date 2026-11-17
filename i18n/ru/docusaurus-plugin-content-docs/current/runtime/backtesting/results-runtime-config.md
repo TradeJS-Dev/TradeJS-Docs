@@ -11,8 +11,8 @@ title: Проверенная конфигурация в реальной то�
 для одной стратегии:
 
 ```bash
-npx @tradejs/cli results \
-  --strategy <StrategyName> \
+npm exec -- tradejs results \
+  --strategy '<StrategyName>' \
   --coverage \
   --user root
 ```
@@ -62,9 +62,9 @@ Bybit.
    и `deploymentCompositionId`; числовое поле version вести не нужно.
 
 ```bash
-npx @tradejs/cli runtime-control verify \
+npm exec -- tradejs runtime-control verify \
   --user root \
-  --deployment <deployment>
+  --deployment '<deployment>'
 ```
 
 Страница стратегий показывает эту конфигурацию, но не переписывает её. Команды
@@ -76,15 +76,15 @@ npx @tradejs/cli runtime-control verify \
 расчёт на текущем рынке без `--makeOrders`:
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
-  --deployment <deployment> \
+  --deployment '<deployment>' \
   --days 7 \
   --cacheOnly
 
 npm exec -- tradejs signals \
   --user root \
-  --deployment <deployment> \
+  --deployment '<deployment>' \
   --cacheOnly
 ```
 

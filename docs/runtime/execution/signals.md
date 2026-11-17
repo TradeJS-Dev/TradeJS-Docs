@@ -19,6 +19,9 @@ Live settings are declared in the project's `tradejs.config.ts`. A
 configurations:
 
 ```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
 export default defineConfig(basePreset, {
   runtime: {
     deployments: {
@@ -125,13 +128,13 @@ and falls back to REST for startup, gaps, and reconnection. Set
 ## Pause, Resume, and Verify
 
 ```bash
-npx @tradejs/cli runtime-control verify \
+npm exec -- tradejs runtime-control verify \
   --user root --deployment production
 
-npx @tradejs/cli runtime-control pause \
+npm exec -- tradejs runtime-control pause \
   --user root --deployment production --strategy DoubleTap
 
-npx @tradejs/cli runtime-control resume \
+npm exec -- tradejs runtime-control resume \
   --user root --deployment production --strategy DoubleTap
 ```
 

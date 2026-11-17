@@ -2,6 +2,8 @@
 title: 'TrendLine'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendLine draws a line through recent highs or lows and looks for a price break
 through it. It checks the risk before entering.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![TrendLine and ReverseTrendLine strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
-
-![TrendLine and ReverseTrendLine signals on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="trendline" />
 
 ## Entry Logic
 
@@ -108,5 +106,6 @@ First [save backtest settings](../../getting-started/backtest-config) with the
 name in `--config`. Then run this command from the project folder.
 
 ```bash
-npm run backtest -- --user root --config TrendLine:base --connector bybit --timeframe 15
+npm run backtest -- --config TrendLine:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

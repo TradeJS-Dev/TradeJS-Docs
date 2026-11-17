@@ -2,6 +2,8 @@
 title: 'Breakout'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Breakout проверяет несколько условий пробоя и начисляет за них баллы. Для входа
 нужны все обязательные условия и достаточная сумма баллов.
 
@@ -10,11 +12,8 @@ Breakout проверяет несколько условий пробоя и н
 
 ## Визуальная схема
 
-![Логика Breakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="breakout" />
 
-![Пример сигнала Breakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
@@ -156,8 +155,8 @@ Long и short используют отдельные карты сигнало�
 Вторая запускает проверку на 15-минутных свечах Binance BTCUSDT за 30 дней.
 
 ```bash
-docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
-  'users:root:backtests:configs:Breakout:example' '{"INTERVAL":["15"]}' NX
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli JSON.SET \
+  'users:root:backtests:configs:Breakout:example' '$' '{"INTERVAL":["15"]}' NX
 
 npm run backtest -- --user root --connector binance --tickers BTCUSDT \
   --config Breakout:example --timeframe 15 --days 30 --tests 1 --parallel 1

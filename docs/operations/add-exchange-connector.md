@@ -13,76 +13,9 @@ Important:
 
 ## 1. Implement Connector Creator
 
-Implement connector in your own module/package (for example `@your-scope/tradejs-connectors`) and return full typed `Connector` contract.
+Create `myExchangeConnector.ts` and export `MyExchangeConnectorCreator` typed as `ConnectorCreator` from `@tradejs/types`.
 
-Minimal typed skeleton:
-
-```ts
-import type {
-  Connector,
-  ConnectorCreator,
-  KlineRequest,
-  KlineChartData,
-  Ticker,
-  Position,
-  Order,
-  Tp,
-  Sl,
-} from '@tradejs/types';
-
-const kline = async (options: KlineRequest): Promise<KlineChartData> => {
-  return [];
-};
-
-const getTickers = async (): Promise<Ticker[]> => {
-  return [];
-};
-
-const getPosition = async (symbol: string): Promise<Position | null> => {
-  return null;
-};
-
-const getPositions = async (): Promise<Position[]> => {
-  return [];
-};
-
-const placeOrder = async (
-  order: Order,
-  tp?: Tp[],
-  slPrice?: Sl,
-): Promise<boolean> => {
-  return true;
-};
-
-const closePosition = async (order: Omit<Order, 'qty'>): Promise<boolean> => {
-  return true;
-};
-
-export const MyExchangeConnectorCreator: ConnectorCreator = async ({
-  userName,
-}) => {
-  const connector: Connector = {
-    kline,
-    getTickers,
-    getPosition,
-    getPositions,
-    placeOrder,
-    closePosition,
-    getState: async () => ({}),
-    setState: async (_state: object) => {},
-  };
-
-  return connector;
-};
-```
-
-Required methods in `Connector`:
-
-- `kline`
-- `getTickers`
-- `getPosition`, `getPositions`
-- `placeOrder`, `closePosition`
-- `getState`, `setState`
+The returned `Connector` describes the market and supported capabilities, lists instruments and candles, stores state, and provides position and order methods. Report rejected exchange operations as failures. For a history integration, start by checking the instrument list and candles.
 
 ## 2. Export Connector Plugin Entries
 
@@ -116,13 +49,7 @@ export default defineConfig(basePreset, {
 });
 ```
 
-## 3. Type Updates
-
-If provider is user-facing in filters/configs, update provider union in:
-
-- `@tradejs/types` (`Provider`)
-
-## 4. CLI Integration Points
+## 3. CLI Integration Points
 
 Already map-based and plugin-aware:
 
@@ -136,14 +63,13 @@ Still strategy-specific/fixed in current architecture:
 
 So adding a connector for generic market history is easy, but some flows intentionally keep Binance/Coinbase/ByBit roles.
 
-## 5. Recommended Validation Checklist
+## 4. Recommended Validation Checklist
 
 1. Run TypeScript checks in your connector project.
 2. Run unit tests in your connector project.
-3. `npx @tradejs/cli backtest --updateOnly --connector <provider> --config <Strategy:Config> --timeframe 15`
-4. `npx @tradejs/cli continuity --provider <provider> --timeframe 15 --tickers BTCUSDT`
-5. `npx @tradejs/cli backtest --connector <provider> --config <Strategy:Config> --tests 20`
+3. `npm exec -- tradejs backtest --updateOnly --connector '<provider>' --config '<Strategy:Config>' --timeframe 15`
+4. `npm exec -- tradejs backtest --connector '<provider>' --config '<Strategy:Config>' --tests 20`
 
-## 6. Optional Next Step
+## 5. Optional Next Step
 
 If you want even fewer entry points for new connectors, you can extract BTC reference providers and coverage universe into configurable provider settings instead of fixed Binance/Coinbase/ByBit choices.

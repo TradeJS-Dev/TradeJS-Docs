@@ -7,14 +7,10 @@ processing the first candle.
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    data: KlineChartItem[];
-    btcData: KlineChartItem[];
-  };
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['onInit']>>[0];
 ```
 
 ## Output

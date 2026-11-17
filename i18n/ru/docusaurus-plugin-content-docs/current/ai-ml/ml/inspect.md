@@ -2,7 +2,7 @@
 title: Проверка ML-датасета
 ---
 
-Выполните `npx @tradejs/cli ml-inspect`, чтобы проверить набор данных перед
+Выполните `npm exec -- tradejs ml-inspect`, чтобы проверить набор данных перед
 обучением модели.
 
 Источник:
@@ -12,9 +12,9 @@ title: Проверка ML-датасета
 ## Быстрый старт
 
 ```bash
-npx @tradejs/cli ml-inspect
-npx @tradejs/cli ml-inspect --strategy TrendLine --rows 20000 --mode sample
-npx @tradejs/cli ml-inspect --file data/ml/export/ml-dataset-trendline-merged-123.jsonl --mode tail
+npm exec -- tradejs ml-inspect
+npm exec -- tradejs ml-inspect --strategy TrendLine --rows 20000 --mode sample
+npm exec -- tradejs ml-inspect --file '<path-to-export.jsonl>' --mode tail
 ```
 
 ## Режимы
@@ -31,8 +31,8 @@ npx @tradejs/cli ml-inspect --file data/ml/export/ml-dataset-trendline-merged-12
 Примеры:
 
 ```bash
-npx @tradejs/cli ml-inspect --tool quick --rows 15000
-npx @tradejs/cli ml-inspect --tool ydata --rows 20000 --mode sample
+npm exec -- tradejs ml-inspect --tool quick --rows 15000
+npm exec -- tradejs ml-inspect --tool ydata --rows 20000 --mode sample
 ```
 
 ## Что проверяет quick-режим

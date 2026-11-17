@@ -17,14 +17,14 @@ title: От бэктеста к реальной торговле
 Начните с нескольких инструментов и ограниченного набора параметров:
 
 ```bash
-npx @tradejs/cli backtest \
-  --user <user> \
-  --config <StrategyName:configName> \
-  --connector <connector> \
-  --timeframe <minutes> \
-  --tickers <SYMBOL1,SYMBOL2> \
-  --tests <small-limit> \
-  --parallel <workers> \
+npm exec -- tradejs backtest \
+  --user '<user>' \
+  --config '<StrategyName:configName>' \
+  --connector '<connector>' \
+  --timeframe '<minutes>' \
+  --tickers '<SYMBOL1,SYMBOL2>' \
+  --tests '<small-limit>' \
+  --parallel '<workers>' \
   --cacheOnly
 ```
 
@@ -40,10 +40,10 @@ npx @tradejs/cli backtest \
 Просмотрите результаты и покрытие инструментов:
 
 ```bash
-npx @tradejs/cli results \
-  --strategy <StrategyName> \
+npm exec -- tradejs results \
+  --strategy '<StrategyName>' \
   --coverage \
-  --user <user>
+  --user '<user>'
 ```
 
 ## 4. Проверьте выбранную конфигурацию
@@ -65,9 +65,9 @@ npx @tradejs/cli results \
 runtime identifier.
 
 ```bash
-npx @tradejs/cli runtime-control verify \
-  --user <user> \
-  --deployment <deployment>
+npm exec -- tradejs runtime-control verify \
+  --user '<user>' \
+  --deployment '<deployment>'
 ```
 
 Сохраните полученные `strategyRevision` и `deploymentCompositionId` вместе с
@@ -76,10 +76,10 @@ evidence кандидата.
 ## 6. Воспроизведите точное развёртывание
 
 ```bash
-npx @tradejs/cli replay \
-  --user <user> \
-  --deployment <deployment> \
-  --days <days> \
+npm exec -- tradejs replay \
+  --user '<user>' \
+  --deployment '<deployment>' \
+  --days '<days>' \
   --cacheOnly
 ```
 
@@ -92,8 +92,8 @@ npx @tradejs/cli replay \
 
 ```bash
 npm exec -- tradejs signals \
-  --user <user> \
-  --deployment <deployment> \
+  --user '<user>' \
+  --deployment '<deployment>' \
   --cacheOnly
 ```
 

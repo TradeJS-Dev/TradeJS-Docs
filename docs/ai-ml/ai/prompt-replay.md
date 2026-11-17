@@ -39,10 +39,13 @@ During replay, TradeJS rebuilds the strategy prompt pair from the saved signal a
 
 ## Reproducible CLI Flow
 
+First [save a backtest configuration](../../getting-started/backtest-config) as `TrendLine:base`.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ai
-npx @tradejs/cli ai-export
-npx @tradejs/cli ai-train -n 50 --minQuality 4
+npm exec -- tradejs backtest --config TrendLine:base --ai \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ai-export --strategy TrendLine
+npm exec -- tradejs ai-train --strategy TrendLine -n 50 --minQuality 4
 ```
 
 Artifacts:

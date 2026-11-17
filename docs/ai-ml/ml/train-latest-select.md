@@ -2,7 +2,7 @@
 title: ML Train Latest Select
 ---
 
-Run `npx @tradejs/cli ml-train:latest` to train from recent exports. The command
+Run `npm exec -- tradejs ml-train:latest` to train from recent exports. The command
 prepares separate sets for training and evaluation.
 
 Runtime surface:
@@ -29,8 +29,8 @@ Runtime surface:
 ## Commands
 
 ```bash
-npx @tradejs/cli ml-train:latest
-npx @tradejs/cli ml-train:latest --strategy TrendLine --model xgboost
+npm exec -- tradejs ml-train:latest
+npm exec -- tradejs ml-train:latest --strategy TrendLine --model xgboost
 ```
 
 Non-interactive options:
@@ -56,7 +56,6 @@ Ensemble/profile:
 
 Causality:
 
-- `ML_TRAIN_DISABLE_CAUSALITY_GUARD=1` (debug only)
 
 Incremental mode:
 

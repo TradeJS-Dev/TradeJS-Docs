@@ -2,10 +2,16 @@
 title: VwapReversion
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 VwapReversion ждёт закрытия свечи, которая подтверждает возврат внутрь дневных
 полос VWAP. VWAP — средняя цена дня по UTC с учётом объёма.
 
 Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
+
+## Визуальная схема
+
+<StrategySignalChart strategy="vwap-reversion" />
 
 ## Вход и выход
 

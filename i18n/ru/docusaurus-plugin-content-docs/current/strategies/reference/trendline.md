@@ -2,6 +2,8 @@
 title: 'TrendLine'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendLine строит линию через недавние максимумы или минимумы и ждёт её пробоя.
 Перед входом стратегия проверяет риск.
 
@@ -10,11 +12,8 @@ TrendLine строит линию через недавние максимумы
 
 ## Визуальная схема
 
-![Логика TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="trendline" />
 
-![Пример сигналов TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
@@ -153,5 +152,6 @@ TrendLine строит линию через недавние максимумы
 под именем из `--config`. Затем выполните команду из папки проекта.
 
 ```bash
-npm run backtest -- --user root --config TrendLine:base --connector bybit --timeframe 15
+npm run backtest -- --config TrendLine:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

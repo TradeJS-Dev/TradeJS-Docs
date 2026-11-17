@@ -11,7 +11,7 @@ title: Сравнение реальных и воспроизведённых �
 ## Запуск сравнения
 
 ```bash
-npx @tradejs/cli runtime-parity \
+npm exec -- tradejs runtime-parity \
   --user root \
   --connector bybit \
   --days 3
@@ -21,10 +21,10 @@ npx @tradejs/cli runtime-parity \
 метками:
 
 ```bash
-npx @tradejs/cli runtime-parity \
+npm exec -- tradejs runtime-parity \
   --user root \
   --connector bybit \
-  --strategy <StrategyName> \
+  --strategy '<StrategyName>' \
   --tickers BTCUSDT,ETHUSDT \
   --details
 ```

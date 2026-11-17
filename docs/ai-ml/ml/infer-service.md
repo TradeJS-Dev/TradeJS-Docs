@@ -70,5 +70,5 @@ If service is unavailable, runtime logs error and returns `null` for ML decision
 ## Health Check
 
 ```bash
-npx @tradejs/cli doctor --require-ml
+npm exec -- tradejs doctor --require-ml
 ```

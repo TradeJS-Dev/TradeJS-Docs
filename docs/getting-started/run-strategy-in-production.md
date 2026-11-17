@@ -105,9 +105,9 @@ Run these commands inside the deployed project environment, against the same
 Redis, database, and account that the daemon will use:
 
 ```bash
-npx @tradejs/cli doctor
+npm exec -- tradejs doctor
 
-npx @tradejs/cli runtime-control verify \
+npm exec -- tradejs runtime-control verify \
   --user root \
   --deployment production
 ```
@@ -121,7 +121,7 @@ package version, interval, universe, or control state is unexpected.
 Replay recent history with the deployed package and configuration:
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
   --deployment production \
   --days 7 \
@@ -154,7 +154,7 @@ Account settings, risk checks and strategy checks still apply to each order.
 Pause new entries without abandoning management of existing positions:
 
 ```bash
-npx @tradejs/cli runtime-control pause \
+npm exec -- tradejs runtime-control pause \
   --user root \
   --deployment production \
   --strategy DoubleTap
@@ -163,7 +163,7 @@ npx @tradejs/cli runtime-control pause \
 Resume the Git-enabled strategy:
 
 ```bash
-npx @tradejs/cli runtime-control resume \
+npm exec -- tradejs runtime-control resume \
   --user root \
   --deployment production \
   --strategy DoubleTap

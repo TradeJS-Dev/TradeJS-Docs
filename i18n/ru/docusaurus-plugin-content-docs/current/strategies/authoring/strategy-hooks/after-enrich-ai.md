@@ -8,17 +8,9 @@ TradeJS вызывает этот обработчик после проверк
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  }
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  ml: StrategyHookMlContext;
-  ai: StrategyHookAiContext;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterEnrichAi']>>[0];
 ```
 
 `ai.quality` присутствует только когда `ai.applied === true`. Если AI был пропущен или не вернул quality, смотри `ai.attempted` и `ai.skippedReason`.

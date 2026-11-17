@@ -2,6 +2,8 @@
 title: 'TrendShift'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendShift ищет вход при смене направления тренда, когда трендовая полоса
 разворачивается вверх или вниз.
 
@@ -10,11 +12,8 @@ TrendShift ищет вход при смене направления тренд
 
 ## Визуальная схема
 
-![Логика TrendShift](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="trend-shift" />
 
-![Пример сигнала TrendShift](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

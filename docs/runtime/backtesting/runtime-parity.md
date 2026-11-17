@@ -12,7 +12,7 @@ fills.
 ## Run the Comparison
 
 ```bash
-npx @tradejs/cli runtime-parity \
+npm exec -- tradejs runtime-parity \
   --user root \
   --connector bybit \
   --days 3
@@ -21,10 +21,10 @@ npx @tradejs/cli runtime-parity \
 You can limit the comparison by strategy and symbols or set exact timestamps:
 
 ```bash
-npx @tradejs/cli runtime-parity \
+npm exec -- tradejs runtime-parity \
   --user root \
   --connector bybit \
-  --strategy <StrategyName> \
+  --strategy '<StrategyName>' \
   --tickers BTCUSDT,ETHUSDT \
   --details
 ```

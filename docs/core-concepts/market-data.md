@@ -10,7 +10,7 @@ The common workflow is:
 1. A connector loads or updates candle history.
 2. Indicators and market context are computed from historical candles.
 3. The runtime gives each strategy the current closed candle.
-4. The strategy returns `skip`, `entry`, or `exit`.
+4. The strategy returns a [decision](./strategy).
 
 ## Closed Candles Matter
 

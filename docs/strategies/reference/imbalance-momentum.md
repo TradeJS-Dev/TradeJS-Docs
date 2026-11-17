@@ -2,11 +2,19 @@
 title: 'ImbalanceMomentum'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 ImbalanceMomentum looks for a directional gap across three consecutive four-hour candles.
 
 Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
 
+## Visual overview
+
+<StrategySignalChart strategy="imbalance-momentum" />
+
 ## Install
+
+This example needs TradeJS `3.1.29-beta.302` or a compatible newer release.
 
 Run the command in your TradeJS project.
 
@@ -26,8 +34,7 @@ the middle candle's body. The initial stop sits three four-hour ATRs from
 the fill. The strategy has no fixed profit target. It starts trailing after
 price moves three initial stop distances in its favor.
 
-Use TradeJS `3.1.29-beta.302` or a compatible newer release for entry plans
-with an empty `takeProfits` list and a stop calculated from the fill.
+The strategy sends an empty `takeProfits` list and calculates the stop from the fill.
 Use matching versions of `@tradejs/core`, `@tradejs/types`, and `@tradejs/node`.
 
 See the [package README](https://github.com/TradeJS-Dev/TradeJS-Strategy-ImbalanceMomentum#readme) for the full setup.

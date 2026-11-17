@@ -2,6 +2,8 @@
 title: 'Dragon'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Dragon looks for a reversal from four price extremes. The pattern needs
 confirmation at the line drawn through the head and the hump.
 
@@ -10,12 +12,9 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![Dragon strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Dragon/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="dragon" />
 
-![Bullish Dragon signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Dragon/main/docs/signal-example.svg)
-
-The illustrations are schematic and are not market data. The active strategy
-config supplies the exact geometry, confirmation, and risk thresholds.
+The strategy settings define the exact geometry, confirmation, and risk thresholds.
 
 ## Decision flow
 

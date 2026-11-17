@@ -2,6 +2,8 @@
 title: 'MaStrategy'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 `MaStrategy` is a built-in TypeScript strategy from `@tradejs/strategy-ma-strategy` based on fast/slow moving average crossover.
 
 A standard TradeJS project already includes MaStrategy. Run the
@@ -10,11 +12,7 @@ the preset settings.
 
 ## Visual overview
 
-![MaStrategy strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/strategy-logic.svg)
-
-![MaStrategy signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="ma-strategy" />
 
 ## Entry Logic
 

@@ -2,6 +2,8 @@
 title: 'HyperliquidConsensus'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 HyperliquidConsensus looks for agreement in the position changes of selected
 Hyperliquid accounts. It skips entries when the data is incomplete or stale.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![HyperliquidConsensus strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/strategy-logic.svg)
-
-![HyperliquidConsensus signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="hyperliquid-consensus" />
 
 ## Decision flow
 

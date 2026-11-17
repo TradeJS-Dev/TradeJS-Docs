@@ -2,10 +2,16 @@
 title: VwapReversion
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 VwapReversion waits for a closed candle to confirm a return inside the daily
 VWAP bands. VWAP is the volume-weighted average price for the UTC day.
 
 Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
+
+## Visual overview
+
+<StrategySignalChart strategy="vwap-reversion" />
 
 ## Entry and exit
 

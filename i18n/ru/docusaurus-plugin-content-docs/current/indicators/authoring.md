@@ -84,26 +84,7 @@ export default defineConfig(basePreset, {
 
 Минимальная рабочая связка:
 
-```ts
-{
-  historyKey: 'sandboxMomentum',
-  compute: ({ data }) => {
-    const last = data[data.length - 1];
-    const prev = data[data.length - 2];
-    if (!last || !prev || prev.close === 0) return null;
-    return ((last.close - prev.close) / prev.close) * 100;
-  },
-  renderer: {
-    shortName: 'SBX MOM',
-    paneId: 'sandbox_momentum_pane',
-    minHeight: 120,
-    figures: [
-      { key: 'sandboxMomentum', type: 'line', color: '#f59e0b' },
-      { key: 'sandboxMomentumZero', type: 'line', constant: 0, dashed: true },
-    ],
-  },
-}
-```
+В первом примере блок `renderer` включает линию индикатора и пунктирную линию нулевого уровня.
 
 - `renderer.figures[].key` должен совпадать с ключом в свечах (обычно `historyKey`).
 - Для горизонтальных уровней используйте `constant`: тогда значение не нужно писать в `compute`.

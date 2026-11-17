@@ -2,8 +2,14 @@
 title: LondonBreakout
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 LondonBreakout ищет выход цены из диапазона предыдущих девяти часовых свечей.
 Стратегия фиксирует их максимум и минимум в 08:00 UTC.
+
+## Визуальная схема
+
+<StrategySignalChart strategy="london-breakout" />
 
 ## Установка
 

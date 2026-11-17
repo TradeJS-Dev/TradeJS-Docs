@@ -2,6 +2,8 @@
 title: 'AdaptiveTrendChannel'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 AdaptiveTrendChannel ищет смену направления в канале, который подстраивается под
 цену. Стоп находится у границы канала. От расстояния до него зависит размер
 позиции.
@@ -11,11 +13,8 @@ AdaptiveTrendChannel ищет смену направления в канале,
 
 ## Визуальная схема
 
-![Логика AdaptiveTrendChannel](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="adaptive-trend-channel" />
 
-![Пример сигнала AdaptiveTrendChannel](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

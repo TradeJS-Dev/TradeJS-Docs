@@ -39,10 +39,13 @@ AI-проверка в TradeJS не обязана жить только в ра
 
 ## Воспроизводимый CLI flow
 
+Сначала [сохраните настройки бэктеста](../../getting-started/backtest-config) под именем `TrendLine:base`.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ai
-npx @tradejs/cli ai-export
-npx @tradejs/cli ai-train -n 50 --minQuality 4
+npm exec -- tradejs backtest --config TrendLine:base --ai \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ai-export --strategy TrendLine
+npm exec -- tradejs ai-train --strategy TrendLine -n 50 --minQuality 4
 ```
 
 Артефакты:

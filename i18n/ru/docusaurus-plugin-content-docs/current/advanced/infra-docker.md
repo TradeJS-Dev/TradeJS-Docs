@@ -6,18 +6,19 @@ title: Infra / Docker
 данные приложения, а в PostgreSQL с TimescaleDB — история рынка.
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-npx @tradejs/cli doctor
-npx @tradejs/cli infra-down
+npm exec -- tradejs infra-init
+npm exec -- tradejs infra-up
+npm exec -- tradejs doctor --skip-ml
 ```
 
-Типичные endpoints:
+Позже остановить локальные сервисы можно командой `npm run infra-down`.
+
+Адреса по умолчанию:
 
 - Redis: `127.0.0.1:6379`;
 - PostgreSQL/Timescale: `127.0.0.1:5432`;
-- ML gRPC, optional: `127.0.0.1:50051`.
+- ML gRPC, если настроен: `127.0.0.1:50051`.
 
 Docs repo публикует `ghcr.io/tradejs-dev/tradejs-docs` и обновляет production compose service `docs`.
 
-См. [Production runbook](../operations/production-runbook).
+См. [руководство по эксплуатации](../operations/production-runbook).

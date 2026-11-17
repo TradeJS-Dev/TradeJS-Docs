@@ -2,11 +2,19 @@
 title: 'ValueAreaReclaim'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 ValueAreaReclaim ищет возврат в область основного объёма торгов после ложного пробоя.
 
 Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
 
+## Визуальная схема
+
+<StrategySignalChart strategy="value-area-reclaim" />
+
 ## Установка
+
+Для этого примера нужен TradeJS `3.1.29-beta.302` или более новый совместимый выпуск.
 
 Выполните команду в каталоге проекта TradeJS.
 
@@ -29,7 +37,6 @@ npm install --save-exact @tradejs/strategy-value-area-reclaim
 `StrategyAPI.getClosedCandles`. Если в исходном окне есть пропуски,
 новые входы блокируются до следующего дня UTC.
 
-Используйте TradeJS `3.1.29-beta.302` или совместимый более новый выпуск.
 У пакетов `@tradejs/core`, `@tradejs/types` и `@tradejs/node` должна быть одна версия.
 
 Подробности настройки есть в [README пакета](https://github.com/TradeJS-Dev/TradeJS-Strategy-ValueAreaReclaim#readme).

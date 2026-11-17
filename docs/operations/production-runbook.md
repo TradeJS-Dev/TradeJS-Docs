@@ -14,8 +14,8 @@ TradeJS is distributed as public npm packages, not as a managed trading service.
 Build and start the installable app from your project:
 
 ```bash
-npx tradejs-app build
-npx tradejs-app start
+npm exec -- tradejs-app build
+npm exec -- tradejs-app start
 ```
 
 Use your own process supervisor or container platform for the app and scheduled runtime commands. Provide TLS, ingress, backups, secrets management, and service monitoring according to your environment.
@@ -60,7 +60,7 @@ Check the latest cycle in **Strategies** after startup. See
 ## Daily Health Checks
 
 1. `docker compose ps` or service manager status.
-2. `npx @tradejs/cli doctor` (or equivalent in runtime environment).
+2. `npm exec -- tradejs doctor` (or equivalent in runtime environment).
 3. Verify API responsiveness and basic UI pages.
 4. Check Redis/Postgres connectivity and resource usage.
 

@@ -2,7 +2,7 @@
 title: Обучение ML-модели
 ---
 
-Команда `npx @tradejs/cli ml-train:latest` обучает модель на свежих выгрузках.
+Команда `npm exec -- tradejs ml-train:latest` обучает модель на свежих выгрузках.
 Она разделяет данные для обучения и проверки.
 
 Внешний интерфейс:
@@ -29,8 +29,8 @@ title: Обучение ML-модели
 ## Команды
 
 ```bash
-npx @tradejs/cli ml-train:latest
-npx @tradejs/cli ml-train:latest --strategy TrendLine --model xgboost
+npm exec -- tradejs ml-train:latest
+npm exec -- tradejs ml-train:latest --strategy TrendLine --model xgboost
 ```
 
 Неинтерактивные опции:
@@ -56,7 +56,6 @@ Ensemble/profile:
 
 Causality:
 
-- `ML_TRAIN_DISABLE_CAUSALITY_GUARD=1` (только для отладки)
 
 Incremental mode:
 

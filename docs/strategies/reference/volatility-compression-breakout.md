@@ -2,6 +2,8 @@
 title: 'VolatilityCompressionBreakout'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 VolatilityCompressionBreakout looks for a move out of a narrow range after a
 quiet period. It uses ATR and Bollinger Bands to measure how much price has been
 moving.
@@ -11,11 +13,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![VolatilityCompressionBreakout strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/strategy-logic.svg)
-
-![VolatilityCompressionBreakout signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="volatility-compression-breakout" />
 
 ## Decision flow
 

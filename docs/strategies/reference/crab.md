@@ -2,9 +2,15 @@
 title: 'Crab'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Crab looks for a reversal after five price pivots form the XABCD pattern.
 
 Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
+
+## Visual overview
+
+<StrategySignalChart strategy="crab" />
 
 ## Install
 
@@ -27,7 +33,5 @@ to 10% of X–A.
 
 The strategy confirms D only after later candles have closed. The backtest
 uses the confirmed signal time rather than the price at the earlier turning point.
-
-![Illustrated entry for Crab](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Crab/main/docs/signal-example.svg)
 
 See the [package README](https://github.com/TradeJS-Dev/TradeJS-Strategy-Crab#readme) for the full setup.

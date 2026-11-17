@@ -2,8 +2,9 @@
 title: Running Multiple Strategies
 ---
 
-One `signals` process can run calculations for multiple strategies, accounts,
-candle intervals, and market types. Set them in `tradejs.config.ts`.
+The server evaluates enabled strategies when candles close. To run strategies
+for different accounts or candle intervals, define the deployments in
+`tradejs.config.ts`.
 
 ## How Setups Are Separated
 

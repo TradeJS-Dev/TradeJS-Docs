@@ -10,19 +10,19 @@ its data.
 Initialize local dev compose file (one-time):
 
 ```bash
-npx @tradejs/cli infra-init
+npm exec -- tradejs infra-init
 ```
 
 Start infra:
 
 ```bash
-npx @tradejs/cli infra-up
+npm exec -- tradejs infra-up
 ```
 
 Stop local infra:
 
 ```bash
-npx @tradejs/cli infra-down
+npm exec -- tradejs infra-down
 ```
 
 ## Cleanups
@@ -30,51 +30,31 @@ npx @tradejs/cli infra-down
 Clean local files under `data/*`:
 
 ```bash
-npx @tradejs/cli clean-dir --dir cache
-npx @tradejs/cli clean-dir --dir ml/export
+npm exec -- tradejs clean-dir --dir cache
+npm exec -- tradejs clean-dir --dir ml/export
 ```
 
 Clean Redis area/prefix:
 
 ```bash
-npx @tradejs/cli clean-redis --area cache
-npx @tradejs/cli clean-redis --area users:root:tests:
+npm exec -- tradejs clean-redis --area cache
 ```
 
-Clean test keys for all users or one user:
+For the local `root` user, the first command removes saved tests and their cache. The second removes only the cache.
 
 ```bash
-npx @tradejs/cli clean-tests
-npx @tradejs/cli clean-tests --user root
-npx @tradejs/cli clean-tests --user root --cache
+npm exec -- tradejs clean-tests --user root
+npm exec -- tradejs clean-tests --user root --cache
 ```
 
 ## User Management
 
-Create/update user in Redis:
-
-```bash
-npx @tradejs/cli user-add --user root --password 'secret'
-```
-
-## Connector / Order Debug
-
-Manual connector smoke script:
-
-```bash
-npx @tradejs/cli test-script
-```
-
-ML gRPC payload smoke script:
-
-```bash
-npx @tradejs/cli test-ml
-```
+For account setup or password changes, see [Local Root User](../getting-started/root-user).
 
 ## Environment Health
 
 ```bash
-npx @tradejs/cli doctor
-npx @tradejs/cli doctor --require-ml
-npx @tradejs/cli doctor --skip-ml
+npm exec -- tradejs doctor
+npm exec -- tradejs doctor --require-ml
+npm exec -- tradejs doctor --skip-ml
 ```

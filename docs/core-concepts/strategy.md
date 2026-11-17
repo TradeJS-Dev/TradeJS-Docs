@@ -9,13 +9,14 @@ On each candle, a strategy decides whether to:
 
 - `skip`: do nothing and record an optional reason
 - `entry`: create a signal and an order plan
-- `exit`: close or manage an existing position
+- `exit`: close an open position
+- `protect`: update the stop or targets for an open position
 
 The shared runtime handles the surrounding work: market data flow, signal enrichment, optional AI/ML gates, order execution, hooks, and artifact storage.
 
 ## TypeScript Strategies
 
-TypeScript strategies usually use `StrategyAPI` and return decisions through helper methods such as `strategyApi.skip(...)`, `strategyApi.entry(...)`, and `strategyApi.exit(...)`.
+TypeScript strategies usually use `StrategyAPI` and return decisions through helper methods such as `strategyApi.skip(...)`, `strategyApi.entry(...)`, `strategyApi.exit(...)`, and `strategyApi.protect(...)`.
 
 Use TypeScript when you want strong typing, custom state machines, custom figures, or deeper runtime integration.
 
@@ -27,36 +28,9 @@ Use this when you are porting or comparing Pine Script-inspired workflows.
 
 ## Built-In Strategies
 
-The non-empty `@tradejs/base` preset installs independent strategy packages for:
-
-- `Breakout`
-- `TrendLine`
-- `ReverseTrendLine`
-- `TrendShift`
-- `TrendFollow`
-- `DoubleTap`
-- `LiquidityTails`
-- `LiquidityZones`
-- `StructureZones`
-- `AdaptiveTrendChannel`
-- `AdaptiveMomentumRibbon`
-- `MaStrategy`
-- `VolumeDivergence`
-- `MarketFlushReversal`
-- `VolatilityCompressionBreakout`
-- `RelativeRotation`
-- `CupAndHandle`
-- `HeadAndShoulders`
-- `Grid`
-- `GridClassic`
-- `HyperliquidConsensus`
-
-TrendLine and ReverseTrendLine share `@tradejs/strategy-trend-line`; every
-other strategy has its own package and repository. Built-ins are useful
-examples, but they are still strategy code that needs your own validation.
-
-See the [built-in strategy catalog](../strategies/reference) for the grouped
-list, data requirements, and per-strategy references.
+The `@tradejs/base` package loads the default set of strategies.
+See the [catalog](../strategies/reference) for each strategy’s rules and settings.
+For separately installed strategies, see [Add a strategy](../getting-started/add-strategy).
 
 ## Next
 

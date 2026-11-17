@@ -2,8 +2,14 @@
 title: TrendPullback
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendPullback waits for a pullback within an hourly trend. It uses two
 exponential moving averages to find the direction and RSI to spot a pullback.
+
+## Visual overview
+
+<StrategySignalChart strategy="trend-pullback" />
 
 ## Install the package
 

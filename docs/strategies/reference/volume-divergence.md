@@ -2,6 +2,8 @@
 title: 'VolumeDivergence'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 VolumeDivergence looks for a reversal when a new high or low in price is not
 confirmed by normalized volume.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![VolumeDivergence strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/strategy-logic.svg)
-
-![VolumeDivergence signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="volume-divergence" />
 
 ## Entry Logic
 
@@ -119,5 +117,6 @@ First [save backtest settings](../../getting-started/backtest-config) with the
 name in `--config`. Then run this command from the project folder.
 
 ```bash
-npm run backtest -- --user root --config VolumeDivergence:base --connector bybit --timeframe 15
+npm run backtest -- --config VolumeDivergence:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

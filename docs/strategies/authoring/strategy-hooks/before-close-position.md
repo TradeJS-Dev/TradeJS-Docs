@@ -7,15 +7,10 @@ with `connector.closePosition(...)`.
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: ExitDecision;
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['beforeClosePosition']>>[0];
 ```
 
 ## Output

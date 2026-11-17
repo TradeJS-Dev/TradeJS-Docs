@@ -8,16 +8,9 @@ TradeJS вызывает этот обработчик после оценки �
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  }
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  ml: StrategyHookMlContext;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterEnrichMl']>>[0];
 ```
 
 `ml` содержит явный статус stage:

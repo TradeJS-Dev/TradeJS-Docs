@@ -2,6 +2,8 @@
 title: 'LiquidityTails'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 LiquidityTails marks areas with long candle wicks. It looks for a trade when
 price returns and reacts to one of the areas, then sets a stop beyond its edge.
 
@@ -12,11 +14,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![LiquidityTails strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/strategy-logic.svg)
-
-![LiquidityTails signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="liquidity-tails" />
 
 ## Entry Logic
 

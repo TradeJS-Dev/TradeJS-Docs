@@ -2,6 +2,8 @@
 title: 'StructureZones'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 StructureZones строит зоны по недавним максимумам и минимумам. Стратегия ищет
 отбой от зоны или пробой её границы.
 
@@ -10,11 +12,8 @@ StructureZones строит зоны по недавним максимумам 
 
 ## Визуальная схема
 
-![Логика StructureZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="structure-zones" />
 
-![Пример сигнала StructureZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

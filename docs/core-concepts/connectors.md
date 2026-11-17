@@ -21,8 +21,8 @@ Connectors may support:
 Many CLI commands accept a connector/provider option:
 
 ```bash
-npx @tradejs/cli backtest --connector bybit
-npm exec -- tradejs signals --connector bybit
+npm run backtest -- --config MaStrategy:base --connector bybit \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```
 
 Use the provider that matches your data source and execution assumptions.

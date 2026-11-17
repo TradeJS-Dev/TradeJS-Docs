@@ -2,10 +2,16 @@
 title: RangeReclaim
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 RangeReclaim waits for price to leave the range of a completed larger candle and
 then close back inside it.
 
 Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
+
+## Visual overview
+
+<StrategySignalChart strategy="range-reclaim" />
 
 ## Installation
 

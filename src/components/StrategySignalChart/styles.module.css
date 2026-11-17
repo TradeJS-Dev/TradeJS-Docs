@@ -1,0 +1,174 @@
+.figure {
+  --chart-bg: #111c2d;
+  --chart-border: #293b51;
+  --chart-grid: #203047;
+  --chart-text: #e7eff6;
+  --chart-muted: #adc1d5;
+  --chart-gold: #f2c77e;
+  --chart-blue: #7ab8f7;
+  --chart-violet: #beabf7;
+  max-width: 46rem;
+  margin: 1rem 0 1.75rem;
+  overflow: hidden;
+  border: 1px solid var(--chart-border);
+  border-radius: 0.7rem;
+  background: var(--chart-bg);
+  color: var(--chart-text);
+}
+
+.price {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2;
+  overflow: hidden;
+  background-color: var(--chart-bg, #111c2d);
+  background-image:
+    linear-gradient(var(--chart-grid, #203047) 1px, transparent 1px),
+    linear-gradient(90deg, var(--chart-grid, #203047) 1px, transparent 1px);
+  background-size: 12.5% 25%;
+  background-position: center;
+}
+
+.zone {
+  position: absolute;
+  border: 1px solid #7ab8f766;
+  background: #7ab8f722;
+}
+
+.guide {
+  position: absolute;
+  border-top: 2px dashed var(--guide-color);
+  transform-origin: left center;
+  --guide-color: var(--chart-gold, #f2c77e);
+}
+
+.guide[data-color='blue'] {
+  --guide-color: var(--chart-blue, #7ab8f7);
+}
+
+.guide[data-color='violet'] {
+  --guide-color: var(--chart-violet, #beabf7);
+}
+
+.guide[data-solid='true'] {
+  border-top-style: solid;
+}
+
+.wick {
+  --candle-color: #36d3a2;
+  position: absolute;
+  width: 1px;
+  min-height: 2px;
+  background: var(--candle-color);
+}
+
+.wick[data-down='true'] {
+  --candle-color: #f37d8a;
+}
+
+.candle {
+  position: absolute;
+  width: clamp(5px, 1.2vw, 13px);
+  min-height: 2px;
+  border-radius: 1px;
+  background: var(--candle-color);
+  transform: translateX(-50%);
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px dashed #adc1d57a;
+}
+
+.marker[data-signal='true'] {
+  border-left-color: #f2c77eb0;
+}
+
+.badge,
+.steps li::before {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #344c67;
+  color: #f4f8fc;
+  font: 700 0.7rem / 1 var(--ifm-font-family-monospace);
+}
+
+.badge {
+  position: absolute;
+  top: 1.45rem;
+  transform: translateX(-50%);
+}
+
+.marker[data-signal='true'] .badge {
+  top: 0.35rem;
+}
+
+.marker[data-signal='true'] .badge,
+.steps li[data-signal='true']::before {
+  background: var(--chart-gold);
+  color: var(--chart-bg);
+}
+
+.indicator {
+  border-top: 1px solid var(--chart-border);
+}
+
+.indicatorLabel {
+  padding: 0.3rem 1rem 0;
+  color: var(--chart-muted);
+  font-size: 0.75rem;
+}
+
+.indicatorBars {
+  display: grid;
+  align-items: end;
+  height: clamp(1.65rem, 5vw, 3rem);
+  margin: 0 5% 0.4rem;
+  border-bottom: 1px solid var(--chart-border);
+}
+
+.indicatorBars span {
+  justify-self: center;
+  width: 42%;
+  background: #829ac2;
+}
+
+.caption {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.7rem 1rem 0.85rem;
+  border-top: 1px solid var(--chart-border);
+}
+
+.note {
+  color: var(--chart-muted);
+  font-size: 0.75rem;
+}
+
+.steps {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  list-style: none;
+  counter-reset: chart-step;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  gap: 0.55rem;
+  margin: 0;
+  counter-increment: chart-step;
+}
+
+.steps li::before {
+  content: counter(chart-step);
+}

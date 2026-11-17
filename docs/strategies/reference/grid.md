@@ -2,6 +2,8 @@
 title: 'Grid'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Grid starts a position after a pullback in a trend or a successful retest of a
 breakout level. It adds to the position within one risk limit for the whole
 trade.
@@ -11,11 +13,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![Grid strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/strategy-logic.svg)
-
-![Grid signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="grid" />
 
 ## Decision flow
 

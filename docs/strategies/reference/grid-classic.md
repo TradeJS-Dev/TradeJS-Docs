@@ -2,6 +2,8 @@
 title: 'GridClassic'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 GridClassic builds a grid within a horizontal range. It can trade a bounce from
 the edge, a continuation after a breakout, or a reversal if the breakout fails.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![GridClassic strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/strategy-logic.svg)
-
-![GridClassic signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="grid-classic" />
 
 ## Decision flow
 

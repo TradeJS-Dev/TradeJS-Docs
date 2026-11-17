@@ -2,7 +2,7 @@
 title: 'HeadAndShoulders'
 ---
 
-import HeadAndShouldersChart from "@site/src/components/HeadAndShouldersChart";
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
 
 HeadAndShoulders ищет обычную и перевёрнутую фигуру «голова и плечи». Вход
 возможен после пробоя линии шеи. Стоп и цель рассчитываются по фигуре.
@@ -18,9 +18,9 @@ HeadAndShoulders ищет обычную и перевёрнутую фигур�
 ждёт дополнительного подтверждения закрытием свечи. Стоп для короткой позиции
 ставится выше головы с запасом, а цель рассчитывается по высоте фигуры.
 
-<HeadAndShouldersChart />
+Пороги подтверждения и параметры риска задаются настройками стратегии.
 
-Цены на схеме условные. Пороги подтверждения и параметры риска задаются настройками стратегии.
+<StrategySignalChart strategy="head-and-shoulders" />
 
 ## Бэктест {#backtest}
 

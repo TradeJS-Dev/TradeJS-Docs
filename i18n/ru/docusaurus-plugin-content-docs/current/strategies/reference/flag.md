@@ -2,6 +2,8 @@
 title: 'Flag'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Flag ищет сильное движение, короткий откат в узком канале и пробой в сторону
 исходного движения.
 
@@ -10,12 +12,9 @@ Flag ищет сильное движение, короткий откат в у
 
 ## Визуальная схема
 
-![Логика Flag](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Flag/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="flag" />
 
-![Примеры бычьего и медвежьего флага](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Flag/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными. Точные
-пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
+Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
 
@@ -75,5 +74,6 @@ Flag ищет сильное движение, короткий откат в у
 под именем из `--config`. Затем выполните команду из папки проекта.
 
 ```bash
-npm run backtest -- --user root --config Flag:base --connector bybit --timeframe 15
+npm run backtest -- --config Flag:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

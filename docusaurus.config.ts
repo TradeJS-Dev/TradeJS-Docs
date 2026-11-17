@@ -139,9 +139,15 @@ const config: Config = {
         },
         {
           to: '/guides/develop-with-an-agent',
-          activeBaseRegex: '^/(?:ru/)?guides/(?:develop-with-an-agent|mcp|codex-strategy-skills)(?:/|$)',
+          activeBaseRegex: '^/(?:ru/)?guides/(?:develop-with-an-agent|codex-strategy-skills)(?:/|$)',
           position: 'left',
           label: t('Agents', 'Агенты'),
+        },
+        {
+          to: '/guides/mcp',
+          exact: true,
+          position: 'left',
+          label: 'MCP',
         },
         {
           type: 'localeDropdown',
@@ -154,33 +160,13 @@ const config: Config = {
       ],
     },
     footer: {
-      style: 'dark',
-      logo: {
-        alt: 'TradeJS Docs',
-        src: 'img/tradejs-docs-wordmark.svg',
-        href: '/',
-        width: 300,
-        height: 56,
-      },
       links: [
-        {
-          title: t('Use TradeJS', 'Пользователям'),
-          items: [
-            { label: t('Strategies', 'Готовые стратегии'), to: '/strategies/reference' },
-            { label: t('First backtest', 'Первый бэктест'), to: '/getting-started/first-backtest' },
-            { label: t('Installation', 'Установка'), to: '/getting-started/installation' },
-          ],
-        },
-        {
-          title: t('Resources', 'Справка'),
-          items: [
-            { label: t('CLI reference', 'Справочник команд'), to: '/api/cli' },
-            { label: t('License', 'Лицензия'), to: '/introduction/licensing' },
-            { label: 'GitHub', href: 'https://github.com/tradejs-dev/tradejs' },
-          ],
-        },
+        { label: t('Installation', 'Установка'), to: '/getting-started/installation' },
+        { label: t('CLI reference', 'Справочник команд'), to: '/api/cli' },
+        { label: t('License', 'Лицензия'), to: '/introduction/licensing' },
+        { label: 'GitHub', href: 'https://github.com/tradejs-dev/tradejs' },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} TradeJS`,
+      copyright: `© ${new Date().getFullYear()} TradeJS`,
     },
     prism: {
       theme: prismThemes.oneLight,

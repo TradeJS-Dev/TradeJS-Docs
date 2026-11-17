@@ -108,9 +108,9 @@ export default defineConfig(basePreset, {
 Redis, базу данных и торговый счёт, что и постоянный процесс стратегии:
 
 ```bash
-npx @tradejs/cli doctor
+npm exec -- tradejs doctor
 
-npx @tradejs/cli runtime-control verify \
+npm exec -- tradejs runtime-control verify \
   --user root \
   --deployment production
 ```
@@ -125,7 +125,7 @@ npx @tradejs/cli runtime-control verify \
 Запустите недавний период с тем же пакетом и той же конфигурацией:
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
   --deployment production \
   --days 7 \
@@ -160,7 +160,7 @@ npx @tradejs/cli replay \
 позиций, выполните:
 
 ```bash
-npx @tradejs/cli runtime-control pause \
+npm exec -- tradejs runtime-control pause \
   --user root \
   --deployment production \
   --strategy DoubleTap
@@ -169,7 +169,7 @@ npx @tradejs/cli runtime-control pause \
 Возобновление стратегии, включённой в Git-конфигурации:
 
 ```bash
-npx @tradejs/cli runtime-control resume \
+npm exec -- tradejs runtime-control resume \
   --user root \
   --deployment production \
   --strategy DoubleTap

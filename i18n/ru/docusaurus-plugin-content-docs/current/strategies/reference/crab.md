@@ -2,9 +2,15 @@
 title: 'Crab'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Crab ищет разворот после того, как пять экстремумов цены образуют фигуру XABCD.
 
 Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
+
+## Визуальная схема
+
+<StrategySignalChart strategy="crab" />
 
 ## Установка
 
@@ -27,7 +33,5 @@ npm install --save-exact @tradejs/strategy-crab
 
 Стратегия подтверждает точку D после закрытия следующих свечей. В бэктесте
 вход считается от момента подтверждения, когда сигнал становится известен.
-
-![Схема входа Crab](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Crab/main/docs/signal-example.svg)
 
 Подробности настройки есть в [README пакета](https://github.com/TradeJS-Dev/TradeJS-Strategy-Crab#readme).

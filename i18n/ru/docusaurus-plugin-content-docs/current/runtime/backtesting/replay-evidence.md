@@ -13,7 +13,7 @@ title: Проверка реальных решений через воспро�
 Запускайте команду из проекта с `tradejs.config.ts`:
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
   --deployment production \
   --days 7 \
@@ -38,7 +38,7 @@ npx @tradejs/cli replay \
 сохранённую историю, весь доступный период свечей и `MAX_LOSS_VALUE=10`:
 
 ```bash
-npx @tradejs/cli portfolio-backtest --user root
+npm exec -- tradejs portfolio-backtest --user root
 ```
 
 Команда обрабатывает инструменты ограниченными пакетами, а затем объединяет
@@ -63,7 +63,7 @@ HTML, Markdown, JSON и SVG сохраняются в `data/replay/output`. От
 Для точного сравнения соберите записи на сервере, где выполнялся расчёт:
 
 ```bash
-npx @tradejs/cli runtime-evidence \
+npm exec -- tradejs runtime-evidence \
   --daily \
   --user root \
   --deployment production \
@@ -111,7 +111,7 @@ npx @tradejs/cli runtime-evidence \
 Для анализа в другом окружении:
 
 ```bash
-npx @tradejs/cli runtime-evidence-sync \
+npm exec -- tradejs runtime-evidence-sync \
   --source user@runtime-host:/path/to/ready/production \
   --deployment production
 ```
@@ -123,21 +123,21 @@ npx @tradejs/cli runtime-evidence-sync \
 ## Воспроизведение записанной настройки
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
-  --runtimeEvidence <bundle>/runtime-evidence.json \
-  --startTime <ms> \
-  --endTime <ms> \
+  --runtimeEvidence '<bundle>/runtime-evidence.json' \
+  --startTime '<ms>' \
+  --endTime '<ms>' \
   --cacheOnly
 ```
 
 Затем подготовьте данные для сравнения:
 
 ```bash
-npx @tradejs/cli replay-runtime-evidence \
-  --runtimeEvidence <bundle>/runtime-evidence.json \
-  --startTime <ms> \
-  --endTime <ms> \
+npm exec -- tradejs replay-runtime-evidence \
+  --runtimeEvidence '<bundle>/runtime-evidence.json' \
+  --startTime '<ms>' \
+  --endTime '<ms>' \
   --out output/replay-runtime-evidence.json
 ```
 
@@ -160,8 +160,8 @@ npx @tradejs/cli replay-runtime-evidence \
 исполнения с восстановленными решениями:
 
 ```bash
-npx @tradejs/cli execution-calibration \
-  --runtimeEvidence <bundle>/runtime-evidence.json \
+npm exec -- tradejs execution-calibration \
+  --runtimeEvidence '<bundle>/runtime-evidence.json' \
   --replayEvidence output/replay-runtime-evidence.json \
   --out output/execution-calibration.json
 ```
@@ -175,8 +175,8 @@ npx @tradejs/cli execution-calibration \
 с результатом воспроизведения:
 
 ```bash
-npx @tradejs/cli runtime-feedback-notify \
-  --bundle <verified-replay-bundle>
+npm exec -- tradejs runtime-feedback-notify \
+  --bundle '<verified-replay-bundle>'
 ```
 
 Параметр `--dryRun` проверяет манифест, файлы, контрольные суммы и данные

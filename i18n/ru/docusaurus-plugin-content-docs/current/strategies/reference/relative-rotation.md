@@ -2,6 +2,8 @@
 title: 'RelativeRotation'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 RelativeRotation сравнивает движение инструмента и биткоина за час и за сутки.
 Для проверки входа стратегия учитывает объём и другие рыночные данные.
 
@@ -10,11 +12,8 @@ RelativeRotation сравнивает движение инструмента и
 
 ## Визуальная схема
 
-![Логика RelativeRotation](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="relative-rotation" />
 
-![Пример сигнала RelativeRotation](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

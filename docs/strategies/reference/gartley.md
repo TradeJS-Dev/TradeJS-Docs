@@ -2,6 +2,8 @@
 title: 'Gartley'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Gartley looks for a reversal pattern with five price extremes. It checks
 Fibonacci ratios and waits for confirmation before entering.
 
@@ -10,12 +12,9 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![Gartley strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Gartley/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="gartley" />
 
-![Bullish Gartley signal](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Gartley/main/docs/signal-example.svg)
-
-The illustrations are schematic, not market data. Exact ratios, confirmation
-rules, and risk parameters come from the active strategy config.
+The strategy settings define the exact ratios, confirmation rules, and risk thresholds.
 
 ## Entry logic
 
@@ -61,5 +60,6 @@ First [save backtest settings](../../getting-started/backtest-config) with the
 name in `--config`. Then run this command from the project folder.
 
 ```bash
-npm run backtest -- --user root --config Gartley:base --connector bybit --timeframe 15
+npm run backtest -- --config Gartley:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

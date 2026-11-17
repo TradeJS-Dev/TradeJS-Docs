@@ -8,14 +8,9 @@ TradeJS вызывает этот обработчик перед вызовом
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  }
-  decision: ExitDecision;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['beforeClosePosition']>>[0];
 ```
 
 ## Output

@@ -10,19 +10,19 @@ title: Скрипты командной строки для обслужива�
 Создайте локальный Compose-файл. Команду нужно выполнить один раз:
 
 ```bash
-npx @tradejs/cli infra-init
+npm exec -- tradejs infra-init
 ```
 
 Запустите сервисы:
 
 ```bash
-npx @tradejs/cli infra-up
+npm exec -- tradejs infra-up
 ```
 
 Остановить локальную инфраструктуру:
 
 ```bash
-npx @tradejs/cli infra-down
+npm exec -- tradejs infra-down
 ```
 
 ## Очистка
@@ -30,51 +30,31 @@ npx @tradejs/cli infra-down
 Очистка локальных файлов в `data/*`:
 
 ```bash
-npx @tradejs/cli clean-dir --dir cache
-npx @tradejs/cli clean-dir --dir ml/export
+npm exec -- tradejs clean-dir --dir cache
+npm exec -- tradejs clean-dir --dir ml/export
 ```
 
-Очистка Redis area/prefix:
+Удаление данных из области `cache` в Redis:
 
 ```bash
-npx @tradejs/cli clean-redis --area cache
-npx @tradejs/cli clean-redis --area users:root:tests:
+npm exec -- tradejs clean-redis --area cache
 ```
 
-Очистка test-ключей для всех пользователей или одного:
+Для локального пользователя `root` первая команда удаляет сохранённые тесты и их кэш. Вторая удаляет только кэш.
 
 ```bash
-npx @tradejs/cli clean-tests
-npx @tradejs/cli clean-tests --user root
-npx @tradejs/cli clean-tests --user root --cache
+npm exec -- tradejs clean-tests --user root
+npm exec -- tradejs clean-tests --user root --cache
 ```
 
 ## Управление пользователями
 
-Создать/обновить пользователя в Redis:
-
-```bash
-npx @tradejs/cli user-add --user root --password 'secret'
-```
-
-## Отладка коннектора / ордеров
-
-Ручной smoke-скрипт коннектора:
-
-```bash
-npx @tradejs/cli test-script
-```
-
-Smoke-скрипт ML gRPC payload:
-
-```bash
-npx @tradejs/cli test-ml
-```
+Для создания пользователя или смены пароля см. [локальная учётная запись](../getting-started/root-user).
 
 ## Проверка состояния окружения
 
 ```bash
-npx @tradejs/cli doctor
-npx @tradejs/cli doctor --require-ml
-npx @tradejs/cli doctor --skip-ml
+npm exec -- tradejs doctor
+npm exec -- tradejs doctor --require-ml
+npm exec -- tradejs doctor --skip-ml
 ```

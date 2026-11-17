@@ -2,6 +2,8 @@
 title: 'VolumeDivergence'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 VolumeDivergence ищет разворот, когда новый максимум или минимум цены не
 подтверждается нормализованным объёмом.
 
@@ -10,11 +12,8 @@ VolumeDivergence ищет разворот, когда новый максиму
 
 ## Визуальная схема
 
-![Логика VolumeDivergence](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="volume-divergence" />
 
-![Пример сигнала VolumeDivergence](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
@@ -160,5 +159,6 @@ VolumeDivergence ищет разворот, когда новый максиму
 под именем из `--config`. Затем выполните команду из папки проекта.
 
 ```bash
-npm run backtest -- --user root --config VolumeDivergence:base --connector bybit --timeframe 15
+npm run backtest -- --config VolumeDivergence:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

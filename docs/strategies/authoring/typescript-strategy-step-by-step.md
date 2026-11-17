@@ -26,26 +26,28 @@ Create files:
 
 - `config.ts`
 - `core.ts`
-- `strategy.ts`
 - `manifest.ts`
 - `src/plugins/simpleMa.plugin.ts`
 
 ## 2. Add Strategy Config (`config.ts`)
 
+Install the configuration helper in your project:
+
+```bash
+npm install --save-exact @tradejs/strategy-kit
+```
+
 ```ts
 import type { Interval, StrategyConfig } from '@tradejs/types';
 
 export const config = {
-  ENV: 'BACKTEST',
   INTERVAL: '15' as Interval,
-  MAKE_ORDERS: true,
-  BACKTEST_PRICE_MODE: 'mid' as const,
   MA_FAST: 21,
   MA_SLOW: 55,
   TP_PERCENT: 2,
   SL_PERCENT: 1,
-  MAX_LOSS_USDT: 10,
-} as const;
+  MAX_LOSS_VALUE: 10,
+};
 
 export type SimpleMaConfig = StrategyConfig & typeof config;
 ```
@@ -58,7 +60,7 @@ import type {
   Direction,
   IndicatorsHistorySnapshot,
 } from '@tradejs/types';
-import { SimpleMaConfig } from './config';
+import type { SimpleMaConfig } from './config';
 
 const getCrossDirection = ({
   fastPrev,
@@ -120,8 +122,12 @@ export const createSimpleMaCore: CreateStrategyCore<
         takeProfitDelta: config.TP_PERCENT,
         stopLossDelta: config.SL_PERCENT,
         unit: 'percent',
-        maxLossValue: config.MAX_LOSS_USDT,
+        maxLossValue: config.MAX_LOSS_VALUE,
       });
+
+    if (qty === undefined || !Number.isFinite(qty) || qty <= 0) {
+      return strategyApi.skip('INVALID_QTY');
+    }
 
     return strategyApi.entry({
       direction,
@@ -142,30 +148,14 @@ export const createSimpleMaCore: CreateStrategyCore<
 };
 ```
 
-## 4. Wire Runtime and Manifest
-
-`strategy.ts`:
-
-```ts
-import { createStrategyRuntime } from '@tradejs/node/strategies';
-import { config, SimpleMaConfig } from './config';
-import { createSimpleMaCore } from './core';
-
-export const SimpleMaCreator = createStrategyRuntime<SimpleMaConfig>({
-  strategyName: 'SimpleMa',
-  defaults: config as SimpleMaConfig,
-  createCore: createSimpleMaCore,
-});
-```
+## 4. Name the strategy in its manifest
 
 `manifest.ts`:
 
 ```ts
 import type { StrategyManifest } from '@tradejs/types';
 
-export const simpleMaManifest: StrategyManifest = {
-  name: 'SimpleMa',
-};
+export const simpleMaManifest: StrategyManifest = { name: 'SimpleMa' };
 ```
 
 ## 5. Export Plugin Entry
@@ -174,11 +164,21 @@ export const simpleMaManifest: StrategyManifest = {
 
 ```ts
 import { defineStrategyPlugin } from '@tradejs/core/config';
+import { createStrategyConfigParser } from '@tradejs/strategy-kit/config';
+import { config } from '../strategies/SimpleMa/config';
+import { createSimpleMaCore } from '../strategies/SimpleMa/core';
 import { simpleMaManifest } from '../strategies/SimpleMa/manifest';
-import { SimpleMaCreator } from '../strategies/SimpleMa/strategy';
 
 export default defineStrategyPlugin({
-  strategyEntries: [{ manifest: simpleMaManifest, creator: SimpleMaCreator }],
+  strategyEntries: [{
+    manifest: simpleMaManifest,
+    defaults: config,
+    parseConfig: createStrategyConfigParser({
+      strategyName: simpleMaManifest.name,
+      defaults: config,
+    }),
+    createCore: createSimpleMaCore,
+  }],
 });
 ```
 
@@ -190,61 +190,29 @@ import { basePreset } from '@tradejs/base';
 
 export default defineConfig(basePreset, {
   strategies: ['./src/plugins/simpleMa.plugin.ts'],
-  runtime: {
-    deployments: {
-      production: {
-        connectorName: 'bybit',
-        accountId: 'bybit-main',
-        strategies: {
-          SimpleMa: {
-            enabled: true,
-            config: {
-              INTERVAL: '15',
-              UNIVERSE: 'crypto',
-              BACKTEST_PRICE_MODE: 'mid',
-              MA_FAST: 21,
-              MA_SLOW: 55,
-              TP_PERCENT: 2,
-              SL_PERCENT: 1,
-              MAX_LOSS_USDT: 10,
-            },
-          },
-        },
-      },
-    },
-  },
 });
 ```
-
-The production config is now complete and reviewable in Git. Pin the strategy
-package and lockfile with this configuration. TradeJS computes
-`strategyRevision` and `deploymentCompositionId` from the verified composition;
-there is no manual version field. Redis stores the referenced trading account
-and optional pause state, not strategy config.
 
 ## 6. Add a Backtest Grid
 
 ```bash
-redis-cli JSON.SET users:root:backtests:configs:SimpleMa:quickstart '$' '{
-  "ENV": ["BACKTEST"],
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli JSON.SET \
+  users:root:backtests:configs:SimpleMa:quickstart '$' '{
   "INTERVAL": ["15"],
-  "MAKE_ORDERS": [true],
-  "BACKTEST_PRICE_MODE": ["mid"],
   "MA_FAST": [14, 21],
   "MA_SLOW": [50, 55],
   "TP_PERCENT": [2],
   "SL_PERCENT": [1],
-  "MAX_LOSS_USDT": [10]
-}'
+  "MAX_LOSS_VALUE": [10]
+}' NX
 ```
 
 ## 7. Run and Validate
 
 ```bash
-npx @tradejs/cli backtest --user root --config SimpleMa:quickstart --connector bybit --tests 200 --parallel 4
-npx @tradejs/cli results --strategy SimpleMa --coverage --user root
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npm exec -- tradejs signals --user root --deployment production
+npm run backtest -- --config SimpleMa:quickstart --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 4 --parallel 1
+npm exec -- tradejs results --strategy SimpleMa --coverage --user root
 ```
 
 ## Notes

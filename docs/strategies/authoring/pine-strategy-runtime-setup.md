@@ -7,10 +7,11 @@ description: 'Import the Pine runtime helpers, map strategy configuration to Pin
 Start `core.ts` by naming the Pine outputs and writing a function to read them.
 The next step uses the values to decide whether to trade.
 
-```text
+```ts
 import {
   getLatestPineBooleanPlotValues,
   getLatestPineNumberPlotValues,
+  loadPineScriptFile,
   runPineScript,
   type PineContextLike,
 } from '@tradejs/node/pine';
@@ -20,7 +21,7 @@ import type { AdaptiveMomentumRibbonConfig } from './config';
 import { buildAdaptiveMomentumRibbonFigures } from './figures';
 import { type CreateStrategyCore } from '@tradejs/types';
 
-const AMR_PINE_FILE_NAME = 'adaptiveMomentumRibbon.pine';
+const AMR_PINE_PATH = 'src/strategies/AdaptiveMomentumRibbon/adaptiveMomentumRibbon.pine';
 const AMR_BOOLEAN_PLOTS = [
   'entryLong',
   'entryShort',

@@ -2,6 +2,8 @@
 title: 'TrendShift'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendShift looks for a change in direction when the trend band flips up or down.
 
 Included in a standard TradeJS project.
@@ -9,11 +11,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![TrendShift strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/strategy-logic.svg)
-
-![TrendShift signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="trend-shift" />
 
 ## Entry Logic
 

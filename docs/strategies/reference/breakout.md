@@ -2,6 +2,8 @@
 title: 'Breakout'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Breakout checks several conditions for a price breakout and gives each condition
 a score. A trade needs all required conditions and a high enough total score.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![Breakout strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/strategy-logic.svg)
-
-![Breakout signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="breakout" />
 
 ## Entry Logic
 
@@ -101,8 +99,8 @@ It sets the candle interval and uses the strategy defaults for the other fields.
 The second command tests 30 days of 15-minute Binance BTCUSDT candles.
 
 ```bash
-docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
-  'users:root:backtests:configs:Breakout:example' '{"INTERVAL":["15"]}' NX
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli JSON.SET \
+  'users:root:backtests:configs:Breakout:example' '$' '{"INTERVAL":["15"]}' NX
 
 npm run backtest -- --user root --connector binance --tickers BTCUSDT \
   --config Breakout:example --timeframe 15 --days 30 --tests 1 --parallel 1

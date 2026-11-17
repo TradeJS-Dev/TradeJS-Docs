@@ -2,6 +2,8 @@
 title: 'LiquidityZones'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 LiquidityZones draws zones from recent highs and lows. It watches for a reaction
 when price returns to a zone.
 
@@ -12,11 +14,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![LiquidityZones strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/strategy-logic.svg)
-
-![LiquidityZones signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="liquidity-zones" />
 
 ## Entry Logic
 

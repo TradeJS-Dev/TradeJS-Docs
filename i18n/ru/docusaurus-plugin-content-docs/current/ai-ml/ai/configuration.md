@@ -66,25 +66,6 @@ TradeJS ищет данные для подключения к ИИ в тако�
 }
 ```
 
-## Пример адаптера TrendLine
-
-TrendLine добавляет в общие данные поле `trendline` с полной геометрией линии:
-
-```ts
-export const trendLineAiAdapter: StrategyAiAdapter = {
-  buildPayload: ({ signal, basePayload }) => ({
-    ...basePayload,
-    figures: {
-      ...basePayload.figures,
-      trendline: signal.figures?.trendLine ?? null,
-    },
-  }),
-  mapEntryRuntimeFromConfig: (config) =>
-    mapAiRuntimeFromConfig(
-      config as Pick<TrendLineConfig, 'AI_ENABLED' | 'MIN_AI_QUALITY'>,
-    ),
-};
-```
 
 ## Как подменить промпт для своей стратегии
 
@@ -124,17 +105,6 @@ export const myStrategyManifest: StrategyManifest = {
 
 - так можно изменить запрос для конкретной стратегии через публичный интерфейс
 - основной запрос по-прежнему применяется, а ваши блоки добавляются к системной и пользовательской частям
-
-## Логика фильтра перед размещением ордера
-
-```ts
-const minAiQuality = runtime.ai?.minQuality ?? 4;
-const shouldMakeOrder =
-  makeOrdersEnabled &&
-  (!signal || env === 'BACKTEST' || quality == null || quality >= minAiQuality);
-```
-
-Если проверка не пройдена, сигнал сохраняется, но ордер не отправляется.
 
 ## ИИ и машинное обучение
 

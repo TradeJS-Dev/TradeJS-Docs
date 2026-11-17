@@ -21,7 +21,7 @@ title: Резервное копирование и восстановление
 ## Тест восстановления
 
 1. Восстановите данные на staging.
-2. Поднимите сервисы (`npx @tradejs/cli infra-init && npx @tradejs/cli infra-up` для локального запуска) и прогоните `doctor`.
+2. Поднимите сервисы (`npm exec -- tradejs infra-init && npm exec -- tradejs infra-up` для локального запуска) и прогоните `doctor`.
 3. Проверьте базовые API/runtime smoke-тесты.
 4. Убедитесь, что alias-модели и критичные ключи на месте.
 

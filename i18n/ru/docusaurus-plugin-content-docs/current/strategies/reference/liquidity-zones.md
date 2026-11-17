@@ -2,6 +2,8 @@
 title: 'LiquidityZones'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 LiquidityZones отмечает зоны по недавним максимумам и минимумам. Стратегия ждёт,
 как цена отреагирует при возврате в зону.
 
@@ -10,11 +12,8 @@ LiquidityZones отмечает зоны по недавним максимум�
 
 ## Визуальная схема
 
-![Логика LiquidityZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="liquidity-zones" />
 
-![Пример сигнала LiquidityZones](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

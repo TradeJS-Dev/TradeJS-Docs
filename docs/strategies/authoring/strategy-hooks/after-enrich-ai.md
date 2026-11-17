@@ -6,18 +6,10 @@ TradeJS calls this hook after the AI check on an entry with a `decision.signal`.
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  ml: StrategyHookMlContext;
-  ai: StrategyHookAiContext;
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterEnrichAi']>>[0];
 ```
 
 `ai.quality` is present only when `ai.applied === true`. When AI was skipped or produced no score, inspect `ai.attempted` and `ai.skippedReason`.

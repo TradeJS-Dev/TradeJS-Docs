@@ -13,14 +13,9 @@ In `tradejs.config.ts`, project-level `afterBarDecision` hooks may return a tran
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: SkipDecision | EntryDecision | ExitDecision | ProtectDecision;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterBarDecision']>>[0];
 ```
 
 ## Output

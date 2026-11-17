@@ -2,6 +2,8 @@
 title: 'Dragon'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Dragon ищет разворот по четырём крайним точкам цены. Для подтверждения
 используется линия через голову и горб фигуры.
 
@@ -10,12 +12,9 @@ Dragon ищет разворот по четырём крайним точкам
 
 ## Визуальная схема
 
-![Логика стратегии Dragon](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Dragon/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="dragon" />
 
-![Бычий сигнал Dragon на схематичном графике](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Dragon/main/docs/signal-example.svg)
-
-Иллюстрации показывают логику и не являются рыночными данными. Точные пороги
-геометрии, подтверждения и риска задаёт активная конфигурация стратегии.
+Настройки стратегии задают форму фигуры, условия подтверждения и пороги риска.
 
 ## Логика решения
 

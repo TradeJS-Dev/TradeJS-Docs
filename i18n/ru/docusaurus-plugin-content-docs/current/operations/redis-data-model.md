@@ -35,7 +35,7 @@ results как production config.
 ## Правила эксплуатации
 
 - Не делайте глобальный flush Redis в проде.
-- Используйте scoped cleanup (`npx @tradejs/cli clean-redis`).
+- Используйте scoped cleanup (`npm exec -- tradejs clean-redis`).
 - Относитесь к Redis как к критической runtime-зависимости.
 
 ## Как дебажить

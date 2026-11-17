@@ -7,9 +7,8 @@ place orders.
 
 ## Recommended Timeframes
 
-Use candle-based workflows on `5m+` timeframes. Many examples use `15m`.
-
-TradeJS is not designed for high-frequency trading.
+Use an interval supported by the strategy. See the [strategy catalog](./strategies/reference)
+for the supported intervals and examples.
 
 ## Not For HFT
 

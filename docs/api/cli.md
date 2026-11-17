@@ -6,14 +6,14 @@ title: CLI API
 Use the commands below to run backtests, manage local services, and inspect a
 TradeJS project. Run them from your project folder.
 
-```bash
-npx @tradejs/cli <command> [flags]
+```text
+npm exec -- tradejs <command> [flags]
 ```
 
 Run command-level help whenever you need the exact current syntax:
 
 ```bash
-npx @tradejs/cli backtest --help
+npm exec -- tradejs backtest --help
 ```
 
 ## Command Map
@@ -29,7 +29,7 @@ Setup and diagnostics:
 Research and backtesting:
 
 - `backtest` - run strategy backtests or refresh market cache.
-- `research:strategy` - automate fixed-config research, resume and frozen-period revalidation.
+- `research:core` - define and verify a reproducible study with source access.
 - `results` - inspect, merge, update, or clear selected strategy results in Redis.
 - `runtime-parity` - compare recorded live entries with reconstructed entries.
 - `replay` - evaluate a deployed configuration over historical closed candles.
@@ -51,7 +51,7 @@ Runtime and signals:
 
 Market data and maintenance:
 
-- `continuity` - check or repair candle continuity.
+- `continuity` - reload candle history when it detects a gap.
 - `binance:market-ingest` - ingest Binance market data.
 - `derivatives:ingest` - ingest derivatives context.
 - `derivatives:ingest:coinalyze:all` - ingest Coinalyze derivatives context for all configured targets.
@@ -69,25 +69,21 @@ ML and AI:
 - `ai-export` - export AI prompt/evaluation datasets.
 - `ai-train` - replay AI datasets and measure gate behavior.
 - `ai-pocket-search` - search deterministic AI-gate feature pockets.
-- `test-ml`, `test-script` - diagnostic test commands.
 
 ## Common Examples
 
 ```bash
 # Check local dependencies
-npx @tradejs/cli doctor
+npm exec -- tradejs doctor
 
 # Refresh candles without running tests
-npx @tradejs/cli backtest --updateOnly --tickers BTCUSDT,ETHUSDT
+npm exec -- tradejs backtest --updateOnly --config MaStrategy:base --connector binance --tickers BTCUSDT
 
 # Run a cache-only backtest over one symbol
-npx @tradejs/cli backtest --config MaStrategy:base --tickers BTCUSDT --cacheOnly
-
-# Evaluate runtime signals without placing orders
-npm exec -- tradejs signals --tickers BTCUSDT --cacheOnly --skipScreenshots
+npm exec -- tradejs backtest --config MaStrategy:base --connector binance --tickers BTCUSDT --cacheOnly
 
 # Inspect selected backtest results for one strategy
-npx @tradejs/cli results --strategy TrendLine --coverage
+npm exec -- tradejs results --strategy MaStrategy --coverage
 ```
 
 ## Backtest
@@ -138,52 +134,9 @@ See [Create a backtest config](../getting-started/backtest-config).
 
 ## Automatic strategy research {#automatic-strategy-research}
 
-Use Node.js 24. Run the installed CLI from your project
-with `PROJECT_CWD`, `TRADEJS_SOURCE_REPOSITORY_ROOT` and
-`TRADEJS_FRAMEWORK_REPOSITORY_ROOT` bound to the research checkouts described in
-[Codex strategy skills](../guides/codex-strategy-skills#research-roots).
+List the available actions with `npm exec -- tradejs research:core --help`. To start a study, first set up the [source and build paths](../guides/codex-strategy-skills#research-roots).
 
-Start from an existing frozen core specification:
-
-```bash
-yarn exec tradejs research:strategy init \
-  --coreSpec data/research/specs/core.json \
-  --out data/research/specs/workflow.json
-```
-
-Alternatively, `init` accepts `--strategy`, `--config <Strategy:config>`,
-`--researchId`, `--claim`, `--mechanism`, `--symbolsFile`, `--start`, `--end`
-and `--out`. The symbols file is a JSON string array of USDT contracts;
-timestamps are UTC strings with a timezone or epoch milliseconds. Add
-`--candidates <Strategy:a,Strategy:b>` for bounded alternatives. Each named
-Redis config must contain exactly one value per key, belong to the selected
-strategy and set `MAX_LOSS_VALUE=10`.
-
-Review the generated hypothesis, costs, history exposure, DEV/TEST boundary,
-selection criteria and resource budget before the first run. For comparisons
-across exports, freeze one common calendar boundary. `init` defaults to
-retrospective history; do not relabel previously inspected data as untouched.
-Check active workers and host memory before running:
-
-```bash
-yarn exec tradejs research:strategy run --spec data/research/specs/workflow.json
-yarn exec tradejs research:strategy verify --spec data/research/specs/workflow.json
-yarn exec tradejs research:strategy status --spec data/research/specs/workflow.json
-```
-
-Repeat the same `run` to resume unchanged inputs and executable versions.
-`status` reports stages, errors, report location and retention state. For a
-completed parent, create a new-period specification with:
-
-```text
-research:strategy revalidate --spec <parent-workflow.json> --researchId <new-id> --start <UTC> --end <UTC> --out <new-workflow.json>
-```
-
-The new period must start at or after the parent's end; frozen rules and
-directions are preserved. Results live under
-`data/research/strategy/<researchId>/`, with a permanent research note under
-`notes/<Strategy>/`. The command uses cached history and does not publish,
-deploy, send notifications or place live orders.
+To get started with a coding agent, use the [research prompt](../guides/develop-with-an-agent#run-strategy-research).
 
 ## Signals
 
@@ -220,10 +173,10 @@ resume add or remove only a temporary new-entry block; they do not edit the
 strategy configuration.
 
 ```bash
-npx @tradejs/cli runtime-control inspect --user root --deployment production
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli runtime-control pause --user root --deployment production --strategy TrendFollow
-npx @tradejs/cli runtime-control resume --user root --deployment production --strategy TrendFollow
+npm exec -- tradejs runtime-control inspect --user root --deployment production
+npm exec -- tradejs runtime-control verify --user root --deployment production
+npm exec -- tradejs runtime-control pause --user root --deployment production --strategy TrendFollow
+npm exec -- tradejs runtime-control resume --user root --deployment production --strategy TrendFollow
 ```
 
 - `inspect` prints resolved deployments and may be filtered by `--deployment`

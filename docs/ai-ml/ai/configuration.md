@@ -62,25 +62,6 @@ Example:
 }
 ```
 
-## Real TrendLine Adapter Example
-
-TrendLine extends shared payload with untrimmed trendline geometry:
-
-```ts
-export const trendLineAiAdapter: StrategyAiAdapter = {
-  buildPayload: ({ signal, basePayload }) => ({
-    ...basePayload,
-    figures: {
-      ...basePayload.figures,
-      trendline: signal.figures?.trendLine ?? null,
-    },
-  }),
-  mapEntryRuntimeFromConfig: (config) =>
-    mapAiRuntimeFromConfig(
-      config as Pick<TrendLineConfig, 'AI_ENABLED' | 'MIN_AI_QUALITY'>,
-    ),
-};
-```
 
 ## How to Override Prompt for Your Strategy
 
@@ -120,17 +101,6 @@ Notes:
 
 - this is the public way to customize prompt behavior per strategy
 - base runtime prompt is still applied; your add-ons are appended to system/human prompts
-
-## Order Gate Logic
-
-```ts
-const minAiQuality = runtime.ai?.minQuality ?? 4;
-const shouldMakeOrder =
-  makeOrdersEnabled &&
-  (!signal || env === 'BACKTEST' || quality == null || quality >= minAiQuality);
-```
-
-If gate blocks order, signal is still returned with skip reason.
 
 ## AI + ML Together
 

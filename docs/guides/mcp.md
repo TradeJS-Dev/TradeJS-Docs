@@ -1,15 +1,19 @@
 ---
 title: MCP for Codex and Claude Code
+sidebar_label: MCP
 description: Connect Codex or Claude Code to TradeJS to read data and run backtests.
 ---
 
-Connect Codex or Claude Code to your TradeJS app through MCP. The assistant can
-read market data, signals, and backtest results. To let it run backtests or
-diagnostics, grant the corresponding permissions.
+MCP lets your agent use data from a running TradeJS server. You can ask about
+market data, saved signals, and backtest results. With permission, the agent
+can also run a backtest on the server.
 
 The MCP address is `https://YOUR_APP_HOST/mcp`. Replace `YOUR_APP_HOST` with
 your app's host. Open **MCP** in the TradeJS sidebar to find the address
 and view your connections.
+
+The local stable release `3.1.28` does not include MCP. Use an existing
+TradeJS server with MCP enabled and an account on that server.
 
 ## Connect Codex
 
@@ -17,12 +21,12 @@ Run these commands in your terminal, using your app's address:
 
 ```bash
 codex mcp add tradejs --url https://YOUR_APP_HOST/mcp
-codex mcp login tradejs --scopes market:read,runtime:read,backtests:read,backtests:run,diagnostics:read,diagnostics:run
+codex mcp login tradejs --scopes market:read,runtime:read,backtests:read
 ```
 
-Sign in to TradeJS in the browser and choose the assistant's permissions.
-Permissions ending in `:read` are enough to inspect data. Permissions ending
-in `:run` allow background jobs and start unchecked on the consent page.
+Sign in to TradeJS in the browser and approve read access. To allow new
+backtests, add `backtests:run` to `--scopes` when signing in and approve it
+on the consent page.
 
 Codex CLI and the Codex desktop app can use the same connection. Refresh the
 connection or restart the client if the TradeJS tools do not appear.
@@ -36,19 +40,28 @@ Run this command in your terminal:
 claude mcp add --transport http tradejs https://YOUR_APP_HOST/mcp
 ```
 
-In Claude Code, open `/mcp`, select TradeJS and complete authorization in the
+In Claude Code, open [`/mcp`](https://code.claude.com/docs/en/mcp), select TradeJS and complete authorization in the
 browser. Check the client name, redirect address and requested permissions
 before approving. Complete sign-in and consent yourself.
 
 ## Make your first request
 
-Ask a specific question and include the period you want to examine. For example:
+Start by asking **“Check my TradeJS connection and list the data you can access.”**
+The agent can verify the connection with `tradejs_info`.
 
-> Show the saved TrendShift signals for BTCUSDT over the last 24 hours
-> in the production deployment.
+| Task | Example prompt |
+| --- | --- |
+| Read candles | Show the latest 15-minute BTCUSDT candles on Binance. |
+| Review signals | Show saved TrendShift signals for BTCUSDT in the `production` deployment over the last 24 hours. |
+| Read a backtest | Find the latest HeadAndShoulders backtest. Show the number of closed trades, net result, and drawdown. |
+| Run a backtest | Find my saved HeadAndShoulders configuration. Use it to backtest BTCUSDT on Binance over the last seven days of cached 15-minute candles. Show the configuration name and resulting job ID. |
 
-The assistant should first call `tradejs_info` to check the connection and user. Questions about the running app also require
-`runtime_get_status`.
+The first three requests only need read access. The last needs `backtests:run`,
+a saved configuration, and a server with a backtest worker.
+
+## Inspect runtime data
+
+For questions about the running app, the agent should also check `runtime_get_status`.
 
 The dashboard's **Copy context for AI** button copies the market data provider,
 symbol universe, selected symbol, interval, backtest and page link. Paste the
@@ -199,8 +212,4 @@ so download `payload` for the complete content.
 | A tool is missing | Check the granted permissions in **MCP**. |
 | A job will not start | Check background job availability with `tradejs_info`. If unavailable, contact the app owner. |
 
-Use the Project's `AGENTS.md` and the `$tradejs-mcp` skill in `.codex/skills`
-to give the assistant Project instructions. In Claude Code, `CLAUDE.md` imports
-the same instructions. Update installed skills with
-`create-tradejs --update-skills`. If managed files have local changes,
-reconcile those changes before retrying the update and running Project checks.
+[Try an agent recipe](./develop-with-an-agent) to check the connection on a specific task.

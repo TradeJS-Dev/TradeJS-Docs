@@ -27,11 +27,12 @@ has:
 
 ## Runtime Contract
 
-`core.ts` returns one of three decisions:
+`core.ts` returns a decision:
 
 - `skip`
 - `entry`
 - `exit`
+- `protect`
 
 Shared runtime handles:
 
@@ -55,38 +56,7 @@ Import rule:
 
 ## Minimal `core.ts` Example
 
-```ts
-export const createMyStrategyCore: CreateStrategyCore<
-  MyStrategyConfig
-> = async ({ strategyApi }) => {
-  return async () => {
-    const position = await strategyApi.getCurrentPosition();
-    if (position && position.qty > 0) {
-      return strategyApi.skip('POSITION_EXISTS');
-    }
-
-    const { currentPrice } = await strategyApi.getDecisionPriceContext();
-
-    const { stopLossPrice, takeProfitPrice } =
-      strategyApi.getDirectionalTpSlPrices({
-        price: currentPrice,
-        direction: 'LONG',
-        takeProfitDelta: 2,
-        stopLossDelta: 1,
-        unit: 'percent',
-      });
-
-    return strategyApi.entry({
-      direction: 'LONG',
-      orderPlan: {
-        qty: 1,
-        stopLossPrice,
-        takeProfits: [{ rate: 1, price: takeProfitPrice }],
-      },
-    });
-  };
-};
-```
+`core.ts` can skip a candle with `strategyApi.skip(code)`. For a complete signal and order-plan example, see the [TypeScript walkthrough](./typescript-strategy-step-by-step).
 
 ## StrategyAPI Data Rules
 

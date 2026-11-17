@@ -7,17 +7,10 @@ TradeJS calls this hook after applying the ML model to an entry with a
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  ml: StrategyHookMlContext;
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['afterEnrichMl']>>[0];
 ```
 
 `ml` is explicit stage metadata:

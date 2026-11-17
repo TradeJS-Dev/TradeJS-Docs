@@ -2,6 +2,8 @@
 title: 'VolatilityCompressionBreakout'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 VolatilityCompressionBreakout ищет выход из узкого диапазона после периода
 небольших колебаний. Размах движения стратегия оценивает по ATR и полосам
 Боллинджера.
@@ -11,11 +13,8 @@ VolatilityCompressionBreakout ищет выход из узкого диапаз
 
 ## Визуальная схема
 
-![Логика VolatilityCompressionBreakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="volatility-compression-breakout" />
 
-![Пример сигнала VolatilityCompressionBreakout](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

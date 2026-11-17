@@ -10,10 +10,13 @@ rotating the password from the command line.
 
 ## Create or Update the User
 
+Run this in Bash from the project folder with Redis running:
+
 ```bash
-npx @tradejs/cli user-add \
-  --user root \
-  --password 'StrongPassword123!'
+read -r -s -p 'New TradeJS password: ' tradejs_password
+printf '\n'
+npm exec -- tradejs user-add --user root --password "$tradejs_password"
+unset tradejs_password
 ```
 
 The command hashes the password with bcrypt and saves the local user record in
@@ -35,13 +38,7 @@ permission is not required for trading.
 
 ## Rotate the Password
 
-Change it from account settings or run:
-
-```bash
-npx @tradejs/cli user-add \
-  --user root \
-  --password 'NewStrongPassword456!'
-```
+Change the password in account settings or reuse the command in the first section.
 
 ## Diagnose Manual Setup
 

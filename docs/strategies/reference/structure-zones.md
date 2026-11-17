@@ -2,6 +2,8 @@
 title: 'StructureZones'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 StructureZones draws price zones from recent highs and lows. It looks for a
 bounce from a zone or a break through it.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![StructureZones strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/strategy-logic.svg)
-
-![StructureZones signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="structure-zones" />
 
 ## Entry Logic
 

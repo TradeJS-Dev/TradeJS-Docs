@@ -2,6 +2,8 @@
 title: 'MarketFlushReversal'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 MarketFlushReversal ищет отбой после резкого движения на широком рынке.
 Стратегия использует закрытую свечу и данные, доступные на момент сигнала.
 
@@ -10,11 +12,8 @@ MarketFlushReversal ищет отбой после резкого движени
 
 ## Визуальная схема
 
-![Логика MarketFlushReversal](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="market-flush-reversal" />
 
-![Пример сигнала MarketFlushReversal](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

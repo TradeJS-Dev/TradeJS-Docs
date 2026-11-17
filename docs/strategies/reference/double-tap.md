@@ -2,6 +2,8 @@
 title: 'DoubleTap'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 DoubleTap looks for a double top or double bottom. It waits for a breakout and
 uses the pattern to set the stop and target.
 
@@ -12,11 +14,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![DoubleTap strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/strategy-logic.svg)
-
-![DoubleTap signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="double-tap" />
 
 ## Entry Logic
 

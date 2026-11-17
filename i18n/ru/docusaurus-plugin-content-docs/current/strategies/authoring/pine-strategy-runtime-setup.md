@@ -7,10 +7,11 @@ description: 'Подключите функции Pine, преобразуйте
 В начале `core.ts` задайте имена выходных значений Pine и напишите функцию чтения.
 На следующем шаге эти значения будут нужны для решения о сделке.
 
-```text
+```ts
 import {
   getLatestPineBooleanPlotValues,
   getLatestPineNumberPlotValues,
+  loadPineScriptFile,
   runPineScript,
   type PineContextLike,
 } from '@tradejs/node/pine';
@@ -20,7 +21,7 @@ import type { AdaptiveMomentumRibbonConfig } from './config';
 import { buildAdaptiveMomentumRibbonFigures } from './figures';
 import { type CreateStrategyCore } from '@tradejs/types';
 
-const AMR_PINE_FILE_NAME = 'adaptiveMomentumRibbon.pine';
+const AMR_PINE_PATH = 'src/strategies/AdaptiveMomentumRibbon/adaptiveMomentumRibbon.pine';
 const AMR_BOOLEAN_PLOTS = [
   'entryLong',
   'entryShort',

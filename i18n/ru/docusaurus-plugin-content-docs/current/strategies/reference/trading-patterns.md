@@ -2,10 +2,16 @@
 title: TradingPatterns
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TradingPatterns проверяет четыре фигуры в одной стратегии. На каждой свече она
 ищет Diamond, Flag, Gartley и HeadAndShoulders.
 
 Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
+
+## Визуальная схема
+
+<StrategySignalChart strategy="trading-patterns" />
 
 ## Установка и интервал
 

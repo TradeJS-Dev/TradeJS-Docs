@@ -14,9 +14,8 @@ sending an order.
   timeframe, and market universe.
 - **Universe:** the set of symbols eligible for evaluation. A deployment or an
   individual strategy can narrow this set.
-- **Signal:** a strategy decision such as a possible long entry, short entry,
-  exit, or no action. A signal is not proof that an order was accepted or
-  filled.
+- **Signal:** a record of a potential entry. Check order submission and fills
+  separately.
 - **Order:** an instruction sent to a venue. Its lifecycle includes submission,
   acknowledgement, rejection, partial fills, fills, and cancellation.
 - **Position:** the resulting market exposure. Position management continues

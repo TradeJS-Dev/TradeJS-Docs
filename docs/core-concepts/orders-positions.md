@@ -13,7 +13,7 @@ An entry decision should provide:
 - `direction`
 - `qty`
 - `stopLossPrice`
-- one or more take-profit prices
+- take-profit prices when the strategy uses fixed targets
 
 The shared runtime resolves execution fields such as timestamp, current price, and signal metadata from runtime context.
 

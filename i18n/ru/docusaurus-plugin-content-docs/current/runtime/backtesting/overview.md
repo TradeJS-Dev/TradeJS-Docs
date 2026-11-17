@@ -30,20 +30,20 @@ description: 'Узнайте, как TradeJS воспроизводит торг
 можно запустить через CLI:
 
 ```bash
-npx @tradejs/cli backtest \
+npm exec -- tradejs backtest \
   --user root \
-  --config <StrategyName:configName> \
-  --connector <connector> \
-  --timeframe <minutes> \
-  --tickers <SYMBOLS> \
-  --tests <limit> \
-  --parallel <workers>
+  --config '<StrategyName:configName>' \
+  --connector '<connector>' \
+  --timeframe '<minutes>' \
+  --tickers '<SYMBOLS>' \
+  --tests '<limit>' \
+  --parallel '<workers>'
 ```
 
 Если локальные сервисы остановлены, сначала запустите их:
 
 ```bash
-npx @tradejs/cli infra-up
+npm exec -- tradejs infra-up
 ```
 
 Флаг `--cacheOnly` запрещает обновлять историю и подходит для повторной проверки
@@ -70,8 +70,8 @@ npx @tradejs/cli infra-up
 конфигурации стратегии:
 
 ```bash
-npx @tradejs/cli backtest \
-  --config <StrategyName:configName> \
+npm exec -- tradejs backtest \
+  --config '<StrategyName:configName>' \
   --executionCosts '{"fees":{"makerRate":0.001,"takerRate":0.001},"slippage":{"baseBps":10,"spreadMultiplier":1,"marketImpactBps":0,"delayRiskMultiplier":0},"funding":{"enabled":false}}'
 ```
 

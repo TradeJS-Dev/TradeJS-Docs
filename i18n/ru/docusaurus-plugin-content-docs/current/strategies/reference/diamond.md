@@ -2,9 +2,15 @@
 title: 'Diamond'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Diamond ищет разворот, когда расширявшийся диапазон цены сужается и цена выходит за его границу.
 
 Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
+
+## Визуальная схема
+
+<StrategySignalChart strategy="diamond" />
 
 ## Установка
 
@@ -27,7 +33,5 @@ npm install --save-exact @tradejs/strategy-diamond
 
 По умолчанию цель отстоит от пробоя на высоту фигуры. Стоп находится за
 последней крайней точкой на противоположной стороне с отступом 10% высоты фигуры.
-
-![Схема входа Diamond](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Diamond/main/docs/signal-example.svg)
 
 Подробности настройки есть в [README пакета](https://github.com/TradeJS-Dev/TradeJS-Strategy-Diamond#readme).

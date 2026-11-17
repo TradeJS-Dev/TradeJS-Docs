@@ -6,15 +6,10 @@ TradeJS calls this hook only when `core.ts` returns a `skip` decision.
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: SkipDecision;
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['onSkip']>>[0];
 ```
 
 ## Output

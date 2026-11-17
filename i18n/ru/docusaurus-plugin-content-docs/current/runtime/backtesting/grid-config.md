@@ -39,7 +39,7 @@ title: Перебор сетки параметров
 ## Запуск поиска
 
 ```bash
-npx @tradejs/cli backtest \
+npm exec -- tradejs backtest \
   --user root \
   --config MaStrategy:grid-v1 \
   --connector bybit \
@@ -67,7 +67,7 @@ npx @tradejs/cli backtest \
 Просмотрите результаты и покрытие инструментов:
 
 ```bash
-npx @tradejs/cli results \
+npm exec -- tradejs results \
   --strategy MaStrategy \
   --coverage \
   --user root

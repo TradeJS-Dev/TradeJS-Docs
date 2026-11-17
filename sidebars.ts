@@ -70,6 +70,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/understanding-output',
       ],
     },
+    'guides/mcp',
     {
       type: 'category',
       label: t('Core Concepts', 'Базовые понятия'),
@@ -91,7 +92,6 @@ const sidebars: SidebarsConfig = {
         'guides/data-quality',
         'guides/compare-strategies',
         'guides/ai-ml-workflows',
-        'guides/mcp',
         {
           type: 'category',
           label: t('Write a strategy', 'Написать свою стратегию'),

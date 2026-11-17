@@ -119,11 +119,14 @@ There are two groups of project hooks:
 - strategy runtime hooks such as `onBar`, `afterBarDecision`, and `beforePlaceOrder`
 - signals batch hooks such as `beforeSignals` and `afterSignals`
 
-`beforeSignals` and `afterSignals` run around the `npm exec -- tradejs signals` pipeline, not around an individual strategy candle. They are only available in `tradejs.config.ts`, not in `manifest.ts`.
+`beforeSignals` and `afterSignals` run around a batch of signal calculations, not around an individual strategy candle. They are only available in `tradejs.config.ts`, not in `manifest.ts`.
 
 `beforeSignals` may abort the current signals run:
 
 ```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
 export default defineConfig(basePreset, {
   hooks: {
     beforeSignals: async () => {
@@ -201,18 +204,18 @@ A strategy plugin exports `strategyEntries`:
 
 ```ts
 import { defineStrategyPlugin } from '@tradejs/core/config';
-import type { StrategyRegistryEntry } from '@tradejs/types';
+import { createStrategyConfigParser } from '@tradejs/strategy-kit/config';
 
-const strategyEntries: StrategyRegistryEntry[] = [
-  {
+const defaults = {};
+
+export default defineStrategyPlugin({
+  strategyEntries: [{
     manifest: { name: 'MyStrategy' },
-    creator: async () => {
-      return async () => 'NO_SIGNAL';
-    },
-  },
-];
-
-export default defineStrategyPlugin({ strategyEntries });
+    defaults,
+    parseConfig: createStrategyConfigParser({ strategyName: 'MyStrategy', defaults }),
+    createCore: ({ strategyApi }) => () => strategyApi.skip('NO_SIGNAL'),
+  }],
+});
 ```
 
 ## Strategy Manifest
@@ -256,28 +259,15 @@ A connector plugin exports `connectorEntries`:
 
 ```ts
 import { defineConnectorPlugin } from '@tradejs/core/config';
-import type { ConnectorRegistryEntry } from '@tradejs/types';
+import { MyExchangeConnectorCreator } from './myExchangeConnector';
 
-const connectorEntries: ConnectorRegistryEntry[] = [
-  {
+export default defineConnectorPlugin({
+  connectorEntries: [{
     name: 'MyExchange',
-    providers: ['myexchange', 'mx'],
-    creator: async ({ userName }) => {
-      return {
-        kline: async () => [],
-        getTickers: async () => [],
-        getPosition: async () => null,
-        getPositions: async () => [],
-        placeOrder: async () => true,
-        closePosition: async () => true,
-        getState: async () => ({}),
-        setState: async () => {},
-      };
-    },
-  },
-];
-
-export default defineConnectorPlugin({ connectorEntries });
+    providers: ['myexchange'],
+    creator: MyExchangeConnectorCreator,
+  }],
+});
 ```
 
 ## Runtime Types You Will Use Most
@@ -295,17 +285,7 @@ See shared contracts in `@tradejs/types` and public helper/runtime entrypoints i
 Use `StrategyAPI.getClosedCandles` when your strategy needs closed
 15-minute candles from a specific time window.
 
-```ts
-const source = await strategyApi.getClosedCandles({
-  interval: '15',
-  start: sourceStart,
-  end: sourceEnd,
-  limit: 96,
-});
-if (!source.complete) {
-  return strategyApi.skip('SOURCE_HISTORY_INCOMPLETE');
-}
-```
+Call `strategyApi.getClosedCandles({ interval: '15', start: sourceStart, end: sourceEnd, limit: 96 })` inside your strategy decision. If `source.complete` is false, skip the signal with `strategyApi.skip('SOURCE_HISTORY_INCOMPLETE')`.
 
 `sourceStart` and `sourceEnd` are UTC millisecond timestamps aligned to 15-minute
 boundaries. The window is half-open `[start, end)` and cannot end after the

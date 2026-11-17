@@ -9,9 +9,9 @@ and how the exchange handled the order.
 ## 1. Verify the Deployed Setup
 
 ```bash
-npx @tradejs/cli runtime-control verify \
-  --user <user> \
-  --deployment <deployment>
+npm exec -- tradejs runtime-control verify \
+  --user '<user>' \
+  --deployment '<deployment>'
 ```
 
 Confirm the strategy package version, computed `strategyRevision`,
@@ -68,13 +68,13 @@ Use a narrow replay for the same strategy, symbols, and timestamps. For an
 entry-only comparison:
 
 ```bash
-npx @tradejs/cli runtime-parity \
-  --user <user> \
-  --connector <connector> \
-  --strategy <StrategyName> \
-  --tickers <SYMBOLS> \
-  --startTime <ms> \
-  --endTime <ms> \
+npm exec -- tradejs runtime-parity \
+  --user '<user>' \
+  --connector '<connector>' \
+  --strategy '<StrategyName>' \
+  --tickers '<SYMBOLS>' \
+  --startTime '<ms>' \
+  --endTime '<ms>' \
   --details \
   --cacheOnly
 ```

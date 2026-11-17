@@ -2,6 +2,8 @@
 title: 'TrendFollow'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendFollow looks for an existing trend to continue. It checks entry conditions
 and moves the stop as the trend progresses.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![TrendFollow strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/strategy-logic.svg)
-
-![TrendFollow signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="trend-follow" />
 
 ## Entry Logic
 

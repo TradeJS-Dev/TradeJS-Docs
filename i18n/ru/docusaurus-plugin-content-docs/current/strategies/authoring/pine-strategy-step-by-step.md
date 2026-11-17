@@ -5,7 +5,7 @@ description: 'Добавьте Pine Script-стратегию в TradeJS по ч
 ---
 
 Подключите Pine-скрипт к TradeJS и используйте его значения для входа и выхода.
-На примере `AdaptiveMomentumRibbon` вы пройдёте путь от скрипта до первого
+На примере `ExamplePineRibbon` вы пройдёте путь от скрипта до первого
 бэктеста.
 
 Если нужен TypeScript-only путь, используйте [руководство по TypeScript-стратегии с `StrategyAPI`](./typescript-strategy-step-by-step).

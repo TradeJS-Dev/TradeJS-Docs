@@ -2,8 +2,14 @@
 title: TrendPullback
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendPullback ждёт откат внутри часового тренда. Две экспоненциальные
 скользящие средние задают направление, а индикатор RSI отмечает откат.
+
+## Визуальная схема
+
+<StrategySignalChart strategy="trend-pullback" />
 
 ## Установка
 

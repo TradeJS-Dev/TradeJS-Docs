@@ -6,6 +6,8 @@ description: Give your coding agent the public TradeJS documentation and a task 
 Use this guide when you want an agent to write or test a strategy in your
 TradeJS project. Start with your project folder open in the agent.
 
+[Connect through MCP](./mcp) when the agent needs data from a running TradeJS app.
+
 ## Give the agent the documentation
 
 Send it the [documentation index](https://docs.tradejs.dev/llms.txt) and the page for the job.
@@ -16,12 +18,11 @@ links to the rules and settings for existing strategies.
 ## Run strategy research
 
 Specify the strategy, dates, and market. You can start from an existing
-configuration. Codex users can use the
-[strategy research skill](./codex-strategy-skills).
+configuration. Codex users can use the [TradeJS research skills](./codex-strategy-skills).
 
 ```text
-Research an existing HeadAndShoulders configuration. Use $strategy-research
-if installed. Read the earlier runs first. Use USDT contracts and locally
+Research an existing HeadAndShoulders configuration. Read earlier runs first.
+Use USDT contracts and locally
 cached history. Record the exchange, symbols, dates, fees, and settings before
 running. Split the data by date. Choose a variant on the earlier period, then
 check it on the later period. Report trade count, drawdown, and result after
@@ -60,10 +61,3 @@ Give the agent the strategy name, exchange, symbol, candle interval, and dates.
 Ask it to record the settings and report path. The
 [HeadAndShoulders example](../strategies/reference/head-and-shoulders#backtest)
 has a complete command.
-
-## Use your TradeJS app as a data source
-
-[Connect through MCP](./mcp) when the agent needs to read data from a running
-TradeJS app or run a backtest there. The connection requires your approval and
-the permissions for the requested action. For a local project created with
-`create-tradejs`, see also [TradeJS skills for Codex](./codex-strategy-skills).

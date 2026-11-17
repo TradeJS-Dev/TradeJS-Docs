@@ -19,13 +19,16 @@ title: Коннекторы
 Пример:
 
 ```bash
-npx @tradejs/cli backtest --connector bybit
-npm exec -- tradejs signals --connector bybit
+npm run backtest -- --config MaStrategy:base --connector bybit \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```
 
 Пользовательский коннектор подключается через `tradejs.config.ts`:
 
 ```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
 export default defineConfig(basePreset, {
   connectors: ['./src/plugins/myConnector.plugin.ts'],
 });

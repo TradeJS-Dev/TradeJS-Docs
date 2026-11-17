@@ -51,7 +51,7 @@ strategy core
      |
      +-- skip(reason) ---------------+
      |                               v
-     +-- exit(code, direction) -- runtime hooks/storage
+     +-- exit / protect --------- runtime hooks/storage
      |
      v
 entry(direction, orderPlan, figures, indicators)

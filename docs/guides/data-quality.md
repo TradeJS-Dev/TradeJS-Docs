@@ -45,26 +45,19 @@ The strategy should only receive data available at the decision timestamp.
 Update history without running tests:
 
 ```bash
-npx @tradejs/cli backtest --updateOnly --connector bybit --timeframe 15
+npm exec -- tradejs backtest --updateOnly --config MaStrategy:base --connector bybit \
+  --tickers BTCUSDT --timeframe 15
 ```
 
 Run from cache only after data is prepared:
 
 ```bash
-npx @tradejs/cli backtest --cacheOnly --config TrendLine:base --tickers BTCUSDT --timeframe 15
+npm exec -- tradejs backtest --cacheOnly --config MaStrategy:base --connector bybit \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```
 
-Check continuity for a provider/timeframe:
+To reload a series with a gap, see [data sync](../getting-started/data-sync).
 
-```bash
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
-```
-
-Run signals without refreshing data:
-
-```bash
-npm exec -- tradejs signals --cacheOnly --tickers BTCUSDT --timeframe 15
-```
 
 ## Context Data
 

@@ -2,6 +2,8 @@
 title: 'TrendFollow'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 TrendFollow ищет продолжение тренда. Стратегия проверяет условия входа и
 подтягивает стоп вслед за трендом.
 
@@ -10,11 +12,8 @@ TrendFollow ищет продолжение тренда. Стратегия п�
 
 ## Визуальная схема
 
-![Логика TrendFollow](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="trend-follow" />
 
-![Пример сигнала TrendFollow](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

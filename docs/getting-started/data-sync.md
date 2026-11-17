@@ -2,18 +2,17 @@
 title: Data Sync
 ---
 
-TradeJS downloads candles as needed for a backtest. Use **Data coverage**
-to check for missing data and fill small gaps.
+TradeJS downloads candles when you run a regular backtest. To fetch history
+before testing, use the command below.
 
 ## Check and fill gaps in the app
 
-Open **Data coverage** as the project owner. Select a year, expand a month
-and a UTC day, then find the affected series. **Refresh** checks the selected
-year again.
+The **Data coverage** and **Backfill queue** screens require a release that
+includes data coverage. The stable `3.1.28` app does not have these screens.
 
-Queue the gap for the affected series and UTC day. In **Backfill queue** you
-can see whether the job completed, how many values it added, and which gaps
-remain. You can also [check coverage through MCP](../guides/mcp#data-coverage).
+On a compatible server, the project owner can select a dataset, series and UTC
+day, queue the missing data, and check the result. If the server supports MCP,
+[ask your agent to check coverage](../guides/mcp#data-coverage).
 
 <span id="choose-exchange-for-update"></span>
 
@@ -36,9 +35,9 @@ npm run backtest -- --updateOnly --user root --config MaStrategy:base \
 
 ## Reload candles when the history has gaps {#2-npx-tradejscli-continuity}
 
-`continuity` can delete and reload candles for the provider, instrument, and
-interval if it finds a gap. Use the app for a small repair. If you need to
-reload the affected series, start with one instrument and one provider.
+When it detects a gap, `continuity` can delete saved candles for the affected
+series and reload its history. Use it when you intend to reload local data.
+This command is scoped to the 15-minute BTCUSDT series on Binance.
 
 ```bash
 npm exec -- tradejs continuity --user root --timeframe 15 \

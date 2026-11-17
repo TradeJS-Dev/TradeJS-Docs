@@ -7,10 +7,10 @@ TradeJS может сохранить данные по деривативам �
 
 Основные скрипты:
 
-- `npx @tradejs/cli derivatives:ingest`
-- `npx @tradejs/cli derivatives:ingest:coinalyze:all`
-- `npx @tradejs/cli hyperliquid:whale-ingest`
-- `npx @tradejs/cli hyperliquid:whale-backfill`
+- `npm exec -- tradejs derivatives:ingest`
+- `npm exec -- tradejs derivatives:ingest:coinalyze:all`
+- `npm exec -- tradejs hyperliquid:whale-ingest`
+- `npm exec -- tradejs hyperliquid:whale-backfill`
 
 Источники:
 
@@ -23,7 +23,7 @@ TradeJS может сохранить данные по деривативам �
 Команда:
 
 ```bash
-npx @tradejs/cli derivatives:ingest --provider coinalyze --symbols BTCUSDT,ETHUSDT --intervals 15m,1h --days 120
+npm exec -- tradejs derivatives:ingest --provider coinalyze --symbols BTCUSDT,ETHUSDT --intervals 15m,1h --days 120
 ```
 
 Поддерживаемые providers:
@@ -43,7 +43,7 @@ npx @tradejs/cli derivatives:ingest --provider coinalyze --symbols BTCUSDT,ETHUS
 Команда:
 
 ```bash
-npx @tradejs/cli derivatives:ingest:coinalyze:all --user root --days 120 --intervals 15m,1h
+npm exec -- tradejs derivatives:ingest:coinalyze:all --user root --days 120 --intervals 15m,1h
 ```
 
 Поведение:
@@ -65,7 +65,7 @@ npx @tradejs/cli derivatives:ingest:coinalyze:all --user root --days 120 --inter
 Запустите long-running public stream:
 
 ```bash
-npx @tradejs/cli hyperliquid:whale-ingest
+npm exec -- tradejs hyperliquid:whale-ingest
 ```
 
 Он классифицирует executions tracked wallets относительно position snapshots,
@@ -75,8 +75,8 @@ npx @tradejs/cli hyperliquid:whale-ingest
 Backfill explicit historical window:
 
 ```bash
-npx @tradejs/cli hyperliquid:whale-backfill --days 1
-npx @tradejs/cli hyperliquid:whale-backfill --from 2026-08-01T00:00:00Z --to 2026-08-02T00:00:00Z
+npm exec -- tradejs hyperliquid:whale-backfill --days 1
+npm exec -- tradejs hyperliquid:whale-backfill --from 2026-08-01T00:00:00Z --to 2026-08-02T00:00:00Z
 ```
 
 `--cacheOnly` запрещает network recovery при missing coverage. Automatic
@@ -113,7 +113,7 @@ Bootstrap схемы и upsert логика:
 
 ## 6. Операционные заметки
 
-- Для локального запуска выполните `npx @tradejs/cli infra-init` один раз, затем `npx @tradejs/cli infra-up`.
+- Для локального запуска выполните `npm exec -- tradejs infra-init` один раз, затем `npm exec -- tradejs infra-up`.
 - Перед ingest убедитесь, что PostgreSQL/Timescale доступен.
 - Начинайте с короткого lookback и малого списка символов.
 - Держите `batchDays` умеренным, чтобы снизить API/rate-limit нагрузку.

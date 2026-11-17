@@ -81,8 +81,8 @@ The production daily comparison is sent only from a verified, sealed runtime
 feedback replay bundle:
 
 ```bash
-npx @tradejs/cli runtime-feedback-notify \
-  --bundle <verified-replay-bundle>
+npm exec -- tradejs runtime-feedback-notify \
+  --bundle '<verified-replay-bundle>'
 ```
 
 Use `--dryRun` to verify the bundle and print the message without sending it.

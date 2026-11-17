@@ -16,13 +16,9 @@ Project `onBar` hooks выполняются раньше, чем `onBar` hooks 
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['onBar']>>[0];
 ```
 
 ## Output

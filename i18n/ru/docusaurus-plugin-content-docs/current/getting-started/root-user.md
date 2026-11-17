@@ -10,10 +10,13 @@ title: Локальный пользователь root
 
 ## Создание или обновление пользователя
 
+В папке проекта с запущенным Redis выполните в Bash:
+
 ```bash
-npx @tradejs/cli user-add \
-  --user root \
-  --password 'StrongPassword123!'
+read -r -s -p 'Новый пароль TradeJS: ' tradejs_password
+printf '\n'
+npm exec -- tradejs user-add --user root --password "$tradejs_password"
+unset tradejs_password
 ```
 
 Команда хеширует пароль с помощью bcrypt и сохраняет локального пользователя в
@@ -35,13 +38,7 @@ Redis. Не добавляйте пароль в скрипты, систему 
 
 ## Смена пароля
 
-Измените пароль в настройках счёта или выполните:
-
-```bash
-npx @tradejs/cli user-add \
-  --user root \
-  --password 'NewStrongPassword456!'
-```
+Измените пароль в настройках счёта или повторите команду из первого раздела.
 
 ## Диагностика ручной настройки
 

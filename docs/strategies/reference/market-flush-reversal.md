@@ -2,6 +2,8 @@
 title: 'MarketFlushReversal'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 MarketFlushReversal looks for a bounce after a sharp move across the market. It
 uses closed candles and market data available at the time of the signal.
 
@@ -10,11 +12,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![MarketFlushReversal strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/strategy-logic.svg)
-
-![MarketFlushReversal signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="market-flush-reversal" />
 
 ## Decision flow
 

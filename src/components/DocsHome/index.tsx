@@ -16,6 +16,8 @@ const copy = {
     agents: 'Разработка с агентом',
     agentsDescription:
       'Дайте агенту документацию и начните с готового запроса для разработки или проверки стратегии.',
+    mcp: 'Подключить MCP',
+    mcpDescription: 'Дайте агенту доступ к сигналам, данным рынка и бэктестам в вашем TradeJS.',
   },
   en: {
     title: 'TradeJS documentation',
@@ -30,6 +32,8 @@ const copy = {
     agents: 'Develop with an agent',
     agentsDescription:
       'Give your agent the docs and start with a prompt for writing or testing a strategy.',
+    mcp: 'Connect MCP',
+    mcpDescription: 'Give your agent access to signals, market data, and backtests in your TradeJS app.',
   },
 };
 
@@ -51,6 +55,11 @@ export default function DocsHome() {
       to: '/guides/develop-with-an-agent',
       title: t.agents,
       description: t.agentsDescription,
+    },
+    {
+      to: '/guides/mcp',
+      title: t.mcp,
+      description: t.mcpDescription,
     },
   ];
 

@@ -24,8 +24,8 @@ TradeJS 3 экспортирует storage через узкие server-only sub
 Быстрый запуск локальной инфраструктуры:
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
+npm exec -- tradejs infra-init
+npm exec -- tradejs infra-up
 ```
 
 ## Что важно в схеме

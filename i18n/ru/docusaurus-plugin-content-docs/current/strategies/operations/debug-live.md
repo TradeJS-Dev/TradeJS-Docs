@@ -9,9 +9,9 @@ title: Диагностика реальной торговли
 ## 1. Проверьте развёрнутую настройку
 
 ```bash
-npx @tradejs/cli runtime-control verify \
-  --user <user> \
-  --deployment <deployment>
+npm exec -- tradejs runtime-control verify \
+  --user '<user>' \
+  --deployment '<deployment>'
 ```
 
 Проверьте версию пакета, вычисленные `strategyRevision` и
@@ -64,13 +64,13 @@ npx @tradejs/cli runtime-control verify \
 Запустите узкое сравнение для той же стратегии, инструментов и времени:
 
 ```bash
-npx @tradejs/cli runtime-parity \
-  --user <user> \
-  --connector <connector> \
-  --strategy <StrategyName> \
-  --tickers <SYMBOLS> \
-  --startTime <ms> \
-  --endTime <ms> \
+npm exec -- tradejs runtime-parity \
+  --user '<user>' \
+  --connector '<connector>' \
+  --strategy '<StrategyName>' \
+  --tickers '<SYMBOLS>' \
+  --startTime '<ms>' \
+  --endTime '<ms>' \
   --details \
   --cacheOnly
 ```

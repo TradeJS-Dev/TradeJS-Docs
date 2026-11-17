@@ -2,6 +2,8 @@
 title: 'CupAndHandle'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 CupAndHandle looks for a cup and handle or its inverse in the highs and lows of
 closed candles. It uses the shape of the pattern to set the entry, stop, and
 target.
@@ -11,11 +13,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![CupAndHandle strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-CupAndHandle/main/docs/strategy-logic.svg)
-
-![CupAndHandle signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-CupAndHandle/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="cup-and-handle" />
 
 ## Decision flow
 

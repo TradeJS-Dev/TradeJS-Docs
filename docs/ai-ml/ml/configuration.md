@@ -7,18 +7,23 @@ description: 'Configure the TradeJS machine-learning pipeline from backtest data
 ## Main Flow
 
 1. Run a backtest with `--ml` to save training data in several files.
-2. Run `npx @tradejs/cli ml-export` to combine the files into one JSONL file.
+2. Run `npm exec -- tradejs ml-export` to combine the files into one JSONL file.
 3. The training command separates a holdout period and later evaluation windows.
 4. A Python container trains the model and saves the evaluation reports.
 5. When evaluating a signal, TradeJS can ask the service at `ML_GRPC_ADDRESS` for a score.
 
 ## Commands
 
+First [save a backtest configuration](../../getting-started/backtest-config) as `TrendLine:base`.
+
+Training needs a `docker-compose.ml.yml` file with an `ml` service. The standard installer sets up the regular backtest environment.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ml
-npx @tradejs/cli ml-export
-npx @tradejs/cli ml-inspect
-npx @tradejs/cli ml-train:latest --strategy TrendLine --model xgboost
+npm exec -- tradejs backtest --config TrendLine:base --ml \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ml-export --strategy TrendLine
+npm exec -- tradejs ml-inspect --strategy TrendLine
+npm exec -- tradejs ml-train:latest --strategy TrendLine --model xgboost
 ```
 
 ## Useful `.env` Example
@@ -54,11 +59,11 @@ Derived split files (generated automatically):
 
 ## Local Artifact Chain (Export -> Train -> Signals)
 
-1. `npx @tradejs/cli backtest --ml` writes chunk files to local project folder:
+1. `npm exec -- tradejs backtest --ml` writes chunk files to local project folder:
    `data/ml/export/ml-dataset-<strategy>-chunk-<chunkId>.jsonl`
-2. `npx @tradejs/cli ml-export` merges chunks into:
+2. `npm exec -- tradejs ml-export` merges chunks into:
    `data/ml/export/ml-dataset-<strategy>-merged-<timestamp>.jsonl`
-3. `npx @tradejs/cli ml-train:latest` reads export files from `data/ml/export` and writes model aliases to:
+3. `npm exec -- tradejs ml-train:latest` reads export files from `data/ml/export` and writes model aliases to:
    `data/ml/models/<Strategy>.joblib`
    or ensemble aliases `data/ml/models/<Strategy>.modelN.joblib`
 4. ML infer service must read the same model directory (`MODEL_DIR`).
@@ -70,11 +75,6 @@ If strategy name and model alias prefix match, runtime automatically uses the tr
 ## Quality and Causality
 
 - Train validates lookahead leakage on timestamp-like fields.
-- Guard can be disabled only for debugging:
-
-```env
-ML_TRAIN_DISABLE_CAUSALITY_GUARD=1
-```
 
 - Runtime inference uses the same feature trimming policy as train.
 

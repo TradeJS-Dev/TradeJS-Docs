@@ -8,18 +8,9 @@ TradeJS вызывает `beforeEntryGate` после встроенных пр�
 ## Параметры
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  policy: StrategyHookPolicyContext;
-  ml?: StrategyHookMlContext;
-  ai?: StrategyHookAiContext;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['beforeEntryGate']>>[0];
 ```
 
 `policy.aiQuality` равен `undefined`, когда сигнала нет или AI не вернул оценку качества.

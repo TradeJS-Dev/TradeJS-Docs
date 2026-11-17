@@ -2,6 +2,8 @@
 title: 'DoubleTap'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 DoubleTap ищет двойную вершину или двойное дно. Стратегия ждёт пробоя и
 рассчитывает стоп и цель по фигуре.
 
@@ -10,11 +12,8 @@ DoubleTap ищет двойную вершину или двойное дно. �
 
 ## Визуальная схема
 
-![Логика DoubleTap](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="double-tap" />
 
-![Пример сигнала DoubleTap](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

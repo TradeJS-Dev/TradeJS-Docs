@@ -30,20 +30,20 @@ The quickest route is the web app described in
 configuration, use the CLI:
 
 ```bash
-npx @tradejs/cli backtest \
+npm exec -- tradejs backtest \
   --user root \
-  --config <StrategyName:configName> \
-  --connector <connector> \
-  --timeframe <minutes> \
-  --tickers <SYMBOLS> \
-  --tests <limit> \
-  --parallel <workers>
+  --config '<StrategyName:configName>' \
+  --connector '<connector>' \
+  --timeframe '<minutes>' \
+  --tickers '<SYMBOLS>' \
+  --tests '<limit>' \
+  --parallel '<workers>'
 ```
 
 Start local services first if they are not running:
 
 ```bash
-npx @tradejs/cli infra-up
+npm exec -- tradejs infra-up
 ```
 
 Use `--cacheOnly` when the required candles are already available and you want
@@ -68,8 +68,8 @@ A reproducible comparison should pass its simulation costs separately from the
 strategy configuration:
 
 ```bash
-npx @tradejs/cli backtest \
-  --config <StrategyName:configName> \
+npm exec -- tradejs backtest \
+  --config '<StrategyName:configName>' \
   --executionCosts '{"fees":{"makerRate":0.001,"takerRate":0.001},"slippage":{"baseBps":10,"spreadMultiplier":1,"marketImpactBps":0,"delayRiskMultiplier":0},"funding":{"enabled":false}}'
 ```
 

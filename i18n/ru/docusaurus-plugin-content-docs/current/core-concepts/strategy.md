@@ -9,7 +9,8 @@ title: Стратегия
 
 - `skip` — ничего не делать и при необходимости записать причину;
 - `entry` — создать сигнал и план ордера;
-- `exit` — закрыть позицию или изменить управление ею.
+- `exit` — закрыть открытую позицию;
+- `protect` — обновить стоп или цели открытой позиции.
 
 Среда исполнения загружает рыночные данные, добавляет индикаторы и необязательные
 AI/ML-оценки, применяет риск-контроли, взаимодействует с коннектором и сохраняет
@@ -18,7 +19,7 @@ AI/ML-оценки, применяет риск-контроли, взаимод
 ## Стратегии на TypeScript
 
 Обычно стратегия использует `StrategyAPI` и возвращает решения через
-`strategyApi.skip(...)`, `strategyApi.entry(...)` и `strategyApi.exit(...)`.
+`strategyApi.skip(...)`, `strategyApi.entry(...)`, `strategyApi.exit(...)` и `strategyApi.protect(...)`.
 
 TypeScript подходит для типизированных параметров, собственных конечных
 автоматов, графических элементов и глубокой интеграции со средой исполнения.
@@ -33,22 +34,10 @@ Script.
 
 ## Встроенные стратегии
 
-Стандартный набор `@tradejs/base` устанавливает 21 стратегию:
-
-- `Breakout`, `TrendLine`, `ReverseTrendLine`, `TrendShift`, `TrendFollow`;
-- `DoubleTap`, `LiquidityTails`, `LiquidityZones`, `StructureZones`;
-- `AdaptiveTrendChannel`, `AdaptiveMomentumRibbon`, `MaStrategy`;
-- `VolumeDivergence`, `MarketFlushReversal`, `VolatilityCompressionBreakout`;
-- `RelativeRotation`, `CupAndHandle`, `HeadAndShoulders`;
-- `Grid`, `GridClassic`, `HyperliquidConsensus`.
-
-TrendLine и ReverseTrendLine входят в общий пакет
-`@tradejs/strategy-trend-line`; остальные стратегии поставляются отдельными
-пакетами. Встроенные стратегии служат рабочими примерами, но их параметры всё
-равно требуют вашей независимой проверки.
-
-См. [каталог встроенных стратегий](../strategies/reference) с требованиями к
-данным и подробным описанием.
+Пакет `@tradejs/base` подключает стандартный набор стратегий.
+В [каталоге](../strategies/reference) есть описание и настройки каждой
+стратегии. Если её нужно установить отдельно, см.
+[как добавить стратегию](../getting-started/add-strategy).
 
 ## Дальше
 

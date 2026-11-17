@@ -7,19 +7,10 @@ entry order. It also runs for entries without a signal.
 
 ## Params
 
-```tstype
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  policy: StrategyHookPolicyContext;
-  ml?: StrategyHookMlContext;
-  ai?: StrategyHookAiContext;
-}
+```ts
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['beforeEntryGate']>>[0];
 ```
 
 `policy.aiQuality` is `undefined` when there is no signal or AI produced no quality score.

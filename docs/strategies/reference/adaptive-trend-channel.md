@@ -2,6 +2,8 @@
 title: 'AdaptiveTrendChannel'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 AdaptiveTrendChannel looks for a direction change in a channel that follows
 price. It puts the stop at the channel boundary and sizes the trade using the
 distance to that stop.
@@ -13,11 +15,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![AdaptiveTrendChannel strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/strategy-logic.svg)
-
-![AdaptiveTrendChannel signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="adaptive-trend-channel" />
 
 ## Entry Logic
 

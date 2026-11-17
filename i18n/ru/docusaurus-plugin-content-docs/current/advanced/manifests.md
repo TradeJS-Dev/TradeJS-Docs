@@ -13,16 +13,7 @@ title: Manifests
 - runtime defaults;
 - lifecycle hooks.
 
-Registry entry связывает manifest и creator:
-
-```ts
-export const strategyEntries = [
-  {
-    manifest: trendLineManifest,
-    creator: TrendlineStrategyCreator,
-  },
-];
-```
+В записи стратегии плагин указывает `manifest`, `defaults`, `parseConfig` и `createCore`. См. [пример регистрации](../api/framework#strategy-plugin-api).
 
 Связанные страницы:
 

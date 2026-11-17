@@ -2,6 +2,8 @@
 title: 'Gartley'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Gartley ищет разворотную фигуру из пяти крайних точек цены. Перед входом
 стратегия проверяет пропорции Фибоначчи и ждёт подтверждения.
 
@@ -10,12 +12,9 @@ Gartley ищет разворотную фигуру из пяти крайни�
 
 ## Визуальная схема
 
-![Логика Gartley](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Gartley/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="gartley" />
 
-![Пример бычьего сигнала Gartley](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Gartley/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными. Точные
-отношения, подтверждения и параметры риска задаются конфигурацией стратегии.
+Настройки стратегии задают пропорции фигуры, условия подтверждения и параметры риска.
 
 ## Логика входа
 
@@ -61,5 +60,6 @@ Gartley ищет разворотную фигуру из пяти крайни�
 под именем из `--config`. Затем выполните команду из папки проекта.
 
 ```bash
-npm run backtest -- --user root --config Gartley:base --connector bybit --timeframe 15
+npm run backtest -- --config Gartley:base --connector binance \
+  --tickers BTCUSDT --timeframe 15 --days 7 --tests 1 --parallel 1
 ```

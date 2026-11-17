@@ -2,6 +2,8 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 AdaptiveMomentumRibbon проверяет силу движения и канал Кельтнера перед входом.
 Pine рассчитывает сигнал. Код на TypeScript рассчитывает размер позиции по риску
 и управляет выходом.
@@ -11,11 +13,8 @@ Pine рассчитывает сигнал. Код на TypeScript рассчи�
 
 ## Визуальная схема
 
-![Логика AdaptiveMomentumRibbon](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="adaptive-momentum-ribbon" />
 
-![Пример сигнала AdaptiveMomentumRibbon](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа
@@ -182,5 +181,5 @@ Pine рассчитывает сигнал. Код на TypeScript рассчи�
 под именем из `--config`. Затем выполните команду из папки проекта.
 
 ```bash
-npm run backtest -- --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15
+npm run backtest -- --user root --config AdaptiveMomentumRibbon:example --connector bybit --timeframe 15
 ```

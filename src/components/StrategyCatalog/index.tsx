@@ -2,6 +2,7 @@ import React from 'react';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { StrategySignalPreview } from '../StrategySignalChart';
 import { strategies } from './strategies';
 
 export default function StrategyCatalog() {
@@ -13,10 +14,10 @@ export default function StrategyCatalog() {
     <ul className="strategy-catalog">
       {strategies.map((strategy) => {
         const { name, slug } = strategy;
-        const preview =
-          slug === 'head-and-shoulders'
-            ? 'head-and-shoulders-signal.webp'
-            : `strategy-previews/${slug}.webp`;
+        const useSignalPlot =
+          slug === 'head-and-shoulders' ||
+          slug === 'trendline' ||
+          slug === 'reverse-trendline';
         return (
           <li key={slug}>
             <Link
@@ -24,12 +25,16 @@ export default function StrategyCatalog() {
               className="strategy-catalog__card"
             >
               <div className="strategy-catalog__preview">
-                <img
-                  src={imageRoot + preview}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
+                {useSignalPlot ? (
+                  <StrategySignalPreview strategy={slug} />
+                ) : (
+                  <img
+                    src={imageRoot + `strategy-previews/${slug}.webp`}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
               </div>
               <div className="strategy-catalog__content">
                 <strong>

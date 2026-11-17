@@ -2,6 +2,8 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 AdaptiveMomentumRibbon checks momentum and the Keltner channel before entering.
 Pine calculates the signal. TypeScript manages the position, calculates order
 size from risk, and handles exits.
@@ -11,11 +13,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![AdaptiveMomentumRibbon strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/strategy-logic.svg)
-
-![AdaptiveMomentumRibbon signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="adaptive-momentum-ribbon" />
 
 ## Entry Logic
 
@@ -124,5 +122,5 @@ First [save backtest settings](../../getting-started/backtest-config) with the
 name in `--config`. Then run this command from the project folder.
 
 ```bash
-npm run backtest -- --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15
+npm run backtest -- --user root --config AdaptiveMomentumRibbon:example --connector bybit --timeframe 15
 ```

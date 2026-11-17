@@ -7,11 +7,11 @@ description: 'Run the prepared Pine script, handle position exits and invalidati
 Add the strategy factory to `core.ts`. It uses the functions from [the previous
 step](./pine-strategy-runtime-setup).
 
-```text
+```ts
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
   AdaptiveMomentumRibbonConfig
-> = async ({ config, symbol, data, loadPineScriptFile, strategyApi }) => {
-  const script = loadPineScriptFile(AMR_PINE_FILE_NAME);
+> = async ({ config, data, strategyApi }) => {
+  const script = loadPineScriptFile(AMR_PINE_PATH);
   const { LONG, SHORT, AMR_EXIT_ON_INVALIDATION } = config;
   const linePlots = resolveLinePlots(config.AMR_LINE_PLOTS);
   const lookbackBars = asPositiveInt(config.AMR_LOOKBACK_BARS, 0);
@@ -23,8 +23,7 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       return strategyApi.skip('AMR_SCRIPT_EMPTY');
     }
 
-    const candleLimit = lookbackBars > 0 ? lookbackBars : 400;
-    const candles = data.slice(-candleLimit);
+    const candles = data.slice(-(lookbackBars > 0 ? lookbackBars : 400));
     if (candles.length < 2) {
       return strategyApi.skip('WAIT_DATA');
     }
@@ -39,16 +38,14 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
       pineContext = await runPineScript({
         candles,
         script,
-        symbol,
         timeframe,
         inputs: pineInputs,
       });
     } catch (error) {
       if (typeof globalThis.setImmediate === 'function') {
         logger.warn(
-          'AdaptiveMomentumRibbon pine run failed for %s: %s',
-          symbol,
-          String(error),
+          'ExamplePineRibbon failed: %s',
+            String(error),
         );
       }
       return strategyApi.skip('AMR_SCRIPT_FAILED');
@@ -99,6 +96,7 @@ export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<
         takeProfitDelta: modeConfig.TP,
         stopLossDelta: modeConfig.SL,
         unit: 'percent',
+        maxLossValue: config.MAX_LOSS_VALUE,
       });
 
     if (!qty || !Number.isFinite(qty) || qty <= 0) {

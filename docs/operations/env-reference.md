@@ -67,8 +67,8 @@ The web app manages these values from the account settings drawer opened by the 
 
 - Keep `.env.example` safe and generic; never commit secrets.
 - In production, inject secrets from a secret manager.
-- For local setup, run `npx @tradejs/cli infra-init` once, then `npx @tradejs/cli infra-up`.
-- Validate environment with `npx @tradejs/cli doctor` before enabling live orders.
+- For local setup, run `npm exec -- tradejs infra-init` once, then `npm exec -- tradejs infra-up`.
+- Validate environment with `npm exec -- tradejs doctor` before enabling live orders.
 - Prefer the account settings drawer for user-scoped API keys and tokens instead of sharing one global `.env` secret across operators.
 - `AI_API_*` and `TG_*` are user-record fields, not app environment variables; store them on the user record in Redis.
 

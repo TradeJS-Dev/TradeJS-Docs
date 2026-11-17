@@ -31,8 +31,8 @@ TradeJS выполнит два теста. В первом период быс�
 TradeJS должны быть запущены. Чтобы сохранить старые настройки, задайте новое имя.
 
 ```bash
-docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
-  'users:root:backtests:configs:MaStrategy:compare' \
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli JSON.SET \
+  'users:root:backtests:configs:MaStrategy:compare' '$' \
   '{"INTERVAL":["15"],"MA_FAST":[21,34],"MA_SLOW":[55]}' NX
 ```
 

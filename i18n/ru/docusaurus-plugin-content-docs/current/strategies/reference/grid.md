@@ -2,6 +2,8 @@
 title: 'Grid'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 Grid открывает позицию на откате в тренде или после подтверждения пробитого
 уровня. Стратегия добавляет объём в пределах общего риска по сделке.
 
@@ -10,11 +12,8 @@ Grid открывает позицию на откате в тренде или 
 
 ## Визуальная схема
 
-![Логика Grid](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="grid" />
 
-![Пример сигнала Grid](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

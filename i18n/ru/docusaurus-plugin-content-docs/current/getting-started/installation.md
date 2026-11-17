@@ -4,10 +4,7 @@ title: Установка TradeJS в TypeScript-проект
 description: 'Установите TradeJS через create-tradejs или добавьте публичные npm-пакеты в существующий TypeScript-проект с необходимыми настройками Node.js и Docker.'
 ---
 
-Установите TradeJS командой `npx create-tradejs`, как на сайте TradeJS.
-На момент выпуска документации она устанавливает стабильный `3.1.28`.
-Рабочий сервер использует `3.1.29-beta.302`. Для точного воспроизведения
-этой версии воспользуйтесь инструкцией ниже.
+Установщик использует актуальную стабильную версию TradeJS из npm. Сейчас это `3.1.28`.
 
 ## Требования
 
@@ -16,40 +13,23 @@ description: 'Установите TradeJS через create-tradejs или до
 
 ## Создайте проект {#create-project}
 
-В папке, где хотите создать проект, выполните
-`npx create-tradejs`. Команда установит TradeJS и
-откроет приложение. Дальше следуйте [инструкции по первому бэктесту](./first-backtest).
+В папке, где хотите создать проект, выполните ту же команду, что и на сайте TradeJS.
+
+```bash
+npx create-tradejs
+```
+
+Команда установит TradeJS и откроет приложение. Дальше следуйте
+[инструкции по первому бэктесту](./first-backtest).
 
 Если установка сорвалась при скачивании Chrome через Puppeteer, перейдите в
 уже созданную папку `tradejs-project`. Для локального бэктеста эта загрузка
 не нужна. Выполните `PUPPETEER_SKIP_DOWNLOAD=true npm install` в Bash или Zsh
 и переходите к [запуску приложения](#start-app).
 
-## Установите бета-версию {#install-packages}
-
-Сначала создайте проект без установки зависимостей. Так можно указать
-одинаковую бета-версию для всех пакетов движка. Выполните в Bash или Zsh:
-
-```bash
-npx create-tradejs@3.1.29-beta.302 tradejs-project --no-install
-cd tradejs-project
-
-tradejs_version=3.1.29-beta.302
-for package in app cli connectors core indicators infra node types; do
-  npm pkg set "dependencies.@tradejs/$package=$tradejs_version" \
-    "overrides.@tradejs/$package=\$@tradejs/$package"
-done
-npm install --save-exact @tradejs/base@3.1.8
-```
-
-Цикл записывает версию восьми пакетов в `package.json`. Поле `overrides`
-выравнивает версии вложенных зависимостей. У `@tradejs/base` и пакетов
-стратегий свои версии. Сохраните `package-lock.json`, чтобы повторить установку
-с теми же версиями.
-
 ## Запустите приложение {#start-app}
 
-Если вы только установили пакеты, выполните в папке проекта:
+Если пропустили запуск приложения при установке, выполните в папке проекта:
 
 ```bash
 npm exec -- tradejs infra-init
@@ -61,12 +41,13 @@ npm run dev
 к [первому бэктесту](./first-backtest). Если Docker сообщает, что порт занят,
 укажите свободный порт в `.env` проекта и повторите `npm run infra-up`.
 
-## Добавьте TradeJS в существующий проект
+## Добавьте TradeJS в существующий проект {#install-packages}
 
-Установите пакеты движка одной версии. В разделе
-[«Установите бета-версию»](#install-packages) перечислены зависимости и
-переопределения. Выполните эти шаги в папке существующего проекта и пропустите
-создание новой папки.
+Чтобы установить стабильные пакеты, выполните в папке своего TypeScript-проекта:
+
+```bash
+npm install --save-exact @tradejs/app @tradejs/cli @tradejs/core @tradejs/base
+```
 
 Если в проекте ещё нет `tradejs.config.ts`, создайте этот файл:
 

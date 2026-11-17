@@ -2,7 +2,7 @@
 title: ML Dataset Inspection
 ---
 
-Run `npx @tradejs/cli ml-inspect` to check your training data before fitting a
+Run `npm exec -- tradejs ml-inspect` to check your training data before fitting a
 model.
 
 Source:
@@ -12,9 +12,9 @@ Source:
 ## Quick Start
 
 ```bash
-npx @tradejs/cli ml-inspect
-npx @tradejs/cli ml-inspect --strategy TrendLine --rows 20000 --mode sample
-npx @tradejs/cli ml-inspect --file data/ml/export/ml-dataset-trendline-merged-123.jsonl --mode tail
+npm exec -- tradejs ml-inspect
+npm exec -- tradejs ml-inspect --strategy TrendLine --rows 20000 --mode sample
+npm exec -- tradejs ml-inspect --file '<path-to-export.jsonl>' --mode tail
 ```
 
 ## Modes
@@ -31,8 +31,8 @@ npx @tradejs/cli ml-inspect --file data/ml/export/ml-dataset-trendline-merged-12
 Examples:
 
 ```bash
-npx @tradejs/cli ml-inspect --tool quick --rows 15000
-npx @tradejs/cli ml-inspect --tool ydata --rows 20000 --mode sample
+npm exec -- tradejs ml-inspect --tool quick --rows 15000
+npm exec -- tradejs ml-inspect --tool ydata --rows 20000 --mode sample
 ```
 
 ## What Quick Inspect Checks
@@ -55,7 +55,7 @@ It prints top problematic fields by score and recommended fixes.
 
 Requirements:
 
-- ydata profiling runtime available in your environment
+- `docker-compose.ml.yml` with the `ml-profile` service
 - enough disk space for generated `.profile.html` report
 
 ## Useful Flags

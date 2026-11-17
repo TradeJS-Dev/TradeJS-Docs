@@ -7,18 +7,21 @@ TradeJS может проверить вход по стратегии с пом
 
 ## Проверка AI-фильтра
 
+Сначала [сохраните настройки бэктеста](../getting-started/backtest-config) под именем `TrendLine:base`.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ai
-npx @tradejs/cli ai-export
-npx @tradejs/cli ai-train -n 50 --minQuality 4
+npm exec -- tradejs backtest --config TrendLine:base --ai \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ai-export --strategy TrendLine
+npm exec -- tradejs ai-train --strategy TrendLine -n 50 --minQuality 4
 ```
 
 Также можно проверить детерминированный локальный фильтр без внешних запросов и
 исследовать подмножества признаков:
 
 ```bash
-npx @tradejs/cli ai-train --localOnly
-npx @tradejs/cli ai-pocket-search --strategy TrendLine
+npm exec -- tradejs ai-train --strategy TrendLine --localOnly
+npm exec -- tradejs ai-pocket-search --strategy TrendLine
 ```
 
 Оценивайте не только долю разрешённых сигналов, но и размер выборки, результат
@@ -37,11 +40,14 @@ npx @tradejs/cli ai-pocket-search --strategy TrendLine
 
 ## Подготовка ML-модели
 
+Для обучения нужен `docker-compose.ml.yml` с сервисом `ml`. Установщик TradeJS создаёт только окружение для обычных бэктестов.
+
 ```bash
-npx @tradejs/cli backtest --config TrendLine:base --ml
-npx @tradejs/cli ml-export
-npx @tradejs/cli ml-inspect
-npx @tradejs/cli ml-train:latest
+npm exec -- tradejs backtest --config TrendLine:base --ml \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 90 --tests 1 --parallel 1
+npm exec -- tradejs ml-export --strategy TrendLine
+npm exec -- tradejs ml-inspect --strategy TrendLine
+npm exec -- tradejs ml-train:latest --strategy TrendLine
 ```
 
 Разделяйте обучение и проверку по времени, исключайте будущую информацию,

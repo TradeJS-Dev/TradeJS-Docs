@@ -12,8 +12,8 @@ deployment for live trading.
 strategy:
 
 ```bash
-npx @tradejs/cli results \
-  --strategy <StrategyName> \
+npm exec -- tradejs results \
+  --strategy '<StrategyName>' \
   --coverage \
   --user root
 ```
@@ -63,9 +63,9 @@ Live settings are declared in `tradejs.config.ts`. To use a reviewed candidate:
    `deploymentCompositionId`; do not maintain a numeric version field.
 
 ```bash
-npx @tradejs/cli runtime-control verify \
+npm exec -- tradejs runtime-control verify \
   --user root \
-  --deployment <deployment>
+  --deployment '<deployment>'
 ```
 
 The strategies page displays this configuration but does not rewrite it.
@@ -78,15 +78,15 @@ Run a historical replay of the exact deployment, then run one live evaluation
 cycle without `--makeOrders`:
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
-  --deployment <deployment> \
+  --deployment '<deployment>' \
   --days 7 \
   --cacheOnly
 
 npm exec -- tradejs signals \
   --user root \
-  --deployment <deployment> \
+  --deployment '<deployment>' \
   --cacheOnly
 ```
 

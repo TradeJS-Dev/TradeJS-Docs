@@ -8,18 +8,9 @@ TradeJS вызывает этот обработчик перед отправк
 ## Params
 
 ```ts
-{
-  ctx: StrategyHookCtx;
-  market: {
-    candle: KlineChartItem;
-    btcCandle: KlineChartItem;
-  };
-  decision: EntryDecision;
-  entry: StrategyHookEntryContext;
-  policy: StrategyHookPolicyContext;
-  ml?: StrategyHookMlContext;
-  ai?: StrategyHookAiContext;
-}
+import type { StrategyManifest } from '@tradejs/types';
+
+type Params = Parameters<NonNullable<NonNullable<StrategyManifest['hooks']>['beforePlaceOrder']>>[0];
 ```
 
 Используй `entry.context` вместо отдельного top-level alias `entryContext`.

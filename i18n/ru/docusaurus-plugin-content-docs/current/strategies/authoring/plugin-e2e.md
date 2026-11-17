@@ -13,7 +13,7 @@ title: Разработка плагина от начала до конца
 
 ## 2. Реализуйте стратегию или индикатор
 
-- Плагин стратегии: `manifest` и `creator`.
+- Запись стратегии содержит `manifest`, `defaults`, `parseConfig` и `createCore`. См. [пример](./typescript-strategy-step-by-step).
 - Плагин индикатора: `compute` и необязательный `renderer`.
 
 ## 3. Подключите плагин в проекте

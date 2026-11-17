@@ -2,6 +2,8 @@
 title: 'LiquidityTails'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 LiquidityTails отмечает зоны длинных теней свечей. Стратегия ждёт возврата и
 реакции цены, а стоп ставит за границей зоны.
 
@@ -10,11 +12,8 @@ LiquidityTails отмечает зоны длинных теней свечей.
 
 ## Визуальная схема
 
-![Логика LiquidityTails](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="liquidity-tails" />
 
-![Пример сигнала LiquidityTails](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

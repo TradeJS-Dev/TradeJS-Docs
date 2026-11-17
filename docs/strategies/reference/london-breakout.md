@@ -2,8 +2,14 @@
 title: LondonBreakout
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 LondonBreakout looks for a price break outside a range set at 08:00 UTC. It
 uses the high and low of the nine preceding hourly candles.
+
+## Visual overview
+
+<StrategySignalChart strategy="london-breakout" />
 
 ## Install the package
 

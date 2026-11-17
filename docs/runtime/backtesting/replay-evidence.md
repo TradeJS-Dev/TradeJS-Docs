@@ -12,7 +12,7 @@ Replay is a diagnostic tool. It does not place orders or change the deployment.
 Run from the project that contains `tradejs.config.ts`:
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
   --deployment production \
   --days 7 \
@@ -38,7 +38,7 @@ history, the complete available candle range, and `MAX_LOSS_VALUE=10` by
 default:
 
 ```bash
-npx @tradejs/cli portfolio-backtest --user root
+npm exec -- tradejs portfolio-backtest --user root
 ```
 
 The command processes symbols in bounded batches and then merges completed
@@ -63,7 +63,7 @@ For exact comparison, collect a timestamped record on the host where live
 evaluation ran:
 
 ```bash
-npx @tradejs/cli runtime-evidence \
+npm exec -- tradejs runtime-evidence \
   --daily \
   --user root \
   --deployment production \
@@ -110,7 +110,7 @@ exclude credentials, and do not commit them to the application repository.
 To analyze a record in another project environment:
 
 ```bash
-npx @tradejs/cli runtime-evidence-sync \
+npm exec -- tradejs runtime-evidence-sync \
   --source user@runtime-host:/path/to/ready/production \
   --deployment production
 ```
@@ -123,21 +123,21 @@ mismatch.
 ## Replay the Recorded Setup
 
 ```bash
-npx @tradejs/cli replay \
+npm exec -- tradejs replay \
   --user root \
-  --runtimeEvidence <bundle>/runtime-evidence.json \
-  --startTime <ms> \
-  --endTime <ms> \
+  --runtimeEvidence '<bundle>/runtime-evidence.json' \
+  --startTime '<ms>' \
+  --endTime '<ms>' \
   --cacheOnly
 ```
 
 Then create a comparison input from the replay result and live record:
 
 ```bash
-npx @tradejs/cli replay-runtime-evidence \
-  --runtimeEvidence <bundle>/runtime-evidence.json \
-  --startTime <ms> \
-  --endTime <ms> \
+npm exec -- tradejs replay-runtime-evidence \
+  --runtimeEvidence '<bundle>/runtime-evidence.json' \
+  --startTime '<ms>' \
+  --endTime '<ms>' \
   --out output/replay-runtime-evidence.json
 ```
 
@@ -160,8 +160,8 @@ Execution calibration compares signal time, market arrival, and fills with the
 reconstructed decisions:
 
 ```bash
-npx @tradejs/cli execution-calibration \
-  --runtimeEvidence <bundle>/runtime-evidence.json \
+npm exec -- tradejs execution-calibration \
+  --runtimeEvidence '<bundle>/runtime-evidence.json' \
   --replayEvidence output/replay-runtime-evidence.json \
   --out output/execution-calibration.json
 ```
@@ -175,8 +175,8 @@ Production sends the daily parity summary only after the replay output has been
 sealed and verified:
 
 ```bash
-npx @tradejs/cli runtime-feedback-notify \
-  --bundle <verified-replay-bundle>
+npm exec -- tradejs runtime-feedback-notify \
+  --bundle '<verified-replay-bundle>'
 ```
 
 Use `--dryRun` to verify the manifest, files, checksums, and comparison data and

@@ -2,7 +2,7 @@
 title: Pre-Live Checklist
 ---
 
-Run through these checks before you enable order placement with `--makeOrders`.
+Run through these checks before enabling order placement on your server.
 Verify the account and risk limits as well as the test results.
 
 ## Research
@@ -40,7 +40,7 @@ Verify the account and risk limits as well as the test results.
   timeframe, universe, symbols, and `enabled` state are correct.
 - `runtime-control verify` passes for the target deployment.
 - Historical replay of the exact deployment matches the expected decisions.
-- A current-market `signals` run without `--makeOrders` is clean.
+- The server processes new candles in signal-only mode and records the expected decisions.
 
 ## Account and Venue
 

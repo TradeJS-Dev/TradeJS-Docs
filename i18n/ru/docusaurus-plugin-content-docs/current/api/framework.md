@@ -127,6 +127,9 @@ export default defineConfig(basePreset, {
 `beforeSignals` может прервать текущий прогон signals:
 
 ```ts
+import { defineConfig } from '@tradejs/core/config';
+import { basePreset } from '@tradejs/base';
+
 export default defineConfig(basePreset, {
   hooks: {
     beforeSignals: async () => {
@@ -204,18 +207,18 @@ export default defineConfig(basePreset, {
 
 ```ts
 import { defineStrategyPlugin } from '@tradejs/core/config';
-import type { StrategyRegistryEntry } from '@tradejs/types';
+import { createStrategyConfigParser } from '@tradejs/strategy-kit/config';
 
-const strategyEntries: StrategyRegistryEntry[] = [
-  {
+const defaults = {};
+
+export default defineStrategyPlugin({
+  strategyEntries: [{
     manifest: { name: 'MyStrategy' },
-    creator: async () => {
-      return async () => 'NO_SIGNAL';
-    },
-  },
-];
-
-export default defineStrategyPlugin({ strategyEntries });
+    defaults,
+    parseConfig: createStrategyConfigParser({ strategyName: 'MyStrategy', defaults }),
+    createCore: ({ strategyApi }) => () => strategyApi.skip('NO_SIGNAL'),
+  }],
+});
 ```
 
 ## Strategy Manifest
@@ -259,28 +262,15 @@ export default defineIndicatorPlugin({
 
 ```ts
 import { defineConnectorPlugin } from '@tradejs/core/config';
-import type { ConnectorRegistryEntry } from '@tradejs/types';
+import { MyExchangeConnectorCreator } from './myExchangeConnector';
 
-const connectorEntries: ConnectorRegistryEntry[] = [
-  {
+export default defineConnectorPlugin({
+  connectorEntries: [{
     name: 'MyExchange',
-    providers: ['myexchange', 'mx'],
-    creator: async ({ userName }) => {
-      return {
-        kline: async () => [],
-        getTickers: async () => [],
-        getPosition: async () => null,
-        getPositions: async () => [],
-        placeOrder: async () => true,
-        closePosition: async () => true,
-        getState: async () => ({}),
-        setState: async () => {},
-      };
-    },
-  },
-];
-
-export default defineConnectorPlugin({ connectorEntries });
+    providers: ['myexchange'],
+    creator: MyExchangeConnectorCreator,
+  }],
+});
 ```
 
 ## Типы, которые чаще всего нужны
@@ -298,17 +288,7 @@ export default defineConnectorPlugin({ connectorEntries });
 Вызовите `StrategyAPI.getClosedCandles`, если стратегии нужны закрытые
 15-минутные свечи за определённый период.
 
-```ts
-const source = await strategyApi.getClosedCandles({
-  interval: '15',
-  start: sourceStart,
-  end: sourceEnd,
-  limit: 96,
-});
-if (!source.complete) {
-  return strategyApi.skip('SOURCE_HISTORY_INCOMPLETE');
-}
-```
+Вызовите `strategyApi.getClosedCandles({ interval: '15', start: sourceStart, end: sourceEnd, limit: 96 })` внутри решения стратегии. Если `source.complete` равно `false`, пропустите сигнал через `strategyApi.skip('SOURCE_HISTORY_INCOMPLETE')`.
 
 `sourceStart` и `sourceEnd` — время в миллисекундах UTC на границах 15-минутных
 свечей. Окно `[start, end)` не включает конец и не может завершаться позже

@@ -49,30 +49,23 @@ title: Качество данных
 Обновить историю без запуска тестов:
 
 ```bash
-npx @tradejs/cli backtest --updateOnly --connector bybit --timeframe 15
+npm exec -- tradejs backtest --updateOnly --config MaStrategy:base --connector bybit \
+  --tickers BTCUSDT --timeframe 15
 ```
 
 Использовать уже подготовленную историю:
 
 ```bash
-npx @tradejs/cli backtest \
+npm exec -- tradejs backtest \
   --cacheOnly \
-  --config TrendLine:base \
+  --config MaStrategy:base \
+  --connector bybit \
   --tickers BTCUSDT \
-  --timeframe 15
+  --timeframe 15 --days 7 --tests 1 --parallel 1
 ```
 
-Проверить непрерывность:
+Чтобы перезагрузить ряд с разрывом, см. [загрузку истории](../getting-started/data-sync).
 
-```bash
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
-```
-
-Рассчитать текущие сигналы без обновления данных:
-
-```bash
-npm exec -- tradejs signals --cacheOnly --tickers BTCUSDT --timeframe 15
-```
 
 ## Дополнительные данные
 

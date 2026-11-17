@@ -2,6 +2,8 @@
 title: 'MaStrategy'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 `MaStrategy` входит по пересечению быстрой и медленной скользящих средних.
 
 В стандартном проекте MaStrategy уже подключена. Чтобы увидеть её в работе,
@@ -10,11 +12,8 @@ title: 'MaStrategy'
 
 ## Визуальная схема
 
-![Логика MaStrategy](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="ma-strategy" />
 
-![Пример сигнала MaStrategy](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

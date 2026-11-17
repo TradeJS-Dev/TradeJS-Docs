@@ -6,14 +6,14 @@ title: Командная строка
 Команды из этого справочника запускают бэктесты, управляют локальными сервисами и
 проверяют проект. Выполняйте их из папки проекта.
 
-```bash
-npx @tradejs/cli <command> [flags]
+```text
+npm exec -- tradejs <command> [flags]
 ```
 
 Точный синтаксис установленной версии всегда можно получить через `--help`:
 
 ```bash
-npx @tradejs/cli backtest --help
+npm exec -- tradejs backtest --help
 ```
 
 ## Команды
@@ -29,7 +29,7 @@ npx @tradejs/cli backtest --help
 Исследование и бэктестинг:
 
 - `backtest` — запуск бэктеста или обновление истории рынка;
-- `research:strategy` — автоматическое исследование фиксированных конфигураций, продолжение и проверка на новом периоде.
+- `research:core` — создание и проверка воспроизводимого исследования с доступом к исходникам;
 - `results` — просмотр и ведение локального списка выбранных результатов;
 - `runtime-parity` — сравнение записанных реальных входов с восстановленными;
 - `replay` — воспроизведение рабочей конфигурации на исторических свечах;
@@ -51,7 +51,7 @@ npx @tradejs/cli backtest --help
 
 Рыночные данные и обслуживание:
 
-- `continuity` — проверка и исправление непрерывности свечей;
+- `continuity` — перезагрузка свечей при обнаружении разрыва в ряду;
 - `binance:market-ingest` — загрузка рыночных данных Binance;
 - `derivatives:ingest` — загрузка данных рынка деривативов;
 - `derivatives:ingest:coinalyze:all` — загрузка данных Coinalyze для всех настроенных инструментов;
@@ -69,31 +69,25 @@ AI и ML:
 - `ai-export` — экспорт данных для проверки AI-промптов;
 - `ai-train` — повторная оценка данных и измерение поведения AI-фильтра;
 - `ai-pocket-search` — поиск устойчивых областей признаков для детерминированного фильтра;
-- `test-ml`, `test-script` — диагностические команды.
 
 ## Основные примеры
 
 ```bash
 # Проверить локальные зависимости
-npx @tradejs/cli doctor
+npm exec -- tradejs doctor
 
 # Обновить свечи без запуска тестов
-npx @tradejs/cli backtest --updateOnly --tickers BTCUSDT,ETHUSDT
+npm exec -- tradejs backtest --updateOnly --config MaStrategy:base --connector binance --tickers BTCUSDT
 
 # Запустить бэктест одного инструмента на сохранённой истории
-npx @tradejs/cli backtest \
+npm exec -- tradejs backtest \
   --config MaStrategy:base \
+  --connector binance \
   --tickers BTCUSDT \
   --cacheOnly
 
-# Рассчитать сигналы без размещения ордеров
-npm exec -- tradejs signals \
-  --tickers BTCUSDT \
-  --cacheOnly \
-  --skipScreenshots
-
 # Показать выбранные результаты одной стратегии
-npx @tradejs/cli results --strategy TrendLine --coverage
+npm exec -- tradejs results --strategy MaStrategy --coverage
 ```
 
 ## `backtest`
@@ -143,54 +137,11 @@ npx @tradejs/cli results --strategy TrendLine --coverage
 `users:<user>:backtests:configs:<StrategyName:configName>`. Подробнее:
 [Создание конфигурации бэктеста](../getting-started/backtest-config).
 
-## Автоматическое исследование стратегии {#automatic-strategy-research}
+## Автоматическое исследование стратегий {#automatic-strategy-research}
 
-Используйте Node.js 24. Выполняйте команду из каталога своего проекта
-с `PROJECT_CWD`, `TRADEJS_SOURCE_REPOSITORY_ROOT` и
-`TRADEJS_FRAMEWORK_REPOSITORY_ROOT`, указывающими на выбранные рабочие копии.
-Назначение каталогов описано в [навыках Codex](../guides/codex-strategy-skills).
+Список действий показывает `npm exec -- tradejs research:core --help`. Для запуска сначала задайте [пути к исходникам и сборке](../guides/codex-strategy-skills#корни-исследования).
 
-Начните с существующей зафиксированной спецификации ядра:
-
-```bash
-yarn exec tradejs research:strategy init \
-  --coreSpec data/research/specs/core.json \
-  --out data/research/specs/workflow.json
-```
-
-Другой вариант `init` принимает `--strategy`, `--config <Strategy:config>`,
-`--researchId`, `--claim`, `--mechanism`, `--symbolsFile`, `--start`, `--end`
-и `--out`. Файл инструментов содержит JSON-массив строк с USDT-контрактами;
-время задаётся строкой UTC с часовым поясом или миллисекундами эпохи.
-Для ограниченного набора альтернатив добавьте `--candidates <Strategy:a,Strategy:b>`.
-Каждая именованная конфигурация Redis должна содержать одно значение на ключ,
-относиться к выбранной стратегии и задавать `MAX_LOSS_VALUE=10`.
-
-До первого запуска проверьте созданные гипотезу, расходы, отметку об изученной
-истории, границу DEV/TEST, критерии отбора и бюджет ресурсов. Для сравнения
-выгрузок зафиксируйте общую календарную границу. `init` по умолчанию помечает
-историю ретроспективной; не называйте ранее изученные данные нетронутыми.
-Проверьте активные процессы тестера и память компьютера, затем выполните:
-
-```bash
-yarn exec tradejs research:strategy run --spec data/research/specs/workflow.json
-yarn exec tradejs research:strategy verify --spec data/research/specs/workflow.json
-yarn exec tradejs research:strategy status --spec data/research/specs/workflow.json
-```
-
-Повторный `run` продолжает запуск с теми же входами и исполняемыми версиями.
-`status` показывает этапы, ошибки, путь отчёта и состояние очистки.
-Для завершённого родительского исследования создайте спецификацию нового периода:
-
-```text
-research:strategy revalidate --spec <parent-workflow.json> --researchId <new-id> --start <UTC> --end <UTC> --out <new-workflow.json>
-```
-
-Новый период начинается не раньше конца родительского; правила и направления
-сохраняются. Результаты находятся в `data/research/strategy/<researchId>/`,
-постоянная заметка — в `notes/<Strategy>/`. Команда использует сохранённую
-историю, не публикует и не развёртывает пакеты, не отправляет уведомления и
-не размещает реальные ордера.
+Для первого исследования с агентом используйте [готовый запрос](../guides/develop-with-an-agent#запустить-исследование).
 
 ## `signals`
 
@@ -227,10 +178,10 @@ research:strategy revalidate --spec <parent-workflow.json> --researchId <new-id>
 редактируя конфигурацию стратегии.
 
 ```bash
-npx @tradejs/cli runtime-control inspect --user root --deployment production
-npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli runtime-control pause --user root --deployment production --strategy TrendFollow
-npx @tradejs/cli runtime-control resume --user root --deployment production --strategy TrendFollow
+npm exec -- tradejs runtime-control inspect --user root --deployment production
+npm exec -- tradejs runtime-control verify --user root --deployment production
+npm exec -- tradejs runtime-control pause --user root --deployment production --strategy TrendFollow
+npm exec -- tradejs runtime-control resume --user root --deployment production --strategy TrendFollow
 ```
 
 - `inspect` выводит итоговые настройки; доступны фильтры `--deployment` и `--strategy`;

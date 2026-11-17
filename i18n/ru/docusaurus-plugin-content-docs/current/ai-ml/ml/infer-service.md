@@ -70,5 +70,5 @@ ML_GRPC_ADDRESS=127.0.0.1:50051
 ## Проверка доступности
 
 ```bash
-npx @tradejs/cli doctor --require-ml
+npm exec -- tradejs doctor --require-ml
 ```

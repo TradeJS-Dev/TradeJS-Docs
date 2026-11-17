@@ -2,6 +2,8 @@
 title: 'ReverseTrendLine'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 ReverseTrendLine строит линии поддержки и сопротивления по недавним максимумам и
 минимумам. Стратегия ищет отбой от одной из линий.
 
@@ -10,11 +12,8 @@ ReverseTrendLine строит линии поддержки и сопротив�
 
 ## Визуальная схема
 
-![Логика TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="reverse-trendline" />
 
-![Пример сигналов TrendLine и ReverseTrendLine](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика входа

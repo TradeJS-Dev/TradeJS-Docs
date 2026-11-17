@@ -23,8 +23,8 @@ There is no aggregate `@tradejs/infra/timescale` export.
 Local start shortcut:
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
+npm exec -- tradejs infra-init
+npm exec -- tradejs infra-up
 ```
 
 ## What to Keep in Schema Design

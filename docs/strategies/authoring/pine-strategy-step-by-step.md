@@ -5,7 +5,7 @@ description: 'Add a Pine Script strategy to TradeJS through four focused chapter
 ---
 
 Add a Pine script to TradeJS and use its outputs to make entry and exit
-decisions. The example builds `AdaptiveMomentumRibbon` from the script through
+decisions. The example builds `ExamplePineRibbon` from the script through
 its first backtest.
 
 If you need the TypeScript-only path, see [TypeScript strategy with `StrategyAPI`](./typescript-strategy-step-by-step).

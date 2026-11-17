@@ -8,13 +8,14 @@ data and PostgreSQL with TimescaleDB stores market history.
 ## Local Dev
 
 ```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-npx @tradejs/cli doctor
-npx @tradejs/cli infra-down
+npm exec -- tradejs infra-init
+npm exec -- tradejs infra-up
+npm exec -- tradejs doctor --skip-ml
 ```
 
 `infra-init` creates `docker-compose.dev.yml` in your project root. `infra-up` starts the dev services.
+
+To stop the local services later, run `npm run infra-down`.
 
 ## Runtime Services
 
@@ -22,7 +23,7 @@ Typical local endpoints:
 
 - Redis: `127.0.0.1:6379`
 - PostgreSQL/Timescale: `127.0.0.1:5432`
-- ML gRPC, optional: `127.0.0.1:50051`
+- ML gRPC, если настроен: `127.0.0.1:50051`
 
 ## Production Docs Deployment
 

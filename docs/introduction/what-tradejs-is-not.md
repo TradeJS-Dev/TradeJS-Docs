@@ -11,7 +11,7 @@ TradeJS is distributed as public npm packages and is designed to run locally or 
 
 ## Not HFT
 
-TradeJS is not a high-frequency trading engine. It is built around candle-based strategy workflows and is best treated as a slower systematic research/runtime tool. Recommended strategy timeframes start at `5m+`; many examples use `15m`.
+TradeJS is not a high-frequency trading engine. It is built around candle-based strategy workflows and is best treated as a slower systematic research/runtime tool.
 
 ## Not Financial Advice
 

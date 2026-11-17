@@ -2,6 +2,8 @@
 title: 'GridClassic'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 GridClassic строит сетку внутри горизонтального диапазона. Она может войти на
 отбое от края, на продолжении после пробоя или на развороте после ложного
 пробоя.
@@ -11,11 +13,8 @@ GridClassic строит сетку внутри горизонтального 
 
 ## Визуальная схема
 
-![Логика GridClassic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/strategy-logic.svg)
+<StrategySignalChart strategy="grid-classic" />
 
-![Пример сигнала GridClassic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/signal-example.svg)
-
-Иллюстрации показывают общую логику и не являются рыночными данными.
 Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
 
 ## Логика

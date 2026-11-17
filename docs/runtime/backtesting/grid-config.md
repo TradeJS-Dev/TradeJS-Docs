@@ -40,7 +40,7 @@ storage and naming.
 ## Run the Search
 
 ```bash
-npx @tradejs/cli backtest \
+npm exec -- tradejs backtest \
   --user root \
   --config MaStrategy:grid-v1 \
   --connector bybit \
@@ -68,7 +68,7 @@ If you refresh history, record that change as a new experiment input.
 Inspect the saved results and symbol coverage:
 
 ```bash
-npx @tradejs/cli results \
+npm exec -- tradejs results \
   --strategy MaStrategy \
   --coverage \
   --user root

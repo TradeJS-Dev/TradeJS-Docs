@@ -2,6 +2,8 @@
 title: 'RelativeRotation'
 ---
 
+import StrategySignalChart from "@site/src/components/StrategySignalChart";
+
 RelativeRotation compares how an instrument and Bitcoin have moved. It checks
 their hourly and daily performance, then uses volume and other market data to
 filter entries.
@@ -11,11 +13,7 @@ Included in a standard TradeJS project.
 
 ## Visual overview
 
-![RelativeRotation strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/strategy-logic.svg)
-
-![RelativeRotation signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/signal-example.svg)
-
-The diagrams show an example signal and use illustrative prices.
+<StrategySignalChart strategy="relative-rotation" />
 
 ## Decision flow
 
