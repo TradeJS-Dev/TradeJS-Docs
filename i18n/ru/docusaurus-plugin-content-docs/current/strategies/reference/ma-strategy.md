@@ -4,6 +4,10 @@ title: 'MaStrategy'
 
 `MaStrategy` входит по пересечению быстрой и медленной скользящих средних.
 
+В стандартном проекте MaStrategy уже подключена. Чтобы увидеть её в работе,
+запустите [первый бэктест](../../getting-started/first-backtest). Для него
+уже заполнены настройки MaStrategy.
+
 ## Визуальная схема
 
 ![Логика MaStrategy](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/strategy-logic.svg)
@@ -141,7 +145,5 @@ title: 'MaStrategy'
 
 ## Запуск
 
-```bash
-npx @tradejs/cli backtest --user root --config MaStrategy:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
-```
+Откройте [первый бэктест](../../getting-started/first-backtest).
+Выберите **MaStrategy:base** и укажите рынок и период из примера.

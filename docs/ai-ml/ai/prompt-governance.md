@@ -2,7 +2,8 @@
 title: AI Prompt Governance
 ---
 
-Treat prompts as versioned runtime artifacts.
+Keep the exact prompt used to check trading signals. Record its version and test
+new wording on the same saved signals before changing a running deployment.
 
 ## Versioning
 

@@ -3,8 +3,8 @@ sidebar_position: 7
 title: Creating Strategies
 ---
 
-TradeJS keeps strategy decisions in a small, typed contract. You can implement
-that contract in TypeScript or connect a dedicated Pine source file.
+A strategy returns a decision in the format TradeJS expects. Write the decision
+rules in TypeScript or read the values from a Pine script.
 
 TradeJS supports two strategy creation paths:
 

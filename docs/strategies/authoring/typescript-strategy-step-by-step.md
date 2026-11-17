@@ -4,8 +4,8 @@ title: Build a TypeScript Trading Strategy Step by Step
 description: 'Build a complete moving-average crossover strategy in TypeScript with TradeJS StrategyAPI, public package imports, configuration, registration, and tests.'
 ---
 
-Build a custom TypeScript strategy with `StrategyAPI`, register it as a plugin,
-and verify it with tests.
+Build a TypeScript strategy with `StrategyAPI`, load it as a plugin, and check its
+decisions in tests.
 
 Example strategy: simple MA crossover.
 
@@ -13,6 +13,8 @@ Import rule for this guide:
 
 - use public `@tradejs/core/*` subpaths for browser-safe helpers, `@tradejs/node/*` for Node runtime wiring, and `@tradejs/types` for types
 - do not use non-public deep imports
+
+[Work through this guide with an agent](../../guides/develop-with-an-agent).
 
 ## 1. Create Files
 
@@ -242,7 +244,7 @@ redis-cli JSON.SET users:root:backtests:configs:SimpleMa:quickstart '$' '{
 npx @tradejs/cli backtest --user root --config SimpleMa:quickstart --connector bybit --tests 200 --parallel 4
 npx @tradejs/cli results --strategy SimpleMa --coverage --user root
 npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli signals --user root --deployment production
+npm exec -- tradejs signals --user root --deployment production
 ```
 
 ## Notes

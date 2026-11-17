@@ -2,9 +2,14 @@
 title: 'AdaptiveTrendChannel'
 ---
 
-`AdaptiveTrendChannel` is a built-in TypeScript strategy from `@tradejs/strategy-adaptive-trend-channel`.
+AdaptiveTrendChannel looks for a direction change in a channel that follows
+price. It puts the stop at the channel boundary and sizes the trade using the
+distance to that stop.
 
 It replays candles through an adaptive channel engine, watches for bullish/bearish channel flips, and sizes entries from the distance to the channel boundary used as the stop.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +17,7 @@ It replays candles through an adaptive channel engine, watches for bullish/beari
 
 ![AdaptiveTrendChannel signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveTrendChannel/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -49,9 +53,6 @@ condition persists. Directional `_LONG` and `_SHORT` overrides take precedence.
 cooldown.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

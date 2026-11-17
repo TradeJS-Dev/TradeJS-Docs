@@ -2,7 +2,8 @@
 title: What TradeJS is not
 ---
 
-TradeJS is intentionally scoped as a research, backtesting, signal, and automation framework. It does not remove trading risk.
+TradeJS works with market candles and leaves the trading rules, risk limits, and
+infrastructure under your control.
 
 ## Not a Hosted Trading SaaS
 

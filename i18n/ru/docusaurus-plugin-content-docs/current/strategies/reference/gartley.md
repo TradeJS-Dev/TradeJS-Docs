@@ -2,9 +2,11 @@
 title: 'Gartley'
 ---
 
-`Gartley` — стратегия гармонического разворота из
-`@tradejs/strategy-gartley`. Она ищет бычьи и медвежьи модели XABCD из пяти
-экстремумов и проверяет их пропорции Фибоначчи перед входом.
+Gartley ищет разворотную фигуру из пяти крайних точек цены. Перед входом
+стратегия проверяет пропорции Фибоначчи и ждёт подтверждения.
+
+Стратегия уже подключена в стандартном проекте.
+[Как сохранить настройки бэктеста](../../getting-started/backtest-config).
 
 ## Визуальная схема
 
@@ -55,7 +57,9 @@ title: 'Gartley'
 
 ## Запуск
 
+Сначала [сохраните настройки бэктеста](../../getting-started/backtest-config)
+под именем из `--config`. Затем выполните команду из папки проекта.
+
 ```bash
-npx @tradejs/cli backtest --user root --config Gartley:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config Gartley:base --connector bybit --timeframe 15
 ```

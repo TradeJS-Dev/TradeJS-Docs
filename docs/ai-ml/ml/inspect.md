@@ -2,7 +2,8 @@
 title: ML Dataset Inspection
 ---
 
-`npx @tradejs/cli ml-inspect` helps validate dataset quality before training.
+Run `npx @tradejs/cli ml-inspect` to check your training data before fitting a
+model.
 
 Source:
 

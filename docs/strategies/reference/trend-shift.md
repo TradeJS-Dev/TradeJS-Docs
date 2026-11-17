@@ -2,8 +2,10 @@
 title: 'TrendShift'
 ---
 
-`TrendShift` trades transitions detected as bullish or bearish flips in a
-dynamic trend band.
+TrendShift looks for a change in direction when the trend band flips up or down.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -11,8 +13,7 @@ dynamic trend band.
 
 ![TrendShift signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendShift/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 

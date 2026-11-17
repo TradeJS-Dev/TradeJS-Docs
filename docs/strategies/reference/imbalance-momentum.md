@@ -4,6 +4,8 @@ title: 'ImbalanceMomentum'
 
 ImbalanceMomentum looks for a directional gap across three consecutive four-hour candles.
 
+Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
+
 ## Install
 
 Run the command in your TradeJS project.

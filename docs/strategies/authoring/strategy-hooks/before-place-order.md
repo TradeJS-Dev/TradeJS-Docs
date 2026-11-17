@@ -2,7 +2,8 @@
 title: beforePlaceOrder
 ---
 
-Called on the entry path right before connector order placement. This hook fires for both signal and no-signal entries.
+TradeJS calls this hook just before sending an entry order to the connector. It
+runs for entries with or without a signal.
 
 ## Params
 

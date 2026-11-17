@@ -2,18 +2,44 @@
 title: 'HeadAndShoulders'
 ---
 
-`HeadAndShoulders` detects bearish and inverse head-and-shoulders patterns from
-closed-candle pivots. It models the shoulders, head prominence, neckline,
-breakout, stop, and measured target.
+import HeadAndShouldersChart from "@site/src/components/HeadAndShouldersChart";
+
+HeadAndShoulders looks for a head and shoulders pattern or its inverse. A break
+of the neckline can trigger an entry, and the pattern sets the stop and target.
+
+Included in a standard TradeJS project.
+[Run a backtest](#backtest).
 
 ## Visual overview
 
-![HeadAndShoulders strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/strategy-logic.svg)
+The regular pattern has three peaks. The middle peak is higher, and the
+neckline runs through the two lows between them. After the right shoulder,
+the strategy checks for a break below the neckline. The default
+`close_acceptance` mode waits for a confirming close. The short stop goes
+above the head with a buffer, and the target uses the pattern height.
 
-![HeadAndShoulders signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/signal-example.svg)
+<HeadAndShouldersChart />
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The chart uses illustrative prices.
+
+## Backtest {#backtest}
+
+You need a standard local project with its Docker services running and access
+to public Binance BTCUSDT candles. From the project folder, create a separate test configuration and
+run it on the last seven days of 15-minute candles.
+
+```bash
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli JSON.SET \
+  'users:root:backtests:configs:HeadAndShoulders:docs-example' '$' '{"INTERVAL":["15"]}' NX
+
+npm run backtest -- --user root --connector binance --tickers BTCUSDT \
+  --config HeadAndShoulders:docs-example --timeframe 15 --days 7 --tests 1 --parallel 1
+```
+
+Redis returns `OK` when it creates the configuration. If the name is already
+taken, replace `docs-example` in both commands. At the end of the run look
+for `SUCCESS TESTS: 1`, `ERRORS: 0`, and the path after `full report:`.
+A run can finish without trades if no entry met the rules in that period.
 
 ## Decision flow
 
@@ -27,9 +53,6 @@ Entry codes distinguish regular breakdown and inverse breakout. An optional
 opposite-pattern exit uses `HEADSHOULDERS_OPPOSITE_PATTERN_EXIT`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

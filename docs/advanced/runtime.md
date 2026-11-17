@@ -2,7 +2,9 @@
 title: Runtime
 ---
 
-The runtime executes strategy decisions against market data.
+TradeJS runs strategy rules against market data, then handles the resulting
+signal, order, or exit. Backtests, replay, and live operation share strategy
+rules. They differ where simulation or exchange execution requires it.
 
 The current runtime path is shared across backtests, replay, signals, and automation where practical. That parity matters: a strategy should not have one decision path for backtests and another for runtime unless the difference is explicit.
 

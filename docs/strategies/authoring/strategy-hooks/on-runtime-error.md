@@ -2,7 +2,8 @@
 title: onRuntimeError
 ---
 
-Called when runtime catches an error in a runtime stage or hook.
+TradeJS calls this hook when it catches an error while running a strategy or a
+hook.
 
 ## Params
 

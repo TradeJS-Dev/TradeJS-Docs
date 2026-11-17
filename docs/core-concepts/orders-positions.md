@@ -2,7 +2,9 @@
 title: Orders / positions
 ---
 
-Orders and positions are execution-layer objects. A strategy proposes an `orderPlan`; the runtime and connector decide what can actually happen.
+An order tells an exchange what to buy or sell. A position records the trade
+exposure after orders fill. The strategy proposes an `orderPlan`, then TradeJS
+and the exchange connector handle the request and track the result.
 
 ## Order Plan
 

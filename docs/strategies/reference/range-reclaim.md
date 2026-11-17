@@ -2,10 +2,10 @@
 title: RangeReclaim
 ---
 
-`@tradejs/strategy-range-reclaim` trades a return inside the range of a closed
-higher-timeframe candle after a failed breakout. Install it separately from
-`@tradejs/base`. Its defaults and optional entry policies are
-research parameters, not validated trading recommendations.
+RangeReclaim waits for price to leave the range of a completed larger candle and
+then close back inside it.
+
+Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
 
 ## Installation
 

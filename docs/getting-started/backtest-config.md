@@ -2,126 +2,80 @@
 title: Define a Backtest Parameter Grid
 ---
 
-A backtest configuration defines the candidate values TradeJS should evaluate.
-The first-run installer creates `MaStrategy:base` for the web app. For custom
-research, save a named grid in the local project and select it with
-`--config <StrategyName:label>`.
+The [first backtest](./first-backtest) already has settings for MaStrategy.
+To try different settings or another strategy, save a configuration in your
+local project. The example below tests two values for the fast moving average.
 
 ## Grid Shape
 
-Every top-level value is an array, including fields with only one candidate:
+A grid lists the values you want to try. Use an array even for settings you
+want to keep fixed. Fields you leave out use the strategy's defaults.
 
 ```json
 {
   "INTERVAL": ["15"],
-  "MAX_LOSS_VALUE": [10],
   "MA_FAST": [21, 34],
-  "MA_SLOW": [55, 89],
-  "LONG": [
-    {
-      "enable": true,
-      "direction": "LONG",
-      "TP": 2,
-      "SL": 1,
-      "minRiskRatio": 1.2
-    }
-  ],
-  "SHORT": [
-    {
-      "enable": true,
-      "direction": "SHORT",
-      "TP": 2,
-      "SL": 1,
-      "minRiskRatio": 1.2
-    }
-  ]
+  "MA_SLOW": [55]
 }
 ```
 
-TradeJS evaluates the Cartesian product of these arrays. This example contains
-four moving-average combinations because `MA_FAST` and `MA_SLOW` each have two
-values. Invalid relationships such as a fast period greater than a slow period
-should be excluded before running a large search.
-
-The prefix before the first colon selects the strategy: `MaStrategy:base`
-selects `MaStrategy`, while `TrendLine:conservative` selects `TrendLine`.
-
-## Direction-Specific Parameters
-
-Some built-in strategies support `<KEY>_LONG` and `<KEY>_SHORT` in addition to
-an unsuffixed `<KEY>`. For example, `TARGET_R_MULT_SHORT` can change the short
-target independently of `TARGET_R_MULT_LONG`.
-
-This convention applies only to fields documented by the strategy. Check its
-reference and default configuration instead of assuming every parameter is
-direction-specific.
+TradeJS runs one test with a fast period of 21 and another with a fast period
+of 34. Both use a slow period of 55. If each period had two values, TradeJS
+would test four combinations.
 
 ## Save a Grid Manually
 
-Backtest grids are local research data stored in Redis. After starting the
-local services, the key is:
-
-```text
-users:<user>:backtests:configs:<StrategyName:label>
-```
-
-For example:
+Open your TradeJS project folder. With the local services running, save the
+grid in the project's Redis. Use a new name each time you want to keep the
+old settings.
 
 ```bash
-redis-cli -h 127.0.0.1 -p 6379 SET \
-  'users:root:backtests:configs:MaStrategy:base' \
-  '{"INTERVAL":["15"],"MAX_LOSS_VALUE":[10],"MA_FAST":[21],"MA_SLOW":[55],"LONG":[{"enable":true,"direction":"LONG","TP":2,"SL":1,"minRiskRatio":1.2}],"SHORT":[{"enable":true,"direction":"SHORT","TP":2,"SL":1,"minRiskRatio":1.2}]}'
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
+  'users:root:backtests:configs:MaStrategy:compare' \
+  '{"INTERVAL":["15"],"MA_FAST":[21,34],"MA_SLOW":[55]}' NX
 ```
 
-Then run:
+`OK` means the settings were saved. An empty response means the name is
+already in use. `MaStrategy` selects the strategy and `compare` names these settings.
+
+In the app, open **Backtest**, select **MaStrategy** and configuration
+**MaStrategy:compare**, then choose the market and time range. If you prefer
+the terminal, run the project's `backtest` command:
 
 ```bash
-npx @tradejs/cli backtest \
-  --user root \
-  --config MaStrategy:base \
-  --tickers BTCUSDT \
-  --timeframe 15 \
-  --tests 1 \
-  --parallel 1
+npm run backtest -- --user root --config MaStrategy:compare \
+  --connector binance --tickers BTCUSDT --timeframe 15 --days 30 --tests 2 --parallel 1
 ```
 
-For a long grid or password-protected Redis, use a small seed script in your
-own project. Keep that script in version control when the experiment should be
-reviewable and reproducible.
+## Direction-Specific Parameters
+
+Some strategies let you set a different value for long and short trades.
+For instance, `TARGET_R_MULT_SHORT` may set the short target independently.
+Check the strategy page for fields that accept `_LONG` and `_SHORT`.
 
 ## Reproduce a Live Configuration
 
-To test a configuration from `tradejs.config.ts`, copy the strategy parameters
-into one-value arrays and use the same strategy package version, timeframe,
-symbols, and data window. Do not copy live-operation fields such as `ENV` or
-`MAKE_ORDERS`; represent execution assumptions with the backtest's price, fee,
-slippage, and delay settings.
-
-Backtest grids and saved result lists do not change live strategy settings.
+Put each tested strategy setting in an array with one item. Use the same
+strategy package version, candle interval, instruments, and dates. Set price,
+fees, slippage, and delay through the backtest options. Leave live controls such
+as `ENV` and `MAKE_ORDERS` out of the grid. A saved grid only affects backtests.
 
 ## Common Errors
 
 ### `Backtest config "<name>" not found`
 
-The selected user has no grid with that name. Verify both parts:
-
-```bash
-redis-cli -h 127.0.0.1 -p 6379 GET \
-  'users:root:backtests:configs:MaStrategy:base'
-```
+Check the user name and the part after `backtests:configs:` in the Redis key.
+For the example above they are `root` and `MaStrategy:compare`.
 
 ### `must include strategyName and strategyConfig grid`
 
-The value is not a grid object. Every top-level field must be an array, and no
-array may be empty.
+Save a JSON object. Each field must contain an array with at least one value.
 
 ### The wrong strategy runs
 
-The strategy is selected from the prefix before the first colon. Use
-`StrategyName:label`.
+The name before the first colon selects the strategy.
 
 ## Next
 
-- [Run your first backtest](./first-backtest)
-- [Search a parameter grid](../runtime/backtesting/grid-config)
-- [How backtests work](../runtime/backtesting/overview)
+[Learn how TradeJS tests parameter combinations](../runtime/backtesting/grid-config)
+or [compare the results](../guides/compare-strategies).

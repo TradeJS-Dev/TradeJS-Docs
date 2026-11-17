@@ -2,9 +2,12 @@
 title: 'RelativeRotation'
 ---
 
-`RelativeRotation` trades a symbol's rotation relative to BTC. It evaluates
-24-hour alpha and ratio return, one-hour relative strength, ratio trend,
-participation, correlation, and optional BTC/alt regime alignment.
+RelativeRotation compares how an instrument and Bitcoin have moved. It checks
+their hourly and daily performance, then uses volume and other market data to
+filter entries.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +15,7 @@ participation, correlation, and optional BTC/alt regime alignment.
 
 ![RelativeRotation signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-RelativeRotation/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Decision flow
 
@@ -29,9 +31,6 @@ Entry codes are `RR_LONG_RELATIVE_ROTATION` and
 `RR_OPPOSITE_ROTATION_EXIT`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

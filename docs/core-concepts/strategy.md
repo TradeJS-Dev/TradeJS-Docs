@@ -2,7 +2,8 @@
 title: Strategy
 ---
 
-A strategy is the decision-making unit in TradeJS.
+A strategy is a set of rules for reading market data and deciding when to enter,
+manage, or close a trade.
 
 On each candle, a strategy decides whether to:
 

@@ -2,8 +2,9 @@
 title: Use AI and ML
 ---
 
-AI and ML are optional analysis and order-filtering layers. They do not replace
-strategy rules, data validation, or risk management.
+TradeJS can use AI or a trained model to check a strategy's entry. Compare
+results with and without the extra check before enabling it for a running
+strategy.
 
 ## Evaluate an AI Gate
 

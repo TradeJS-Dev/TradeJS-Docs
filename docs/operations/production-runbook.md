@@ -4,7 +4,8 @@ title: Self-Hosted TradeJS Production Runbook
 description: 'Operate TradeJS on infrastructure you control with explicit deployment configuration, TLS, secrets, monitoring, backups, runtime checks, and incident procedures.'
 ---
 
-Use this runbook as a daily operational checklist.
+Install TradeJS on infrastructure you manage. You will need the npm packages,
+Redis, and PostgreSQL with TimescaleDB.
 
 ## Self-Hosted Deployment Model
 
@@ -27,6 +28,10 @@ The official repository split uses `TradeJS-Project` for package composition,
 and secrets. The Project supplies a versioned image tag and project revision
 to Deploy; Deploy does not rebuild application source. See
 [Repository and package ownership](../advanced/repository-ownership).
+
+The standard Project image starts the web app and the signal process together.
+Check the latest cycle in **Strategies** after startup. See
+[how the server evaluates signals](../runtime/execution/signals).
 
 ## Configuration and rollout
 

@@ -2,7 +2,8 @@
 title: Licensing
 ---
 
-TradeJS uses different licenses for different components. Check the license closest to the file or package you use.
+Check the license in the package or source folder you are using. The nearest
+license file applies to the component.
 
 ## Business Source License components
 

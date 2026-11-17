@@ -2,7 +2,8 @@
 title: Feature Engineering Cookbook
 ---
 
-Use this checklist when adding or changing ML features.
+Use these checks when you add or change a value that the model receives as
+input.
 
 ## Design Rules
 

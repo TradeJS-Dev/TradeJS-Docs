@@ -4,7 +4,8 @@ title: Регистрация, бэктест и проверка Pine-стра�
 description: 'Добавьте entrypoint, adapters, manifest, регистрацию plugin, backtest grid и команды проверки Pine-стратегии.'
 ---
 
-Это глава 4 [пошагового руководства по Pine-стратегии](./pine-strategy-step-by-step). Здесь готовый runtime-мост публикуется как пакет стратегии и проверяется стандартным workflow TradeJS.
+Подключите код из предыдущих шагов как пакет стратегии и проверьте его на
+исторических данных.
 
 ## 6. Добавьте runtime entrypoint стратегии (`strategy.ts`)
 
@@ -206,7 +207,7 @@ npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-defaul
 Сигналы:
 
 ```bash
-npx @tradejs/cli signals --user root --cacheOnly
+npm exec -- tradejs signals --user root --cacheOnly
 ```
 
 В UI (`/routes/backtest`) проверьте:

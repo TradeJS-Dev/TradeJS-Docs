@@ -8,9 +8,15 @@ Marketing site: https://tradejs.dev
 
 ## Start Here
 
+For project work, read the project instructions and check installed package versions before choosing commands. Use the local backtest workflow for simulated tests and the MCP guide for access to a running app.
+
 - Overview: https://docs.tradejs.dev/
 - What is TradeJS: https://docs.tradejs.dev/introduction/what-is-tradejs
 - Trading workflow and terms: https://docs.tradejs.dev/introduction/trading-workflow-and-terms
+- Agent recipes for research, creating a strategy, improving it, and running a backtest: https://docs.tradejs.dev/guides/develop-with-an-agent
+- HeadAndShoulders backtest example: https://docs.tradejs.dev/strategies/reference/head-and-shoulders#backtest
+- Russian agent guide: https://docs.tradejs.dev/ru/guides/develop-with-an-agent
+- Add a strategy: https://docs.tradejs.dev/getting-started/add-strategy
 - Installation: https://docs.tradejs.dev/getting-started/installation
 - Quickstart: https://docs.tradejs.dev/getting-started/quickstart
 - TypeScript strategy: https://docs.tradejs.dev/strategies/authoring/typescript-strategy-step-by-step
@@ -22,7 +28,7 @@ Marketing site: https://tradejs.dev
 - Codex strategy workflow skills: https://docs.tradejs.dev/guides/codex-strategy-skills
 - Examples: https://docs.tradejs.dev/examples
 - Core API: https://docs.tradejs.dev/api/framework
-- Built-in strategy catalog: https://docs.tradejs.dev/strategies/reference
+- Ready-to-use strategy catalog: https://docs.tradejs.dev/strategies/reference
 - Ready-made project hook helpers: https://docs.tradejs.dev/api/framework
 - CLI API: https://docs.tradejs.dev/api/cli
 
@@ -62,7 +68,7 @@ Marketing site: https://tradejs.dev
 
 TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at /mcp. Read markets, charts, runtime strategies/signals/orders and verified evidence; run bounded cached backtest/diagnostic jobs through a separate worker. Requires an MCP-enabled release. No live order or deployment tools. Guide: https://docs.tradejs.dev/guides/mcp (Russian: https://docs.tradejs.dev/ru/guides/mcp). The project owner can inspect data coverage, request gap downloads with market:backfill, and read saved studies with research:read.
 
-Separately installed strategies outside Base: TradingPatterns (https://docs.tradejs.dev/strategies/reference/trading-patterns) VwapReversion (https://docs.tradejs.dev/strategies/reference/vwap-reversion), and RangeReclaim (https://docs.tradejs.dev/strategies/reference/range-reclaim). TradingPatterns supports 15-minute and hourly candles (hourly by default). LondonBreakout (https://www.npmjs.com/package/@tradejs/strategy-london-breakout) and TrendPullback (https://www.npmjs.com/package/@tradejs/strategy-trend-pullback) are also published separately.
+Separately installed strategies outside Base: TradingPatterns (https://docs.tradejs.dev/strategies/reference/trading-patterns) VwapReversion (https://docs.tradejs.dev/strategies/reference/vwap-reversion), and RangeReclaim (https://docs.tradejs.dev/strategies/reference/range-reclaim). TradingPatterns supports 15-minute and hourly candles (hourly by default). LondonBreakout (https://docs.tradejs.dev/strategies/reference/london-breakout) and TrendPullback (https://docs.tradejs.dev/strategies/reference/trend-pullback) are also published separately.
 
 Other standalone strategies:
 - Crab (https://docs.tradejs.dev/strategies/reference/crab)

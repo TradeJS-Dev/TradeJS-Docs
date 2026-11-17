@@ -2,10 +2,8 @@
 title: Run a Strategy in Production
 ---
 
-A backtest does not start a strategy. Production execution is a separate,
-controlled rollout of an exact project build to infrastructure you operate.
-The same build contains the installed strategy package, its reviewed
-configuration, and the runtime that will evaluate closed candles.
+To run a tested strategy on a trading account, prepare a separate deployment. Use
+the same strategy package, settings, and TradeJS version that you tested.
 
 The one-command `create-tradejs` setup is intended for local onboarding. It
 does not provision a production server, TLS, backups, monitoring, or a container
@@ -137,45 +135,19 @@ without order placement and repeat the replay before continuing.
 
 ## 5. Run Without Orders First
 
-Evaluate the current closed candle once:
-
-```bash
-npx @tradejs/cli signals \
-  --user root \
-  --deployment production
-```
-
-Then keep the strategy running in signal-only mode for an observation period:
-
-```bash
-npx @tradejs/cli signals-daemon \
-  --user root \
-  --deployment production
-```
-
-Without `--makeOrders`, TradeJS calculates and records decisions but does not
-place orders. Confirm candle freshness, expected symbols, signal frequency,
-rejections, memory use, restarts, and monitoring before proceeding.
-
-Run only one daemon for the deployment. Put it under a process supervisor with
-restart policy, memory limits, logs, and an alert for missed candle cycles.
+Start the app container with the intended deployment and explicitly set
+`SIGNALS_DAEMON_MAKE_ORDERS=false` to observe signals without placing orders.
+In the standard TradeJS Project image, the container starts and supervises the
+signal process. Use **Strategies** to check status and the latest cycle, and
+open a chart to inspect recorded signals. For server verification, use
+`runtime-control verify` from step 3.
 
 ## 6. Enable Order Placement Explicitly
 
-After the [pre-live checklist](../strategies/operations/pre-live-checklist) is
-complete, replace the supervised signal-only command with:
-
-```bash
-npx @tradejs/cli signals-daemon \
-  --user root \
-  --deployment production \
-  --makeOrders
-```
-
-`--makeOrders` authorizes order placement; it does not bypass account, risk,
-strategy, AI, or ML checks. Start with a bounded risk allocation and written
-stop conditions. Confirm that the previous signal-only daemon has stopped
-before starting this process.
+After completing the [pre-live checklist](../strategies/operations/pre-live-checklist),
+enable order placement in the server container settings and roll out the
+verified image. Set a starting risk budget and stop conditions first.
+Account settings, risk checks and strategy checks still apply to each order.
 
 ## 7. Pause and Resume New Entries
 

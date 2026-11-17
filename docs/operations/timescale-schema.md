@@ -2,7 +2,7 @@
 title: Postgres and Timescale Schema Guide
 ---
 
-TimescaleDB stores market time-series and supports historical queries used by runtime and backtests.
+TimescaleDB stores market history used by backtests and live calculations.
 
 TradeJS 3 exposes storage by focused server-only subpaths:
 

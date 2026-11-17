@@ -2,7 +2,8 @@
 title: Connectors
 ---
 
-Connectors provide market data and execution access.
+A connector translates TradeJS requests into calls to a market data source or an
+exchange.
 
 The built-in connector package is `@tradejs/connectors`. The default `basePreset` registers the built-in connector catalog.
 
@@ -21,7 +22,7 @@ Many CLI commands accept a connector/provider option:
 
 ```bash
 npx @tradejs/cli backtest --connector bybit
-npx @tradejs/cli signals --connector bybit
+npm exec -- tradejs signals --connector bybit
 ```
 
 Use the provider that matches your data source and execution assumptions.

@@ -2,9 +2,11 @@
 title: 'Gartley'
 ---
 
-`Gartley` is a harmonic reversal strategy from `@tradejs/strategy-gartley`. It
-detects bullish and bearish five-pivot XABCD patterns and validates their
-Fibonacci ratios before entry.
+Gartley looks for a reversal pattern with five price extremes. It checks
+Fibonacci ratios and waits for confirmation before entering.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -55,7 +57,9 @@ computed stop and target, and chart figures for the detected pattern.
 
 ## Run
 
+First [save backtest settings](../../getting-started/backtest-config) with the
+name in `--config`. Then run this command from the project folder.
+
 ```bash
-npx @tradejs/cli backtest --user root --config Gartley:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config Gartley:base --connector bybit --timeframe 15
 ```

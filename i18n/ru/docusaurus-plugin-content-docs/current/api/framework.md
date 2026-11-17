@@ -3,7 +3,8 @@ sidebar_position: 5
 title: Базовый API
 ---
 
-`@tradejs/core` — публичный пакет для разработки стратегий и индикаторов TradeJS.
+Используйте публичные интерфейсы `@tradejs/core` для написания стратегий и
+индикаторов. Серверные функции находятся в отдельных пакетах.
 
 ## Что экспортируется
 
@@ -121,7 +122,7 @@ export default defineConfig(basePreset, {
 - strategy runtime hooks, например `onBar`, `afterBarDecision` и `beforePlaceOrder`
 - batch hooks для signals, например `beforeSignals` и `afterSignals`
 
-`beforeSignals` и `afterSignals` оборачивают весь пайплайн `npx @tradejs/cli signals`, а не одну свечу конкретной стратегии. Их можно объявлять только в `tradejs.config.ts`, но не в `manifest.ts`.
+`beforeSignals` и `afterSignals` оборачивают весь пайплайн `npm exec -- tradejs signals`, а не одну свечу конкретной стратегии. Их можно объявлять только в `tradejs.config.ts`, но не в `manifest.ts`.
 
 `beforeSignals` может прервать текущий прогон signals:
 

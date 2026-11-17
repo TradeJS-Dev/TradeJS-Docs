@@ -2,7 +2,8 @@
 title: afterPlaceOrder
 ---
 
-Called on the entry path right after a successful order placement call. This hook fires for both signal and no-signal entries.
+TradeJS calls this hook after it places an entry order successfully, including
+orders placed without a signal.
 
 ## Params
 

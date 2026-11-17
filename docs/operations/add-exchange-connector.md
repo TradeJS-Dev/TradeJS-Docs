@@ -2,8 +2,8 @@
 title: Add a New Exchange Connector
 ---
 
-Add an exchange connector as a typed plugin, register it in
-`tradejs.config.ts`, and verify the CLI paths that use it.
+Add the connector as a plugin, register it in `tradejs.config.ts`, then check the
+commands that will use it.
 
 Important:
 

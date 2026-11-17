@@ -2,7 +2,8 @@
 title: Extending TradeJS
 ---
 
-Extend TradeJS through plugins and public package APIs.
+Use a plugin to add a strategy, indicator, or exchange connector. The examples
+below use the public package interfaces.
 
 ## Extension Points
 

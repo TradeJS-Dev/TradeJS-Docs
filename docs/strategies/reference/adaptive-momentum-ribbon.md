@@ -2,10 +2,12 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
-`AdaptiveMomentumRibbon` combines a Pine-based momentum ribbon with Keltner
-context, structural invalidation, and risk-sized entries. Pine performs the
-signal calculation while TypeScript handles position state, exits, and order
-planning.
+AdaptiveMomentumRibbon checks momentum and the Keltner channel before entering.
+Pine calculates the signal. TypeScript manages the position, calculates order
+size from risk, and handles exits.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -13,8 +15,7 @@ planning.
 
 ![AdaptiveMomentumRibbon signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-AdaptiveMomentumRibbon/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -46,9 +47,6 @@ confirmation rules, and risk parameters come from the active strategy config.
 - `CLOSE_BY_AMR_INVALIDATION` — invalidation when `AMR_EXIT_ON_INVALIDATION=true`
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, and position-sizing
-keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
@@ -122,7 +120,9 @@ keys keep the same meaning across the built-in strategies.
 
 ## Run
 
+First [save backtest settings](../../getting-started/backtest-config) with the
+name in `--config`. Then run this command from the project folder.
+
 ```bash
-npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15
 ```

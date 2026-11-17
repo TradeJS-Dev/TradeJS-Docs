@@ -2,7 +2,8 @@
 title: Security Hardening Checklist
 ---
 
-Use this checklist before and after production go-live.
+Use these checks when you set up a server for TradeJS and after you put it into
+use.
 
 ## Secrets
 

@@ -2,9 +2,11 @@
 title: 'Dragon'
 ---
 
-`Dragon` is a four pivot reversal strategy from
-`@tradejs/strategy-dragon`. It confirms the pattern against a projected
-trendline from head to hump before it creates an entry.
+Dragon looks for a reversal from four price extremes. The pattern needs
+confirmation at the line drawn through the head and the hump.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -33,9 +35,6 @@ entry stage. When `DRAGON_EXIT_ON_OPPOSITE_PATTERN=true`, a confirmed opposite
 pattern can close an open position with `DRAGON_OPPOSITE_PATTERN_EXIT`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

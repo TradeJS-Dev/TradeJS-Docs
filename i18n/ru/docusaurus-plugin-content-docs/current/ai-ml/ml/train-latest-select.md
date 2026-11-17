@@ -2,7 +2,8 @@
 title: Обучение ML-модели
 ---
 
-`npx @tradejs/cli ml-train:latest` запускает интерактивный/селективный train по актуальным export-файлам и автоматически готовит holdout/prod/walk-forward split.
+Команда `npx @tradejs/cli ml-train:latest` обучает модель на свежих выгрузках.
+Она разделяет данные для обучения и проверки.
 
 Внешний интерфейс:
 

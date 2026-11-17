@@ -1,100 +1,17 @@
 ---
-title: Built-In Strategy Catalog
+title: Ready-to-use strategies
+description: Choose a strategy by its entry rules, then see how to install it and test it on historical market data in TradeJS.
+hide_table_of_contents: true
+displayed_sidebar: null
 ---
 
-`@tradejs/base` installs 23 packages that provide 24 strategy implementations.
-They are inspectable starting points, not trading recommendations or validated
-parameter sets. Test every strategy with your own market, data source, costs,
-timeframe, liquidity, and risk limits.
+import StrategyCatalog from "@site/src/components/StrategyCatalog";
 
-TrendLine and ReverseTrendLine share `@tradejs/strategy-trend-line`; each other
-strategy has its own package.
+Each chart illustrates a strategy signal. Open a card for the full rules and settings.
 
-## Trend, Momentum, and Breakout
-
-- [TrendLine](./reference/trendline) — breakout through a trendline fitted to swing highs
-  or lows.
-- [ReverseTrendLine](./reference/reverse-trendline) — rejection or reversal around a
-  fitted support/resistance line.
-- [TrendFollow](./reference/trend-follow) — trend continuation with a trailing stop line.
-- [TrendShift](./reference/trend-shift) — directional change after a dynamic trend-band flip.
-- [Breakout](./reference/breakout) — weighted confirmation of long or short breakout conditions.
-- [Flag](./reference/flag) — continuation after a strong pole, compact
-  counter-trend channel, and directional breakout.
-- [AdaptiveTrendChannel](./reference/adaptive-trend-channel) — direction change in an
-  adaptive channel with a structural stop at its boundary.
-- [AdaptiveMomentumRibbon](./reference/adaptive-momentum-ribbon) — momentum-ribbon signal
-  with Keltner bias and structural invalidation.
-- [MaStrategy](./reference/ma-strategy) — fast/slow moving-average crossover.
-- [VolatilityCompressionBreakout](./reference/volatility-compression-breakout) — range
-  expansion after low ATR and Bollinger-width ranks.
-- [RelativeRotation](./reference/relative-rotation) — relative strength and rotation of a
-  symbol versus BTC.
-
-## Price Structure, Liquidity, and Reversal
-
-- [DoubleTap](./reference/double-tap) — double top/bottom structure followed by a
-  breakout or breakdown.
-- [CupAndHandle](./reference/cup-and-handle) — bullish cup-and-handle or bearish inverted
-  cup with a measured target.
-- [HeadAndShoulders](./reference/head-and-shoulders) — standard or inverse
-  head-and-shoulders neckline breakout.
-- [Dragon](./reference/dragon) — reversal from four pivots confirmed at a
-  projected trendline from head to hump.
-- [Gartley](./reference/gartley) — harmonic XABCD reversal validated by
-  Fibonacci ratios and a confirmed break of B.
-- [LiquidityTails](./reference/liquidity-tails) — reaction after a retest of a zone formed
-  by large candle wicks.
-- [LiquidityZones](./reference/liquidity-zones) — reaction at liquidity zones derived from
-  swing highs and lows.
-- [StructureZones](./reference/structure-zones) — reaction or transition breakout at
-  market-structure zones.
-- [MarketFlushReversal](./reference/market-flush-reversal) — rejection after broad market
-  liquidation or pressure.
-- [VolumeDivergence](./reference/volume-divergence) — reversal based on divergence between
-  price pivots and normalized-volume pivots.
-
-## Position Building and External Context
-
-- [Grid](./reference/grid) — directional pullback or breakout-retest entries with staged
-  additions inside one risk budget.
-- [GridClassic](./reference/grid-classic) — horizontal-range mean reversion, breakout
-  continuation, or optional failed-breakout reversal.
-- [HyperliquidConsensus](./reference/hyperliquid-consensus) — direction derived from the
-  position-aware flow of configured Hyperliquid accounts.
-
-## Separately installed packages
-
-These packages are outside the 23-package Base preset:
-
-- [TradingPatterns](./reference/trading-patterns) combines four pattern detectors.
-- [VwapReversion](./reference/vwap-reversion) trades confirmed UTC-session VWAP returns.
-- [RangeReclaim](./reference/range-reclaim) trades a return inside a closed higher-timeframe range.
-- [LondonBreakout](https://www.npmjs.com/package/@tradejs/strategy-london-breakout)
-  trades a closed hourly candle breaking a UTC session range.
-- [TrendPullback](https://www.npmjs.com/package/@tradejs/strategy-trend-pullback)
-  waits for an RSI pullback and a candle close confirming the hourly EMA trend.
-- [Crab](./reference/crab). Crab looks for a reversal after five price pivots form the XABCD pattern.
-- [Diamond](./reference/diamond). Diamond looks for a reversal when a widening price range contracts and breaks.
-- [Triangle](./reference/triangle). Triangle looks for price breaks from ascending, descending, and symmetric triangles.
-- [ValueAreaReclaim](./reference/value-area-reclaim). ValueAreaReclaim looks for a return to the main traded volume range after a failed break.
-- [ImbalanceMomentum](./reference/imbalance-momentum). ImbalanceMomentum looks for a directional gap across three consecutive four-hour candles.
+<StrategyCatalog />
 
 ## How to Evaluate a Strategy
 
-Each reference page explains the decision sequence, exits, required data,
-configuration fields, output, and example commands. The diagrams are schematic
-and show logic rather than historical performance.
-
-Before comparing results, identify:
-
-1. the market hypothesis and regime the strategy is intended for;
-2. the required candles and optional context data;
-3. entry, invalidation, exit, and position-sizing rules;
-4. turnover, expected holding period, and execution sensitivity;
-5. parameters selected before the test and the independent validation plan.
-
-For configuration and execution, see
-[Define a backtest parameter grid](../../getting-started/backtest-config),
-[How backtests work](../../runtime/backtesting/overview), and
-[How live signals work](../../runtime/execution/signals).
+Use the same market and period, check that each strategy has the data it needs,
+and include fees and slippage. Then [compare the results](../../guides/compare-strategies.md).

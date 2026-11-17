@@ -3,10 +3,10 @@ title: Write Custom TypeScript Indicators
 description: 'Create a custom TypeScript indicator plugin, register it in tradejs.config.ts, calculate values from market data, and render the result in a TradeJS chart.'
 ---
 
-Use built-in indicators when they already calculate what your strategy needs.
-Write a TypeScript plugin when you need a new indicator. Pine plots can be
-read inside a [Pine strategy](../strategies/authoring/pine-strategy-step-by-step).
-Standalone indicator plugins require TypeScript.
+Check the [indicator catalog](./catalog) first. If you need a different
+calculation, add a TypeScript plugin. A [Pine
+strategy](../strategies/authoring/pine-strategy-step-by-step) can read values from
+its own `plot(...)` calls.
 
 ## 1. Create an Indicator Plugin Package
 

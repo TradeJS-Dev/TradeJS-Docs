@@ -2,7 +2,8 @@
 title: AI Filter Validation on Backtest Data
 ---
 
-TradeJS can turn AI-enabled backtests into reusable datasets for AI filter validation.
+Save signals from an AI backtest so you can run the AI filter again on the same
+inputs.
 
 Instead of treating AI review as a live-only gate, you can capture replayable AI rows during backtests and run the same historical trades through updated prompts, models, and approval thresholds later.
 

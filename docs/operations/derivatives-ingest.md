@@ -2,7 +2,8 @@
 title: Derivatives and Spread Ingest
 ---
 
-TradeJS can ingest derivatives and spread market features into TimescaleDB.
+TradeJS can save derivatives and spread data in TimescaleDB so strategies can
+use it in tests and live calculations.
 
 Main scripts:
 

@@ -4,7 +4,8 @@ title: Build TradeJS Figures from Pine Plot Series
 description: 'Turn Pine plot series into TradeJS entry chart lines and points for a registered Pine strategy.'
 ---
 
-This is chapter 2 of the [Pine strategy walkthrough](./pine-strategy-step-by-step). It turns the named plot series from the Pine source into entry figures.
+Use named plots from the Pine script to draw the entry on a TradeJS chart. This
+step follows [the Pine script and settings](./pine-strategy-pine-and-config).
 
 ## 4. Add Figure Builder (`figures.ts`)
 

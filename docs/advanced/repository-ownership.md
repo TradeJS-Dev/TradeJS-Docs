@@ -2,8 +2,8 @@
 title: Repository and Package Ownership
 ---
 
-TradeJS is a multi-repository system. The repository that owns a behavior is
-also where that behavior is tested, versioned, and released.
+Use this page to find the repository where a TradeJS component is developed,
+tested, and published.
 
 ## From generator to production
 

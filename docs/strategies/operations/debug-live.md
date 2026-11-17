@@ -2,9 +2,9 @@
 title: Diagnose Live Trading Behavior
 ---
 
-Diagnose an unexpected result by following the decision and order lifecycle in
-order. First define the exact strategy, account, symbol, candle timestamp, and
-expected outcome.
+When a trade differs from what you expected, record the strategy, account, symbol,
+candle time, and expected result. Then check how the strategy made its decision
+and how the exchange handled the order.
 
 ## 1. Verify the Deployed Setup
 

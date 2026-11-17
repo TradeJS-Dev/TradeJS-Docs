@@ -3,7 +3,8 @@ sidebar_position: 5
 title: Core API
 ---
 
-`@tradejs/core` is the public package for strategy and indicator plugin development.
+Use the public exports of `@tradejs/core` to create strategies and indicators.
+Server-side features live in separate packages.
 
 ## Main Exports
 
@@ -118,7 +119,7 @@ There are two groups of project hooks:
 - strategy runtime hooks such as `onBar`, `afterBarDecision`, and `beforePlaceOrder`
 - signals batch hooks such as `beforeSignals` and `afterSignals`
 
-`beforeSignals` and `afterSignals` run around the `npx @tradejs/cli signals` pipeline, not around an individual strategy candle. They are only available in `tradejs.config.ts`, not in `manifest.ts`.
+`beforeSignals` and `afterSignals` run around the `npm exec -- tradejs signals` pipeline, not around an individual strategy candle. They are only available in `tradejs.config.ts`, not in `manifest.ts`.
 
 `beforeSignals` may abort the current signals run:
 

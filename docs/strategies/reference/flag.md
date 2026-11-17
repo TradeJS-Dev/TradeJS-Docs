@@ -2,9 +2,11 @@
 title: 'Flag'
 ---
 
-`Flag` is a continuation strategy from `@tradejs/strategy-flag`. It looks for a
-strong directional pole, a compact counter-trend channel, and a break in the
-direction of the original move.
+Flag looks for a strong move, a short pullback inside a narrow channel, and a
+break in the original direction.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +14,7 @@ direction of the original move.
 
 ![Bull and bear flag examples](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Flag/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry logic
 
@@ -69,7 +70,9 @@ the computed stop and target, and chart figures for the detected pattern.
 
 ## Run
 
+First [save backtest settings](../../getting-started/backtest-config) with the
+name in `--config`. Then run this command from the project folder.
+
 ```bash
-npx @tradejs/cli backtest --user root --config Flag:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config Flag:base --connector bybit --timeframe 15
 ```

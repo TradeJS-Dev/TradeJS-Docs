@@ -3,9 +3,9 @@ title: MCP for Codex and Claude Code
 description: Connect Codex or Claude Code to TradeJS to read data and run backtests.
 ---
 
-Connect Codex or Claude Code to your TradeJS app to discuss markets, strategy
-signals and backtest results with an assistant. Through MCP, the assistant can
-read app data and run backtests or diagnostics if you grant permission.
+Connect Codex or Claude Code to your TradeJS app through MCP. The assistant can
+read market data, signals, and backtest results. To let it run backtests or
+diagnostics, grant the corresponding permissions.
 
 The MCP address is `https://YOUR_APP_HOST/mcp`. Replace `YOUR_APP_HOST` with
 your app's host. Open **MCP** in the TradeJS sidebar to find the address

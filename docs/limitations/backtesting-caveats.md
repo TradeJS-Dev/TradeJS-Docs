@@ -2,7 +2,8 @@
 title: Backtesting caveats
 ---
 
-Backtests are useful, but they are not evidence that a strategy will make money in the future.
+A backtest shows how a strategy performed on a particular dataset and execution
+model. Check the assumptions before using the result to make a decision.
 
 Use them to research, test, compare, and analyze strategy behavior under explicit assumptions.
 

@@ -2,9 +2,9 @@
 title: From Backtest to Live Trading
 ---
 
-This playbook connects research, validation, and live operation without tying
-the process to a particular strategy, exchange, or account. Replace angle-
-bracketed values with settings from your project.
+Follow these steps to test a strategy, review the results, and prepare it for a
+live account. In the examples, replace values in angle brackets with values from
+your project.
 
 ## 1. State the Experiment
 
@@ -94,7 +94,7 @@ them agree.
 Run without order placement first:
 
 ```bash
-npx @tradejs/cli signals \
+npm exec -- tradejs signals \
   --user <user> \
   --deployment <deployment> \
   --cacheOnly

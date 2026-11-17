@@ -6,11 +6,11 @@ description: 'Настройте ML-конвейер TradeJS от экспорт
 
 ## Общая схема
 
-1. Бэктест (с `--ml`) пишет chunk-файлы.
-2. `npx @tradejs/cli ml-export` объединяет их в merged JSONL.
-3. Train-скрипт режет merged-файл на `holdout/prod/walk-forward`.
-4. Python train-контейнер обучает модель и пишет отчеты.
-5. Runtime-инференс идет в gRPC (`ML_GRPC_ADDRESS`).
+1. Запустите бэктест с `--ml`. TradeJS запишет данные для обучения в несколько файлов.
+2. Выполните `npx @tradejs/cli ml-export`, чтобы собрать их в один файл JSONL.
+3. Перед обучением команда выделит контрольный период и окна для проверки на следующих датах.
+4. Модель обучится в контейнере Python, который сохранит результаты проверки.
+5. При расчёте сигнала TradeJS запрашивает оценку у сервиса по адресу `ML_GRPC_ADDRESS`.
 
 ## Команды
 
@@ -62,7 +62,7 @@ ml-dataset-<strategy>-<chunkId>.jsonl
    `data/ml/models/<Strategy>.joblib`
    или ensemble aliases `data/ml/models/<Strategy>.modelN.joblib`
 4. ML infer сервис должен читать ту же директорию моделей (`MODEL_DIR`).
-5. `npx @tradejs/cli signals` (если в конфиге стратегии `ML_ENABLED=true`) отправляет `signal.strategy` в gRPC `Predict`.
+5. `npm exec -- tradejs signals` (если в конфиге стратегии `ML_ENABLED=true`) отправляет `signal.strategy` в gRPC `Predict`.
    Inference-сервис загружает `<Strategy>.joblib` / `<Strategy>.modelN.joblib` для этой стратегии.
 
 Если имя стратегии и префикс model alias совпадают, runtime автоматически использует обученную локальную модель.

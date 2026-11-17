@@ -2,8 +2,8 @@
 title: Pre-Live Checklist
 ---
 
-Complete this checklist before adding `--makeOrders`. A successful backtest or
-signal-only run is not sufficient authorization for live execution.
+Run through these checks before you enable order placement with `--makeOrders`.
+Verify the account and risk limits as well as the test results.
 
 ## Research
 

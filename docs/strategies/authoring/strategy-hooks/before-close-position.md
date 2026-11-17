@@ -2,7 +2,8 @@
 title: beforeClosePosition
 ---
 
-Called on the exit path before `connector.closePosition(...)`.
+TradeJS calls this hook before asking the exchange connector to close a position
+with `connector.closePosition(...)`.
 
 ## Params
 

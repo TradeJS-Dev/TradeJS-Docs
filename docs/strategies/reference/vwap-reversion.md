@@ -2,9 +2,10 @@
 title: VwapReversion
 ---
 
-`@tradejs/strategy-vwap-reversion` trades a confirmed return inside UTC-session
-VWAP bands on closed candles. It is a separate package outside `@tradejs/base`.
-Historical tests do not predict future results.
+VwapReversion waits for a closed candle to confirm a return inside the daily
+VWAP bands. VWAP is the volume-weighted average price for the UTC day.
+
+Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
 
 ## Entry and exit
 

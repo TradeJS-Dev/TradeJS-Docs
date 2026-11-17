@@ -2,9 +2,9 @@
 title: Risk Management
 ---
 
-Risk controls should be explicit, testable, and independent of the entry
-signal. A strategy with positive expectancy can still fail through excessive
-size, correlated exposure, execution problems, or an uncontrolled loss path.
+Set position size and loss limits separately from entry rules. A good entry may
+still lose money because of a large position, related trades, or an execution
+error.
 
 ## Position Risk
 

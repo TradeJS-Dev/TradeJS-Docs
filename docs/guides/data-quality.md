@@ -2,7 +2,8 @@
 title: Data quality guide
 ---
 
-Backtest and runtime quality depends on the data path before the strategy sees a candle.
+If a run looks wrong, check the candles before changing the strategy. Use these
+checks when you compare runs or add a data source.
 
 Use this checklist when results look suspicious, when adding a connector, or before comparing strategies.
 
@@ -62,7 +63,7 @@ npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
 Run signals without refreshing data:
 
 ```bash
-npx @tradejs/cli signals --cacheOnly --tickers BTCUSDT --timeframe 15
+npm exec -- tradejs signals --cacheOnly --tickers BTCUSDT --timeframe 15
 ```
 
 ## Context Data

@@ -2,8 +2,8 @@
 title: Environment Variables Reference
 ---
 
-TradeJS reads the following environment variables for the app, infrastructure,
-and optional services.
+Use these environment variables to connect the app to its stores and enable
+optional services.
 
 ## Application
 

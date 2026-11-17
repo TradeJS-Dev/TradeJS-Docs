@@ -4,8 +4,8 @@ title: Prepare Pine Runtime Inputs and Plot Readers
 description: 'Import the Pine runtime helpers, map strategy configuration to Pine inputs, and read the latest plot values.'
 ---
 
-Start `core.ts` with the imports, plot names, input mapping, and snapshot reader
-used by the strategy decision function.
+Start `core.ts` by naming the Pine outputs and writing a function to read them.
+The next step uses the values to decide whether to trade.
 
 ```text
 import {

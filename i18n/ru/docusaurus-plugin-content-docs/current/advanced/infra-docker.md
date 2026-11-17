@@ -2,7 +2,8 @@
 title: Infra / Docker
 ---
 
-Локальный TradeJS использует Docker-инфраструктуру для Redis и PostgreSQL/Timescale.
+Для локальной работы TradeJS запускает в Docker два сервиса. В Redis хранятся
+данные приложения, а в PostgreSQL с TimescaleDB — история рынка.
 
 ```bash
 npx @tradejs/cli infra-init

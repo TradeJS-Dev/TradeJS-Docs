@@ -4,60 +4,71 @@ title: Install TradeJS for TypeScript Algorithmic Trading
 description: 'Install TradeJS with create-tradejs or add its public npm packages to an existing TypeScript project, including the required Node.js and Docker setup.'
 ---
 
-This documentation covers TradeJS `3.1.29-beta.301`. Follow these steps
-to install the same release.
+Install TradeJS with `npx create-tradejs`, the same command shown on the
+TradeJS website. It currently installs stable `3.1.28`. The production
+server runs `3.1.29-beta.302`. To reproduce that version locally, use
+the preview instructions below.
 
 ## Requirements
 
-- Node.js 24
-- npm 10 or newer
-- Docker with the `docker compose` command
+- Node.js 24 and npm 10 or later.
+- Docker running, with the `docker compose` command available.
 
 ## Create a project {#create-project}
 
-Run these commands in your terminal. You can replace `tradejs-project` with
-another folder name.
+Run `npx create-tradejs` from the folder where you want
+to create the project. The command installs TradeJS and opens the app. Continue
+with [your first backtest](./first-backtest#2-finish-the-local-installation).
+
+If the install fails while Puppeteer is downloading Chrome, use the
+`tradejs-project` folder that was already created. The browser download is
+optional for local backtests. Run `PUPPETEER_SKIP_DOWNLOAD=true npm install`
+in Bash or Zsh, then follow [Start the app](#start-app).
+
+## Install the preview {#install-packages}
+
+Create the project without installing dependencies so you can pin the framework
+packages to the preview. Run the commands in Bash or Zsh.
 
 ```bash
-tradejs_version=3.1.29-beta.301
-npx "create-tradejs@$tradejs_version" tradejs-project --no-install
+npx create-tradejs@3.1.29-beta.302 tradejs-project --no-install
 cd tradejs-project
-```
 
-## Install packages {#install-packages}
-
-If you already have a project, open its folder and set the same
-`tradejs_version` variable from the previous step.
-
-```bash
+tradejs_version=3.1.29-beta.302
 for package in app cli connectors core indicators infra node types; do
   npm pkg set "dependencies.@tradejs/$package=$tradejs_version" \
     "overrides.@tradejs/$package=\$@tradejs/$package"
 done
-npm install --save-exact @tradejs/base
+npm install --save-exact @tradejs/base@3.1.8
 ```
 
-These commands install the same version of the main TradeJS packages.
-`@tradejs/base` and strategy packages have their own versions. Keep
-`package-lock.json` so later installs use the same versions.
+The loop sets the same version in `package.json` for the eight framework
+packages. The overrides make dependencies use those versions too.
+`@tradejs/base` and strategy packages have their own versions. Keep the
+`package-lock.json` file to install the same versions again.
 
 ## Start the app {#start-app}
 
-In the project created by `create-tradejs`, run:
+If you installed only the packages, run these commands in the project folder:
 
 ```bash
+npm exec -- tradejs infra-init
 npm run infra-up
 npm run dev
 ```
 
-Open the address printed in your terminal, usually `http://localhost:3000`.
-Set the password for the local `root` user on the install page. Then
-[run your first backtest](./first-backtest).
+Open the address shown in the terminal. Create the local password on the setup
+page, then [run your first backtest](./first-backtest).
+If a Docker port is already in use, set an unused port in the project's
+`.env` and run `npm run infra-up` again.
 
 ## Add TradeJS to an existing project
 
-After installing the packages, add `tradejs.config.ts` if you do not already
-have one:
+Install a matching set of framework packages. The commands in
+[Install the preview](#install-packages) show which dependencies and overrides
+to set. Apply them in your existing folder and skip the project creation commands.
+
+If you do not have `tradejs.config.ts`, add it:
 
 ```ts
 import { defineConfig } from '@tradejs/core/config';
@@ -66,7 +77,7 @@ import { basePreset } from '@tradejs/base';
 export default defineConfig(basePreset);
 ```
 
-Then start the services and app:
+Then run these commands in that folder:
 
 ```bash
 npm exec -- tradejs infra-init
@@ -74,23 +85,8 @@ npm exec -- tradejs infra-up
 npm exec -- tradejs-app dev
 ```
 
-`basePreset` registers the default strategies, indicators, and connectors.
-To use a strategy on live markets, first
-[configure its deployment](./run-strategy-in-production).
-
-Useful routes:
-
-- `/routes/backtest`
-- `/routes/dashboard`
-- `/routes/strategies`
-
 ## Import Rules
 
-- Import plugin/config helpers from `@tradejs/core/config`.
-- Import browser-safe helpers from public `@tradejs/core/*` subpaths.
-- Import Node runtime helpers from public `@tradejs/node/*` subpaths.
-- Import shared contracts from `@tradejs/types`.
-- Import server storage adapters from explicit `@tradejs/infra/*` subpaths.
-- Do not import from `@tradejs/*/src/*`.
-
-Next: [Quickstart](./quickstart) or [Run your first backtest](./first-backtest).
+Use public package entry points such as `@tradejs/core/config` for project
+configuration, `@tradejs/node/*` for server code, and `@tradejs/types` for types.
+See the [framework reference](../api/framework) for the public entry points.

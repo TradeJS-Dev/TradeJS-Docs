@@ -2,8 +2,9 @@
 title: Compare Strategies
 ---
 
-Compare strategies on the same inputs and change one group of assumptions at a
-time.
+Compare runs on the same market data and change one group of settings at a time.
+If you change the period and the strategy together, you cannot tell which one
+changed the result.
 
 ## Hold Constant
 

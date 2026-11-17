@@ -2,8 +2,8 @@
 title: beforeEntryGate
 ---
 
-TradeJS calls `beforeEntryGate` after the built-in checks and before placing
-an entry order. It also calls the hook when the entry has no signal.
+TradeJS calls `beforeEntryGate` after its built-in checks and before sending the
+entry order. It also runs for entries without a signal.
 
 ## Params
 

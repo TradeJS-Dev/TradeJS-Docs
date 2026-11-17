@@ -2,7 +2,8 @@
 title: Infra / Docker
 ---
 
-Local TradeJS development uses Docker-managed infrastructure for Redis and PostgreSQL/Timescale.
+TradeJS uses two services in Docker for local work. Redis stores application
+data and PostgreSQL with TimescaleDB stores market history.
 
 ## Local Dev
 

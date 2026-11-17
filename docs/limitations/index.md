@@ -2,7 +2,8 @@
 title: Limitations
 ---
 
-TradeJS is a research, backtesting, signal, and automation framework. It does not remove market, execution, or operational risk.
+Check the limits of TradeJS before deciding to act on a signal or let the app
+place orders.
 
 ## Recommended Timeframes
 

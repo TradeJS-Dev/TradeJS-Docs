@@ -2,7 +2,7 @@
 title: afterCoreDecision
 ---
 
-Вызывается сразу после того, как `core.ts` вернул решение.
+TradeJS вызывает этот обработчик сразу после того, как `core.ts` вернул решение.
 
 Этот stage срабатывает только если свеча дошла до `core.ts`. Если `onBar` уже вернул `StrategyDecision` на этой же свече, `afterCoreDecision` пропускается.
 

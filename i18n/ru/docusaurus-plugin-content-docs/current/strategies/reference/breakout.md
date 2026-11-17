@@ -2,8 +2,11 @@
 title: 'Breakout'
 ---
 
-`Breakout` использует взвешенную модель подтверждений для входа на пробой вверх
-или вниз.
+Breakout проверяет несколько условий пробоя и начисляет за них баллы. Для входа
+нужны все обязательные условия и достаточная сумма баллов.
+
+Стратегия уже подключена в стандартном проекте.
+[Как сохранить настройки бэктеста](../../getting-started/backtest-config).
 
 ## Визуальная схема
 
@@ -143,9 +146,22 @@ Long и short используют отдельные карты сигнало�
 }
 ```
 
-## Запуск
+<span id="запуск"></span>
+
+## Запуск {#backtest}
+
+Из папки стандартного проекта с запущенным Docker выполните две команды.
+Первая сохраняет настройки `Breakout:example` в локальном Redis. В них указан
+только интервал, поэтому остальные значения берутся из настроек стратегии.
+Вторая запускает проверку на 15-минутных свечах Binance BTCUSDT за 30 дней.
 
 ```bash
-npx @tradejs/cli backtest --user root --config Breakout:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
+  'users:root:backtests:configs:Breakout:example' '{"INTERVAL":["15"]}' NX
+
+npm run backtest -- --user root --connector binance --tickers BTCUSDT \
+  --config Breakout:example --timeframe 15 --days 30 --tests 1 --parallel 1
 ```
+
+Если первая команда вернула пустой ответ, настройки с таким именем уже есть.
+Для чистого примера замените `example` на новое имя в обеих командах.

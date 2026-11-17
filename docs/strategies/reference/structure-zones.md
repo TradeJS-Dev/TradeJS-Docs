@@ -2,8 +2,11 @@
 title: 'StructureZones'
 ---
 
-`StructureZones` builds market-structure zones from swing points and trades
-reactions or transition breakouts at those zones.
+StructureZones draws price zones from recent highs and lows. It looks for a
+bounce from a zone or a break through it.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -11,8 +14,7 @@ reactions or transition breakouts at those zones.
 
 ![StructureZones signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-StructureZones/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 

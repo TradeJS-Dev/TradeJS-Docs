@@ -3,8 +3,8 @@ sidebar_position: 6
 title: CLI API
 ---
 
-TradeJS command-line interface is exposed as the `@tradejs/cli` package.
-Use it after package install via:
+Use the commands below to run backtests, manage local services, and inspect a
+TradeJS project. Run them from your project folder.
 
 ```bash
 npx @tradejs/cli <command> [flags]
@@ -84,7 +84,7 @@ npx @tradejs/cli backtest --updateOnly --tickers BTCUSDT,ETHUSDT
 npx @tradejs/cli backtest --config MaStrategy:base --tickers BTCUSDT --cacheOnly
 
 # Evaluate runtime signals without placing orders
-npx @tradejs/cli signals --tickers BTCUSDT --cacheOnly --skipScreenshots
+npm exec -- tradejs signals --tickers BTCUSDT --cacheOnly --skipScreenshots
 
 # Inspect selected backtest results for one strategy
 npx @tradejs/cli results --strategy TrendLine --coverage

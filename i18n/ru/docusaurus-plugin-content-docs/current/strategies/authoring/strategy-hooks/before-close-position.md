@@ -2,7 +2,8 @@
 title: beforeClosePosition
 ---
 
-Вызывается на exit path перед `connector.closePosition(...)`.
+TradeJS вызывает этот обработчик перед вызовом `connector.closePosition(...)`,
+который закрывает позицию.
 
 ## Params
 

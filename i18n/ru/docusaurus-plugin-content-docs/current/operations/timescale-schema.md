@@ -2,7 +2,8 @@
 title: Схема Postgres и Timescale
 ---
 
-TimescaleDB хранит исторические ряды и обслуживает запросы для runtime и бэктестов.
+В TimescaleDB хранится история рынка, которую TradeJS использует в бэктестах и
+при расчёте на текущем рынке.
 
 TradeJS 3 экспортирует storage через узкие server-only subpath'ы:
 

@@ -2,10 +2,11 @@
 title: 'GridClassic'
 ---
 
-`GridClassic` builds a grid from a detected horizontal range. In
-`mean_reversion` mode it enters at confirmed range edges. In
-`breakout_continuation` mode it waits for acceptance and an optional retest.
-It can also trade a failed-breakout reversal when enabled.
+GridClassic builds a grid within a horizontal range. It can trade a bounce from
+the edge, a continuation after a breakout, or a reversal if the breakout fails.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -13,8 +14,7 @@ It can also trade a failed-breakout reversal when enabled.
 
 ![GridClassic signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-GridClassic/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Decision flow
 
@@ -25,9 +25,6 @@ confirmation rules, and risk parameters come from the active strategy config.
 5. Manage breakeven, protection repricing, range invalidation, max hold, volatility shock, and target exits.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

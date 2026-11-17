@@ -2,11 +2,8 @@
 title: Compare Live and Replayed Entries
 ---
 
-`runtime-parity` compares recorded live entries with entries reconstructed over
-the same symbols and time window. It answers one focused question:
-
-> Did live evaluation and historical reconstruction produce comparable entry
-> decisions?
+Use `runtime-parity` to compare recorded live entries with entries from
+replay for the same instruments and period.
 
 Use [full replay with a runtime record](./replay-evidence) when you need an
 exact comparison of package versions, configurations, signals, orders, and

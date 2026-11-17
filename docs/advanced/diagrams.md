@@ -2,7 +2,8 @@
 title: Diagrams
 ---
 
-These diagrams show how the main TradeJS pieces fit together.
+Use these diagrams to see how TradeJS loads a project, runs a strategy, and
+tracks an order.
 
 ## Package Map
 

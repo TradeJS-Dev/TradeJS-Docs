@@ -2,9 +2,12 @@
 title: 'Grid'
 ---
 
-`Grid` is a directional, position-building strategy. It can enter an EMA-trend
-pullback recovery or a confirmed breakout retest, then add levels while keeping
-the whole basket inside one configured risk budget.
+Grid starts a position after a pullback in a trend or a successful retest of a
+breakout level. It adds to the position within one risk limit for the whole
+trade.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +15,7 @@ the whole basket inside one configured risk budget.
 
 ![Grid signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Grid/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Decision flow
 
@@ -27,9 +29,6 @@ Entry codes are `GRID_DIRECTIONAL_PULLBACK_ENTRY` and
 `GRID_BREAKOUT_RETEST_ENTRY`. Additional legs use `GRID_SCALE_IN_<level>`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

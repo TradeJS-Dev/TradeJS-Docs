@@ -2,10 +2,12 @@
 title: 'VolatilityCompressionBreakout'
 ---
 
-`VolatilityCompressionBreakout` trades expansion after a volatility
-compression. It combines ATR and Bollinger-width ranks with a local support or
-resistance breakout, then applies signal-time participation and acceptance
-filters.
+VolatilityCompressionBreakout looks for a move out of a narrow range after a
+quiet period. It uses ATR and Bollinger Bands to measure how much price has been
+moving.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -13,8 +15,7 @@ filters.
 
 ![VolatilityCompressionBreakout signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolatilityCompressionBreakout/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Decision flow
 
@@ -30,9 +31,6 @@ Entry codes are `VCB_LONG_COMPRESSION_BREAKOUT` and
 `VCB_OPPOSITE_BREAKOUT_EXIT`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

@@ -2,7 +2,7 @@
 title: onBar
 ---
 
-Called on every candle before `core.ts`.
+TradeJS calls this hook for each candle before it runs `core.ts`.
 
 Use this hook for global or pre-core behavior that should run even when the strategy itself would later return `skip`, for example shared risk checks, cross-strategy position management, or project-wide order guards.
 

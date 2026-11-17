@@ -4,8 +4,8 @@ title: Запуск Pine и возврат решения стратегии
 description: 'Запустите подготовленный Pine-скрипт, обработайте выход и отмену сигнала, затем верните типизированное решение TradeJS.'
 ---
 
-Продолжите тот же файл `core.ts` фабрикой стратегии. Она использует функции из
-[предыдущего этапа](./pine-strategy-runtime-setup).
+Добавьте в `core.ts` функцию, которая создаёт стратегию. Она использует функции из
+[предыдущего шага](./pine-strategy-runtime-setup).
 
 ```text
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<

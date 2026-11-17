@@ -4,6 +4,8 @@ title: 'ValueAreaReclaim'
 
 ValueAreaReclaim looks for a return to the main traded volume range after a failed break.
 
+Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
+
 ## Install
 
 Run the command in your TradeJS project.
@@ -16,6 +18,9 @@ Add `"@tradejs/strategy-value-area-reclaim"` to the `strategies` list in
 `tradejs.config.ts`. The package registers the `ValueAreaReclaim` strategy.
 
 ## Signal and exit
+
+Price must leave the volume area and close back inside it. The stop goes
+beyond the excursion extreme, with a buffer of one quarter of ATR.
 
 The strategy builds its volume profile from closed 15-minute candles.
 `VAR_PROFILE_DAYS` defaults to three complete UTC days. The target is the

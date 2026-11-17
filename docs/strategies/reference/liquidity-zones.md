@@ -2,9 +2,13 @@
 title: 'LiquidityZones'
 ---
 
-`LiquidityZones` is a built-in TypeScript strategy from `@tradejs/strategy-liquidity-zones`.
+LiquidityZones draws zones from recent highs and lows. It watches for a reaction
+when price returns to a zone.
 
 It builds liquidity zones from swing highs/lows, waits for retests, and trades reactions from those zones.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +16,7 @@ It builds liquidity zones from swing highs/lows, waits for retests, and trades r
 
 ![LiquidityZones signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityZones/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 

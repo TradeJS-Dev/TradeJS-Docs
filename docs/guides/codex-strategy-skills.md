@@ -2,10 +2,8 @@
 title: Codex strategy workflow skills
 ---
 
-`create-tradejs` installs the complete checksum-managed TradeJS skill set in
-the generated project's `.codex/skills` directory. Each invocation has one
-workflow owner. This keeps one core experiment separate from end-to-end
-improvement research, gate analysis, reporting, and production mutations.
+`create-tradejs` copies the TradeJS skills into `.codex/skills`. A skill gives
+Codex instructions for a task, such as running a backtest or reviewing a result.
 
 ## Choose one workflow owner
 

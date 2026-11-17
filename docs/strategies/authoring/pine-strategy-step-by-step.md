@@ -4,7 +4,9 @@ title: Add and Backtest a Pine Script Strategy in TradeJS
 description: 'Add a Pine Script strategy to TradeJS through four focused chapters covering Pine source, figures, the runtime bridge, registration, and backtesting.'
 ---
 
-This walkthrough shows how to add a Pine strategy to TradeJS as a normal first-class strategy module. The complete `AdaptiveMomentumRibbon` implementation is split into focused chapters so you can load and follow only the task you are working on.
+Add a Pine script to TradeJS and use its outputs to make entry and exit
+decisions. The example builds `AdaptiveMomentumRibbon` from the script through
+its first backtest.
 
 If you need the TypeScript-only path, see [TypeScript strategy with `StrategyAPI`](./typescript-strategy-step-by-step).
 

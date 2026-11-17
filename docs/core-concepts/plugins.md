@@ -2,7 +2,8 @@
 title: Plugins
 ---
 
-TradeJS loads strategies, indicators, and connectors as plugins.
+Add a package as a plugin when you want TradeJS to load a strategy, indicator, or
+exchange connector from it.
 
 Project-level registration happens in `tradejs.config.ts`:
 

@@ -2,101 +2,46 @@
 title: Синхронизация данных
 ---
 
-Обновляйте историю рынка командой
-`npx @tradejs/cli backtest --updateOnly`, а пропуски ищите через
-`npx @tradejs/cli continuity`. Обе команды позволяют выбрать конкретную
-биржу.
-
-Сначала запустите локальные сервисы:
-
-```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-```
-
-После работы остановите локальную инфраструктуру: `npx @tradejs/cli infra-down`.
+TradeJS загружает свечи по мере необходимости для бэктеста. Чтобы найти
+и заполнить отдельные пропуски, откройте **Data coverage**.
 
 ## Проверка и заполнение пропусков в приложении
 
 Войдите как владелец проекта и откройте **Data coverage**. Выберите год,
-раскройте месяц и день по UTC, чтобы посмотреть покрытие по отдельным рядам.
-Кнопка **Refresh** заново проверяет выбранный год.
+раскройте месяц и день по UTC, затем найдите нужный ряд. Кнопка **Refresh**
+повторно проверяет выбранный год.
 
-В очередь можно добавить пропуск для одного ряда и одного дня по UTC.
-Вкладка **Backfill queue** показывает состояние задания, число добавленных
-значений и оставшиеся пропуски. Ассистент может проверить те же данные через
-[MCP](../guides/mcp#data-coverage). Пропуск на сервере сам по себе не показывает,
-доступны ли данные у поставщика.
+Добавьте пропуск в очередь для нужного ряда и дня. В **Backfill queue** видно,
+завершилась ли загрузка, сколько данных добавилось и какие пропуски остались.
+[Проверить покрытие можно и через MCP](../guides/mcp#data-coverage).
 
-## 1. `npx @tradejs/cli backtest --updateOnly`
+<span id="выбор-биржи-для-update"></span>
 
-Запустите `backtest` только для обновления данных:
+<span id="3-когда-какую-команду-использовать"></span>
 
-```bash
-npx @tradejs/cli backtest --updateOnly
-```
+## Обновить свечи из терминала {#1-npx-tradejscli-backtest---updateonly}
 
-Источники:
-
-- `@tradejs/cli`
-
-Что делает команда:
-
-- читает backtest config из Redis
-- берет список тикеров через выбранный connector
-- обновляет свечи в БД без запуска тестов
-
-### Выбор биржи для update
-
-Используйте `--connector` (`bybit|binance|coinbase`):
+Запустите локальные сервисы. В папке проекта выполните команду с уже
+сохранёнными настройками бэктеста. В примере обновляются свечи Binance BTCUSDT
+с настройками первого бэктеста.
 
 ```bash
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector bybit --timeframe 15
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector binance --timeframe 15
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector coinbase --timeframe 15
+npm run backtest -- --updateOnly --user root --config MaStrategy:base \
+  --connector binance --tickers BTCUSDT --timeframe 15
 ```
 
-Совет: добавьте `--tickers BTCUSDT,ETHUSDT`, чтобы ограничить набор символов.
+<span id="выбор-биржи-для-continuity"></span>
 
-## 2. `npx @tradejs/cli continuity`
+<span id="4-операционные-замечания"></span>
 
-`npx @tradejs/cli continuity` проверяет целостность истории и может автоматически чинить разрывы.
+## Перезагрузить свечи при пропусках {#2-npx-tradejscli-continuity}
 
-Источник:
-
-- `@tradejs/cli`
-
-Поведение:
-
-- загружает свечи для выбранных провайдеров
-- проверяет разрывы по ожидаемому шагу интервала
-- при gap: удаляет свечи symbol+interval и загружает диапазон заново
-
-### Выбор биржи для continuity
-
-Теперь есть фильтр провайдеров:
-
-- `--provider all` (по умолчанию)
-- `--provider bybit`
-- `--provider binance`
-- `--provider coinbase`
-- список через запятую, например `--provider bybit,binance`
-
-Примеры:
+При обнаружении пропуска команда `continuity` может удалить и повторно
+загрузить свечи для выбранного поставщика, инструмента и интервала. Для
+отдельных пропусков используйте приложение. Если нужно перезагрузить ряд,
+начните с одного инструмента и одного поставщика.
 
 ```bash
-npx @tradejs/cli continuity --user root --timeframe 15 --provider all
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
-npx @tradejs/cli continuity --user root --timeframe 15 --provider binance --tickers BTCUSDT,ETHUSDT
+npm exec -- tradejs continuity --user root --timeframe 15 \
+  --provider binance --tickers BTCUSDT
 ```
-
-## 3. Когда какую команду использовать
-
-- `backtest --updateOnly` — для регулярного обновления истории.
-- `continuity` — когда подозреваете пропуски/битые диапазоны и нужно восстановление.
-
-## 4. Операционные замечания
-
-- `continuity` может быть тяжелой и деструктивной для затронутого symbol+interval (удаляет и перезаливает).
-- Явно задавайте интервал (`--timeframe`) и для первых прогонов ограничивайте список тикеров.
-- Перед запуском убедитесь, что TimescaleDB доступна.

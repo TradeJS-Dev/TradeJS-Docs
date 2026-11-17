@@ -2,9 +2,8 @@
 title: Validate Live Decisions with Replay
 ---
 
-Replay evaluates a named deployment over historical closed candles. Use it to
-reproduce the decisions of the exact strategies, versions, configurations,
-timeframes, accounts, and symbol selections declared for live operation.
+Replay runs a named deployment against closed historical candles. It uses the
+strategy versions, settings, accounts, intervals, and symbols from the deployment.
 
 Replay is a diagnostic tool. It does not place orders or change the deployment.
 

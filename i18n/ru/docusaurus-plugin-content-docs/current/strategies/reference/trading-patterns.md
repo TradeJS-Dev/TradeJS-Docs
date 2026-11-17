@@ -2,9 +2,10 @@
 title: TradingPatterns
 ---
 
-`@tradejs/strategy-trading-patterns` объединяет Diamond, Flag, Gartley и
-HeadAndShoulders в одну стратегию. Пакет устанавливается отдельно от
-`@tradejs/base`.
+TradingPatterns проверяет четыре фигуры в одной стратегии. На каждой свече она
+ищет Diamond, Flag, Gartley и HeadAndShoulders.
+
+Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
 
 ## Установка и интервал
 

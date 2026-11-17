@@ -2,99 +2,45 @@
 title: Data Sync
 ---
 
-Use `npx @tradejs/cli backtest --updateOnly` to refresh market history and
-`npx @tradejs/cli continuity` to find gaps. Both commands can target a specific
-exchange.
-
-Start the local services first:
-
-```bash
-npx @tradejs/cli infra-init
-npx @tradejs/cli infra-up
-```
-
-Use `npx @tradejs/cli infra-down` to stop local infra when done.
+TradeJS downloads candles as needed for a backtest. Use **Data coverage**
+to check for missing data and fill small gaps.
 
 ## Check and fill gaps in the app
 
-Sign in as the project owner and open **Data coverage**. Select a year, then
-open a month and a UTC day to inspect coverage by series. Use **Refresh** to
-recheck the selected year.
+Open **Data coverage** as the project owner. Select a year, expand a month
+and a UTC day, then find the affected series. **Refresh** checks the selected
+year again.
 
-You can queue a gap for a single series and UTC day. Open **Backfill queue** to
-follow progress and check how many samples were added and which gaps remain.
-Use [MCP](../guides/mcp#data-coverage) if you want an assistant to check the same
-data. A gap on this server does not establish that the provider has no data.
+Queue the gap for the affected series and UTC day. In **Backfill queue** you
+can see whether the job completed, how many values it added, and which gaps
+remain. You can also [check coverage through MCP](../guides/mcp#data-coverage).
 
-## 1. `npx @tradejs/cli backtest --updateOnly`
+<span id="choose-exchange-for-update"></span>
 
-Use `backtest` in update-only mode:
+<span id="3-which-command-to-use"></span>
 
-```bash
-npx @tradejs/cli backtest --updateOnly
-```
+## Refresh a range from the command line {#1-npx-tradejscli-backtest---updateonly}
 
-Source:
-
-- `@tradejs/cli`
-
-What it does:
-
-- resolves backtest config from Redis
-- loads ticker list from selected connector
-- updates candles in DB (without running tests)
-
-### Choose Exchange For Update
-
-Use `--connector` (`bybit|binance|coinbase`):
+From the project folder, with the local services running, use an existing
+backtest configuration. The following command updates Binance candles for
+BTCUSDT using the settings created for the first backtest.
 
 ```bash
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector bybit --timeframe 15
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector binance --timeframe 15
-npx @tradejs/cli backtest --updateOnly --user root --config TrendLine:base --connector coinbase --timeframe 15
+npm run backtest -- --updateOnly --user root --config MaStrategy:base \
+  --connector binance --tickers BTCUSDT --timeframe 15
 ```
 
-Tip: pass `--tickers BTCUSDT,ETHUSDT` to limit symbols.
+<span id="choose-exchange-for-continuity"></span>
 
-## 2. `npx @tradejs/cli continuity`
+<span id="4-operational-notes"></span>
 
-`npx @tradejs/cli continuity` checks historical gaps and can auto-repair broken ranges.
+## Reload candles when the history has gaps {#2-npx-tradejscli-continuity}
 
-Source:
-
-- `@tradejs/cli`
-
-Behavior:
-
-- load candles for selected provider(s)
-- detect discontinuities by expected interval
-- when gap is found: delete symbol+interval candles and reload
-
-### Choose Exchange For Continuity
-
-Now supports provider filter:
-
-- `--provider all` (default)
-- `--provider bybit`
-- `--provider binance`
-- `--provider coinbase`
-- comma list, e.g. `--provider bybit,binance`
-
-Examples:
+`continuity` can delete and reload candles for the provider, instrument, and
+interval if it finds a gap. Use the app for a small repair. If you need to
+reload the affected series, start with one instrument and one provider.
 
 ```bash
-npx @tradejs/cli continuity --user root --timeframe 15 --provider all
-npx @tradejs/cli continuity --user root --timeframe 15 --provider bybit
-npx @tradejs/cli continuity --user root --timeframe 15 --provider binance --tickers BTCUSDT,ETHUSDT
+npm exec -- tradejs continuity --user root --timeframe 15 \
+  --provider binance --tickers BTCUSDT
 ```
-
-## 3. Which Command To Use
-
-- Use `backtest --updateOnly` for normal periodic refresh.
-- Use `continuity` when you suspect gaps/corruption and need repair.
-
-## 4. Operational Notes
-
-- `continuity` may be heavy and destructive for affected symbol+interval (it deletes then reloads).
-- Keep interval explicit (`--timeframe`) and start with a narrow ticker list for first runs.
-- Ensure TimescaleDB is up before running either command.

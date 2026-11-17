@@ -2,8 +2,8 @@
 title: Trading Workflow and Terms
 ---
 
-TradeJS uses standard systematic-trading terms. The terms below distinguish
-research, validation, and live execution throughout the documentation.
+Use this glossary when you read about testing a strategy, checking a signal, or
+sending an order.
 
 ## Trading Objects
 

@@ -4,7 +4,8 @@ title: Register, Backtest, and Validate a Pine Strategy
 description: 'Add the Pine strategy entrypoint, adapters, manifest, plugin registration, backtest grid, and validation commands.'
 ---
 
-This is chapter 4 of the [Pine strategy walkthrough](./pine-strategy-step-by-step). It exposes the completed runtime bridge as a strategy package and validates it through the normal TradeJS workflow.
+Register the code from the earlier steps as a strategy package, then test it on
+historical data.
 
 ## 6. Add Strategy Runtime Entrypoint (`strategy.ts`)
 
@@ -206,7 +207,7 @@ npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-defaul
 Signals:
 
 ```bash
-npx @tradejs/cli signals --user root --cacheOnly
+npm exec -- tradejs signals --user root --cacheOnly
 ```
 
 In app (`/routes/backtest`) verify:

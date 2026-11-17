@@ -2,7 +2,11 @@
 title: 'TrendLine'
 ---
 
-`TrendLine` is a built-in TypeScript strategy from `@tradejs/strategy-trend-line` that opens trades on trendline breakouts with risk guards.
+TrendLine draws a line through recent highs or lows and looks for a price break
+through it. It checks the risk before entering.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -10,8 +14,7 @@ title: 'TrendLine'
 
 ![TrendLine and ReverseTrendLine signals on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -101,7 +104,9 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 
 ## Run
 
+First [save backtest settings](../../getting-started/backtest-config) with the
+name in `--config`. Then run this command from the project folder.
+
 ```bash
-npx @tradejs/cli backtest --user root --config TrendLine:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config TrendLine:base --connector bybit --timeframe 15
 ```

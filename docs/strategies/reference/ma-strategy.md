@@ -4,14 +4,17 @@ title: 'MaStrategy'
 
 `MaStrategy` is a built-in TypeScript strategy from `@tradejs/strategy-ma-strategy` based on fast/slow moving average crossover.
 
+A standard TradeJS project already includes MaStrategy. Run the
+[first backtest](../../getting-started/first-backtest) to try it with
+the preset settings.
+
 ## Visual overview
 
 ![MaStrategy strategy logic](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/strategy-logic.svg)
 
 ![MaStrategy signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MaStrategy/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -98,7 +101,5 @@ Keys are grouped by the part of the strategy they control. A value of `0` or
 
 ## Run
 
-```bash
-npx @tradejs/cli backtest --user root --config MaStrategy:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
-```
+Open [your first backtest](../../getting-started/first-backtest), choose
+**MaStrategy:base**, and use the market and period from the example.

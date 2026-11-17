@@ -4,8 +4,8 @@ title: Как написать торговую стратегию на TypeScri
 description: 'Создайте стратегию пересечения скользящих средних на TypeScript через TradeJS StrategyAPI: файлы, публичные импорты, конфигурация, регистрация и тесты.'
 ---
 
-Создайте стратегию на TypeScript через `StrategyAPI`, зарегистрируйте её как
-плагин и проверьте тестами.
+Напишите стратегию на TypeScript через `StrategyAPI`, подключите её как плагин и
+проверьте решения в тестах.
 
 Пример стратегии: простое пересечение MA.
 
@@ -14,6 +14,8 @@ description: 'Создайте стратегию пересечения ско�
 - используйте публичные подпути `@tradejs/core/*` для кода браузера,
   `@tradejs/node/*` для среды Node.js и `@tradejs/types` для типов;
 - не импортируйте непубличные внутренние файлы.
+
+[Как пройти это руководство с агентом](../../guides/develop-with-an-agent).
 
 ## 1. Создайте файлы
 
@@ -243,7 +245,7 @@ redis-cli JSON.SET users:root:backtests:configs:SimpleMa:quickstart '$' '{
 npx @tradejs/cli backtest --user root --config SimpleMa:quickstart --connector bybit --tests 200 --parallel 4
 npx @tradejs/cli results --strategy SimpleMa --coverage --user root
 npx @tradejs/cli runtime-control verify --user root --deployment production
-npx @tradejs/cli signals --user root --deployment production
+npm exec -- tradejs signals --user root --deployment production
 ```
 
 ## Примечания

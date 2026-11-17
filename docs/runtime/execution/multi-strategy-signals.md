@@ -2,8 +2,8 @@
 title: Running Multiple Strategies
 ---
 
-One `signals` process can evaluate several strategies, accounts, timeframes,
-market universes, and deployments declared in `tradejs.config.ts`.
+One `signals` process can run calculations for multiple strategies, accounts,
+candle intervals, and market types. Set them in `tradejs.config.ts`.
 
 ## How Setups Are Separated
 
@@ -36,33 +36,6 @@ different account or disable one instance.
 
 ## Examples
 
-Evaluate every enabled setup once:
-
-```bash
-npx @tradejs/cli signals --user root
-```
-
-Run one deployment continuously:
-
-```bash
-npx @tradejs/cli signals-daemon \
-  --user root \
-  --deployment production \
-  --notify \
-  --makeOrders
-```
-
-Run a narrow diagnostic pass without placing orders:
-
-```bash
-npx @tradejs/cli signals \
-  --user root \
-  --universe crypto \
-  --timeframe 15 \
-  --account bybit-main \
-  --tickers BTCUSDT,ETHUSDT \
-  --cacheOnly
-```
-
-See [How live signals work](./signals) and
-[Validate live decisions with replay](../backtesting/replay-evidence).
+The app container starts signal evaluation for the configured deployments.
+Open **Strategies** to see their state and settings. Use
+[replay](../backtesting/replay-evidence) to investigate past decisions.

@@ -2,8 +2,8 @@
 title: Telegram Notifications
 ---
 
-TradeJS can send signal messages, optional charts and AI commentary, daily
-operational summaries, and live/replay comparison reports to Telegram.
+TradeJS can send signals, charts, optional AI comments, daily summaries, and
+replay comparison reports to Telegram.
 
 ## Configure Telegram
 
@@ -40,15 +40,10 @@ Keep the bot token out of shell history, screenshots, logs, and version control.
 
 ## Signal Notifications
 
-```bash
-npx @tradejs/cli signals \
-  --user root \
-  --notify \
-  --tickers BTCUSDT \
-  --cacheOnly
-```
+The server's signal process delivers these messages when
+`SIGNALS_DAEMON_NOTIFY` and the user's notification settings are enabled.
 
-Use the same `--user` that owns the Telegram settings. TradeJS stores the
+Use the settings of the account that runs the deployment. TradeJS stores the
 strategy decision before sending the message. Signals blocked or canceled
 before order submission remain available for diagnosis but are not sent as
 trade notifications.
@@ -61,7 +56,7 @@ must not be interpreted as a fill confirmation.
 ## Daily Operational Summary
 
 ```bash
-npx @tradejs/cli signals-summary \
+npm exec -- tradejs signals-summary \
   --user root \
   --connector bybit
 ```

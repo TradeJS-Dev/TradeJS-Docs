@@ -2,7 +2,8 @@
 title: Candles / market data
 ---
 
-TradeJS strategies normally operate on candles: open, high, low, close, volume, and timestamp for a symbol and interval.
+A candle describes one interval for one market instrument. It records the
+opening, high, low and closing prices, the volume, and the time.
 
 The common workflow is:
 

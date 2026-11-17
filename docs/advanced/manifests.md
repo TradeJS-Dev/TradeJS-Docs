@@ -2,7 +2,8 @@
 title: Manifests
 ---
 
-Strategy manifests describe how a strategy is registered and enriched.
+A strategy manifest tells TradeJS which strategy a package exports and which
+data to add to its signals.
 
 Common manifest fields include:
 

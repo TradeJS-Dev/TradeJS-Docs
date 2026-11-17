@@ -2,7 +2,8 @@
 title: ML Train Latest Select
 ---
 
-`npx @tradejs/cli ml-train:latest` runs interactive/selective training from latest exports and auto-prepares holdout/prod/walk-forward splits.
+Run `npx @tradejs/cli ml-train:latest` to train from recent exports. The command
+prepares separate sets for training and evaluation.
 
 Runtime surface:
 

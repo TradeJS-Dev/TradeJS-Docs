@@ -4,8 +4,8 @@ title: Run Pine and Return Strategy Decisions
 description: 'Run the prepared Pine script, handle position exits and invalidation, and return a typed TradeJS entry decision.'
 ---
 
-Continue the same `core.ts` file with the strategy factory. It uses the helpers
-from the [previous step](./pine-strategy-runtime-setup).
+Add the strategy factory to `core.ts`. It uses the functions from [the previous
+step](./pine-strategy-runtime-setup).
 
 ```text
 export const createAdaptiveMomentumRibbonCore: CreateStrategyCore<

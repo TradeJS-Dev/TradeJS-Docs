@@ -2,9 +2,11 @@
 title: 'HyperliquidConsensus'
 ---
 
-`HyperliquidConsensus` trades directional agreement in the position-aware flow
-of configured Hyperliquid accounts. It requires sufficiently complete and
-current whale-position data and skips when that context is missing or stale.
+HyperliquidConsensus looks for agreement in the position changes of selected
+Hyperliquid accounts. It skips entries when the data is incomplete or stale.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +14,7 @@ current whale-position data and skips when that context is missing or stale.
 
 ![HyperliquidConsensus signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HyperliquidConsensus/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Decision flow
 
@@ -28,9 +29,6 @@ Entry codes are `HLC_LONG_CONSENSUS` and `HLC_SHORT_CONSENSUS`. Optional exits
 respond to opposite consensus or material position reduction.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

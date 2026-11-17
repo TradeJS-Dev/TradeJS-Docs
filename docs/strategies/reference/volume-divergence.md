@@ -2,7 +2,11 @@
 title: 'VolumeDivergence'
 ---
 
-`VolumeDivergence` is a built-in TypeScript reversal strategy from `@tradejs/strategy-volume-divergence` that compares price pivots with normalized volume pivots.
+VolumeDivergence looks for a reversal when a new high or low in price is not
+confirmed by normalized volume.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -10,8 +14,7 @@ title: 'VolumeDivergence'
 
 ![VolumeDivergence signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-VolumeDivergence/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -112,7 +115,9 @@ and `fixed`.
 
 ## Run
 
+First [save backtest settings](../../getting-started/backtest-config) with the
+name in `--config`. Then run this command from the project folder.
+
 ```bash
-npx @tradejs/cli backtest --user root --config VolumeDivergence:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config VolumeDivergence:base --connector bybit --timeframe 15
 ```

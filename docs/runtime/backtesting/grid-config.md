@@ -2,9 +2,9 @@
 title: Search a Backtest Parameter Grid
 ---
 
-A parameter search compares predefined strategy variants under the same market
-data and execution assumptions. TradeJS builds the Cartesian product of the
-arrays in a saved backtest grid and evaluates each combination for each symbol.
+A parameter grid lists the values to try for each setting. TradeJS runs each
+combination on each selected instrument. Use the same market data and execution
+settings to compare the results.
 
 ## Estimate the Search Size
 

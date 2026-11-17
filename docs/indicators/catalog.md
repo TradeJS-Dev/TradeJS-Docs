@@ -2,8 +2,7 @@
 title: Indicator Catalog
 ---
 
-The shared indicator pipeline calculates the fields listed below for the
-strategy runtime.
+Use this list to find the fields that TradeJS can calculate for a strategy.
 
 Primary implementation:
 

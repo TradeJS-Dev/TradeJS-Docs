@@ -2,7 +2,7 @@
 title: Коннекторы
 ---
 
-Коннекторы дают стратегиям доступ к рыночным данным и исполнению ордеров.
+Коннектор передаёт запросы TradeJS источнику данных или бирже.
 
 Стандартный `basePreset` регистрирует встроенный каталог коннекторов из
 `@tradejs/connectors`.
@@ -20,7 +20,7 @@ title: Коннекторы
 
 ```bash
 npx @tradejs/cli backtest --connector bybit
-npx @tradejs/cli signals --connector bybit
+npm exec -- tradejs signals --connector bybit
 ```
 
 Пользовательский коннектор подключается через `tradejs.config.ts`:

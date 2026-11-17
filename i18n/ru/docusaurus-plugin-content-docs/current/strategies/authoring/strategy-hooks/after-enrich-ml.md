@@ -2,7 +2,8 @@
 title: afterEnrichMl
 ---
 
-Вызывается на entry path после ML stage. Этот хук вызывается только когда существует `decision.signal`.
+TradeJS вызывает этот обработчик после оценки входа моделью, если у решения есть
+`decision.signal`.
 
 ## Params
 

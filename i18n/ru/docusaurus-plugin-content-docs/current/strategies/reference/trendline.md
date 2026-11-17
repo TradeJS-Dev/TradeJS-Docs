@@ -2,7 +2,11 @@
 title: 'TrendLine'
 ---
 
-`TrendLine` — встроенная TypeScript-стратегия из `@tradejs/strategy-trend-line` для входа по пробою трендовой линии с риск-ограничениями.
+TrendLine строит линию через недавние максимумы или минимумы и ждёт её пробоя.
+Перед входом стратегия проверяет риск.
+
+Стратегия уже подключена в стандартном проекте.
+[Как сохранить настройки бэктеста](../../getting-started/backtest-config).
 
 ## Визуальная схема
 
@@ -145,7 +149,9 @@ title: 'TrendLine'
 
 ## Запуск
 
+Сначала [сохраните настройки бэктеста](../../getting-started/backtest-config)
+под именем из `--config`. Затем выполните команду из папки проекта.
+
 ```bash
-npx @tradejs/cli backtest --user root --config TrendLine:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config TrendLine:base --connector bybit --timeframe 15
 ```

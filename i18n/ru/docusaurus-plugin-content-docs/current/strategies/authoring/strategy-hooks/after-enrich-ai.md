@@ -2,7 +2,8 @@
 title: afterEnrichAi
 ---
 
-Вызывается на entry path после AI stage. Этот хук вызывается только когда существует `decision.signal`.
+TradeJS вызывает этот обработчик после проверки входа с помощью ИИ, если у
+решения есть `decision.signal`.
 
 ## Params
 

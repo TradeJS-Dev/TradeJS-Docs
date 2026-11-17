@@ -2,8 +2,11 @@
 title: 'VolumeDivergence'
 ---
 
-`VolumeDivergence` ищет разворот по расхождению ценовых экстремумов и
-экстремумов нормализованного объёма.
+VolumeDivergence ищет разворот, когда новый максимум или минимум цены не
+подтверждается нормализованным объёмом.
+
+Стратегия уже подключена в стандартном проекте.
+[Как сохранить настройки бэктеста](../../getting-started/backtest-config).
 
 ## Визуальная схема
 
@@ -153,7 +156,9 @@ title: 'VolumeDivergence'
 
 ## Запуск
 
+Сначала [сохраните настройки бэктеста](../../getting-started/backtest-config)
+под именем из `--config`. Затем выполните команду из папки проекта.
+
 ```bash
-npx @tradejs/cli backtest --user root --config VolumeDivergence:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config VolumeDivergence:base --connector bybit --timeframe 15
 ```

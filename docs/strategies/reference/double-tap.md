@@ -2,9 +2,13 @@
 title: 'DoubleTap'
 ---
 
-`DoubleTap` is a built-in TypeScript strategy from `@tradejs/strategy-double-tap`.
+DoubleTap looks for a double top or double bottom. It waits for a breakout and
+uses the pattern to set the stop and target.
 
 It detects double-bottom and double-top structures, then trades the breakout/breakdown with stop and target prices produced by the pattern engine.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +16,7 @@ It detects double-bottom and double-top structures, then trades the breakout/bre
 
 ![DoubleTap signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-DoubleTap/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -39,9 +42,6 @@ When a position exists:
 - otherwise `POSITION_EXISTS`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

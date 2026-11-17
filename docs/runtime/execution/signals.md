@@ -3,19 +3,14 @@ sidebar_position: 9
 title: How Live Signals Work
 ---
 
-TradeJS evaluates strategies only after a candle closes. You can run one
-evaluation cycle for inspection or keep a daemon aligned with candle boundaries:
+The TradeJS server starts signal evaluation when its app container starts.
+It watches the configured deployments and evaluates their strategies after
+candle close. Open **Strategies** to see strategy status, or open a chart to
+inspect recorded signals.
 
-```bash
-# Evaluate every active setup once
-npx @tradejs/cli signals
-
-# Continue evaluating newly closed candles
-npx @tradejs/cli signals-daemon
-# Equivalent: npx @tradejs/cli signals --watch
-```
-
-Neither command places orders unless `--makeOrders` is explicitly present.
+A local installation with `npx create-tradejs` opens the app for backtesting.
+For live-market evaluation, follow the
+[server setup guide](../../getting-started/run-strategy-in-production).
 
 ## Configure a Live Setup
 
@@ -61,6 +56,7 @@ credentials remain server-side.
 
 ## Choose What to Evaluate
 
+For one-off diagnostics from the project folder, use `npm exec -- tradejs signals`.
 Without filters, `signals` evaluates every enabled setup. These options narrow
 the current command:
 

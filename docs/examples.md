@@ -2,7 +2,9 @@
 title: Examples
 ---
 
-These examples show strategy ideas and TradeJS wiring patterns. They are starting points for research, not trading recommendations.
+Use these examples to see how a strategy is put together. To test an existing
+strategy without writing code, start from the [strategy
+catalog](./strategies/reference).
 
 ## 1. Simple Moving Average Strategy
 

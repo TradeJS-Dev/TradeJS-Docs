@@ -2,7 +2,9 @@
 title: Who is it for?
 ---
 
-TradeJS is for TypeScript developers and technical researchers who want a programmable, self-hosted way to research, test, and run trading strategies.
+Use TradeJS if you want to test a trading idea with market data or need control
+over how a strategy runs. You can start with a ready-made strategy and write
+code when you need different rules.
 
 It fits you if you want to:
 

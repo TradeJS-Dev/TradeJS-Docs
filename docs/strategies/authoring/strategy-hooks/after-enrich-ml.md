@@ -2,7 +2,8 @@
 title: afterEnrichMl
 ---
 
-Called on the entry path after the ML stage. This hook only fires when `decision.signal` exists.
+TradeJS calls this hook after applying the ML model to an entry with a
+`decision.signal`.
 
 ## Params
 

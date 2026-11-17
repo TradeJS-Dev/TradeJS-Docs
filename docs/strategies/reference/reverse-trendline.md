@@ -2,9 +2,11 @@
 title: 'ReverseTrendLine'
 ---
 
-`ReverseTrendLine` builds support and resistance trendlines from recent highs
-and lows, then trades rejection behavior around those lines rather than the
-breakout path used by `TrendLine`.
+ReverseTrendLine draws support and resistance lines through recent highs and
+lows. It looks for a bounce when price reaches one of those lines.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +14,7 @@ breakout path used by `TrendLine`.
 
 ![TrendLine and ReverseTrendLine signals on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendLine/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 

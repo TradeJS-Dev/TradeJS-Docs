@@ -2,8 +2,11 @@
 title: 'TrendFollow'
 ---
 
-`TrendFollow` trades trend-continuation setups using a trailing stop line and
-deterministic entry filters.
+TrendFollow looks for an existing trend to continue. It checks entry conditions
+and moves the stop as the trend progresses.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -11,8 +14,7 @@ deterministic entry filters.
 
 ![TrendFollow signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-TrendFollow/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 

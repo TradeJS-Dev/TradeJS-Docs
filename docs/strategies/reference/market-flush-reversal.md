@@ -2,9 +2,11 @@
 title: 'MarketFlushReversal'
 ---
 
-`MarketFlushReversal` looks for broad-market liquidation or pressure followed
-by a directional rejection candle. Its decision uses only the closed candle and
-market context available at that timestamp.
+MarketFlushReversal looks for a bounce after a sharp move across the market. It
+uses closed candles and market data available at the time of the signal.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +14,7 @@ market context available at that timestamp.
 
 ![MarketFlushReversal signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-MarketFlushReversal/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Decision flow
 
@@ -28,9 +29,6 @@ Entry codes are `MFR_LONG_FLUSH_REVERSAL` and
 position with `MFR_OPPOSITE_FLUSH_EXIT`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime, AI, ML, shared indicator,
-and position-sizing keys keep the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |

@@ -2,7 +2,8 @@
 title: Model Promotion Policy
 ---
 
-Define objective promotion gates before publishing model aliases.
+Set measurable checks before making a trained model available under a shared
+alias.
 
 ## Required Inputs
 

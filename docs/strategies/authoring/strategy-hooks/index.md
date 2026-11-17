@@ -2,8 +2,8 @@
 title: Strategy Runtime Hooks
 ---
 
-The shared strategy runtime calls lifecycle hooks at defined points before and
-after strategy decisions, enrichment, and order placement.
+A hook is a function that TradeJS calls at a specific step, such as after a
+strategy decision or before submitting an order.
 
 Hooks can be declared in two places:
 

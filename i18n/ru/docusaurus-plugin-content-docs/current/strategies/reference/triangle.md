@@ -4,6 +4,8 @@ title: 'Triangle'
 
 Triangle ищет пробой восходящего, нисходящего или симметричного треугольника.
 
+Пакет устанавливается отдельно. [Как подключить пакет и сохранить стандартные стратегии](../../getting-started/add-strategy).
+
 ## Установка
 
 Выполните команду в каталоге проекта TradeJS.
@@ -23,4 +25,27 @@ npm install --save-exact @tradejs/strategy-triangle
 треугольника разрешить только пробой вверх, а для нисходящего только пробой
 вниз. Симметричный треугольник использует фактическое направление пробоя.
 
+Стоп находится за противоположной границей. Цель — часть начальной высоты
+треугольника, отложенная от линии пробоя.
+
+![Пример пробоя треугольника на схеме](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Triangle/main/docs/signal-example.svg)
+
 Подробности настройки есть в [README пакета](https://github.com/TradeJS-Dev/TradeJS-Strategy-Triangle#readme).
+
+## Бэктест {#backtest}
+
+Из папки стандартного проекта с запущенным Docker выполните две команды.
+Первая сохраняет настройки `Triangle:example` в локальном Redis. В них указан
+только интервал, поэтому остальные значения берутся из настроек стратегии.
+Вторая запускает проверку на 15-минутных свечах Binance BTCUSDT за 30 дней.
+
+```bash
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
+  'users:root:backtests:configs:Triangle:example' '{"INTERVAL":["15"]}' NX
+
+npm run backtest -- --user root --connector binance --tickers BTCUSDT \
+  --config Triangle:example --timeframe 15 --days 30 --tests 1 --parallel 1
+```
+
+Если первая команда вернула пустой ответ, настройки с таким именем уже есть.
+Для чистого примера замените `example` на новое имя в обеих командах.

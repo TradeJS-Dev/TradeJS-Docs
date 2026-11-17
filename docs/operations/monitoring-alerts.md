@@ -2,7 +2,8 @@
 title: Monitoring and Alerts
 ---
 
-Monitoring should cover infrastructure, runtime quality, and business-level behavior.
+Check whether the services are up, the strategy is processing new candles, and
+orders and positions match what you expect.
 
 ## Infrastructure Metrics
 

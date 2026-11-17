@@ -2,7 +2,8 @@
 title: Signals
 ---
 
-A signal is the runtime record of a strategy opportunity.
+A signal records a trading opportunity that a strategy found. Check the order
+separately to see whether TradeJS sent it and the exchange filled it.
 
 Signals usually contain:
 
@@ -23,12 +24,6 @@ A signal describes a decision. An order is a later execution action that may be 
 
 ## Runtime Scans
 
-`npx @tradejs/cli signals` evaluates configured runtime strategies against the selected ticker universe. Useful flags include:
-
-```bash
-npx @tradejs/cli signals --tickers BTCUSDT --timeframe 15 --cacheOnly
-npx @tradejs/cli signals --notify
-npx @tradejs/cli signals --makeOrders
-```
-
-Use `--makeOrders` only after validating strategy behavior and risk controls.
+The server evaluates signals after candles close. Use **Strategies** to check
+status and open a chart to inspect recorded signals.
+[How the server evaluates signals](../runtime/execution/signals).

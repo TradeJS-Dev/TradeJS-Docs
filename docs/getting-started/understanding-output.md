@@ -2,7 +2,8 @@
 title: Understanding the output
 ---
 
-TradeJS output is meant for analysis and comparison, not for promises about future behavior.
+Start with the number of trades, net profit, and maximum drawdown. Compare runs
+only after checking the period, market, and settings.
 
 ## Backtest Output
 

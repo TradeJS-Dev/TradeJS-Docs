@@ -2,9 +2,13 @@
 title: 'LiquidityTails'
 ---
 
-`LiquidityTails` is a built-in TypeScript strategy from `@tradejs/strategy-liquidity-tails`.
+LiquidityTails marks areas with long candle wicks. It looks for a trade when
+price returns and reacts to one of the areas, then sets a stop beyond its edge.
 
 It detects wick/tail liquidity zones, waits for retests, and trades reactions with a stop outside the retested zone.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -12,8 +16,7 @@ It detects wick/tail liquidity zones, waits for retests, and trades reactions wi
 
 ![LiquidityTails signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-LiquidityTails/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 

@@ -2,7 +2,8 @@
 title: Architecture
 ---
 
-TradeJS is split into public packages with clear boundaries.
+TradeJS loads strategies, indicators, and exchange connectors from separate
+packages. Find the package you need in the list below.
 
 ## Packages
 

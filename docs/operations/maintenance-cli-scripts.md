@@ -2,8 +2,8 @@
 title: Maintenance and Debug CLI Scripts
 ---
 
-The CLI includes commands for local services, diagnostics, data maintenance,
-and smoke tests.
+Use these commands to start and stop local services, check a project, or maintain
+its data.
 
 ## Dev Infra
 

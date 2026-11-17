@@ -4,7 +4,8 @@ title: Self-Hosted Trading Infrastructure
 description: 'Plan a self-hosted TradeJS deployment with Nginx, Redis, TimescaleDB, application services, ML inference, backups, monitoring, and horizontal scaling.'
 ---
 
-Use this as a reference architecture for cloud deployments.
+Use this diagram to decide which services to run together and which to move to
+separate hosts as the load grows.
 
 ## Single-Node Setup
 

@@ -3,7 +3,8 @@ sidebar_position: 6
 title: Командная строка
 ---
 
-Командный интерфейс TradeJS поставляется в пакете `@tradejs/cli`:
+Команды из этого справочника запускают бэктесты, управляют локальными сервисами и
+проверяют проект. Выполняйте их из папки проекта.
 
 ```bash
 npx @tradejs/cli <command> [flags]
@@ -86,7 +87,7 @@ npx @tradejs/cli backtest \
   --cacheOnly
 
 # Рассчитать сигналы без размещения ордеров
-npx @tradejs/cli signals \
+npm exec -- tradejs signals \
   --tickers BTCUSDT \
   --cacheOnly \
   --skipScreenshots

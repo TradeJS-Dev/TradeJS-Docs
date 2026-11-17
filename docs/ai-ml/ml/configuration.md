@@ -6,11 +6,11 @@ description: 'Configure the TradeJS machine-learning pipeline from backtest data
 
 ## Main Flow
 
-1. Backtests can write ML chunk files (`--ml`).
-2. `npx @tradejs/cli ml-export` merges chunk files into one JSONL dataset.
-3. Train script builds derived windows (`holdout`, `prod`, `walk-forward`).
-4. Python train container generates model artifacts and reports.
-5. Runtime inference uses gRPC (`ML_GRPC_ADDRESS`).
+1. Run a backtest with `--ml` to save training data in several files.
+2. Run `npx @tradejs/cli ml-export` to combine the files into one JSONL file.
+3. The training command separates a holdout period and later evaluation windows.
+4. A Python container trains the model and saves the evaluation reports.
+5. When evaluating a signal, TradeJS can ask the service at `ML_GRPC_ADDRESS` for a score.
 
 ## Commands
 
@@ -62,7 +62,7 @@ Derived split files (generated automatically):
    `data/ml/models/<Strategy>.joblib`
    or ensemble aliases `data/ml/models/<Strategy>.modelN.joblib`
 4. ML infer service must read the same model directory (`MODEL_DIR`).
-5. `npx @tradejs/cli signals` (with strategy config `ML_ENABLED=true`) sends `signal.strategy` to gRPC `Predict`.
+5. `npm exec -- tradejs signals` (with strategy config `ML_ENABLED=true`) sends `signal.strategy` to gRPC `Predict`.
    Inference service loads `<Strategy>.joblib` / `<Strategy>.modelN.joblib` for that strategy.
 
 If strategy name and model alias prefix match, runtime automatically uses the trained local model.

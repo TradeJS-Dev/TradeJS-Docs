@@ -2,7 +2,8 @@
 title: Metrics
 ---
 
-Metrics help you compare historical behavior. They do not predict future performance.
+Use metrics to compare what strategies did in a backtest. Read them together
+with the market, period, and costs used in the run.
 
 Common metrics:
 

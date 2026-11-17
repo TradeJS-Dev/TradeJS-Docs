@@ -2,7 +2,8 @@
 title: onInit
 ---
 
-Called once, right after strategy runtime creation and before the per-candle runner starts.
+TradeJS calls this hook once, after creating the strategy instance and before
+processing the first candle.
 
 ## Params
 

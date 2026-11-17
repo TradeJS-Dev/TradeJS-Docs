@@ -4,7 +4,9 @@ title: Построение TradeJS figures из Pine plot series
 description: 'Преобразуйте Pine plot series в линии и точки entry chart для зарегистрированной Pine-стратегии TradeJS.'
 ---
 
-Это глава 2 [пошагового руководства по Pine-стратегии](./pine-strategy-step-by-step). Здесь именованные plot series из Pine-исходника преобразуются в figures входа.
+Возьмите именованные графики из Pine-скрипта и используйте их, чтобы отметить
+вход на графике TradeJS. Перед этим подготовьте [Pine-скрипт и
+настройки](./pine-strategy-pine-and-config).
 
 ## 4. Добавьте построитель figures (`figures.ts`)
 

@@ -2,7 +2,7 @@
 title: afterEnrichAi
 ---
 
-Called on the entry path after the AI stage. This hook only fires when `decision.signal` exists.
+TradeJS calls this hook after the AI check on an entry with a `decision.signal`.
 
 ## Params
 

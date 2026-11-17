@@ -2,7 +2,8 @@
 title: ML Infer gRPC Service
 ---
 
-Runtime ML gating calls a Python gRPC inference service.
+The Python inference service returns model scores over gRPC. TradeJS can use the
+score to decide whether to allow an entry.
 
 Public interface:
 

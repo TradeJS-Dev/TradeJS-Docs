@@ -4,7 +4,8 @@ title: Create the Pine Strategy Module, Source, and Config
 description: 'Create a TradeJS Pine strategy module, add its Pine Script source, and define a typed runtime and backtest configuration.'
 ---
 
-This is chapter 1 of the [Pine strategy walkthrough](./pine-strategy-step-by-step). It creates the module boundary, Pine source, and typed configuration used by the remaining chapters.
+Start by creating the Pine script and a TypeScript file with its settings. The
+next steps use both files.
 
 ## 1. Create Strategy Folder Structure
 

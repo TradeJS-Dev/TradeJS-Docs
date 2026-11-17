@@ -2,7 +2,7 @@
 title: afterBarDecision
 ---
 
-Called after the final candle decision is known.
+TradeJS calls this hook once the final decision for the candle is known.
 
 This stage runs for every candle after runtime has resolved its final `StrategyDecision`, regardless of whether that decision came from `onBar` or from `core.ts`.
 

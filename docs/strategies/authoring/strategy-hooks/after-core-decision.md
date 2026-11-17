@@ -2,7 +2,7 @@
 title: afterCoreDecision
 ---
 
-Called right after `core.ts` returns a decision.
+TradeJS calls this hook as soon as `core.ts` returns its decision.
 
 This stage only runs when the candle reached `core.ts`. If `onBar` already returned a `StrategyDecision` for the same candle, `afterCoreDecision` is skipped.
 

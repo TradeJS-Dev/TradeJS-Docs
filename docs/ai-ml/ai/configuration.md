@@ -6,19 +6,13 @@ description: 'Configure the optional TradeJS AI review layer that evaluates stra
 
 ## Purpose
 
-AI in TradeJS is a runtime review layer. It evaluates the current strategy signal and can gate order execution in live mode.
-
-Runtime module:
-
-- `@tradejs/node`
+TradeJS can ask an AI model to check a signal before placing an entry order.
+The code runs in `@tradejs/node`.
 
 ## Configuration Source
 
-TradeJS resolves AI credentials in this order:
-
-1. Account settings stored in the current Redis user record.
-
-In the web app, open the gear icon in the left sidebar and set:
+TradeJS reads credentials from the current user's account. In the web app,
+open account settings from the gear icon and set these fields.
 
 - `AI_API_KEY`
 - `AI_API_ENDPOINT`

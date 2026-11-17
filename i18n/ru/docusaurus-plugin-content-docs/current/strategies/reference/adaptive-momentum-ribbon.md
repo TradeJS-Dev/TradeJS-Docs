@@ -2,10 +2,12 @@
 title: 'AdaptiveMomentumRibbon'
 ---
 
-`AdaptiveMomentumRibbon` объединяет ленту моментума на Pine, контекст канала
-Кельтнера, структурную отмену сигнала и размер позиции по риску. Pine
-рассчитывает сигнал, а TypeScript управляет состоянием позиции, выходами и
-планом ордера.
+AdaptiveMomentumRibbon проверяет силу движения и канал Кельтнера перед входом.
+Pine рассчитывает сигнал. Код на TypeScript рассчитывает размер позиции по риску
+и управляет выходом.
+
+Стратегия уже подключена в стандартном проекте.
+[Как сохранить настройки бэктеста](../../getting-started/backtest-config).
 
 ## Визуальная схема
 
@@ -176,7 +178,9 @@ title: 'AdaptiveMomentumRibbon'
 
 ## Запуск
 
+Сначала [сохраните настройки бэктеста](../../getting-started/backtest-config)
+под именем из `--config`. Затем выполните команду из папки проекта.
+
 ```bash
-npx @tradejs/cli backtest --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+npm run backtest -- --user root --config AdaptiveMomentumRibbon:amr-default --connector bybit --timeframe 15
 ```

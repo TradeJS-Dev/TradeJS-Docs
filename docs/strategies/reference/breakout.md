@@ -2,7 +2,11 @@
 title: 'Breakout'
 ---
 
-`Breakout` is a built-in TypeScript strategy from `@tradejs/strategy-breakout` with weighted signal scoring for long/short breakout scenarios.
+Breakout checks several conditions for a price breakout and gives each condition
+a score. A trade needs all required conditions and a high enough total score.
+
+Included in a standard TradeJS project.
+[Save settings for a backtest](../../getting-started/backtest-config).
 
 ## Visual overview
 
@@ -10,8 +14,7 @@ title: 'Breakout'
 
 ![Breakout signal on an illustrative chart](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-Breakout/main/docs/signal-example.svg)
 
-The illustrations are schematic, not market data. Exact thresholds,
-confirmation rules, and risk parameters come from the active strategy config.
+The diagrams show an example signal and use illustrative prices.
 
 ## Entry Logic
 
@@ -32,9 +35,6 @@ With an open position, strategy closes when:
 Otherwise returns `POSITION_HELD`.
 
 ## Configuration keys
-
-The keys are grouped by purpose. Common runtime and decision-service keys keep
-the same meaning across the built-in strategies.
 
 | Group | Keys | Purpose |
 | --- | --- | --- |
@@ -91,9 +91,22 @@ the same meaning across the built-in strategies.
 }
 ```
 
-## Run
+<span id="run"></span>
+
+## Run {#backtest}
+
+Run these commands from the standard project folder with Docker running.
+The first command saves `Breakout:example` in the project's local Redis.
+It sets the candle interval and uses the strategy defaults for the other fields.
+The second command tests 30 days of 15-minute Binance BTCUSDT candles.
 
 ```bash
-npx @tradejs/cli backtest --user root --config Breakout:base --connector bybit --timeframe 15
-npx @tradejs/cli signals --user root --timeframe 15
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli SET \
+  'users:root:backtests:configs:Breakout:example' '{"INTERVAL":["15"]}' NX
+
+npm run backtest -- --user root --connector binance --tickers BTCUSDT \
+  --config Breakout:example --timeframe 15 --days 30 --tests 1 --parallel 1
 ```
+
+If the first command returns an empty response, a configuration with that
+name already exists. Replace `example` in both commands to start with a new one.

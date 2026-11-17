@@ -2,18 +2,45 @@
 title: 'HeadAndShoulders'
 ---
 
-`HeadAndShoulders` ищет обычную и перевёрнутую модель «голова и плечи» по
-экстремумам закрытых свечей. Расчёт включает плечи, выраженность головы, линию
-шеи, пробой, стоп и измеряемую цель.
+import HeadAndShouldersChart from "@site/src/components/HeadAndShouldersChart";
+
+HeadAndShoulders ищет обычную и перевёрнутую фигуру «голова и плечи». Вход
+возможен после пробоя линии шеи. Стоп и цель рассчитываются по фигуре.
+
+Стратегия уже подключена в стандартном проекте.
+[Запустить бэктест](#backtest).
 
 ## Визуальная схема
 
-![Логика HeadAndShoulders](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/strategy-logic.svg)
+У обычной фигуры три вершины. Средняя выше двух соседних. Линия шеи
+проходит через две впадины между вершинами. После правого плеча стратегия
+проверяет пробой этой линии. В стандартном режиме `close_acceptance` она
+ждёт дополнительного подтверждения закрытием свечи. Стоп для короткой позиции
+ставится выше головы с запасом, а цель рассчитывается по высоте фигуры.
 
-![Пример сигнала HeadAndShoulders](https://raw.githubusercontent.com/TradeJS-Dev/TradeJS-Strategy-HeadAndShoulders/main/docs/signal-example.svg)
+<HeadAndShouldersChart />
 
-Иллюстрации показывают общую логику и не являются рыночными данными.
-Точные пороги, подтверждения и параметры риска задаются конфигурацией стратегии.
+Цены на схеме условные. Пороги подтверждения и параметры риска задаются настройками стратегии.
+
+## Бэктест {#backtest}
+
+Для примера нужны стандартный локальный проект, запущенные сервисы Docker и
+публичные 15-минутные свечи Binance BTCUSDT. Аккаунт биржи не требуется.
+В папке проекта выполните команды ниже. Первая создаёт отдельный набор
+настроек для теста, а вторая проверяет последние семь дней.
+
+```bash
+docker compose -f docker-compose.dev.yml exec -T redis redis-cli JSON.SET \
+  'users:root:backtests:configs:HeadAndShoulders:docs-example' '$' '{"INTERVAL":["15"]}' NX
+
+npm run backtest -- --user root --connector binance --tickers BTCUSDT \
+  --config HeadAndShoulders:docs-example --timeframe 15 --days 7 --tests 1 --parallel 1
+```
+
+При первом сохранении Redis вернёт `OK`. Если имя уже занято, замените
+`docs-example` в обеих командах на новое. В конце расчёта ищите
+`SUCCESS TESTS: 1`, `ERRORS: 0` и путь после `full report:`. Тест может успешно
+завершиться без сделок, если в этом периоде условия входа не встретились.
 
 ## Логика
 

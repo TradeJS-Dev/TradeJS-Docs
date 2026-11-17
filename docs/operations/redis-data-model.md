@@ -2,9 +2,8 @@
 title: Redis Data Model
 ---
 
-Redis is used as an operational storage layer for server state and transient
-artifacts. Production deployment and strategy config live in
-`tradejs.config.ts`, not Redis.
+Redis stores application state and temporary data. Keep deployment settings and
+strategy parameters in `tradejs.config.ts`.
 
 ## Main Key Families
 

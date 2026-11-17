@@ -2,7 +2,8 @@
 title: Backup and Restore Guide
 ---
 
-Backups must cover application artifacts and stateful services.
+Back up the project files and the data in its services. Check that you can
+restore both before relying on the backups.
 
 ## What to Backup
 

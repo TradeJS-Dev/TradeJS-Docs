@@ -2,10 +2,9 @@
 title: Use a Tested Configuration in Live Trading
 ---
 
-Moving from a good backtest to live trading is a controlled change, not an
-automatic export. The goal is to preserve the exact strategy, configuration,
-and risk limits that were reviewed while avoiding selection based on a single
-headline metric.
+After testing a configuration, record the package version, all strategy
+settings, and risk limits that you tested. You will need them when you prepare a
+deployment for live trading.
 
 ## Inspect Saved Results
 
@@ -85,7 +84,7 @@ npx @tradejs/cli replay \
   --days 7 \
   --cacheOnly
 
-npx @tradejs/cli signals \
+npm exec -- tradejs signals \
   --user root \
   --deployment <deployment> \
   --cacheOnly

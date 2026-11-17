@@ -2,7 +2,7 @@
 title: onSkip
 ---
 
-Called only when `core.ts` returns a `skip` decision.
+TradeJS calls this hook only when `core.ts` returns a `skip` decision.
 
 ## Params
 

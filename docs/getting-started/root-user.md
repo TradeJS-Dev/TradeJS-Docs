@@ -2,9 +2,8 @@
 title: Local Root User
 ---
 
-TradeJS CLI commands default to `--user root`. In a project created with
-`create-tradejs`, the installation page creates this local user and asks you
-to choose its password.
+The local setup page creates the `root` account and asks you to choose its
+password. TradeJS commands use `--user root` by default.
 
 Use the steps below only when setting up an existing project manually or
 rotating the password from the command line.

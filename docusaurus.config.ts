@@ -108,8 +108,7 @@ const config: Config = {
     image: 'img/docusaurus-social-card.png',
     colorMode: {
       defaultMode: 'dark',
-      disableSwitch: true,
-      respectPrefersColorScheme: false,
+      respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'TradeJS Docs',
@@ -121,50 +120,32 @@ const config: Config = {
       },
       items: [
         {
-          type: 'doc',
-          docId: 'getting-started/quickstart',
+          to: '/strategies/reference',
+          activeBaseRegex: '^/(?:ru/)?strategies/reference(?:/|$)',
           position: 'left',
-          label: t('Getting started', 'Начало'),
+          label: t('Strategies', 'Готовые стратегии'),
         },
         {
-          type: 'doc',
-          docId: 'strategies/authoring/typescript-strategy-step-by-step',
+          to: '/getting-started/first-backtest',
+          activeBaseRegex: '^/(?:ru/)?(?:getting-started|runtime/backtesting)(?:/|$)',
           position: 'left',
-          label: t('TypeScript Strategies', 'TypeScript-стратегии'),
+          label: t('First backtest', 'Первый бэктест'),
         },
         {
-          type: 'doc',
-          docId: 'runtime/backtesting/overview',
+          to: '/strategies/authoring/typescript-strategy-step-by-step',
+          activeBaseRegex: '^/(?:ru/)?(?:strategies/authoring|indicators|api/framework)(?:/|$)',
           position: 'left',
-          label: t('Backtesting', 'Бэктестинг'),
+          label: t('Developers', 'Разработчикам'),
         },
         {
-          type: 'doc',
-          docId: 'runtime/execution/signals',
+          to: '/guides/develop-with-an-agent',
+          activeBaseRegex: '^/(?:ru/)?guides/(?:develop-with-an-agent|mcp|codex-strategy-skills)(?:/|$)',
           position: 'left',
-          label: t('Runtime', 'Рантайм'),
-        },
-        {
-          type: 'doc',
-          docId: 'operations/production-runbook',
-          position: 'left',
-          label: t('Self-Hosting', 'Self-hosting'),
+          label: t('Agents', 'Агенты'),
         },
         {
           type: 'localeDropdown',
           position: 'right',
-        },
-        {
-          href: 'https://x.com/tradejsdev',
-          label: 'X.com',
-          position: 'right',
-          'aria-label': 'TradeJS X account',
-        },
-        {
-          href: 'https://github.com/tradejs-dev/tradejs',
-          label: 'GitHub',
-          position: 'right',
-          'aria-label': 'TradeJS GitHub repository',
         },
         {
           type: 'search',
@@ -183,54 +164,19 @@ const config: Config = {
       },
       links: [
         {
-          title: t('Getting Started', 'Начало'),
+          title: t('Use TradeJS', 'Пользователям'),
           items: [
-            { label: t('Overview', 'Обзор'), to: '/' },
+            { label: t('Strategies', 'Готовые стратегии'), to: '/strategies/reference' },
+            { label: t('First backtest', 'Первый бэктест'), to: '/getting-started/first-backtest' },
             { label: t('Installation', 'Установка'), to: '/getting-started/installation' },
-            { label: t('Quickstart', 'Быстрый старт'), to: '/getting-started/quickstart' },
-            { label: t('First Backtest', 'Первый бэктест'), to: '/getting-started/first-backtest' },
-            { label: t('Root User Setup', 'Настройка пользователя root'), to: '/getting-started/root-user' },
           ],
         },
         {
-          title: t('TypeScript', 'TypeScript'),
+          title: t('Resources', 'Справка'),
           items: [
-            { label: t('Examples', 'Примеры'), to: '/examples' },
-            { label: t('Core API', 'Базовый API'), to: '/api/framework' },
-            {
-              label: t('TypeScript Strategy', 'TypeScript-стратегия'),
-              to: '/strategies/authoring/typescript-strategy-step-by-step',
-            },
-            { label: t('Backtest a Strategy', 'Бэктест стратегии'), to: '/runtime/backtesting/overview' },
-          ],
-        },
-        {
-          title: t('Self-Hosting', 'Self-hosting'),
-          items: [
-            { label: t('Architecture', 'Архитектура'), to: '/advanced/architecture' },
-            {
-              label: t('Production Runbook', 'Руководство по эксплуатации продакшена'),
-              to: '/operations/production-runbook',
-            },
-            { label: t('Monitoring', 'Мониторинг'), to: '/operations/monitoring-alerts' },
-            { label: t('Backtesting Caveats', 'Ограничения бэктестинга'), to: '/limitations/backtesting-caveats' },
-          ],
-        },
-        {
-          title: t('Licensing', 'Лицензирование'),
-          items: [
-            {
-              label: t('License Overview', 'Обзор лицензий'),
-              to: '/introduction/licensing',
-            },
-            {
-              label: t('GitHub Repository', 'Репозиторий GitHub'),
-              href: 'https://github.com/tradejs-dev/tradejs',
-            },
-            {
-              label: t('Issue Tracker', 'Трекер задач'),
-              href: 'https://github.com/tradejs-dev/tradejs/issues',
-            },
+            { label: t('CLI reference', 'Справочник команд'), to: '/api/cli' },
+            { label: t('License', 'Лицензия'), to: '/introduction/licensing' },
+            { label: 'GitHub', href: 'https://github.com/tradejs-dev/tradejs' },
           ],
         },
       ],

@@ -2,9 +2,10 @@
 title: TradingPatterns
 ---
 
-`@tradejs/strategy-trading-patterns` combines Diamond, Flag, Gartley and
-HeadAndShoulders into one strategy. It is installed separately from
-`@tradejs/base`.
+TradingPatterns combines four pattern detectors in one strategy. It checks for
+Diamond, Flag, Gartley, and HeadAndShoulders on each candle.
+
+Install this package separately. [Keep the standard strategies when adding the package](../../getting-started/add-strategy).
 
 ## Installation and interval
 
