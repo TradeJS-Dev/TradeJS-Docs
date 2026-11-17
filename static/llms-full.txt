@@ -150,6 +150,13 @@ TradeJS MCP connects Codex and Claude Code through OAuth and Streamable HTTP at 
 
 Separately installed strategies outside Base: TradingPatterns (https://docs.tradejs.dev/strategies/reference/trading-patterns) VwapReversion (https://docs.tradejs.dev/strategies/reference/vwap-reversion), and RangeReclaim (https://docs.tradejs.dev/strategies/reference/range-reclaim). TradingPatterns supports 15-minute and hourly candles (hourly by default). LondonBreakout (https://www.npmjs.com/package/@tradejs/strategy-london-breakout) and TrendPullback (https://www.npmjs.com/package/@tradejs/strategy-trend-pullback) are also published separately.
 
+Other standalone strategies:
+- Crab (https://docs.tradejs.dev/strategies/reference/crab)
+- Diamond (https://docs.tradejs.dev/strategies/reference/diamond)
+- Triangle (https://docs.tradejs.dev/strategies/reference/triangle)
+- ValueAreaReclaim (https://docs.tradejs.dev/strategies/reference/value-area-reclaim)
+- ImbalanceMomentum (https://docs.tradejs.dev/strategies/reference/imbalance-momentum)
+
 ## Automatic fixed-configuration research
 
 Use research:strategy or the strategy-research skill with Node.js 24. Cached USDT studies freeze filters and directions on DEV before TEST, support resume and frozen-period revalidation, and produce verified HTML/JSON records. Configured Jev uses saved assessments or local models for a frozen with/without comparison. No live orders, publication or deployment. See https://docs.tradejs.dev/guides/codex-strategy-skills and https://docs.tradejs.dev/api/cli#automatic-strategy-research.

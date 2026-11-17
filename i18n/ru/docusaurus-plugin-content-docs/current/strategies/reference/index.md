@@ -73,6 +73,11 @@ TrendLine и ReverseTrendLine входят в общий пакет
   ищет пробой диапазона сессии по UTC на закрытии часовой свечи.
 - [TrendPullback](https://www.npmjs.com/package/@tradejs/strategy-trend-pullback)
   ждёт откат RSI и подтверждение часового тренда EMA закрытием свечи.
+- [Crab](./reference/crab). Crab ищет разворот после того, как пять экстремумов цены образуют фигуру XABCD.
+- [Diamond](./reference/diamond). Diamond ищет разворот, когда расширявшийся диапазон цены сужается и цена выходит за его границу.
+- [Triangle](./reference/triangle). Triangle ищет пробой восходящего, нисходящего или симметричного треугольника.
+- [ValueAreaReclaim](./reference/value-area-reclaim). ValueAreaReclaim ищет возврат в область основного объёма торгов после ложного пробоя.
+- [ImbalanceMomentum](./reference/imbalance-momentum). ImbalanceMomentum ищет направленный разрыв между тремя последовательными четырёхчасовыми свечами.
 
 ## Как оценивать стратегию
 

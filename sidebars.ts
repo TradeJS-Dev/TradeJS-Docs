@@ -143,6 +143,11 @@ const sidebars: SidebarsConfig = {
             'strategies/reference/trading-patterns',
             'strategies/reference/vwap-reversion',
             'strategies/reference/range-reclaim',
+            'strategies/reference/crab',
+            'strategies/reference/diamond',
+            'strategies/reference/triangle',
+            'strategies/reference/value-area-reclaim',
+            'strategies/reference/imbalance-momentum',
           ],
         },
         {

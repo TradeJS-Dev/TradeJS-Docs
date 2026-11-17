@@ -1,0 +1,30 @@
+---
+title: 'ValueAreaReclaim'
+---
+
+ValueAreaReclaim ищет возврат в область основного объёма торгов после ложного пробоя.
+
+## Установка
+
+Выполните команду в каталоге проекта TradeJS.
+
+```bash
+npm install --save-exact @tradejs/strategy-value-area-reclaim
+```
+
+Добавьте `"@tradejs/strategy-value-area-reclaim"` в список `strategies` в
+`tradejs.config.ts`. Пакет зарегистрирует стратегию `ValueAreaReclaim`.
+
+## Сигнал и выход
+
+Стратегия строит профиль объёма по закрытым 15-минутным свечам.
+Параметр `VAR_PROFILE_DAYS` по умолчанию задаёт три полных дня UTC. Цель
+стоит на ценовом уровне с наибольшим объёмом в профиле. При исполнении
+на часовом интервале TradeJS получает ту же 15-минутную историю через
+`StrategyAPI.getClosedCandles`. Если в исходном окне есть пропуски,
+новые входы блокируются до следующего дня UTC.
+
+Используйте TradeJS `3.1.29-beta.302` или совместимый более новый выпуск.
+У пакетов `@tradejs/core`, `@tradejs/types` и `@tradejs/node` должна быть одна версия.
+
+Подробности настройки есть в [README пакета](https://github.com/TradeJS-Dev/TradeJS-Strategy-ValueAreaReclaim#readme).

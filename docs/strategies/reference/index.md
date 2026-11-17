@@ -74,6 +74,11 @@ These packages are outside the 23-package Base preset:
   trades a closed hourly candle breaking a UTC session range.
 - [TrendPullback](https://www.npmjs.com/package/@tradejs/strategy-trend-pullback)
   waits for an RSI pullback and a candle close confirming the hourly EMA trend.
+- [Crab](./reference/crab). Crab looks for a reversal after five price pivots form the XABCD pattern.
+- [Diamond](./reference/diamond). Diamond looks for a reversal when a widening price range contracts and breaks.
+- [Triangle](./reference/triangle). Triangle looks for price breaks from ascending, descending, and symmetric triangles.
+- [ValueAreaReclaim](./reference/value-area-reclaim). ValueAreaReclaim looks for a return to the main traded volume range after a failed break.
+- [ImbalanceMomentum](./reference/imbalance-momentum). ImbalanceMomentum looks for a directional gap across three consecutive four-hour candles.
 
 ## How to Evaluate a Strategy
 
