@@ -11,6 +11,8 @@ root = Path(__file__).resolve().parents[1]
 name = 'docs-nginx-test-' + uuid.uuid4().hex
 with tempfile.TemporaryDirectory(prefix='docs-nginx-') as directory:
     files = Path(directory)
+    # Linux nginx workers need traversal permission on the fixture mount.
+    files.chmod(0o755)
     for path, body in {'index.html': 'home', 'guide.html': 'guide', '404.html': 'missing',
                        'ru/index.html': 'ru home', 'ru/guide.html': 'ru guide', 'ru/404.html': 'missing'}.items():
         file = files / path
