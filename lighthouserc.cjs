@@ -10,10 +10,15 @@ const auditUrls = [
 module.exports = {
   ci: {
     collect: {
-      // Audit the same extensionless URLs used by production. On a raw
-      // .html path, the client router replaces a valid article with the 404 page.
-      startServerCommand: 'npm run serve',
-      startServerReadyPattern: 'Serving',
+      // Match production's canonical URLs and gzip transfer sizes.
+      startServerCommand: [
+        'docker run --rm -p 127.0.0.1:3001:80',
+        '-v "$PWD/build:/usr/share/nginx/html:ro"',
+        '-v "$PWD/nginx.docs.conf:/etc/nginx/conf.d/default.conf:ro"',
+        'nginx:stable-alpine',
+      ].join(' '),
+      startServerReadyPattern: 'start worker process',
+      startServerReadyTimeout: 60000,
       url: auditUrls,
       numberOfRuns: 5,
       settings: {
