@@ -1,16 +1,19 @@
 const auditUrls = [
-  'http://localhost/',
-  'http://localhost/getting-started/quickstart.html',
-  'http://localhost/strategies/authoring/pine-strategy-step-by-step.html',
-  'http://localhost/strategies/authoring/pine-strategy-runtime-setup.html',
-  'http://localhost/strategies/authoring/pine-strategy-runtime-decisions.html',
-  'http://localhost/ru/getting-started/quickstart.html',
+  'http://localhost:3001/',
+  'http://localhost:3001/getting-started/quickstart',
+  'http://localhost:3001/strategies/authoring/pine-strategy-step-by-step',
+  'http://localhost:3001/strategies/authoring/pine-strategy-runtime-setup',
+  'http://localhost:3001/strategies/authoring/pine-strategy-runtime-decisions',
+  'http://localhost:3001/ru/getting-started/quickstart',
 ];
 
 module.exports = {
   ci: {
     collect: {
-      staticDistDir: './build',
+      // Audit the same extensionless URLs used by production. On a raw
+      // .html path, the client router replaces a valid article with the 404 page.
+      startServerCommand: 'npm run serve',
+      startServerReadyPattern: 'Serving',
       url: auditUrls,
       numberOfRuns: 5,
       settings: {
