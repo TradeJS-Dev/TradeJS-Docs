@@ -5,7 +5,7 @@ description: 'Create a local TradeJS project and run a reproducible TypeScript t
 ---
 
 A backtest shows what a strategy would have done with past market data. In this
-example, you will test [MaStrategy](../strategies/reference/ma-strategy) on Bitcoin
+example, you will test [MaStrategy](https://tradejs.dev/marketplace/ma-strategy) on Bitcoin
 from the TradeJS web app. You do not need an exchange account or API key.
 
 [Ask an agent to help prepare a backtest](../guides/develop-with-an-agent).
@@ -40,7 +40,7 @@ Open the run to see its progress. When it finishes, check the number of closed
 trades, net profit, and drawdown. The run can finish with zero trades. The figures
 depend on the dates, data, and settings used. See [how to read the result](./understanding-output).
 
-To try something else, [choose a strategy](../strategies/reference) and
+To try something else, [choose a strategy](https://tradejs.dev/marketplace) and
 [save its backtest settings](./backtest-config).
 
 ## Stop and Restart

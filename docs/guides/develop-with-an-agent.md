@@ -12,7 +12,7 @@ TradeJS project. Start with your project folder open in the agent.
 
 Send it the [documentation index](https://docs.tradejs.dev/llms.txt) and the page for the job.
 The [TypeScript guide](../strategies/authoring/typescript-strategy-step-by-step)
-covers writing a strategy. The [strategy catalog](../strategies/reference)
+covers writing a strategy. The [strategy catalog](https://tradejs.dev/marketplace)
 links to the rules and settings for existing strategies.
 
 ## Run strategy research
@@ -59,5 +59,5 @@ report locally.
 
 Give the agent the strategy name, exchange, symbol, candle interval, and dates.
 Ask it to record the settings and report path. The
-[HeadAndShoulders example](../strategies/reference/head-and-shoulders#backtest)
+[HeadAndShoulders example](https://tradejs.dev/marketplace/head-and-shoulders#backtest)
 has a complete command.

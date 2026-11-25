@@ -1,9 +1,19 @@
-import { themes as prismThemes } from 'prism-react-renderer';
+import { themes as prismThemes, type PrismTheme } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const currentLocale = process.env.DOCUSAURUS_CURRENT_LOCALE ?? 'en';
 const t = (en: string, ru: string) => (currentLocale === 'ru' ? ru : en);
+
+const tradejsPrism = (theme: PrismTheme, overrides: PrismTheme['styles'] = []): PrismTheme => ({
+  plain: { color: 'var(--tradejs-ink)', backgroundColor: 'var(--tradejs-subtle)' },
+  styles: [
+    ...theme.styles,
+    { types: ['comment', 'prolog', 'cdata'], style: { color: 'var(--tradejs-muted)' } },
+    { types: ['string', 'char', 'builtin', 'regex', 'attr-value'], style: { color: 'var(--tradejs-code)' } },
+    ...overrides,
+  ],
+});
 
 const config: Config = {
   title: 'TradeJS Docs',
@@ -120,10 +130,9 @@ const config: Config = {
       },
       items: [
         {
-          to: '/strategies/reference',
-          activeBaseRegex: '^/(?:ru/)?strategies/reference(?:/|$)',
+          href: 'https://tradejs.dev/marketplace',
           position: 'left',
-          label: t('Strategies', 'Готовые стратегии'),
+          label: 'Marketplace',
         },
         {
           to: '/getting-started/first-backtest',
@@ -159,18 +168,14 @@ const config: Config = {
         },
       ],
     },
-    footer: {
-      links: [
-        { label: t('Installation', 'Установка'), to: '/getting-started/installation' },
-        { label: t('CLI reference', 'Справочник команд'), to: '/api/cli' },
-        { label: t('License', 'Лицензия'), to: '/introduction/licensing' },
-        { label: 'GitHub', href: 'https://github.com/tradejs-dev/tradejs' },
-      ],
-      copyright: `© ${new Date().getFullYear()} TradeJS`,
-    },
     prism: {
-      theme: prismThemes.oneLight,
-      darkTheme: prismThemes.oneDark,
+      theme: tradejsPrism(prismThemes.oneLight, [
+        { types: ['punctuation'], style: { color: 'var(--tradejs-ink)' } },
+        { types: ['attr-name', 'class-name', 'boolean', 'constant', 'number', 'atrule'], style: { color: '#754b16' } },
+        { types: ['property', 'tag', 'symbol', 'deleted', 'important'], style: { color: '#a03648' } },
+        { types: ['variable', 'operator', 'function', 'url'], style: { color: '#245780' } },
+      ]),
+      darkTheme: tradejsPrism(prismThemes.oneDark),
     },
   } satisfies Preset.ThemeConfig,
 };

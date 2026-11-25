@@ -4,7 +4,7 @@ title: Examples
 
 Use these examples to see how a strategy is put together. To test an existing
 strategy without writing code, start from the [strategy
-catalog](./strategies/reference).
+catalog](https://tradejs.dev/marketplace).
 
 ## 1. Simple Moving Average Strategy
 
@@ -13,7 +13,7 @@ Use this when you want the smallest understandable TypeScript strategy idea: com
 Related pages:
 
 - [Create a simple strategy](./strategies/authoring/typescript-strategy-step-by-step)
-- [MaStrategy reference](./strategies/reference/ma-strategy)
+- [MaStrategy reference](https://tradejs.dev/marketplace/ma-strategy)
 
 ## 2. Breakout Strategy
 
@@ -21,7 +21,7 @@ The built-in `Breakout` strategy uses a weighted signal model. A long setup can 
 
 Related pages:
 
-- [Breakout reference](./strategies/reference/breakout)
+- [Breakout reference](https://tradejs.dev/marketplace/breakout)
 - [Backtest a strategy](./runtime/backtesting/overview)
 
 ## 3. Trendline / Channel-Based Strategy
@@ -37,8 +37,8 @@ The common idea is:
 
 Related pages:
 
-- [TrendLine reference](./strategies/reference/trendline)
-- [AdaptiveTrendChannel reference](./strategies/reference/adaptive-trend-channel)
+- [TrendLine reference](https://tradejs.dev/marketplace/trendline)
+- [AdaptiveTrendChannel reference](https://tradejs.dev/marketplace/adaptive-trend-channel)
 - [Backtesting caveats](./limitations/backtesting-caveats)
 
 ## First Runnable Backtest

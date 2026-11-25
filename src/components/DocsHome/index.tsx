@@ -7,9 +7,8 @@ const copy = {
     title: 'Документация TradeJS',
     description:
       'Выбирайте готовые торговые стратегии, проверяйте их на исторических данных и пишите свои на TypeScript.',
-    catalog: 'Готовые стратегии',
     catalogDescription:
-      'Найдите стратегию и узнайте, как она торгует и как её подключить.',
+      'Выберите стратегию, адаптер биржи или плагин и посмотрите, как его подключить.',
     backtest: 'Первый бэктест',
     backtestDescription:
       'Установите TradeJS, запустите тест в приложении и разберите результат.',
@@ -23,9 +22,8 @@ const copy = {
     title: 'TradeJS documentation',
     description:
       'Choose a trading strategy, test it on historical data, or write your own in TypeScript.',
-    catalog: 'Ready-to-use strategies',
     catalogDescription:
-      'Find a strategy and see how it trades and how to install it.',
+      'Browse strategies, exchange adapters, and plugins with instructions for connecting them.',
     backtest: 'First backtest',
     backtestDescription:
       'Install TradeJS, run a test in the app, and read the results.',
@@ -42,8 +40,8 @@ export default function DocsHome() {
   const t = i18n.currentLocale === 'ru' ? copy.ru : copy.en;
   const links = [
     {
-      to: '/strategies/reference',
-      title: t.catalog,
+      to: 'https://tradejs.dev/marketplace',
+      title: 'Marketplace',
       description: t.catalogDescription,
     },
     {

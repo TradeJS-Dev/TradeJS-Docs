@@ -2,9 +2,9 @@
 title: Как подключить стратегию
 ---
 
-Стратегии из раздела [«Пакеты для отдельной установки»](../strategies/reference)
-нужно добавить в проект. В этом примере подключим
-[Triangle](../strategies/reference/triangle).
+В [Marketplace](https://tradejs.dev/marketplace) тег `base` отмечает стратегии
+из стандартного набора. В этом примере подключим
+[Triangle](https://tradejs.dev/marketplace/triangle).
 
 Выполните в папке проекта:
 
@@ -27,4 +27,4 @@ export default defineConfig(basePreset, {
 
 Если в файле уже есть список `strategies`, добавьте пакет туда. Перезапустите
 приложение командой `npm run dev`. Для проверки используйте
-[пример бэктеста Triangle](../strategies/reference/triangle#backtest).
+[пример бэктеста Triangle](https://tradejs.dev/marketplace/triangle#backtest).

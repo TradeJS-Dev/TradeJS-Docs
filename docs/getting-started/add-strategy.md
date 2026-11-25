@@ -2,9 +2,9 @@
 title: Add a strategy to your TradeJS project
 ---
 
-If the [catalog](../strategies/reference) lists a strategy under separately
-installed packages, install it from your project folder. This example uses
-[Triangle](../strategies/reference/triangle).
+The [Marketplace](https://tradejs.dev/marketplace) marks strategies included in the
+standard project with the `base` tag. This example adds
+[Triangle](https://tradejs.dev/marketplace/triangle). Install the package from your project folder.
 
 ```bash
 npm install --save-exact @tradejs/strategy-triangle
@@ -24,4 +24,4 @@ export default defineConfig(basePreset, {
 
 If you already have a `strategies` list, add the package to that list. Restart
 the app with `npm run dev`. To run a backtest, follow
-[the example for Triangle](../strategies/reference/triangle#backtest).
+[the example for Triangle](https://tradejs.dev/marketplace/triangle#backtest).

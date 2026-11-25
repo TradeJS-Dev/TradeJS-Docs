@@ -86,7 +86,7 @@ context preparation по умолчанию не делает backfill; вклю
 `HYPERLIQUID_WHALE_MIN_COVERAGE_PCT`, `HYPERLIQUID_WHALE_CONCURRENCY` и
 `HYPERLIQUID_WHALE_RATE_LIMIT_WEIGHT`.
 
-[HyperliquidConsensus](../strategies/reference/hyperliquid-consensus) требует
+[HyperliquidConsensus](https://tradejs.dev/marketplace/hyperliquid-consensus) требует
 этот signal-time context.
 
 ## 4. Таблицы БД

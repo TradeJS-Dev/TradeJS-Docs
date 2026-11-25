@@ -7,7 +7,7 @@ place orders.
 
 ## Recommended Timeframes
 
-Use an interval supported by the strategy. See the [strategy catalog](./strategies/reference)
+Use an interval supported by the strategy. See the [strategy catalog](https://tradejs.dev/marketplace)
 for the supported intervals and examples.
 
 ## Not For HFT

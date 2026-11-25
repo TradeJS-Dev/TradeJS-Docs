@@ -29,7 +29,7 @@ Use this when you are porting or comparing Pine Script-inspired workflows.
 ## Built-In Strategies
 
 The `@tradejs/base` package loads the default set of strategies.
-See the [catalog](../strategies/reference) for each strategy’s rules and settings.
+See the [catalog](https://tradejs.dev/marketplace) for each strategy’s rules and settings.
 For separately installed strategies, see [Add a strategy](../getting-started/add-strategy).
 
 ## Next

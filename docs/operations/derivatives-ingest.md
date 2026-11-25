@@ -87,7 +87,7 @@ intentional. `HYPERLIQUID_WHALE_CONTEXT_ENABLED`,
 `HYPERLIQUID_WHALE_CONCURRENCY`, and
 `HYPERLIQUID_WHALE_RATE_LIMIT_WEIGHT` control context use and recovery.
 
-The [HyperliquidConsensus strategy](../strategies/reference/hyperliquid-consensus)
+The [HyperliquidConsensus strategy](https://tradejs.dev/marketplace/hyperliquid-consensus)
 requires this signal-time context.
 
 ## 4. DB Tables

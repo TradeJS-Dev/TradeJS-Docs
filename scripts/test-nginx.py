@@ -2,6 +2,7 @@
 import http.client
 import json
 from pathlib import Path
+import re
 import subprocess
 import tempfile
 import time
@@ -53,6 +54,22 @@ with tempfile.TemporaryDirectory(prefix='docs-nginx-') as directory:
         for prefix in ['', '/ru']:
             status, location, _ = get(prefix + '/guides/create-simple-strategy/?q=value')
             assert status == 301 and location == prefix + '/strategies/authoring/typescript-strategy-step-by-step?q=value', location
-        print('Nginx: normal pages, both locales, legacy links and unsafe paths passed.')
+
+        config = (root / 'nginx.docs.conf').read_text()
+        strategy_map = config.split('map $retired_strategy $has_marketplace_page {', 1)[1].split('}', 1)[0]
+        slugs = re.findall(r'^\s+([a-z0-9-]+) 1;$', strategy_map, re.M)
+        assert {'head-and-shoulders', 'reverse-trendline', 'trend-pullback'} <= set(slugs)
+        marketplace = 'https://tradejs.dev/marketplace'
+        for prefix in ['', '/ru']:
+            legacy = prefix + '/strategies/reference'
+            for suffix in ['', '/', '.html', '/index.html']:
+                assert get(legacy + suffix + '?utm_source=docs')[:2] == (301, marketplace + '?utm_source=docs')
+            for slug in slugs:
+                for suffix in ['', '/', '.html']:
+                    assert get(f'{legacy}/{slug}{suffix}')[:2] == (301, f'{marketplace}/{slug}')
+            for path in [f'{legacy}/unknown-strategy/', f'{legacy}/%5c%5cexternal.example/']:
+                status, location, _ = get(path)
+                assert status in (400, 404) and location is None, (path, status, location)
+        print('Nginx: normal pages, both locales, legacy Marketplace redirects and unsafe paths passed.')
     finally:
         subprocess.run(['docker', 'rm', '-f', name], stdout=subprocess.DEVNULL, check=False)

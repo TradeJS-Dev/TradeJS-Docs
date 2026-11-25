@@ -12,7 +12,7 @@ description: Дайте агенту документацию TradeJS и зад�
 
 Отправьте ему [указатель документации](https://docs.tradejs.dev/llms.txt) и статью по задаче.
 Для разработки используйте [руководство по TypeScript](../strategies/authoring/typescript-strategy-step-by-step).
-Для готовых стратегий правила и настройки собраны в [каталоге](../strategies/reference).
+Для готовых стратегий правила и настройки собраны в [каталоге](https://tradejs.dev/marketplace).
 
 ## Запустить исследование
 
@@ -58,4 +58,4 @@ description: Дайте агенту документацию TradeJS и зад�
 
 Укажите имя стратегии, биржу, инструмент, интервал свечей и даты.
 Попросите агента записать настройки и путь к файлу с результатом.
-Готовый пример есть в [бэктесте HeadAndShoulders](../strategies/reference/head-and-shoulders#backtest).
+Готовый пример есть в [бэктесте HeadAndShoulders](https://tradejs.dev/marketplace/head-and-shoulders#backtest).
